@@ -18,6 +18,8 @@ _PostModel _$PostModelFromJson(Map<String, dynamic> json) => _PostModel(
       (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
   reactionCount: (json['reactionCount'] as num?)?.toInt() ?? 0,
+  reactionDetails: json['reactionDetails'] as Map<String, dynamic>?,
+  currentUserReaction: json['currentUserReaction'] as String?,
   commentCount: (json['commentCount'] as num?)?.toInt() ?? 0,
   createdAt: json['createdAt'] as String?,
 );
@@ -33,6 +35,8 @@ Map<String, dynamic> _$PostModelToJson(_PostModel instance) =>
       'authorUniversity': instance.authorUniversity,
       'tags': instance.tags,
       'reactionCount': instance.reactionCount,
+      'reactionDetails': instance.reactionDetails,
+      'currentUserReaction': instance.currentUserReaction,
       'commentCount': instance.commentCount,
       'createdAt': instance.createdAt,
     };

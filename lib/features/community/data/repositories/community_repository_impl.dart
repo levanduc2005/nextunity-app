@@ -3,7 +3,9 @@ import 'package:rental_car/core/error/failure.dart';
 import 'package:rental_car/core/utils/result.dart';
 import 'package:rental_car/features/community/data/datasources/community_remote_data_source.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
+import 'package:rental_car/features/community/domain/entities/comment_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
+import 'package:rental_car/features/community/domain/entities/post_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/domain/repositories/community_repository.dart';
 
@@ -89,16 +91,16 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Future<Result<void>> togglePostReaction(
+  Future<Result<PostReactionResult>> togglePostReaction(
     String postId, {
     ReactionType reactionType = ReactionType.like,
   }) async {
     try {
-      await _remoteDataSource.togglePostReaction(
+      final result = await _remoteDataSource.togglePostReaction(
         postId,
         reactionType: reactionType,
       );
-      return const Result.ok(null);
+      return Result.ok(result);
     } on ServerException catch (e) {
       return Result.err(ServerFailure(message: e.message));
     } catch (e) {
@@ -107,16 +109,16 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Future<Result<void>> toggleCommentReaction(
+  Future<Result<CommentReactionResult>> toggleCommentReaction(
     String commentId, {
     ReactionType reactionType = ReactionType.like,
   }) async {
     try {
-      await _remoteDataSource.toggleCommentReaction(
+      final result = await _remoteDataSource.toggleCommentReaction(
         commentId,
         reactionType: reactionType,
       );
-      return const Result.ok(null);
+      return Result.ok(result);
     } on ServerException catch (e) {
       return Result.err(ServerFailure(message: e.message));
     } catch (e) {

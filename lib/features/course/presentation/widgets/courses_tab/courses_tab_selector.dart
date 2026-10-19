@@ -18,8 +18,11 @@ class CoursesTabSelector extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFE2E8F0).withValues(alpha: 0.7),
+        color: const Color(0xFFDBEAFE).withValues(alpha: 0.65),
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFFBFDBFE).withValues(alpha: 0.6),
+        ),
       ),
       child: Row(
         children: [
@@ -59,9 +62,9 @@ class CoursesTabSelector extends StatelessWidget {
           boxShadow: isActive
               ? [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 1),
+                    color: const Color(0xFF1E3A8A).withValues(alpha: 0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
                   ),
                 ]
               : null,

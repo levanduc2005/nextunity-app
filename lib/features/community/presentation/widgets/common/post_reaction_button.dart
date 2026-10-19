@@ -42,11 +42,13 @@ class PostReactionButton extends StatefulWidget {
     required this.currentReaction,
     required this.onReactionSelected,
     required this.onReactionCleared,
+    this.isCompact = false,
   });
 
   final ReactionType? currentReaction;
   final ValueChanged<ReactionType> onReactionSelected;
   final VoidCallback onReactionCleared;
+  final bool isCompact;
 
   @override
   State<PostReactionButton> createState() => _PostReactionButtonState();
@@ -109,6 +111,10 @@ class _PostReactionButtonState extends State<PostReactionButton>
       top = offset.dy + size.height + 8;
     }
 
+    final double anchorX = ((offset.dx + size.width / 2 - left) / popupWidth)
+        .clamp(0.1, 0.9);
+    final isAbove = top < offset.dy;
+
     _animController.reset();
     _animController.forward();
 
@@ -135,7 +141,7 @@ class _PostReactionButtonState extends State<PostReactionButton>
                     parent: _animController,
                     curve: Curves.easeOutBack,
                   ),
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment(anchorX * 2 - 1, isAbove ? 1.0 : -1.0),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -151,9 +157,7 @@ class _PostReactionButtonState extends State<PostReactionButton>
                           offset: const Offset(0, 8),
                         ),
                       ],
-                      border: Border.all(
-                        color: const Color(0xFFE2E8F0),
-                      ),
+                      border: Border.all(color: const Color(0xFFE2E8F0)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -199,33 +203,68 @@ class _PostReactionButtonState extends State<PostReactionButton>
     final Color color = isReacted ? reaction.color : const Color(0xFF64748B);
     final String label = isReacted ? reaction.label : 'Thích';
 
-    return GestureDetector(
-      key: _buttonKey,
-      onTap: _handleTap,
-      onLongPress: _showReactionPopup,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (!isReacted)
-              Icon(Icons.thumb_up_outlined, size: 18, color: color)
-            else if (reaction == ReactionType.like)
-              Icon(Icons.thumb_up_rounded, size: 18, color: color)
-            else
-              Text(reaction.emoji, style: const TextStyle(fontSize: 16)),
-            const Gap.h(6),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: isReacted ? FontWeight.w700 : FontWeight.w600,
-                color: color,
-              ),
+    if (widget.isCompact) {
+      return Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: _buttonKey,
+          onTap: _handleTap,
+          onLongPress: _showReactionPopup,
+          borderRadius: BorderRadius.circular(4),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isReacted && reaction != ReactionType.like) ...[
+                  Text(reaction.emoji, style: const TextStyle(fontSize: 12)),
+                  const Gap.h(3),
+                ],
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: isReacted ? color : const Color(0xFF64748B),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
+        ),
+      );
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        key: _buttonKey,
+        onTap: _handleTap,
+        onLongPress: _showReactionPopup,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (!isReacted)
+                Icon(Icons.thumb_up_outlined, size: 18, color: color)
+              else if (reaction == ReactionType.like)
+                Icon(Icons.thumb_up_rounded, size: 18, color: color)
+              else
+                Text(reaction.emoji, style: const TextStyle(fontSize: 16)),
+              const Gap.h(6),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: isReacted ? FontWeight.w700 : FontWeight.w600,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

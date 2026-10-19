@@ -7,7 +7,6 @@ export 'auth_resend_code.dart';
 export 'auth_stationery_stage.dart';
 export 'auth_terms_text.dart';
 export 'auth_text_field.dart';
-export 'auth_top_bar.dart';
 export 'nextunity_logo.dart';
 export 'social_auth_button.dart';
 export 'sticky_note_badge.dart';

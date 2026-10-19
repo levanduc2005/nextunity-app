@@ -4,7 +4,8 @@ import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
-import 'package:rental_car/features/community/presentation/widgets/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
 
 /// Thẻ hiển thị toàn bộ nội dung bài viết trong trang chi tiết
 class PostDetailContentCard extends StatelessWidget {
@@ -246,44 +247,13 @@ class PostDetailContentCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(2.5),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.thumb_up_rounded,
-                      size: 9,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const Gap.h(2),
-                  Container(
-                    padding: const EdgeInsets.all(2.5),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFEF4444),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.favorite_rounded,
-                      size: 9,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const Gap.h(5),
-                  Text(
-                    '${post.reactionCount} người thích',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF64748B),
-                    ),
-                  ),
-                ],
-              ),
+              if (post.reactionCount > 0)
+                ReactionCounterBadge(
+                  topReactions: post.topReactions,
+                  totalCount: post.reactionCount,
+                )
+              else
+                const SizedBox.shrink(),
               Text(
                 '$totalCommentsCount bình luận • 5 lượt chia sẻ',
                 style: const TextStyle(
@@ -306,8 +276,7 @@ class PostDetailContentCard extends StatelessWidget {
                 Expanded(
                   child: PostReactionButton(
                     currentReaction:
-                        currentReaction ??
-                        (isLiked ? ReactionType.like : null),
+                        currentReaction ?? (isLiked ? ReactionType.like : null),
                     onReactionSelected: (reaction) {
                       if (onReactionSelected != null) {
                         onReactionSelected!(reaction);

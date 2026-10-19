@@ -56,7 +56,7 @@ class CoursesPage extends ConsumerWidget {
               child: RefreshIndicator(
                 onRefresh: controller.refresh,
                 child: ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+                  padding: const EdgeInsets.fromLTRB(16, 6, 16, 24),
                   physics: const AlwaysScrollableScrollPhysics(),
                   children: [
                     // Segmented Pill Tab Switcher

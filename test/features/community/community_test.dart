@@ -4,6 +4,7 @@ import 'package:rental_car/core/error/failure.dart';
 import 'package:rental_car/core/utils/result.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
+import 'package:rental_car/features/community/domain/entities/post_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/domain/repositories/community_repository.dart';
 import 'package:rental_car/features/community/domain/usecases/create_comment_use_case.dart';
@@ -13,7 +14,7 @@ import 'package:rental_car/features/community/domain/usecases/get_comments_use_c
 import 'package:rental_car/features/community/domain/usecases/get_post_detail_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_tags_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/toggle_reaction_use_case.dart';
-import 'package:rental_car/features/community/presentation/widgets/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
 
 class MockCommunityRepository extends Mock implements CommunityRepository {}
 
@@ -139,7 +140,16 @@ void main() {
       () async {
         when(
           () => repository.togglePostReaction('p-1'),
-        ).thenAnswer((_) async => const Result.ok(null));
+        ).thenAnswer(
+          (_) async => const Result.ok(
+            PostReactionResult(
+              postId: 'p-1',
+              totalReactions: 1,
+              reactionDetails: {ReactionType.like: 1},
+              currentUserReaction: ReactionType.like,
+            ),
+          ),
+        );
 
         final result = await togglePostReactionUseCase('p-1');
 
@@ -212,6 +222,24 @@ void main() {
       const noTag = PostEntity(id: '3', title: 'T', content: 'C');
       expect(noTag.primaryTag, '#FPTU');
     });
+
+    test('topReactions extracts up to 2 most frequent reactions', () {
+      const emptyPost = PostEntity(
+        id: 'p-empty',
+        title: 'Empty',
+        content: 'Empty',
+      );
+      expect(emptyPost.topReactions, isEmpty);
+
+      final multiPost = emptyPost.copyWith(
+        reactionDetails: {
+          ReactionType.like: 5,
+          ReactionType.haha: 15,
+          ReactionType.love: 8,
+        },
+      );
+      expect(multiPost.topReactions, [ReactionType.haha, ReactionType.love]);
+    });
   });
 
   group('CommentEntity Tests', () {
@@ -232,43 +260,94 @@ void main() {
       expect(liked.isLiked, isTrue);
       expect(liked.reactionCount, 1);
     });
+
+    test('CommentEntity topReactions extracts up to 2 most frequent reactions', () {
+      const emptyComment = CommentEntity(
+        id: 'c-1',
+        postId: 'p-1',
+        authorName: 'User A',
+        content: 'Test',
+      );
+      expect(emptyComment.topReactions, isEmpty);
+
+      // Only 1 reaction type
+      final oneReaction = emptyComment.copyWith(
+        reactionDetails: {ReactionType.like: 5},
+      );
+      expect(oneReaction.topReactions, [ReactionType.like]);
+
+      // Exactly 2 reaction types
+      final twoReactions = emptyComment.copyWith(
+        reactionDetails: {ReactionType.like: 2, ReactionType.haha: 3},
+      );
+      expect(twoReactions.topReactions, [ReactionType.haha, ReactionType.like]);
+
+      // 4 reaction types -> returns the top 2 highest count
+      final fourReactions = emptyComment.copyWith(
+        reactionDetails: {
+          ReactionType.like: 2,
+          ReactionType.haha: 10,
+          ReactionType.love: 7,
+          ReactionType.sad: 1,
+        },
+      );
+      expect(fourReactions.topReactions, [ReactionType.haha, ReactionType.love]);
+    });
   });
 
   group('ReactionType Tests', () {
-    test('ReactionType enum values, emojis, and labels match specifications', () {
-      expect(ReactionType.like.apiValue, 'LIKE');
-      expect(ReactionType.like.emoji, '👍');
-      expect(ReactionType.like.label, 'Thích');
+    test(
+      'ReactionType enum values, emojis, and labels match specifications',
+      () {
+        expect(ReactionType.like.apiValue, 'LIKE');
+        expect(ReactionType.like.emoji, '👍');
+        expect(ReactionType.like.label, 'Thích');
 
-      expect(ReactionType.love.apiValue, 'LOVE');
-      expect(ReactionType.love.emoji, '❤️');
-      expect(ReactionType.love.label, 'Yêu thích');
+        expect(ReactionType.love.apiValue, 'LOVE');
+        expect(ReactionType.love.emoji, '❤️');
+        expect(ReactionType.love.label, 'Yêu thích');
 
-      expect(ReactionType.haha.apiValue, 'HAHA');
-      expect(ReactionType.haha.emoji, '😆');
+        expect(ReactionType.haha.apiValue, 'HAHA');
+        expect(ReactionType.haha.emoji, '😆');
 
-      expect(ReactionType.wow.apiValue, 'WOW');
-      expect(ReactionType.wow.emoji, '😮');
+        expect(ReactionType.wow.apiValue, 'WOW');
+        expect(ReactionType.wow.emoji, '😮');
 
-      expect(ReactionType.sad.apiValue, 'SAD');
-      expect(ReactionType.sad.emoji, '😢');
+        expect(ReactionType.sad.apiValue, 'SAD');
+        expect(ReactionType.sad.emoji, '😢');
 
-      expect(ReactionType.angry.apiValue, 'ANGRY');
-      expect(ReactionType.angry.emoji, '😡');
-    });
+        expect(ReactionType.angry.apiValue, 'ANGRY');
+        expect(ReactionType.angry.emoji, '😡');
+      },
+    );
 
-    test('ReactionType fromString parses uppercase and lowercase strings correctly', () {
-      expect(ReactionType.fromString('like'), ReactionType.like);
-      expect(ReactionType.fromString('LOVE'), ReactionType.love);
-      expect(ReactionType.fromString('Haha'), ReactionType.haha);
-      expect(ReactionType.fromString('invalid'), isNull);
-      expect(ReactionType.fromString(null), isNull);
-    });
+    test(
+      'ReactionType fromString parses uppercase and lowercase strings correctly',
+      () {
+        expect(ReactionType.fromString('like'), ReactionType.like);
+        expect(ReactionType.fromString('LOVE'), ReactionType.love);
+        expect(ReactionType.fromString('Haha'), ReactionType.haha);
+        expect(ReactionType.fromString('invalid'), isNull);
+        expect(ReactionType.fromString(null), isNull);
+      },
+    );
 
     test('TogglePostReactionUseCase sends specified ReactionType', () async {
       when(
-        () => repository.togglePostReaction('p-1', reactionType: ReactionType.love),
-      ).thenAnswer((_) async => const Result.ok(null));
+        () => repository.togglePostReaction(
+          'p-1',
+          reactionType: ReactionType.love,
+        ),
+      ).thenAnswer(
+        (_) async => const Result.ok(
+          PostReactionResult(
+            postId: 'p-1',
+            totalReactions: 1,
+            reactionDetails: {ReactionType.love: 1},
+            currentUserReaction: ReactionType.love,
+          ),
+        ),
+      );
 
       final result = await togglePostReactionUseCase(
         'p-1',
@@ -277,7 +356,10 @@ void main() {
 
       expect(result.isOk, isTrue);
       verify(
-        () => repository.togglePostReaction('p-1', reactionType: ReactionType.love),
+        () => repository.togglePostReaction(
+          'p-1',
+          reactionType: ReactionType.love,
+        ),
       ).called(1);
     });
   });

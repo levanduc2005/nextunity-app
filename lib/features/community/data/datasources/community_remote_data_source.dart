@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:rental_car/core/error/exceptions.dart';
 import 'package:rental_car/features/community/data/models/comment_model.dart';
 import 'package:rental_car/features/community/data/models/post_model.dart';
+import 'package:rental_car/features/community/domain/entities/comment_reaction_result.dart';
+import 'package:rental_car/features/community/domain/entities/post_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 
 abstract interface class CommunityRemoteDataSource {
@@ -18,11 +20,11 @@ abstract interface class CommunityRemoteDataSource {
     required String content,
     String? parentId,
   });
-  Future<void> togglePostReaction(
+  Future<PostReactionResult> togglePostReaction(
     String postId, {
     ReactionType reactionType = ReactionType.like,
   });
-  Future<void> toggleCommentReaction(
+  Future<CommentReactionResult> toggleCommentReaction(
     String commentId, {
     ReactionType reactionType = ReactionType.like,
   });
@@ -144,14 +146,45 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Future<void> togglePostReaction(
+  Future<PostReactionResult> togglePostReaction(
     String postId, {
     ReactionType reactionType = ReactionType.like,
   }) async {
     try {
-      await _dio.post<Map<String, dynamic>>(
+      final response = await _dio.post<Map<String, dynamic>>(
         '/reactions/post/$postId',
         data: {'reactionType': reactionType.apiValue},
+      );
+      final data = response.data?['data'] as Map<String, dynamic>?;
+      if (data == null) {
+        return PostReactionResult(
+          postId: postId,
+          currentUserReaction: reactionType,
+          totalReactions: 1,
+          reactionDetails: {reactionType: 1},
+        );
+      }
+
+      final rawReaction = data['currentUserReaction'] as String?;
+      final userReaction = ReactionType.fromString(rawReaction);
+      final total = (data['totalReactions'] as num?)?.toInt() ?? 0;
+
+      final details = <ReactionType, int>{};
+      final rawDetails = data['reactionDetails'] as Map<String, dynamic>?;
+      if (rawDetails != null) {
+        rawDetails.forEach((k, v) {
+          final t = ReactionType.fromString(k);
+          if (t != null && v is num) {
+            details[t] = v.toInt();
+          }
+        });
+      }
+
+      return PostReactionResult(
+        postId: postId,
+        currentUserReaction: userReaction,
+        totalReactions: total,
+        reactionDetails: details,
       );
     } on DioException catch (e) {
       throw _handleDioError(e, 'Không thể tương tác bài viết');
@@ -161,14 +194,40 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Future<void> toggleCommentReaction(
+  Future<CommentReactionResult> toggleCommentReaction(
     String commentId, {
     ReactionType reactionType = ReactionType.like,
   }) async {
     try {
-      await _dio.post<Map<String, dynamic>>(
+      final response = await _dio.post<Map<String, dynamic>>(
         '/reactions/comment/$commentId',
         data: {'reactionType': reactionType.apiValue},
+      );
+      final data = response.data?['data'] as Map<String, dynamic>?;
+      if (data == null) {
+        return CommentReactionResult(
+          commentId: commentId,
+          currentUserReaction: reactionType,
+          totalReactions: 1,
+          reactionDetails: {reactionType: 1},
+        );
+      }
+      final rawDetails =
+          data['reactionDetails'] as Map<String, dynamic>? ?? {};
+      final details = <ReactionType, int>{};
+      rawDetails.forEach((k, v) {
+        final t = ReactionType.fromString(k);
+        if (t != null && v is num) {
+          details[t] = v.toInt();
+        }
+      });
+      return CommentReactionResult(
+        commentId: commentId,
+        currentUserReaction: ReactionType.fromString(
+          data['currentUserReaction'] as String?,
+        ),
+        totalReactions: (data['totalReactions'] as num?)?.toInt() ?? 0,
+        reactionDetails: details,
       );
     } on DioException catch (e) {
       throw _handleDioError(e, 'Không thể tương tác bình luận');

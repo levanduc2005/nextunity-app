@@ -6,11 +6,11 @@ import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/community/presentation/providers/community_providers.dart';
-import 'package:rental_car/features/community/presentation/widgets/create_post/community_models.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_attachment_card.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_bottom_bar.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_header_info.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_tags_selector.dart';
+import 'package:rental_car/features/community/presentation/widgets/create_post/privacy_picker_modal.dart';
 
 /// Màn hình Tạo bài viết thảo luận (Chuẩn phong cách Facebook Modal)
 class CreatePostPage extends ConsumerStatefulWidget {

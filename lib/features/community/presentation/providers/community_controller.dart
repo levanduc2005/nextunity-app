@@ -88,6 +88,8 @@ class CommunityState {
 }
 
 class CommunityController extends Notifier<CommunityState> {
+  final Set<String> _reactingPostIds = {};
+
   @override
   CommunityState build() {
     Future.microtask(() {
@@ -102,7 +104,17 @@ class CommunityController extends Notifier<CommunityState> {
     final result = await ref.read(getAllPostsUseCaseProvider).call();
     result.when(
       ok: (posts) {
-        state = state.copyWith(posts: posts, isLoading: false);
+        final userReactions = <String, ReactionType>{};
+        for (final p in posts) {
+          if (p.currentUserReaction != null) {
+            userReactions[p.id] = p.currentUserReaction!;
+          }
+        }
+        state = state.copyWith(
+          posts: posts,
+          userReactions: userReactions,
+          isLoading: false,
+        );
       },
       err: (failure) {
         state = state.copyWith(errorMessage: failure.message, isLoading: false);
@@ -145,72 +157,137 @@ class CommunityController extends Notifier<CommunityState> {
     String postId, {
     ReactionType reactionType = ReactionType.like,
   }) async {
-    final currentReaction = state.userReactions[postId];
-    final isSameReaction = currentReaction == reactionType;
+    if (_reactingPostIds.contains(postId)) return;
+    _reactingPostIds.add(postId);
 
-    final newUserReactions = Map<String, ReactionType>.from(
-      state.userReactions,
-    );
+    try {
+      final currentReaction = state.userReactions[postId];
+      final isSameReaction = currentReaction == reactionType;
 
-    if (isSameReaction) {
-      newUserReactions.remove(postId);
-    } else {
-      newUserReactions[postId] = reactionType;
-    }
-
-    // Optimistic UI update
-    final updatedPosts = state.posts.map((p) {
-      if (p.id == postId) {
-        final currentCount = p.reactionCount;
-        int newCount = currentCount;
-        if (isSameReaction) {
-          newCount = currentCount > 0 ? currentCount - 1 : 0;
-        } else if (currentReaction == null) {
-          newCount = currentCount + 1;
-        }
-        return p.copyWith(reactionCount: newCount);
-      }
-      return p;
-    }).toList();
-
-    state = state.copyWith(
-      userReactions: newUserReactions,
-      posts: updatedPosts,
-    );
-
-    // Call Backend API
-    final result = await ref
-        .read(togglePostReactionUseCaseProvider)
-        .call(postId, reactionType: reactionType);
-
-    if (result.isErr) {
-      // Revert if API fails
-      final revertedUserReactions = Map<String, ReactionType>.from(
+      final newUserReactions = Map<String, ReactionType>.from(
         state.userReactions,
       );
-      if (currentReaction != null) {
-        revertedUserReactions[postId] = currentReaction;
+
+      if (isSameReaction) {
+        newUserReactions.remove(postId);
       } else {
-        revertedUserReactions.remove(postId);
+        newUserReactions[postId] = reactionType;
       }
 
-      final revertedPosts = state.posts.map((p) {
+      // Optimistic UI update
+      final updatedPosts = state.posts.map((p) {
         if (p.id == postId) {
-          int originalCount = p.reactionCount;
+          final currentCount = p.reactionCount;
+          final details = Map<ReactionType, int>.from(p.reactionDetails);
+
+          int newCount = currentCount;
           if (isSameReaction) {
-            originalCount = originalCount + 1;
-          } else if (currentReaction == null) {
-            originalCount = originalCount > 0 ? originalCount - 1 : 0;
+            newCount = currentCount > 0 ? currentCount - 1 : 0;
+            if (currentReaction != null) {
+              final cnt = (details[currentReaction] ?? 1) - 1;
+              if (cnt <= 0) {
+                details.remove(currentReaction);
+              } else {
+                details[currentReaction] = cnt;
+              }
+            }
+          } else {
+            if (currentReaction == null) {
+              newCount = currentCount + 1;
+              details[reactionType] = (details[reactionType] ?? 0) + 1;
+            } else {
+              // Switching reaction
+              final oldCnt = (details[currentReaction] ?? 1) - 1;
+              if (oldCnt <= 0) {
+                details.remove(currentReaction);
+              } else {
+                details[currentReaction] = oldCnt;
+              }
+              details[reactionType] = (details[reactionType] ?? 0) + 1;
+            }
           }
-          return p.copyWith(reactionCount: originalCount);
+
+          return p.copyWith(
+            reactionCount: newCount,
+            reactionDetails: details,
+            currentUserReaction: isSameReaction ? null : reactionType,
+          );
         }
         return p;
       }).toList();
 
       state = state.copyWith(
-        userReactions: revertedUserReactions,
-        posts: revertedPosts,
+        userReactions: newUserReactions,
+        posts: updatedPosts,
       );
+
+      // Call Backend API
+      final result = await ref
+          .read(togglePostReactionUseCaseProvider)
+          .call(postId, reactionType: reactionType);
+
+      result.when(
+        ok: (reactionResult) {
+          final syncedUserReactions = Map<String, ReactionType>.from(
+            state.userReactions,
+          );
+          if (reactionResult.currentUserReaction != null) {
+            syncedUserReactions[postId] = reactionResult.currentUserReaction!;
+          } else {
+            syncedUserReactions.remove(postId);
+          }
+
+          final syncedPosts = state.posts.map((p) {
+            if (p.id == postId) {
+              return p.copyWith(
+                reactionCount: reactionResult.totalReactions,
+                reactionDetails: reactionResult.reactionDetails,
+                currentUserReaction: reactionResult.currentUserReaction,
+              );
+            }
+            return p;
+          }).toList();
+
+          state = state.copyWith(
+            userReactions: syncedUserReactions,
+            posts: syncedPosts,
+          );
+        },
+        err: (failure) {
+          // Revert if API fails
+          final revertedUserReactions = Map<String, ReactionType>.from(
+            state.userReactions,
+          );
+          if (currentReaction != null) {
+            revertedUserReactions[postId] = currentReaction;
+          } else {
+            revertedUserReactions.remove(postId);
+          }
+
+          final revertedPosts = state.posts.map((p) {
+            if (p.id == postId) {
+              int originalCount = p.reactionCount;
+              if (isSameReaction) {
+                originalCount = originalCount + 1;
+              } else if (currentReaction == null) {
+                originalCount = originalCount > 0 ? originalCount - 1 : 0;
+              }
+              return p.copyWith(
+                reactionCount: originalCount,
+                currentUserReaction: currentReaction,
+              );
+            }
+            return p;
+          }).toList();
+
+          state = state.copyWith(
+            userReactions: revertedUserReactions,
+            posts: revertedPosts,
+          );
+        },
+      );
+    } finally {
+      _reactingPostIds.remove(postId);
     }
   }
 

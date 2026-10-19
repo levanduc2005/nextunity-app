@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentModel {
 
- String get id; String get postId; String? get authorId; String get authorName; String? get authorAvatar; String? get authorBadge; String get content; String? get parentId; int get reactionCount; List<CommentModel> get replies; String? get createdAt;
+ String get id; String get postId; String? get authorId; String get authorName; String? get authorAvatar; String? get authorBadge; String get content; String? get parentId; int get reactionCount; Map<String, dynamic>? get reactionDetails; String? get currentUserReaction; List<CommentModel> get replies; String? get createdAt;
 /// Create a copy of CommentModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CommentModelCopyWith<CommentModel> get copyWith => _$CommentModelCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorBadge, authorBadge) || other.authorBadge == authorBadge)&&(identical(other.content, content) || other.content == content)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other.replies, replies)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorBadge, authorBadge) || other.authorBadge == authorBadge)&&(identical(other.content, content) || other.content == content)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other.reactionDetails, reactionDetails)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&const DeepCollectionEquality().equals(other.replies, replies)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,postId,authorId,authorName,authorAvatar,authorBadge,content,parentId,reactionCount,const DeepCollectionEquality().hash(replies),createdAt);
+int get hashCode => Object.hash(runtimeType,id,postId,authorId,authorName,authorAvatar,authorBadge,content,parentId,reactionCount,const DeepCollectionEquality().hash(reactionDetails),currentUserReaction,const DeepCollectionEquality().hash(replies),createdAt);
 
 @override
 String toString() {
-  return 'CommentModel(id: $id, postId: $postId, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorBadge: $authorBadge, content: $content, parentId: $parentId, reactionCount: $reactionCount, replies: $replies, createdAt: $createdAt)';
+  return 'CommentModel(id: $id, postId: $postId, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorBadge: $authorBadge, content: $content, parentId: $parentId, reactionCount: $reactionCount, reactionDetails: $reactionDetails, currentUserReaction: $currentUserReaction, replies: $replies, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CommentModelCopyWith<$Res>  {
   factory $CommentModelCopyWith(CommentModel value, $Res Function(CommentModel) _then) = _$CommentModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String postId, String? authorId, String authorName, String? authorAvatar, String? authorBadge, String content, String? parentId, int reactionCount, List<CommentModel> replies, String? createdAt
+ String id, String postId, String? authorId, String authorName, String? authorAvatar, String? authorBadge, String content, String? parentId, int reactionCount, Map<String, dynamic>? reactionDetails, String? currentUserReaction, List<CommentModel> replies, String? createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$CommentModelCopyWithImpl<$Res>
 
 /// Create a copy of CommentModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? authorName = null,Object? authorAvatar = freezed,Object? authorBadge = freezed,Object? content = null,Object? parentId = freezed,Object? reactionCount = null,Object? replies = null,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? authorName = null,Object? authorAvatar = freezed,Object? authorBadge = freezed,Object? content = null,Object? parentId = freezed,Object? reactionCount = null,Object? reactionDetails = freezed,Object? currentUserReaction = freezed,Object? replies = null,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
@@ -76,7 +76,9 @@ as String?,authorBadge: freezed == authorBadge ? _self.authorBadge : authorBadge
 as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,parentId: freezed == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
 as String?,reactionCount: null == reactionCount ? _self.reactionCount : reactionCount // ignore: cast_nullable_to_non_nullable
-as int,replies: null == replies ? _self.replies : replies // ignore: cast_nullable_to_non_nullable
+as int,reactionDetails: freezed == reactionDetails ? _self.reactionDetails : reactionDetails // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
+as String?,replies: null == replies ? _self.replies : replies // ignore: cast_nullable_to_non_nullable
 as List<CommentModel>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -163,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  List<CommentModel> replies,  String? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  Map<String, dynamic>? reactionDetails,  String? currentUserReaction,  List<CommentModel> replies,  String? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommentModel() when $default != null:
-return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.replies,_that.createdAt);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.replies,_that.createdAt);case _:
   return orElse();
 
 }
@@ -184,10 +186,10 @@ return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.auth
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  List<CommentModel> replies,  String? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  Map<String, dynamic>? reactionDetails,  String? currentUserReaction,  List<CommentModel> replies,  String? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _CommentModel():
-return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.replies,_that.createdAt);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.replies,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +206,10 @@ return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.auth
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  List<CommentModel> replies,  String? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String postId,  String? authorId,  String authorName,  String? authorAvatar,  String? authorBadge,  String content,  String? parentId,  int reactionCount,  Map<String, dynamic>? reactionDetails,  String? currentUserReaction,  List<CommentModel> replies,  String? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _CommentModel() when $default != null:
-return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.replies,_that.createdAt);case _:
+return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorBadge,_that.content,_that.parentId,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.replies,_that.createdAt);case _:
   return null;
 
 }
@@ -219,7 +221,7 @@ return $default(_that.id,_that.postId,_that.authorId,_that.authorName,_that.auth
 @JsonSerializable()
 
 class _CommentModel extends CommentModel {
-  const _CommentModel({required this.id, required this.postId, this.authorId, required this.authorName, this.authorAvatar, this.authorBadge, required this.content, this.parentId, this.reactionCount = 0, final  List<CommentModel> replies = const [], this.createdAt}): _replies = replies,super._();
+  const _CommentModel({required this.id, required this.postId, this.authorId, required this.authorName, this.authorAvatar, this.authorBadge, required this.content, this.parentId, this.reactionCount = 0, final  Map<String, dynamic>? reactionDetails, this.currentUserReaction, final  List<CommentModel> replies = const [], this.createdAt}): _reactionDetails = reactionDetails,_replies = replies,super._();
   factory _CommentModel.fromJson(Map<String, dynamic> json) => _$CommentModelFromJson(json);
 
 @override final  String id;
@@ -231,6 +233,16 @@ class _CommentModel extends CommentModel {
 @override final  String content;
 @override final  String? parentId;
 @override@JsonKey() final  int reactionCount;
+ final  Map<String, dynamic>? _reactionDetails;
+@override Map<String, dynamic>? get reactionDetails {
+  final value = _reactionDetails;
+  if (value == null) return null;
+  if (_reactionDetails is EqualUnmodifiableMapView) return _reactionDetails;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(value);
+}
+
+@override final  String? currentUserReaction;
  final  List<CommentModel> _replies;
 @override@JsonKey() List<CommentModel> get replies {
   if (_replies is EqualUnmodifiableListView) return _replies;
@@ -253,16 +265,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorBadge, authorBadge) || other.authorBadge == authorBadge)&&(identical(other.content, content) || other.content == content)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other._replies, _replies)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentModel&&(identical(other.id, id) || other.id == id)&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorBadge, authorBadge) || other.authorBadge == authorBadge)&&(identical(other.content, content) || other.content == content)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other._reactionDetails, _reactionDetails)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&const DeepCollectionEquality().equals(other._replies, _replies)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,postId,authorId,authorName,authorAvatar,authorBadge,content,parentId,reactionCount,const DeepCollectionEquality().hash(_replies),createdAt);
+int get hashCode => Object.hash(runtimeType,id,postId,authorId,authorName,authorAvatar,authorBadge,content,parentId,reactionCount,const DeepCollectionEquality().hash(_reactionDetails),currentUserReaction,const DeepCollectionEquality().hash(_replies),createdAt);
 
 @override
 String toString() {
-  return 'CommentModel(id: $id, postId: $postId, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorBadge: $authorBadge, content: $content, parentId: $parentId, reactionCount: $reactionCount, replies: $replies, createdAt: $createdAt)';
+  return 'CommentModel(id: $id, postId: $postId, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorBadge: $authorBadge, content: $content, parentId: $parentId, reactionCount: $reactionCount, reactionDetails: $reactionDetails, currentUserReaction: $currentUserReaction, replies: $replies, createdAt: $createdAt)';
 }
 
 
@@ -273,7 +285,7 @@ abstract mixin class _$CommentModelCopyWith<$Res> implements $CommentModelCopyWi
   factory _$CommentModelCopyWith(_CommentModel value, $Res Function(_CommentModel) _then) = __$CommentModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String postId, String? authorId, String authorName, String? authorAvatar, String? authorBadge, String content, String? parentId, int reactionCount, List<CommentModel> replies, String? createdAt
+ String id, String postId, String? authorId, String authorName, String? authorAvatar, String? authorBadge, String content, String? parentId, int reactionCount, Map<String, dynamic>? reactionDetails, String? currentUserReaction, List<CommentModel> replies, String? createdAt
 });
 
 
@@ -290,7 +302,7 @@ class __$CommentModelCopyWithImpl<$Res>
 
 /// Create a copy of CommentModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? authorName = null,Object? authorAvatar = freezed,Object? authorBadge = freezed,Object? content = null,Object? parentId = freezed,Object? reactionCount = null,Object? replies = null,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? postId = null,Object? authorId = freezed,Object? authorName = null,Object? authorAvatar = freezed,Object? authorBadge = freezed,Object? content = null,Object? parentId = freezed,Object? reactionCount = null,Object? reactionDetails = freezed,Object? currentUserReaction = freezed,Object? replies = null,Object? createdAt = freezed,}) {
   return _then(_CommentModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
@@ -301,7 +313,9 @@ as String?,authorBadge: freezed == authorBadge ? _self.authorBadge : authorBadge
 as String?,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,parentId: freezed == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
 as String?,reactionCount: null == reactionCount ? _self.reactionCount : reactionCount // ignore: cast_nullable_to_non_nullable
-as int,replies: null == replies ? _self._replies : replies // ignore: cast_nullable_to_non_nullable
+as int,reactionDetails: freezed == reactionDetails ? _self._reactionDetails : reactionDetails // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>?,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
+as String?,replies: null == replies ? _self._replies : replies // ignore: cast_nullable_to_non_nullable
 as List<CommentModel>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

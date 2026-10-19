@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
+import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
 
 /// Widget hiển thị 1 bình luận dạng bong bóng chat xám Facebook (hỗ trợ cả reply con lồng nhau)
 class CommentBubbleItem extends StatelessWidget {
@@ -12,6 +15,12 @@ class CommentBubbleItem extends StatelessWidget {
     required this.onReply,
     required this.onLikeReply,
     required this.onReplyToChild,
+    this.currentReaction,
+    this.onReactionSelected,
+    this.onReactionCleared,
+    this.getReplyReaction,
+    this.onReactionSelectedReply,
+    this.onReactionClearedReply,
   });
 
   final CommentEntity comment;
@@ -19,6 +28,13 @@ class CommentBubbleItem extends StatelessWidget {
   final VoidCallback onReply;
   final void Function(String replyId) onLikeReply;
   final void Function(CommentEntity child) onReplyToChild;
+  final ReactionType? currentReaction;
+  final ValueChanged<ReactionType>? onReactionSelected;
+  final VoidCallback? onReactionCleared;
+  final ReactionType? Function(String replyId)? getReplyReaction;
+  final void Function(String replyId, ReactionType reaction)?
+  onReactionSelectedReply;
+  final void Function(String replyId)? onReactionClearedReply;
 
   @override
   Widget build(BuildContext context) {
@@ -109,19 +125,29 @@ class CommentBubbleItem extends StatelessWidget {
                               color: Color(0xFF64748B),
                             ),
                           ),
-                          const Gap.h(12),
-                          InkWell(
-                            onTap: onLike,
-                            child: Text(
-                              'Thích',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: comment.isLiked
-                                    ? AppColors.primary
-                                    : const Color(0xFF64748B),
-                              ),
-                            ),
+                          const Gap.h(8),
+                          PostReactionButton(
+                            isCompact: true,
+                            currentReaction:
+                                currentReaction ??
+                                (comment.currentUserReaction ??
+                                    (comment.isLiked
+                                        ? ReactionType.like
+                                        : null)),
+                            onReactionSelected: (reaction) {
+                              if (onReactionSelected != null) {
+                                onReactionSelected!(reaction);
+                              } else {
+                                onLike();
+                              }
+                            },
+                            onReactionCleared: () {
+                              if (onReactionCleared != null) {
+                                onReactionCleared!();
+                              } else {
+                                onLike();
+                              }
+                            },
                           ),
                           const Gap.h(12),
                           InkWell(
@@ -136,22 +162,10 @@ class CommentBubbleItem extends StatelessWidget {
                             ),
                           ),
                           if (comment.reactionCount > 0) ...[
-                            const Gap.h(10),
-                            Row(
-                              children: [
-                                const Text(
-                                  '👍',
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                const Gap.h(2),
-                                Text(
-                                  '${comment.reactionCount}',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFF64748B),
-                                  ),
-                                ),
-                              ],
+                            const Gap.h(8),
+                            ReactionCounterBadge(
+                              topReactions: comment.topReactions,
+                              totalCount: comment.reactionCount,
                             ),
                           ],
                         ],
@@ -254,19 +268,32 @@ class CommentBubbleItem extends StatelessWidget {
                                         color: Color(0xFF64748B),
                                       ),
                                     ),
-                                    const Gap.h(12),
-                                    InkWell(
-                                      onTap: () => onLikeReply(reply.id),
-                                      child: Text(
-                                        'Thích',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700,
-                                          color: reply.isLiked
-                                              ? AppColors.primary
-                                              : const Color(0xFF64748B),
-                                        ),
-                                      ),
+                                    const Gap.h(8),
+                                    PostReactionButton(
+                                      isCompact: true,
+                                      currentReaction:
+                                          getReplyReaction?.call(reply.id) ??
+                                          (reply.currentUserReaction ??
+                                              (reply.isLiked
+                                                  ? ReactionType.like
+                                                  : null)),
+                                      onReactionSelected: (reaction) {
+                                        if (onReactionSelectedReply != null) {
+                                          onReactionSelectedReply!(
+                                            reply.id,
+                                            reaction,
+                                          );
+                                        } else {
+                                          onLikeReply(reply.id);
+                                        }
+                                      },
+                                      onReactionCleared: () {
+                                        if (onReactionClearedReply != null) {
+                                          onReactionClearedReply!(reply.id);
+                                        } else {
+                                          onLikeReply(reply.id);
+                                        }
+                                      },
                                     ),
                                     const Gap.h(12),
                                     InkWell(
@@ -281,22 +308,10 @@ class CommentBubbleItem extends StatelessWidget {
                                       ),
                                     ),
                                     if (reply.reactionCount > 0) ...[
-                                      const Gap.h(10),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            '❤️',
-                                            style: TextStyle(fontSize: 10),
-                                          ),
-                                          const Gap.h(2),
-                                          Text(
-                                            '${reply.reactionCount}',
-                                            style: const TextStyle(
-                                              fontSize: 11,
-                                              color: Color(0xFF64748B),
-                                            ),
-                                          ),
-                                        ],
+                                      const Gap.h(8),
+                                      ReactionCounterBadge(
+                                        topReactions: reply.topReactions,
+                                        totalCount: reply.reactionCount,
                                       ),
                                     ],
                                   ],

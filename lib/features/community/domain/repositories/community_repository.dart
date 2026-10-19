@@ -1,6 +1,8 @@
 import 'package:rental_car/core/utils/result.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
+import 'package:rental_car/features/community/domain/entities/comment_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
+import 'package:rental_car/features/community/domain/entities/post_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 
 abstract interface class CommunityRepository {
@@ -22,12 +24,12 @@ abstract interface class CommunityRepository {
     String? parentId,
   });
 
-  Future<Result<void>> togglePostReaction(
+  Future<Result<PostReactionResult>> togglePostReaction(
     String postId, {
     ReactionType reactionType = ReactionType.like,
   });
 
-  Future<Result<void>> toggleCommentReaction(
+  Future<Result<CommentReactionResult>> toggleCommentReaction(
     String commentId, {
     ReactionType reactionType = ReactionType.like,
   });

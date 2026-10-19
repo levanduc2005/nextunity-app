@@ -17,6 +17,8 @@ _CommentModel _$CommentModelFromJson(Map<String, dynamic> json) =>
       content: json['content'] as String,
       parentId: json['parentId'] as String?,
       reactionCount: (json['reactionCount'] as num?)?.toInt() ?? 0,
+      reactionDetails: json['reactionDetails'] as Map<String, dynamic>?,
+      currentUserReaction: json['currentUserReaction'] as String?,
       replies:
           (json['replies'] as List<dynamic>?)
               ?.map((e) => CommentModel.fromJson(e as Map<String, dynamic>))
@@ -36,6 +38,8 @@ Map<String, dynamic> _$CommentModelToJson(_CommentModel instance) =>
       'content': instance.content,
       'parentId': instance.parentId,
       'reactionCount': instance.reactionCount,
+      'reactionDetails': instance.reactionDetails,
+      'currentUserReaction': instance.currentUserReaction,
       'replies': instance.replies,
       'createdAt': instance.createdAt,
     };

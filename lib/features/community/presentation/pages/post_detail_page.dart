@@ -35,6 +35,8 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
 
   List<CommentEntity> _comments = [];
   bool _isLoadingComments = false;
+  final Map<String, ReactionType> _commentReactions = {};
+  final Set<String> _reactingCommentIds = {};
 
   @override
   void initState() {
@@ -92,8 +94,38 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
 
     result.when(
       ok: (comments) {
+        // Sắp xếp bình luận: mới nhất hiện lên trên đầu
+        final sortedComments = [...comments]
+          ..sort((a, b) {
+            final aTime = a.createdAt;
+            final bTime = b.createdAt;
+            if (aTime == null && bTime == null) return 0;
+            if (aTime == null) return 1;
+            if (bTime == null) return -1;
+            return bTime.compareTo(aTime);
+          });
+
+        final initialReactions = <String, ReactionType>{};
+        for (final comment in sortedComments) {
+          if (comment.currentUserReaction != null) {
+            initialReactions[comment.id] = comment.currentUserReaction!;
+          } else if (comment.isLiked) {
+            initialReactions[comment.id] = ReactionType.like;
+          }
+          for (final reply in comment.replies) {
+            if (reply.currentUserReaction != null) {
+              initialReactions[reply.id] = reply.currentUserReaction!;
+            } else if (reply.isLiked) {
+              initialReactions[reply.id] = ReactionType.like;
+            }
+          }
+        }
+
         setState(() {
-          _comments = comments;
+          _comments = sortedComments;
+          _commentReactions
+            ..clear()
+            ..addAll(initialReactions);
           _isLoadingComments = false;
           if (_post != null) {
             _post = _post!.copyWith(commentCount: _totalCommentsCount);
@@ -101,7 +133,10 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
         });
         ref
             .read(communityControllerProvider.notifier)
-            .updateCommentCount(widget.postId, explicitCount: _totalCommentsCount);
+            .updateCommentCount(
+              widget.postId,
+              explicitCount: _totalCommentsCount,
+            );
       },
       err: (failure) {
         setState(() => _isLoadingComments = false);
@@ -144,61 +179,248 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
         _commentController.clear();
         setState(() {
           _replyTarget = null;
+          if (parentId == null) {
+            _comments = [newComment, ..._comments];
+          }
           if (_post != null) {
-            _post = _post!.copyWith(commentCount: _post!.commentCount + 1);
+            _post = _post!.copyWith(commentCount: _totalCommentsCount);
           }
         });
         ref
             .read(communityControllerProvider.notifier)
-            .updateCommentCount(widget.postId);
+            .updateCommentCount(
+              widget.postId,
+              explicitCount: _totalCommentsCount,
+            );
         _loadComments();
         context.showSuccessSnackBar('Đã đăng bình luận!');
       },
       err: (failure) {
-        context.showErrorSnackBar('Gửi bình luận thất bại: ${failure.message}');
+        context.showErrorSnackBar(
+          'Gửi bình luận thất bại: ${failure.message}',
+        );
       },
     );
   }
 
-  Future<void> _toggleCommentLike(String commentId, {String? parentId}) async {
-    // Optimistic UI update
-    setState(() {
-      _comments = _comments.map((parent) {
-        if (parentId == null && parent.id == commentId) {
-          final isLiked = parent.isLiked;
-          return parent.copyWith(
-            isLiked: !isLiked,
-            reactionCount: isLiked
-                ? parent.reactionCount - 1
-                : parent.reactionCount + 1,
-          );
-        } else if (parent.id == parentId) {
-          final updatedReplies = parent.replies.map((reply) {
-            if (reply.id == commentId) {
-              final isLiked = reply.isLiked;
-              return reply.copyWith(
-                isLiked: !isLiked,
-                reactionCount: isLiked
-                    ? reply.reactionCount - 1
-                    : reply.reactionCount + 1,
-              );
-            }
-            return reply;
-          }).toList();
-          return parent.copyWith(replies: updatedReplies);
-        }
-        return parent;
-      }).toList();
-    });
+  CommentEntity _applyReactionToComment(
+    CommentEntity comment, {
+    required ReactionType? newReaction,
+    required ReactionType? oldReaction,
+    int? exactTotal,
+    Map<ReactionType, int>? exactDetails,
+  }) {
+    if (exactTotal != null && exactDetails != null) {
+      return comment.copyWith(
+        isLiked: newReaction != null,
+        currentUserReaction: newReaction,
+        reactionCount: exactTotal,
+        reactionDetails: exactDetails,
+      );
+    }
 
-    // Gọi API Backend POST /api/reactions/comment/{commentId}
-    final result = await ref
-        .read(toggleCommentReactionUseCaseProvider)
-        .call(commentId);
-    if (result.isErr) {
-      // Revert if API fails
+    final newDetails = Map<ReactionType, int>.from(comment.reactionDetails);
+    int countDelta = 0;
+
+    if (oldReaction != null) {
+      final currentOldCount = newDetails[oldReaction] ?? 1;
+      if (currentOldCount <= 1) {
+        newDetails.remove(oldReaction);
+      } else {
+        newDetails[oldReaction] = currentOldCount - 1;
+      }
+    } else {
+      countDelta += 1;
+    }
+
+    if (newReaction != null) {
+      newDetails[newReaction] = (newDetails[newReaction] ?? 0) + 1;
+    } else {
+      countDelta -= 1;
+    }
+
+    final newTotal = (comment.reactionCount + countDelta).clamp(0, 999999);
+
+    return comment.copyWith(
+      isLiked: newReaction != null,
+      currentUserReaction: newReaction,
+      reactionCount: newTotal,
+      reactionDetails: newDetails,
+    );
+  }
+
+  void _updateCommentState(
+    String commentId, {
+    required ReactionType? newReaction,
+    required ReactionType? oldReaction,
+    int? exactTotal,
+    Map<ReactionType, int>? exactDetails,
+    String? parentId,
+  }) {
+    _comments = _comments.map((parent) {
+      if (parentId == null && parent.id == commentId) {
+        return _applyReactionToComment(
+          parent,
+          newReaction: newReaction,
+          oldReaction: oldReaction,
+          exactTotal: exactTotal,
+          exactDetails: exactDetails,
+        );
+      } else if (parent.id == parentId) {
+        final updatedReplies = parent.replies.map((reply) {
+          if (reply.id == commentId) {
+            return _applyReactionToComment(
+              reply,
+              newReaction: newReaction,
+              oldReaction: oldReaction,
+              exactTotal: exactTotal,
+              exactDetails: exactDetails,
+            );
+          }
+          return reply;
+        }).toList();
+        return parent.copyWith(replies: updatedReplies);
+      }
+      return parent;
+    }).toList();
+  }
+
+  Future<void> _reactToComment(
+    String commentId,
+    ReactionType reaction, {
+    String? parentId,
+  }) async {
+    if (_reactingCommentIds.contains(commentId)) return;
+    _reactingCommentIds.add(commentId);
+
+    try {
+      final prevReaction = _commentReactions[commentId];
+
+      setState(() {
+        _commentReactions[commentId] = reaction;
+        _updateCommentState(
+          commentId,
+          newReaction: reaction,
+          oldReaction: prevReaction,
+          parentId: parentId,
+        );
+      });
+
+      final result = await ref
+          .read(toggleCommentReactionUseCaseProvider)
+          .call(commentId, reactionType: reaction);
+
       if (!mounted) return;
-      _loadComments();
+
+      result.when(
+        ok: (reactionResult) {
+          setState(() {
+            if (reactionResult.currentUserReaction != null) {
+              _commentReactions[commentId] = reactionResult.currentUserReaction!;
+            } else {
+              _commentReactions.remove(commentId);
+            }
+            _updateCommentState(
+              commentId,
+              newReaction: reactionResult.currentUserReaction,
+              oldReaction: prevReaction,
+              exactTotal: reactionResult.totalReactions,
+              exactDetails: reactionResult.reactionDetails,
+              parentId: parentId,
+            );
+          });
+        },
+        err: (failure) {
+          setState(() {
+            if (prevReaction != null) {
+              _commentReactions[commentId] = prevReaction;
+            } else {
+              _commentReactions.remove(commentId);
+            }
+            _updateCommentState(
+              commentId,
+              newReaction: prevReaction,
+              oldReaction: reaction,
+              parentId: parentId,
+            );
+          });
+          context.showErrorSnackBar('Tương tác bình luận thất bại');
+        },
+      );
+    } finally {
+      _reactingCommentIds.remove(commentId);
+    }
+  }
+
+  Future<void> _clearCommentReaction(
+    String commentId, {
+    String? parentId,
+  }) async {
+    if (_reactingCommentIds.contains(commentId)) return;
+    _reactingCommentIds.add(commentId);
+
+    try {
+      final prevReaction = _commentReactions[commentId];
+      if (prevReaction == null) return;
+
+      setState(() {
+        _commentReactions.remove(commentId);
+        _updateCommentState(
+          commentId,
+          newReaction: null,
+          oldReaction: prevReaction,
+          parentId: parentId,
+        );
+      });
+
+      final result = await ref
+          .read(toggleCommentReactionUseCaseProvider)
+          .call(commentId, reactionType: prevReaction);
+
+      if (!mounted) return;
+
+      result.when(
+        ok: (reactionResult) {
+          setState(() {
+            if (reactionResult.currentUserReaction != null) {
+              _commentReactions[commentId] = reactionResult.currentUserReaction!;
+            } else {
+              _commentReactions.remove(commentId);
+            }
+            _updateCommentState(
+              commentId,
+              newReaction: reactionResult.currentUserReaction,
+              oldReaction: prevReaction,
+              exactTotal: reactionResult.totalReactions,
+              exactDetails: reactionResult.reactionDetails,
+              parentId: parentId,
+            );
+          });
+        },
+        err: (failure) {
+          setState(() {
+            _commentReactions[commentId] = prevReaction;
+            _updateCommentState(
+              commentId,
+              newReaction: prevReaction,
+              oldReaction: null,
+              parentId: parentId,
+            );
+          });
+          context.showErrorSnackBar('Hủy tương tác thất bại');
+        },
+      );
+    } finally {
+      _reactingCommentIds.remove(commentId);
+    }
+  }
+
+  Future<void> _toggleCommentLike(String commentId, {String? parentId}) async {
+    final current = _commentReactions[commentId];
+    if (current != null) {
+      await _clearCommentReaction(commentId, parentId: parentId);
+    } else {
+      await _reactToComment(commentId, ReactionType.like, parentId: parentId);
     }
   }
 
@@ -298,10 +520,8 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                           currentReaction: state.getPostReaction(post.id),
                           isFollowing: _isFollowing,
                           totalCommentsCount: _totalCommentsCount,
-                          onReactionSelected: (r) => controller.reactToPost(
-                            post.id,
-                            reactionType: r,
-                          ),
+                          onReactionSelected: (r) =>
+                              controller.reactToPost(post.id, reactionType: r),
                           onReactionCleared: () => controller.reactToPost(
                             post.id,
                             reactionType:
@@ -398,6 +618,28 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                                 ..._comments.map(
                                   (comment) => CommentBubbleItem(
                                     comment: comment,
+                                    currentReaction:
+                                        _commentReactions[comment.id] ??
+                                        (comment.isLiked
+                                            ? ReactionType.like
+                                            : null),
+                                    onReactionSelected: (reaction) =>
+                                        _reactToComment(comment.id, reaction),
+                                    onReactionCleared: () =>
+                                        _clearCommentReaction(comment.id),
+                                    getReplyReaction: (replyId) =>
+                                        _commentReactions[replyId],
+                                    onReactionSelectedReply:
+                                        (replyId, reaction) => _reactToComment(
+                                          replyId,
+                                          reaction,
+                                          parentId: comment.id,
+                                        ),
+                                    onReactionClearedReply: (replyId) =>
+                                        _clearCommentReaction(
+                                          replyId,
+                                          parentId: comment.id,
+                                        ),
                                     onLike: () =>
                                         _toggleCommentLike(comment.id),
                                     onReply: () => _setReplyTarget(comment),
@@ -459,7 +701,9 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                 title: const Text('Lưu bài viết'),
                 onTap: () {
                   Navigator.pop(ctx);
-                  context.showSnackBar('Đã lưu vào danh sách của bạn!');
+                  context.showSnackBar(
+                    'Đã lưu vào danh sách của bạn!',
+                  );
                 },
               ),
               ListTile(
@@ -467,7 +711,9 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                 title: const Text('Sao chép liên kết'),
                 onTap: () {
                   Navigator.pop(ctx);
-                  context.showSnackBar('Đã sao chép liên kết bài viết!');
+                  context.showSnackBar(
+                    'Đã sao chép liên kết bài viết!',
+                  );
                 },
               ),
               ListTile(

@@ -61,7 +61,7 @@ class ProfilePage extends ConsumerWidget {
             child: Column(
               children: [
                 // 1. TOP APP BAR: NextUnity Brand & Top Actions
-                const ProfileTopBar(),
+                ProfileTopBar(streak: user?.streak),
 
                 // 2. SCROLLABLE PROFILE CONTENT
                 Expanded(

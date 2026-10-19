@@ -17,5 +17,6 @@ export 'empty_view.dart';
 export 'error_view.dart';
 export 'gap.dart';
 export 'loading_overlay.dart';
+export 'main_tab_header.dart';
 export 'section_header.dart';
 export 'under_development_view.dart';

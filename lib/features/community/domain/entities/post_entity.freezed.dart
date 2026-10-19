@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostEntity {
 
- String get id; String get title; String get content; String? get authorId; String? get authorName; String? get authorAvatar; String? get authorUniversity; List<String> get tags; int get reactionCount; int get commentCount; DateTime? get createdAt;
+ String get id; String get title; String get content; String? get authorId; String? get authorName; String? get authorAvatar; String? get authorUniversity; List<String> get tags; int get reactionCount; Map<ReactionType, int> get reactionDetails; ReactionType? get currentUserReaction; int get commentCount; DateTime? get createdAt;
 /// Create a copy of PostEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostEntityCopyWith<PostEntity> get copyWith => _$PostEntityCopyWithImpl<PostEnt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorUniversity, authorUniversity) || other.authorUniversity == authorUniversity)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorUniversity, authorUniversity) || other.authorUniversity == authorUniversity)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other.reactionDetails, reactionDetails)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,content,authorId,authorName,authorAvatar,authorUniversity,const DeepCollectionEquality().hash(tags),reactionCount,commentCount,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,content,authorId,authorName,authorAvatar,authorUniversity,const DeepCollectionEquality().hash(tags),reactionCount,const DeepCollectionEquality().hash(reactionDetails),currentUserReaction,commentCount,createdAt);
 
 @override
 String toString() {
-  return 'PostEntity(id: $id, title: $title, content: $content, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorUniversity: $authorUniversity, tags: $tags, reactionCount: $reactionCount, commentCount: $commentCount, createdAt: $createdAt)';
+  return 'PostEntity(id: $id, title: $title, content: $content, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorUniversity: $authorUniversity, tags: $tags, reactionCount: $reactionCount, reactionDetails: $reactionDetails, currentUserReaction: $currentUserReaction, commentCount: $commentCount, createdAt: $createdAt)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostEntityCopyWith<$Res>  {
   factory $PostEntityCopyWith(PostEntity value, $Res Function(PostEntity) _then) = _$PostEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String content, String? authorId, String? authorName, String? authorAvatar, String? authorUniversity, List<String> tags, int reactionCount, int commentCount, DateTime? createdAt
+ String id, String title, String content, String? authorId, String? authorName, String? authorAvatar, String? authorUniversity, List<String> tags, int reactionCount, Map<ReactionType, int> reactionDetails, ReactionType? currentUserReaction, int commentCount, DateTime? createdAt
 });
 
 
@@ -62,7 +62,7 @@ class _$PostEntityCopyWithImpl<$Res>
 
 /// Create a copy of PostEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? content = null,Object? authorId = freezed,Object? authorName = freezed,Object? authorAvatar = freezed,Object? authorUniversity = freezed,Object? tags = null,Object? reactionCount = null,Object? commentCount = null,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? content = null,Object? authorId = freezed,Object? authorName = freezed,Object? authorAvatar = freezed,Object? authorUniversity = freezed,Object? tags = null,Object? reactionCount = null,Object? reactionDetails = null,Object? currentUserReaction = freezed,Object? commentCount = null,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,9 @@ as String?,authorAvatar: freezed == authorAvatar ? _self.authorAvatar : authorAv
 as String?,authorUniversity: freezed == authorUniversity ? _self.authorUniversity : authorUniversity // ignore: cast_nullable_to_non_nullable
 as String?,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,reactionCount: null == reactionCount ? _self.reactionCount : reactionCount // ignore: cast_nullable_to_non_nullable
-as int,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
+as int,reactionDetails: null == reactionDetails ? _self.reactionDetails : reactionDetails // ignore: cast_nullable_to_non_nullable
+as Map<ReactionType, int>,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
+as ReactionType?,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
 as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -160,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  int commentCount,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  Map<ReactionType, int> reactionDetails,  ReactionType? currentUserReaction,  int commentCount,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostEntity() when $default != null:
-return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.commentCount,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.commentCount,_that.createdAt);case _:
   return orElse();
 
 }
@@ -181,10 +183,10 @@ return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  int commentCount,  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  Map<ReactionType, int> reactionDetails,  ReactionType? currentUserReaction,  int commentCount,  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _PostEntity():
-return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.commentCount,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.commentCount,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +203,10 @@ return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  int commentCount,  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String content,  String? authorId,  String? authorName,  String? authorAvatar,  String? authorUniversity,  List<String> tags,  int reactionCount,  Map<ReactionType, int> reactionDetails,  ReactionType? currentUserReaction,  int commentCount,  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _PostEntity() when $default != null:
-return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.commentCount,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorName,_that.authorAvatar,_that.authorUniversity,_that.tags,_that.reactionCount,_that.reactionDetails,_that.currentUserReaction,_that.commentCount,_that.createdAt);case _:
   return null;
 
 }
@@ -216,7 +218,7 @@ return $default(_that.id,_that.title,_that.content,_that.authorId,_that.authorNa
 
 
 class _PostEntity extends PostEntity {
-  const _PostEntity({required this.id, required this.title, required this.content, this.authorId, this.authorName, this.authorAvatar, this.authorUniversity, final  List<String> tags = const [], this.reactionCount = 0, this.commentCount = 0, this.createdAt}): _tags = tags,super._();
+  const _PostEntity({required this.id, required this.title, required this.content, this.authorId, this.authorName, this.authorAvatar, this.authorUniversity, final  List<String> tags = const [], this.reactionCount = 0, final  Map<ReactionType, int> reactionDetails = const {}, this.currentUserReaction, this.commentCount = 0, this.createdAt}): _tags = tags,_reactionDetails = reactionDetails,super._();
   
 
 @override final  String id;
@@ -234,6 +236,14 @@ class _PostEntity extends PostEntity {
 }
 
 @override@JsonKey() final  int reactionCount;
+ final  Map<ReactionType, int> _reactionDetails;
+@override@JsonKey() Map<ReactionType, int> get reactionDetails {
+  if (_reactionDetails is EqualUnmodifiableMapView) return _reactionDetails;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_reactionDetails);
+}
+
+@override final  ReactionType? currentUserReaction;
 @override@JsonKey() final  int commentCount;
 @override final  DateTime? createdAt;
 
@@ -247,16 +257,16 @@ _$PostEntityCopyWith<_PostEntity> get copyWith => __$PostEntityCopyWithImpl<_Pos
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorUniversity, authorUniversity) || other.authorUniversity == authorUniversity)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.authorAvatar, authorAvatar) || other.authorAvatar == authorAvatar)&&(identical(other.authorUniversity, authorUniversity) || other.authorUniversity == authorUniversity)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.reactionCount, reactionCount) || other.reactionCount == reactionCount)&&const DeepCollectionEquality().equals(other._reactionDetails, _reactionDetails)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,content,authorId,authorName,authorAvatar,authorUniversity,const DeepCollectionEquality().hash(_tags),reactionCount,commentCount,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,content,authorId,authorName,authorAvatar,authorUniversity,const DeepCollectionEquality().hash(_tags),reactionCount,const DeepCollectionEquality().hash(_reactionDetails),currentUserReaction,commentCount,createdAt);
 
 @override
 String toString() {
-  return 'PostEntity(id: $id, title: $title, content: $content, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorUniversity: $authorUniversity, tags: $tags, reactionCount: $reactionCount, commentCount: $commentCount, createdAt: $createdAt)';
+  return 'PostEntity(id: $id, title: $title, content: $content, authorId: $authorId, authorName: $authorName, authorAvatar: $authorAvatar, authorUniversity: $authorUniversity, tags: $tags, reactionCount: $reactionCount, reactionDetails: $reactionDetails, currentUserReaction: $currentUserReaction, commentCount: $commentCount, createdAt: $createdAt)';
 }
 
 
@@ -267,7 +277,7 @@ abstract mixin class _$PostEntityCopyWith<$Res> implements $PostEntityCopyWith<$
   factory _$PostEntityCopyWith(_PostEntity value, $Res Function(_PostEntity) _then) = __$PostEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String content, String? authorId, String? authorName, String? authorAvatar, String? authorUniversity, List<String> tags, int reactionCount, int commentCount, DateTime? createdAt
+ String id, String title, String content, String? authorId, String? authorName, String? authorAvatar, String? authorUniversity, List<String> tags, int reactionCount, Map<ReactionType, int> reactionDetails, ReactionType? currentUserReaction, int commentCount, DateTime? createdAt
 });
 
 
@@ -284,7 +294,7 @@ class __$PostEntityCopyWithImpl<$Res>
 
 /// Create a copy of PostEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? content = null,Object? authorId = freezed,Object? authorName = freezed,Object? authorAvatar = freezed,Object? authorUniversity = freezed,Object? tags = null,Object? reactionCount = null,Object? commentCount = null,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? content = null,Object? authorId = freezed,Object? authorName = freezed,Object? authorAvatar = freezed,Object? authorUniversity = freezed,Object? tags = null,Object? reactionCount = null,Object? reactionDetails = null,Object? currentUserReaction = freezed,Object? commentCount = null,Object? createdAt = freezed,}) {
   return _then(_PostEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -295,7 +305,9 @@ as String?,authorAvatar: freezed == authorAvatar ? _self.authorAvatar : authorAv
 as String?,authorUniversity: freezed == authorUniversity ? _self.authorUniversity : authorUniversity // ignore: cast_nullable_to_non_nullable
 as String?,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,reactionCount: null == reactionCount ? _self.reactionCount : reactionCount // ignore: cast_nullable_to_non_nullable
-as int,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
+as int,reactionDetails: null == reactionDetails ? _self._reactionDetails : reactionDetails // ignore: cast_nullable_to_non_nullable
+as Map<ReactionType, int>,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
+as ReactionType?,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
 as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
