@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:rental_car/features/shell/presentation/widgets/nextunity_bottom_nav_bar.dart';
+import 'package:rental_car/l10n/l10n.dart';
+
+void main() {
+  Widget buildTestWidget({
+    required int currentIndex,
+    required ValueChanged<int> onTap,
+  }) {
+    return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('vi'),
+      home: Scaffold(
+        bottomNavigationBar: NextUnityBottomNavBar(
+          currentIndex: currentIndex,
+          onTap: onTap,
+        ),
+      ),
+    );
+  }
+
+  group('NextUnityBottomNavBar Tests', () {
+    testWidgets('renders all 5 navigation tabs', (tester) async {
+      await tester.pumpWidget(buildTestWidget(currentIndex: 0, onTap: (_) {}));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Trang chủ'), findsOneWidget);
+      expect(find.text('Khóa học'), findsOneWidget);
+      expect(find.text('AI Study'), findsOneWidget);
+      expect(find.text('Cộng đồng'), findsOneWidget);
+      expect(find.text('Cá nhân'), findsOneWidget);
+    });
+
+    testWidgets('triggers onTap callback when a tab is tapped', (tester) async {
+      int? tappedIndex;
+
+      await tester.pumpWidget(
+        buildTestWidget(
+          currentIndex: 0,
+          onTap: (index) {
+            tappedIndex = index;
+          },
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Tap on 'Khóa học' (tab 1)
+      await tester.tap(find.text('Khóa học'));
+      await tester.pumpAndSettle();
+      expect(tappedIndex, equals(1));
+
+      // Tap on 'Cá nhân' (tab 4)
+      await tester.tap(find.text('Cá nhân'));
+      await tester.pumpAndSettle();
+      expect(tappedIndex, equals(4));
+    });
+
+    testWidgets('displays active indicators for selected index', (
+      tester,
+    ) async {
+      await tester.pumpWidget(buildTestWidget(currentIndex: 4, onTap: (_) {}));
+      await tester.pumpAndSettle();
+
+      // Profile tab (index 4) should display selected icon Icons.person_rounded
+      expect(find.byIcon(Icons.person_rounded), findsOneWidget);
+      // Other inactive tabs should display outline icons
+      expect(find.byIcon(Icons.explore_outlined), findsOneWidget);
+      expect(find.byIcon(Icons.local_library_outlined), findsOneWidget);
+    });
+  });
+}

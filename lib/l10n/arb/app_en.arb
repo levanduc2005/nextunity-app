@@ -1,0 +1,82 @@
+{
+  "@@locale": "en",
+  "appTitle": "NextUnity",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "homeTitle": "Home",
+  "homeWelcome": "Welcome back! Ready to learn today?",
+  "homeSubtitle": "Master your subjects with AI-powered study sets & courses.",
+  "routeNotFound": "Page not found: {location}",
+  "@routeNotFound": {
+    "description": "Shown when a route cannot be resolved",
+    "placeholders": {
+      "location": {
+        "type": "String"
+      }
+    }
+  },
+  "retry": "Retry",
+  "cancel": "Cancel",
+  "comingSoon": "Coming soon.",
+  "tabHome": "Home",
+  "tabCourses": "Courses",
+  "tabAiStudy": "AI Study",
+  "tabCommunity": "Community",
+  "tabProfile": "Profile",
+  "loginTitle": "Welcome to NextUnity",
+  "loginSubtitle": "Sign in to elevate your learning journey.",
+  "emailLabel": "Email",
+  "emailInvalid": "Enter a valid email address.",
+  "passwordLabel": "Password",
+  "passwordTooShort": "Password is too short.",
+  "loginButton": "Sign in",
+  "logout": "Log Out",
+  "logoutConfirmTitle": "Log Out?",
+  "logoutConfirmMessage": "You will need to sign in again next time.",
+  "guestName": "NextUnity Learner",
+  "guestEmail": "student@nextunity.edu.vn",
+  "profileAccountSection": "Account",
+  "profileNotifications": "Notifications",
+  "profileAbout": "About NextUnity",
+  "errorNetwork": "No internet connection. Please try again.",
+  "errorServer": "Something went wrong on our end. Please try again later.",
+  "errorData": "We received unexpected data. Please try again.",
+  "errorCache": "Could not read local data.",
+  "errorUnknown": "An unexpected error occurred.",
+  "loginTopBarTitle": "Sign in",
+  "loginEmailTitle": "Enter your email to continue",
+  "loginEmailSubtitle": "Sign in to access your AI study sets, courses, and streak.",
+  "emailRequired": "Please enter your email address.",
+  "continueButton": "Continue",
+  "orDivider": "or",
+  "continueWithGoogle": "Continue with Google",
+  "otpVerificationTitle": "OTP Verification",
+  "otpSentToMessage": "Enter the OTP code sent to {email}",
+  "@otpSentToMessage": {
+    "description": "Message showing the destination email for OTP",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "changeEmail": "Change email",
+  "resendOtpIn": "Resend OTP ({seconds}s)",
+  "@resendOtpIn": {
+    "description": "Countdown timer for resending OTP",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "resendOtpNow": "Resend OTP",
+  "otpInvalidLength": "Please enter a 6-digit OTP code.",
+  "profileTitle": "Profile",
+  "editProfileTitle": "Edit Profile",
+  "saveChanges": "Save Changes",
+  "upgradePlus": "Upgrade to Plus",
+  "dailyStreak": "Day Streak",
+  "rewardPoints": "Points"
+}
