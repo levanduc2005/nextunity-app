@@ -43,12 +43,14 @@ class PostReactionButton extends StatefulWidget {
     required this.onReactionSelected,
     required this.onReactionCleared,
     this.isCompact = false,
+    this.showLabel = true,
   });
 
   final ReactionType? currentReaction;
   final ValueChanged<ReactionType> onReactionSelected;
   final VoidCallback onReactionCleared;
   final bool isCompact;
+  final bool showLabel;
 
   @override
   State<PostReactionButton> createState() => _PostReactionButtonState();
@@ -216,18 +218,31 @@ class _PostReactionButtonState extends State<PostReactionButton>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (isReacted && reaction != ReactionType.like) ...[
-                  Text(reaction.emoji, style: const TextStyle(fontSize: 12)),
-                  const Gap.h(3),
-                ],
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    color: isReacted ? color : const Color(0xFF64748B),
+                if (!isReacted)
+                  const Icon(
+                    Icons.thumb_up_alt_outlined,
+                    size: 13,
+                    color: Color(0xFF64748B),
+                  )
+                else if (reaction == ReactionType.like)
+                  const Icon(
+                    Icons.thumb_up_alt_rounded,
+                    size: 13,
+                    color: Color(0xFF1877F2),
+                  )
+                else
+                  Text(reaction.emoji, style: const TextStyle(fontSize: 13)),
+                if (widget.showLabel) ...[
+                  const Gap.h(3.5),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: isReacted ? color : const Color(0xFF64748B),
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

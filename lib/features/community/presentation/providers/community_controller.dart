@@ -325,4 +325,30 @@ class CommunityController extends Notifier<CommunityState> {
       },
     );
   }
+
+  Future<bool> deletePost(String postId) async {
+    final deleteUseCase = ref.read(deletePostUseCaseProvider);
+    final result = await deleteUseCase(postId);
+
+    return result.when(
+      ok: (_) {
+        removePost(postId);
+        return true;
+      },
+      err: (failure) {
+        state = state.copyWith(errorMessage: failure.message);
+        return false;
+      },
+    );
+  }
+
+  void removePost(String postId) {
+    final updatedPosts = state.posts.where((p) => p.id != postId).toList();
+    final updatedReactions = Map<String, ReactionType>.from(state.userReactions)
+      ..remove(postId);
+    state = state.copyWith(
+      posts: updatedPosts,
+      userReactions: updatedReactions,
+    );
+  }
 }

@@ -67,15 +67,8 @@ class QuickCreatePostCard extends ConsumerWidget {
           const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
           const Gap(6),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _QuickActionItem(
-                icon: Icons.image_rounded,
-                iconColor: const Color(0xFF10B981),
-                label: 'Ảnh/Video',
-                onTap: () => context.push('/community/create-post'),
-              ),
-              Container(width: 1, height: 16, color: const Color(0xFFE2E8F0)),
               _QuickActionItem(
                 icon: Icons.help_outline_rounded,
                 iconColor: const Color(0xFFF43F5E),
@@ -105,14 +98,6 @@ class QuickCreatePostCard extends ConsumerWidget {
         backgroundColor: const Color(0xFF3D5AFE),
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
-        child: Text(
-          initial,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
       );
     }
 

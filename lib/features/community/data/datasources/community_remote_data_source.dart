@@ -29,6 +29,8 @@ abstract interface class CommunityRemoteDataSource {
     ReactionType reactionType = ReactionType.like,
   });
   Future<List<String>> getTags();
+  Future<void> deletePost(String id);
+  Future<void> deleteComment(String id);
 }
 
 class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
@@ -212,8 +214,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           reactionDetails: {reactionType: 1},
         );
       }
-      final rawDetails =
-          data['reactionDetails'] as Map<String, dynamic>? ?? {};
+      final rawDetails = data['reactionDetails'] as Map<String, dynamic>? ?? {};
       final details = <ReactionType, int>{};
       rawDetails.forEach((k, v) {
         final t = ReactionType.fromString(k);
@@ -254,6 +255,28 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           .toList();
     } on DioException catch (e) {
       throw _handleDioError(e, 'Không thể tải danh sách hashtag');
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> deletePost(String id) async {
+    try {
+      await _dio.delete<dynamic>('/posts/$id');
+    } on DioException catch (e) {
+      throw _handleDioError(e, 'Không thể xóa bài viết');
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteComment(String id) async {
+    try {
+      await _dio.delete<dynamic>('/comments/$id');
+    } on DioException catch (e) {
+      throw _handleDioError(e, 'Không thể xóa bình luận');
     } catch (e) {
       throw ServerException(message: e.toString());
     }

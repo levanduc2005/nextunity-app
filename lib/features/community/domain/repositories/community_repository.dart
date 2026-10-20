@@ -35,4 +35,8 @@ abstract interface class CommunityRepository {
   });
 
   Future<Result<List<String>>> getTags();
+
+  Future<Result<void>> deletePost(String id);
+
+  Future<Result<void>> deleteComment(String id);
 }

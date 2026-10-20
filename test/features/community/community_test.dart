@@ -3,12 +3,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:rental_car/core/error/failure.dart';
 import 'package:rental_car/core/utils/result.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
+import 'package:rental_car/features/community/domain/entities/comment_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
 import 'package:rental_car/features/community/domain/entities/post_reaction_result.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/domain/repositories/community_repository.dart';
 import 'package:rental_car/features/community/domain/usecases/create_comment_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/create_post_use_case.dart';
+import 'package:rental_car/features/community/domain/usecases/delete_comment_use_case.dart';
+import 'package:rental_car/features/community/domain/usecases/delete_post_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_all_posts_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_comments_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_post_detail_use_case.dart';
@@ -27,6 +30,9 @@ void main() {
   late CreatePostUseCase createPostUseCase;
   late GetTagsUseCase getTagsUseCase;
   late TogglePostReactionUseCase togglePostReactionUseCase;
+  late ToggleCommentReactionUseCase toggleCommentReactionUseCase;
+  late DeletePostUseCase deletePostUseCase;
+  late DeleteCommentUseCase deleteCommentUseCase;
 
   setUp(() {
     repository = MockCommunityRepository();
@@ -37,6 +43,9 @@ void main() {
     createPostUseCase = CreatePostUseCase(repository);
     getTagsUseCase = GetTagsUseCase(repository);
     togglePostReactionUseCase = TogglePostReactionUseCase(repository);
+    toggleCommentReactionUseCase = ToggleCommentReactionUseCase(repository);
+    deletePostUseCase = DeletePostUseCase(repository);
+    deleteCommentUseCase = DeleteCommentUseCase(repository);
   });
 
   const testPost = PostEntity(
@@ -138,9 +147,7 @@ void main() {
     test(
       'TogglePostReactionUseCase toggles post reaction successfully',
       () async {
-        when(
-          () => repository.togglePostReaction('p-1'),
-        ).thenAnswer(
+        when(() => repository.togglePostReaction('p-1')).thenAnswer(
           (_) async => const Result.ok(
             PostReactionResult(
               postId: 'p-1',
@@ -185,6 +192,69 @@ void main() {
         ).called(1);
       },
     );
+
+    test(
+      'ToggleCommentReactionUseCase toggles comment reaction successfully',
+      () async {
+        when(
+          () => repository.toggleCommentReaction(
+            'c-1',
+            reactionType: ReactionType.haha,
+          ),
+        ).thenAnswer(
+          (_) async => const Result.ok(
+            CommentReactionResult(
+              commentId: 'c-1',
+              totalReactions: 1,
+              reactionDetails: {ReactionType.haha: 1},
+              currentUserReaction: ReactionType.haha,
+            ),
+          ),
+        );
+
+        final result = await toggleCommentReactionUseCase(
+          'c-1',
+          reactionType: ReactionType.haha,
+        );
+
+        expect(result.isOk, isTrue);
+        result.when(
+          ok: (res) {
+            expect(res.currentUserReaction, ReactionType.haha);
+            expect(res.totalReactions, 1);
+          },
+          err: (_) => fail('Should not fail'),
+        );
+        verify(
+          () => repository.toggleCommentReaction(
+            'c-1',
+            reactionType: ReactionType.haha,
+          ),
+        ).called(1);
+      },
+    );
+
+    test('DeletePostUseCase deletes post successfully', () async {
+      when(
+        () => repository.deletePost('p-1'),
+      ).thenAnswer((_) async => const Result.ok(null));
+
+      final result = await deletePostUseCase('p-1');
+
+      expect(result.isOk, isTrue);
+      verify(() => repository.deletePost('p-1')).called(1);
+    });
+
+    test('DeleteCommentUseCase deletes comment successfully', () async {
+      when(
+        () => repository.deleteComment('c-1'),
+      ).thenAnswer((_) async => const Result.ok(null));
+
+      final result = await deleteCommentUseCase('c-1');
+
+      expect(result.isOk, isTrue);
+      verify(() => repository.deleteComment('c-1')).called(1);
+    });
 
     test('GetTagsUseCase returns list of tags from repository', () async {
       when(
@@ -261,38 +331,47 @@ void main() {
       expect(liked.reactionCount, 1);
     });
 
-    test('CommentEntity topReactions extracts up to 2 most frequent reactions', () {
-      const emptyComment = CommentEntity(
-        id: 'c-1',
-        postId: 'p-1',
-        authorName: 'User A',
-        content: 'Test',
-      );
-      expect(emptyComment.topReactions, isEmpty);
+    test(
+      'CommentEntity topReactions extracts up to 2 most frequent reactions',
+      () {
+        const emptyComment = CommentEntity(
+          id: 'c-1',
+          postId: 'p-1',
+          authorName: 'User A',
+          content: 'Test',
+        );
+        expect(emptyComment.topReactions, isEmpty);
 
-      // Only 1 reaction type
-      final oneReaction = emptyComment.copyWith(
-        reactionDetails: {ReactionType.like: 5},
-      );
-      expect(oneReaction.topReactions, [ReactionType.like]);
+        // Only 1 reaction type
+        final oneReaction = emptyComment.copyWith(
+          reactionDetails: {ReactionType.like: 5},
+        );
+        expect(oneReaction.topReactions, [ReactionType.like]);
 
-      // Exactly 2 reaction types
-      final twoReactions = emptyComment.copyWith(
-        reactionDetails: {ReactionType.like: 2, ReactionType.haha: 3},
-      );
-      expect(twoReactions.topReactions, [ReactionType.haha, ReactionType.like]);
+        // Exactly 2 reaction types
+        final twoReactions = emptyComment.copyWith(
+          reactionDetails: {ReactionType.like: 2, ReactionType.haha: 3},
+        );
+        expect(twoReactions.topReactions, [
+          ReactionType.haha,
+          ReactionType.like,
+        ]);
 
-      // 4 reaction types -> returns the top 2 highest count
-      final fourReactions = emptyComment.copyWith(
-        reactionDetails: {
-          ReactionType.like: 2,
-          ReactionType.haha: 10,
-          ReactionType.love: 7,
-          ReactionType.sad: 1,
-        },
-      );
-      expect(fourReactions.topReactions, [ReactionType.haha, ReactionType.love]);
-    });
+        // 4 reaction types -> returns the top 2 highest count
+        final fourReactions = emptyComment.copyWith(
+          reactionDetails: {
+            ReactionType.like: 2,
+            ReactionType.haha: 10,
+            ReactionType.love: 7,
+            ReactionType.sad: 1,
+          },
+        );
+        expect(fourReactions.topReactions, [
+          ReactionType.haha,
+          ReactionType.love,
+        ]);
+      },
+    );
   });
 
   group('ReactionType Tests', () {
@@ -362,5 +441,72 @@ void main() {
         ),
       ).called(1);
     });
+
+    test(
+      'ToggleCommentReactionUseCase sends reactionType and returns CommentReactionResult',
+      () async {
+        when(
+          () => repository.toggleCommentReaction(
+            'c-1',
+            reactionType: ReactionType.haha,
+          ),
+        ).thenAnswer(
+          (_) async => const Result.ok(
+            CommentReactionResult(
+              commentId: 'c-1',
+              totalReactions: 3,
+              reactionDetails: {ReactionType.like: 2, ReactionType.haha: 1},
+              currentUserReaction: ReactionType.haha,
+            ),
+          ),
+        );
+
+        final result = await toggleCommentReactionUseCase(
+          'c-1',
+          reactionType: ReactionType.haha,
+        );
+
+        expect(result.isOk, isTrue);
+        result.when(
+          ok: (data) {
+            expect(data.commentId, 'c-1');
+            expect(data.totalReactions, 3);
+            expect(data.currentUserReaction, ReactionType.haha);
+            expect(data.reactionDetails[ReactionType.like], 2);
+            expect(data.reactionDetails[ReactionType.haha], 1);
+          },
+          err: (_) => fail('Should succeed'),
+        );
+        verify(
+          () => repository.toggleCommentReaction(
+            'c-1',
+            reactionType: ReactionType.haha,
+          ),
+        ).called(1);
+      },
+    );
+
+    test(
+      'CommentEntity.topReactions returns up to 2 most frequent reaction types in descending order',
+      () {
+        const comment = CommentEntity(
+          id: 'c-test',
+          postId: 'p-1',
+          authorName: 'Nguyen Van A',
+          content: 'Test content',
+          reactionCount: 10,
+          reactionDetails: {
+            ReactionType.like: 2,
+            ReactionType.love: 5,
+            ReactionType.haha: 3,
+          },
+        );
+
+        final top = comment.topReactions;
+        expect(top.length, 2);
+        expect(top[0], ReactionType.love); // 5
+        expect(top[1], ReactionType.haha); // 3
+      },
+    );
   });
 }

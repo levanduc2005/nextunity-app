@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
+import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
+import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
+import 'package:rental_car/features/community/presentation/providers/community_providers.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/post_options_bottom_sheet.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
 
 /// Card bài viết chuẩn mạng xã hội (Facebook / Threads style) cho NextUnity Community
-class CommunityPostCard extends StatefulWidget {
+class CommunityPostCard extends ConsumerStatefulWidget {
   const CommunityPostCard({
     super.key,
     required this.post,
@@ -19,6 +24,7 @@ class CommunityPostCard extends StatefulWidget {
     this.onReactionSelected,
     this.onReactionCleared,
     this.onSharePressed,
+    this.onDeletePressed,
   });
 
   final PostEntity post;
@@ -28,21 +34,16 @@ class CommunityPostCard extends StatefulWidget {
   final ValueChanged<ReactionType>? onReactionSelected;
   final VoidCallback? onReactionCleared;
   final VoidCallback? onSharePressed;
+  final VoidCallback? onDeletePressed;
 
   @override
-  State<CommunityPostCard> createState() => _CommunityPostCardState();
+  ConsumerState<CommunityPostCard> createState() => _CommunityPostCardState();
 }
 
-class _CommunityPostCardState extends State<CommunityPostCard> {
-  bool _isExpanded = false;
-
+class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
   @override
   Widget build(BuildContext context) {
     final post = widget.post;
-    final hasAttachment =
-        post.content.contains('.zip') ||
-        post.content.contains('.pdf') ||
-        post.title.contains('SWP391');
 
     return Container(
       decoration: BoxDecoration(
@@ -189,110 +190,57 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
                   // 3. Post Body Text
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          post.content,
-                          style: const TextStyle(
-                            fontSize: 13.5,
-                            color: Color(0xFF334155),
-                            height: 1.45,
-                          ),
-                          maxLines: _isExpanded ? null : 3,
-                          overflow: _isExpanded
-                              ? TextOverflow.visible
-                              : TextOverflow.ellipsis,
-                        ),
-                        if (post.content.length > 120 && !_isExpanded)
-                          InkWell(
-                            onTap: () => setState(() => _isExpanded = true),
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 4),
-                              child: Text(
-                                '... Xem thêm',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primary,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        const textStyle = TextStyle(
+                          fontSize: 13.5,
+                          color: Color(0xFF334155),
+                          height: 1.45,
+                        );
+
+                        final textSpan = TextSpan(
+                          text: post.content,
+                          style: textStyle,
+                        );
+                        final textPainter = TextPainter(
+                          text: textSpan,
+                          maxLines: 3,
+                          textDirection: Directionality.of(context),
+                        )..layout(maxWidth: constraints.maxWidth);
+
+                        final isOverflowing = textPainter.didExceedMaxLines;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              post.content,
+                              style: textStyle,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (isOverflowing)
+                              GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () =>
+                                    context.push('/community/posts/${post.id}'),
+                                child: const Padding(
+                                  padding: EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    '... Xem thêm',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                      ],
+                          ],
+                        );
+                      },
                     ),
                   ),
-
-                  // 4. File Attachment Card (nếu có tài liệu đính kèm)
-                  if (hasAttachment) ...[
-                    const Gap(10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: const Color(0xFFE2E8F0)),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFEEF2FF),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Icon(
-                                Icons.folder_zip_rounded,
-                                color: AppColors.primary,
-                                size: 22,
-                              ),
-                            ),
-                            const Gap.h(10),
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Template_SRS_DB_SWP391_FPTU.zip',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF0F172A),
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Gap(2),
-                                  Text(
-                                    '4.8 MB • 3 tài liệu đính kèm',
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: Color(0xFF64748B),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.download_rounded,
-                                color: Color(0xFF64748B),
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                context.showInfoSnackBar(
-                                  'Đang tải tệp đính kèm...',
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
 
                   const Gap(10),
 
@@ -394,14 +342,6 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
         backgroundColor: const Color(0xFF3D5AFE),
         backgroundImage: NetworkImage(post.authorAvatar!),
         onBackgroundImageError: (_, _) {},
-        child: Text(
-          post.initials,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 13,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
       );
     }
 
@@ -428,59 +368,59 @@ class _CommunityPostCardState extends State<CommunityPostCard> {
     );
   }
 
+  bool _checkCanDelete(UserEntity? user) {
+    if (user == null) return false;
+    if (user.role.toUpperCase() == 'ADMIN') return true;
+    if (widget.post.authorId != null && user.id != null) {
+      if (widget.post.authorId!.toLowerCase() == user.id!.toLowerCase()) {
+        return true;
+      }
+    }
+    if (widget.post.authorName != null && user.fullName != null) {
+      if (widget.post.authorName!.trim().toLowerCase() ==
+          user.fullName!.trim().toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void _showPostOptions(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (ctx) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 36,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const Gap(12),
-              ListTile(
-                leading: const Icon(Icons.bookmark_border_rounded),
-                title: const Text('Lưu bài viết'),
-                onTap: () {
-                  Navigator.pop(ctx);
-                  context.showSnackBar('Đã lưu vào danh sách của bạn!');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.link_rounded),
-                title: const Text('Sao chép liên kết'),
-                onTap: () {
-                  Navigator.pop(ctx);
-                  context.showSnackBar('Đã sao chép liên kết bài viết!');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.flag_outlined, color: Colors.red),
-                title: const Text(
-                  'Báo cáo bài viết',
-                  style: TextStyle(color: Colors.red),
-                ),
-                onTap: () {
-                  Navigator.pop(ctx);
-                  context.showSnackBar('Cảm ơn bạn đã gửi báo cáo.');
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+    final user = ref.read(authControllerProvider).user;
+    final canDelete = _checkCanDelete(user);
+
+    PostOptionsBottomSheet.show(
+      context,
+      canDelete: canDelete,
+      onCopyLink: () => context.showSnackBar('Đã sao chép liên kết bài viết!'),
+      onDelete: canDelete ? _confirmDeletePost : null,
     );
+  }
+
+  Future<void> _confirmDeletePost() async {
+    final confirmed = await showConfirmDialog(
+      context,
+      title: 'Xóa bài viết',
+      message:
+          'Bạn có chắc chắn muốn xóa bài viết này không? Hành động này không thể hoàn tác.',
+      confirmLabel: 'Xóa',
+      cancelLabel: 'Hủy',
+      isDestructive: true,
+    );
+
+    if (!confirmed || !mounted) return;
+
+    final success = await ref
+        .read(communityControllerProvider.notifier)
+        .deletePost(widget.post.id);
+
+    if (!mounted) return;
+    if (success) {
+      context.showSnackBar('Đã xóa bài viết thành công');
+      widget.onDeletePressed?.call();
+    } else {
+      context.showSnackBar('Không thể xóa bài viết, vui lòng thử lại sau.');
+    }
   }
 }
 

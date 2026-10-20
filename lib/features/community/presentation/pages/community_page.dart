@@ -64,66 +64,67 @@ class _CommunityPageState extends ConsumerState<CommunityPage> {
                             border: Border.all(color: const Color(0xFFE2E8F0)),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF1E3A8A)
-                                    .withValues(alpha: 0.04),
+                                color: const Color(
+                                  0xFF1E3A8A,
+                                ).withValues(alpha: 0.04),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
                             ],
                           ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.search_rounded,
-                                  color: Color(0xFF94A3B8),
-                                  size: 19,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: TextField(
-                                    controller: _searchController,
-                                    decoration: const InputDecoration(
-                                      hintText:
-                                          'Tìm bài viết, hashtag (#SWP391)...',
-                                      hintStyle: TextStyle(
-                                        fontSize: 12.5,
-                                        color: Color(0xFF94A3B8),
-                                      ),
-                                      border: InputBorder.none,
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.zero,
-                                    ),
-                                    style: const TextStyle(fontSize: 13),
-                                    onChanged: (val) {
-                                      controller.setSearchQuery(val);
-                                      setState(() {});
-                                    },
-                                  ),
-                                ),
-                                if (_searchController.text.isNotEmpty)
-                                  GestureDetector(
-                                    onTap: () {
-                                      _searchController.clear();
-                                      controller.setSearchQuery('');
-                                      setState(() {});
-                                    },
-                                    child: const Icon(
-                                      Icons.close_rounded,
-                                      size: 16,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.search_rounded,
+                                color: Color(0xFF94A3B8),
+                                size: 19,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: const InputDecoration(
+                                    hintText:
+                                        'Tìm bài viết, hashtag (#SWP391)...',
+                                    hintStyle: TextStyle(
+                                      fontSize: 12.5,
                                       color: Color(0xFF94A3B8),
                                     ),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.zero,
                                   ),
-                              ],
-                            ),
+                                  style: const TextStyle(fontSize: 13),
+                                  onChanged: (val) {
+                                    controller.setSearchQuery(val);
+                                    setState(() {});
+                                  },
+                                ),
+                              ),
+                              if (_searchController.text.isNotEmpty)
+                                GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    controller.setSearchQuery('');
+                                    setState(() {});
+                                  },
+                                  child: const Icon(
+                                    Icons.close_rounded,
+                                    size: 16,
+                                    color: Color(0xFF94A3B8),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        _buildFilterButton(context, state, controller),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      const SizedBox(width: 8),
+                      _buildFilterButton(context, state, controller),
+                    ],
+                  ),
+                ],
               ),
+            ),
 
             // Feed Content
             Expanded(

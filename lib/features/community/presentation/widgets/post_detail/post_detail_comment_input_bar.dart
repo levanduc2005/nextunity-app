@@ -14,7 +14,6 @@ class PostDetailCommentInputBar extends StatelessWidget {
     this.replyTarget,
     required this.onCancelReply,
     required this.onSend,
-    this.onAttachFile,
   });
 
   final TextEditingController commentController;
@@ -24,7 +23,6 @@ class PostDetailCommentInputBar extends StatelessWidget {
   final CommentEntity? replyTarget;
   final VoidCallback onCancelReply;
   final VoidCallback onSend;
-  final VoidCallback? onAttachFile;
 
   @override
   Widget build(BuildContext context) {
@@ -86,51 +84,30 @@ class PostDetailCommentInputBar extends StatelessWidget {
                 const Gap.h(8),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
                       color: const Color(0xFFF0F2F5),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: commentController,
-                            focusNode: commentFocusNode,
-                            style: const TextStyle(fontSize: 13),
-                            decoration: InputDecoration(
-                              hintText: replyTarget != null
-                                  ? 'Trả lời @${replyTarget!.authorName}...'
-                                  : 'Viết bình luận công khai...',
-                              hintStyle: const TextStyle(
-                                fontSize: 12.5,
-                                color: Color(0xFF94A3B8),
-                              ),
-                              border: InputBorder.none,
-                              isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                              ),
-                            ),
-                            onSubmitted: (_) => onSend(),
-                          ),
+                    child: TextField(
+                      controller: commentController,
+                      focusNode: commentFocusNode,
+                      style: const TextStyle(fontSize: 13),
+                      decoration: InputDecoration(
+                        hintText: replyTarget != null
+                            ? 'Trả lời @${replyTarget!.authorName}...'
+                            : 'Viết bình luận công khai...',
+                        hintStyle: const TextStyle(
+                          fontSize: 12.5,
+                          color: Color(0xFF94A3B8),
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.attach_file_rounded,
-                            size: 18,
-                            color: Color(0xFF64748B),
-                          ),
-                          onPressed:
-                              onAttachFile ??
-                              () {
-                                context.showInfoSnackBar(
-                                  'Đính kèm ảnh vào bình luận.',
-                                );
-                              },
-                          visualDensity: VisualDensity.compact,
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10,
                         ),
-                      ],
+                      ),
+                      onSubmitted: (_) => onSend(),
                     ),
                   ),
                 ),
@@ -167,14 +144,6 @@ class PostDetailCommentInputBar extends StatelessWidget {
         backgroundColor: const Color(0xFF3D5AFE),
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
-        child: Text(
-          initial.toUpperCase(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: radius * 0.75,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
       );
     }
 

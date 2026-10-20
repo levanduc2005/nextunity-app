@@ -14,41 +14,32 @@ class PostDetailContentCard extends StatelessWidget {
     required this.post,
     required this.isLiked,
     this.currentReaction,
-    required this.isFollowing,
     required this.totalCommentsCount,
     required this.onLikePressed,
     this.onReactionSelected,
     this.onReactionCleared,
     required this.onCommentPressed,
     required this.onSharePressed,
-    required this.onToggleFollow,
   });
 
   final PostEntity post;
   final bool isLiked;
   final ReactionType? currentReaction;
-  final bool isFollowing;
   final int totalCommentsCount;
   final VoidCallback onLikePressed;
   final ValueChanged<ReactionType>? onReactionSelected;
   final VoidCallback? onReactionCleared;
   final VoidCallback onCommentPressed;
   final VoidCallback onSharePressed;
-  final VoidCallback onToggleFollow;
 
   @override
   Widget build(BuildContext context) {
-    final hasAttachment =
-        post.content.contains('.zip') ||
-        post.content.contains('.pdf') ||
-        post.title.contains('SWP391');
-
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header: Avatar, Name, Tag, Time, Follow
+          // Header: Avatar, Name, Tag, Time
           Row(
             children: [
               _buildAvatar(post.authorAvatar, post.initials),
@@ -108,45 +99,6 @@ class PostDetailContentCard extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
-                onTap: onToggleFollow,
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isFollowing
-                        ? const Color(0xFFF1F5F9)
-                        : const Color(0xFFEEF2FF),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        isFollowing ? Icons.check_rounded : Icons.add_rounded,
-                        size: 14,
-                        color: isFollowing
-                            ? const Color(0xFF64748B)
-                            : AppColors.primary,
-                      ),
-                      const Gap.h(2),
-                      Text(
-                        isFollowing ? 'Đang theo dõi' : 'Theo dõi',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: isFollowing
-                              ? const Color(0xFF64748B)
-                              : AppColors.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
 
@@ -176,71 +128,6 @@ class PostDetailContentCard extends StatelessWidget {
             ),
           ),
 
-          // Card tệp đính kèm
-          if (hasAttachment) ...[
-            const Gap(12),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEEF2FF),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(
-                      Icons.folder_zip_rounded,
-                      color: AppColors.primary,
-                      size: 24,
-                    ),
-                  ),
-                  const Gap.h(10),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Template_SRS_DB_SWP391_FPTU.zip',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF0F172A),
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Gap(2),
-                        Text(
-                          '4.8 MB • 3 tài liệu đính kèm',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Color(0xFF64748B),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.download_rounded,
-                      color: Color(0xFF64748B),
-                    ),
-                    onPressed: () {
-                      context.showInfoSnackBar('Đang tải tệp đính kèm...');
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-
           const Gap(12),
 
           // Thống kê tương tác
@@ -255,7 +142,7 @@ class PostDetailContentCard extends StatelessWidget {
               else
                 const SizedBox.shrink(),
               Text(
-                '$totalCommentsCount bình luận • 5 lượt chia sẻ',
+                '$totalCommentsCount bình luận',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
@@ -364,14 +251,6 @@ class PostDetailContentCard extends StatelessWidget {
         backgroundColor: const Color(0xFF3D5AFE),
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
-        child: Text(
-          initial.toUpperCase(),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
       );
     }
 

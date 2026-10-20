@@ -5,36 +5,94 @@ import 'package:rental_car/features/community/domain/entities/comment_entity.dar
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_options_popup.dart';
 
-/// Widget hiển thị 1 bình luận dạng bong bóng chat xám Facebook (hỗ trợ cả reply con lồng nhau)
+/// Widget hiển thị 1 bình luận dạng bong bóng chat Facebook (hỗ trợ reply con lồng nhau)
+/// - Giờ hiển thị cạnh tên người dùng
+/// - Nhấn giữ (hold) để mở thanh cảm xúc ở trên và các tùy chọn (sao chép, trả lời, báo cáo, xóa) ở dưới
+/// - Hiển thị icon cảm xúc hiện tại gọn gàng bên cạnh nút 'Trả lời'
 class CommentBubbleItem extends StatelessWidget {
   const CommentBubbleItem({
     super.key,
     required this.comment,
-    required this.onLike,
     required this.onReply,
-    required this.onLikeReply,
     required this.onReplyToChild,
-    this.currentReaction,
-    this.onReactionSelected,
-    this.onReactionCleared,
-    this.getReplyReaction,
-    this.onReactionSelectedReply,
-    this.onReactionClearedReply,
+    required this.onToggleReaction,
+    this.canDelete = false,
+    this.onDelete,
+    this.canDeleteReply,
+    this.onDeleteReply,
   });
 
   final CommentEntity comment;
-  final VoidCallback onLike;
   final VoidCallback onReply;
-  final void Function(String replyId) onLikeReply;
   final void Function(CommentEntity child) onReplyToChild;
-  final ReactionType? currentReaction;
-  final ValueChanged<ReactionType>? onReactionSelected;
-  final VoidCallback? onReactionCleared;
-  final ReactionType? Function(String replyId)? getReplyReaction;
-  final void Function(String replyId, ReactionType reaction)?
-  onReactionSelectedReply;
-  final void Function(String replyId)? onReactionClearedReply;
+  final void Function(String commentId, ReactionType reaction) onToggleReaction;
+  final bool canDelete;
+  final VoidCallback? onDelete;
+  final bool Function(CommentEntity reply)? canDeleteReply;
+  final void Function(CommentEntity reply)? onDeleteReply;
+
+  void _showCommentOptions(BuildContext bubbleContext) {
+    final renderBox = bubbleContext.findRenderObject() as RenderBox?;
+    final offset =
+        renderBox?.localToGlobal(Offset.zero) ?? const Offset(16, 200);
+    final size = renderBox?.size ?? const Size(200, 60);
+    final bubbleRect = offset & size;
+
+    CommentOptionsPopup.show(
+      bubbleContext,
+      bubbleRect: bubbleRect,
+      commentContent: comment.content,
+      authorName: comment.authorName,
+      formattedTime: comment.formattedTime,
+      authorAvatar: comment.authorAvatar,
+      authorInitials: comment.initials,
+      authorBadge: comment.authorBadge,
+      currentReaction: comment.currentUserReaction,
+      onReactionSelected: (reaction) => onToggleReaction(comment.id, reaction),
+      onReactionCleared: () => onToggleReaction(
+        comment.id,
+        comment.currentUserReaction ?? ReactionType.like,
+      ),
+      onReply: onReply,
+      canDelete: canDelete,
+      onDelete: onDelete,
+      onReport: () =>
+          bubbleContext.showSnackBar('Cảm ơn bạn đã gửi báo cáo bình luận.'),
+    );
+  }
+
+  void _showReplyOptions(BuildContext replyBubbleContext, CommentEntity reply) {
+    final renderBox = replyBubbleContext.findRenderObject() as RenderBox?;
+    final offset =
+        renderBox?.localToGlobal(Offset.zero) ?? const Offset(16, 200);
+    final size = renderBox?.size ?? const Size(200, 60);
+    final bubbleRect = offset & size;
+
+    CommentOptionsPopup.show(
+      replyBubbleContext,
+      bubbleRect: bubbleRect,
+      commentContent: reply.content,
+      authorName: reply.authorName,
+      formattedTime: reply.formattedTime,
+      authorAvatar: reply.authorAvatar,
+      authorInitials: reply.initials,
+      authorBadge: reply.authorBadge,
+      currentReaction: reply.currentUserReaction,
+      onReactionSelected: (reaction) => onToggleReaction(reply.id, reaction),
+      onReactionCleared: () => onToggleReaction(
+        reply.id,
+        reply.currentUserReaction ?? ReactionType.like,
+      ),
+      onReply: () => onReplyToChild(reply),
+      canDelete: canDeleteReply?.call(reply) ?? false,
+      onDelete: onDeleteReply != null ? () => onDeleteReply!(reply) : null,
+      onReport: () => replyBubbleContext.showSnackBar(
+        'Cảm ơn bạn đã gửi báo cáo bình luận.',
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +101,7 @@ class CommentBubbleItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Bình luận cha
+          // 1. Bình luận cha
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,116 +111,118 @@ class CommentBubbleItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Bong bóng chat xám chuẩn Facebook
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF0F2F5),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
+                    Builder(
+                      builder: (bubbleContext) => GestureDetector(
+                        onLongPress: () => _showCommentOptions(bubbleContext),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF0F2F5),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                comment.authorName,
-                                style: const TextStyle(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF0F172A),
-                                ),
-                              ),
-                              if (comment.authorBadge != null) ...[
-                                const Gap.h(6),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 5,
-                                    vertical: 1,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFE2E8F0),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    comment.authorBadge!,
+                              // Header: Tên người dùng + Giờ bên cạnh
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Text(
+                                    comment.authorName,
                                     style: const TextStyle(
-                                      fontSize: 9.5,
+                                      fontSize: 12.5,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF475569),
+                                      color: Color(0xFF0F172A),
                                     ),
                                   ),
+                                  const Gap.h(6),
+                                  Text(
+                                    comment.formattedTime,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Color(0xFF94A3B8),
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  if (comment.authorBadge != null) ...[
+                                    const Gap.h(6),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 5,
+                                        vertical: 1,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFE2E8F0),
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        comment.authorBadge!,
+                                        style: const TextStyle(
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.w700,
+                                          color: Color(0xFF475569),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                              const Gap(2),
+                              // Nội dung bình luận
+                              Text(
+                                comment.content,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFF1E293B),
+                                  height: 1.4,
                                 ),
-                              ],
+                              ),
                             ],
                           ),
-                          const Gap(2),
-                          Text(
-                            comment.content,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Color(0xFF1E293B),
-                              height: 1.4,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
 
-                    // Sub-actions: Thời gian, Thích, Trả lời
+                    // Sub-actions dưới bong bóng: Icon Like (chạm/hold) + Trả lời + Đếm cảm xúc
                     Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 4),
+                      padding: const EdgeInsets.only(left: 6, top: 4),
                       child: Row(
                         children: [
-                          Text(
-                            comment.formattedTime,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFF64748B),
-                            ),
-                          ),
-                          const Gap.h(8),
                           PostReactionButton(
                             isCompact: true,
-                            currentReaction:
-                                currentReaction ??
-                                (comment.currentUserReaction ??
-                                    (comment.isLiked
-                                        ? ReactionType.like
-                                        : null)),
-                            onReactionSelected: (reaction) {
-                              if (onReactionSelected != null) {
-                                onReactionSelected!(reaction);
-                              } else {
-                                onLike();
-                              }
-                            },
-                            onReactionCleared: () {
-                              if (onReactionCleared != null) {
-                                onReactionCleared!();
-                              } else {
-                                onLike();
-                              }
-                            },
+                            showLabel: false,
+                            currentReaction: comment.currentUserReaction,
+                            onReactionSelected: (reaction) =>
+                                onToggleReaction(comment.id, reaction),
+                            onReactionCleared: () => onToggleReaction(
+                              comment.id,
+                              comment.currentUserReaction ?? ReactionType.like,
+                            ),
                           ),
-                          const Gap.h(12),
+                          const Gap.h(6),
                           InkWell(
                             onTap: onReply,
-                            child: const Text(
-                              'Trả lời',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF64748B),
+                            borderRadius: BorderRadius.circular(4),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 2,
+                              ),
+                              child: Text(
+                                'Trả lời',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF64748B),
+                                ),
                               ),
                             ),
                           ),
                           if (comment.reactionCount > 0) ...[
-                            const Gap.h(8),
+                            const Gap.h(6),
                             ReactionCounterBadge(
                               topReactions: comment.topReactions,
                               totalCount: comment.reactionCount,
@@ -177,7 +237,7 @@ class CommentBubbleItem extends StatelessWidget {
             ],
           ),
 
-          // Bình luận con (Nested Replies)
+          // 2. Bình luận con (Nested Replies)
           if (comment.replies.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 36, top: 8),
@@ -198,117 +258,126 @@ class CommentBubbleItem extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF0F2F5),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
+                              Builder(
+                                builder: (replyBubbleContext) => GestureDetector(
+                                  onLongPress: () => _showReplyOptions(
+                                    replyBubbleContext,
+                                    reply,
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF0F2F5),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          reply.authorName,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF0F172A),
-                                          ),
-                                        ),
-                                        if (reply.authorBadge != null) ...[
-                                          const Gap.h(6),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 5,
-                                              vertical: 1,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFDBEAFE),
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            child: Text(
-                                              reply.authorBadge!,
+                                        Wrap(
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          children: [
+                                            Text(
+                                              reply.authorName,
                                               style: const TextStyle(
-                                                fontSize: 9.5,
-                                                fontWeight: FontWeight.w800,
-                                                color: AppColors.primary,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF0F172A),
                                               ),
                                             ),
+                                            const Gap.h(6),
+                                            Text(
+                                              reply.formattedTime,
+                                              style: const TextStyle(
+                                                fontSize: 10.5,
+                                                color: Color(0xFF94A3B8),
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            if (reply.authorBadge != null) ...[
+                                              const Gap.h(6),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 1,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(
+                                                    0xFFDBEAFE,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                child: Text(
+                                                  reply.authorBadge!,
+                                                  style: const TextStyle(
+                                                    fontSize: 9.5,
+                                                    fontWeight: FontWeight.w800,
+                                                    color: AppColors.primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ],
+                                        ),
+                                        const Gap(2),
+                                        Text(
+                                          reply.content,
+                                          style: const TextStyle(
+                                            fontSize: 12.5,
+                                            color: Color(0xFF1E293B),
+                                            height: 1.4,
                                           ),
-                                        ],
+                                        ),
                                       ],
                                     ),
-                                    const Gap(2),
-                                    Text(
-                                      reply.content,
-                                      style: const TextStyle(
-                                        fontSize: 12.5,
-                                        color: Color(0xFF1E293B),
-                                        height: 1.4,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
+                              // Sub-actions dưới bong bóng trả lời: Icon Like + Trả lời + Đếm cảm xúc
                               Padding(
-                                padding: const EdgeInsets.only(left: 8, top: 4),
+                                padding: const EdgeInsets.only(left: 6, top: 4),
                                 child: Row(
                                   children: [
-                                    Text(
-                                      reply.formattedTime,
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: Color(0xFF64748B),
-                                      ),
-                                    ),
-                                    const Gap.h(8),
                                     PostReactionButton(
                                       isCompact: true,
+                                      showLabel: false,
                                       currentReaction:
-                                          getReplyReaction?.call(reply.id) ??
-                                          (reply.currentUserReaction ??
-                                              (reply.isLiked
-                                                  ? ReactionType.like
-                                                  : null)),
-                                      onReactionSelected: (reaction) {
-                                        if (onReactionSelectedReply != null) {
-                                          onReactionSelectedReply!(
-                                            reply.id,
-                                            reaction,
-                                          );
-                                        } else {
-                                          onLikeReply(reply.id);
-                                        }
-                                      },
-                                      onReactionCleared: () {
-                                        if (onReactionClearedReply != null) {
-                                          onReactionClearedReply!(reply.id);
-                                        } else {
-                                          onLikeReply(reply.id);
-                                        }
-                                      },
+                                          reply.currentUserReaction,
+                                      onReactionSelected: (reaction) =>
+                                          onToggleReaction(reply.id, reaction),
+                                      onReactionCleared: () => onToggleReaction(
+                                        reply.id,
+                                        reply.currentUserReaction ??
+                                            ReactionType.like,
+                                      ),
                                     ),
-                                    const Gap.h(12),
+                                    const Gap.h(6),
                                     InkWell(
                                       onTap: () => onReplyToChild(reply),
-                                      child: const Text(
-                                        'Trả lời',
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xFF64748B),
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 6,
+                                          vertical: 2,
+                                        ),
+                                        child: Text(
+                                          'Trả lời',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF64748B),
+                                          ),
                                         ),
                                       ),
                                     ),
                                     if (reply.reactionCount > 0) ...[
-                                      const Gap.h(8),
+                                      const Gap.h(6),
                                       ReactionCounterBadge(
                                         topReactions: reply.topReactions,
                                         totalCount: reply.reactionCount,
@@ -338,14 +407,6 @@ class CommentBubbleItem extends StatelessWidget {
         backgroundColor: const Color(0xFF3D5AFE),
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
-        child: Text(
-          initial.toUpperCase(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: radius * 0.75,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
       );
     }
 

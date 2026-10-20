@@ -137,4 +137,28 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Result.err(ServerFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Result<void>> deletePost(String id) async {
+    try {
+      await _remoteDataSource.deletePost(id);
+      return const Result.ok(null);
+    } on ServerException catch (e) {
+      return Result.err(ServerFailure(message: e.message));
+    } catch (e) {
+      return Result.err(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<void>> deleteComment(String id) async {
+    try {
+      await _remoteDataSource.deleteComment(id);
+      return const Result.ok(null);
+    } on ServerException catch (e) {
+      return Result.err(ServerFailure(message: e.message));
+    } catch (e) {
+      return Result.err(ServerFailure(message: e.toString()));
+    }
+  }
 }

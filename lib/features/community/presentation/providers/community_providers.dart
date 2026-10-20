@@ -5,14 +5,18 @@ import 'package:rental_car/features/community/data/repositories/community_reposi
 import 'package:rental_car/features/community/domain/repositories/community_repository.dart';
 import 'package:rental_car/features/community/domain/usecases/create_comment_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/create_post_use_case.dart';
+import 'package:rental_car/features/community/domain/usecases/delete_comment_use_case.dart';
+import 'package:rental_car/features/community/domain/usecases/delete_post_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_all_posts_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_comments_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_post_detail_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_tags_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/toggle_reaction_use_case.dart';
 import 'package:rental_car/features/community/presentation/providers/community_controller.dart';
+import 'package:rental_car/features/community/presentation/providers/post_detail_controller.dart';
 
 export 'community_controller.dart';
+export 'post_detail_controller.dart';
 
 // ============================================================================
 // DEPENDENCY INJECTION PROVIDERS
@@ -65,6 +69,14 @@ final getTagsUseCaseProvider = Provider<GetTagsUseCase>((ref) {
   return GetTagsUseCase(ref.watch(communityRepositoryProvider));
 });
 
+final deletePostUseCaseProvider = Provider<DeletePostUseCase>((ref) {
+  return DeletePostUseCase(ref.watch(communityRepositoryProvider));
+});
+
+final deleteCommentUseCaseProvider = Provider<DeleteCommentUseCase>((ref) {
+  return DeleteCommentUseCase(ref.watch(communityRepositoryProvider));
+});
+
 // ============================================================================
 // PRESENTATION CONTROLLER PROVIDERS
 // ============================================================================
@@ -72,4 +84,9 @@ final getTagsUseCaseProvider = Provider<GetTagsUseCase>((ref) {
 final communityControllerProvider =
     NotifierProvider<CommunityController, CommunityState>(
       CommunityController.new,
+    );
+
+final postDetailControllerProvider =
+    NotifierProvider<PostDetailController, PostDetailState>(
+      PostDetailController.new,
     );

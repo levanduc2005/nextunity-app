@@ -6,13 +6,10 @@ import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/community/presentation/providers/community_providers.dart';
-import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_attachment_card.dart';
-import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_bottom_bar.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_header_info.dart';
 import 'package:rental_car/features/community/presentation/widgets/create_post/create_post_tags_selector.dart';
-import 'package:rental_car/features/community/presentation/widgets/create_post/privacy_picker_modal.dart';
 
-/// Màn hình Tạo bài viết thảo luận (Chuẩn phong cách Facebook Modal)
+/// Màn hình Tạo bài viết thảo luận môn học
 class CreatePostPage extends ConsumerStatefulWidget {
   const CreatePostPage({super.key});
 
@@ -24,9 +21,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
-  String _privacy = 'Công khai';
   final List<String> _tags = ['SWP391'];
-  String? _attachedFileName;
   bool _isSubmitting = false;
 
   @override
@@ -130,126 +125,79 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.all(AppSpacing.md),
           children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                children: [
-                  CreatePostHeaderInfo(
-                    userName: userName,
-                    avatarUrl: user?.avatarUrl,
-                    privacy: _privacy,
-                    onPickPrivacy: () {
-                      showPrivacyPickerModal(
-                        context: context,
-                        currentPrivacy: _privacy,
-                        onSelect: (p) => setState(() => _privacy = p),
-                      );
-                    },
-                  ),
+            CreatePostHeaderInfo(
+              userName: userName,
+              avatarUrl: user?.avatarUrl,
+            ),
 
-                  const Gap(AppSpacing.md),
+            const Gap(AppSpacing.md),
 
-                  // 2. Tiêu đề
-                  TextField(
-                    controller: _titleController,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
-                    ),
-                    decoration: const InputDecoration(
-                      hintText: 'Tiêu đề bài viết (tùy chọn)...',
-                      hintStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF94A3B8),
-                      ),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFFF1F5F9)),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFFF1F5F9)),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.primary),
-                      ),
-                      contentPadding: EdgeInsets.only(bottom: 8),
-                    ),
-                  ),
-
-                  const Gap(8),
-
-                  // 3. Nội dung
-                  TextField(
-                    controller: _contentController,
-                    minLines: 5,
-                    maxLines: 12,
-                    onChanged: (_) => setState(() {}),
-                    style: const TextStyle(
-                      fontSize: 14.5,
-                      height: 1.45,
-                      color: Color(0xFF1E293B),
-                    ),
-                    decoration: InputDecoration(
-                      hintText:
-                          '$displayName ơi, bạn đang cần hỏi đáp môn học gì thế? Chia sẻ câu hỏi, tài liệu hoặc kinh nghiệm đồ án...',
-                      hintStyle: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF94A3B8),
-                        height: 1.4,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                  ),
-
-                  // 4. File đính kèm Preview (nếu có)
-                  if (_attachedFileName != null) ...[
-                    const Gap(12),
-                    CreatePostAttachmentCard(
-                      fileName: _attachedFileName!,
-                      onRemove: () => setState(() => _attachedFileName = null),
-                    ),
-                  ],
-
-                  const Gap(16),
-
-                  // 5. Thẻ môn học gợi ý nhanh
-                  CreatePostTagsSelector(
-                    selectedTags: _tags,
-                    suggestedTags: ref.watch(communityControllerProvider).tags,
-                    onAddTag: (tag) => setState(() => _tags.add(tag)),
-                    onRemoveTag: (tag) => setState(() => _tags.remove(tag)),
-                    onOpenAddDialog: _showAddTagDialog,
-                  ),
-                ],
+            // 2. Tiêu đề
+            TextField(
+              controller: _titleController,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF0F172A),
+              ),
+              decoration: const InputDecoration(
+                hintText: 'Tiêu đề bài viết (tùy chọn)...',
+                hintStyle: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF94A3B8),
+                ),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF1F5F9)),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF1F5F9)),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primary),
+                ),
+                contentPadding: EdgeInsets.only(bottom: 8),
               ),
             ),
 
-            // 6. Thanh công cụ ở đáy màn hình
-            CreatePostBottomBar(
-              onAddPhoto: () {
-                setState(
-                  () => _attachedFileName = 'Screenshot_Jira_Sprint.png',
-                );
-                context.showInfoSnackBar('Đã thêm ảnh minh họa bài viết.');
-              },
-              onAddFile: () {
-                setState(
-                  () =>
-                      _attachedFileName = 'Tai_Lieu_On_Thi_SWP391_Sprint2.pdf',
-                );
-                context.showInfoSnackBar('Đã đính kèm tệp PDF.');
-              },
-              onAddTag: _showAddTagDialog,
-              onAddPoll: () {
-                context.showInfoSnackBar('Tính năng bình chọn sẽ có mặt sớm!');
-              },
-              onAddFeeling: () {
-                context.showInfoSnackBar('Đang cập nhật biểu tượng cảm xúc.');
-              },
+            const Gap(8),
+
+            // 3. Nội dung
+            TextField(
+              controller: _contentController,
+              minLines: 5,
+              maxLines: 12,
+              onChanged: (_) => setState(() {}),
+              style: const TextStyle(
+                fontSize: 14.5,
+                height: 1.45,
+                color: Color(0xFF1E293B),
+              ),
+              decoration: InputDecoration(
+                hintText:
+                    '$displayName ơi, bạn đang cần hỏi đáp môn học gì thế? Chia sẻ câu hỏi hoặc kinh nghiệm môn học...',
+                hintStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF94A3B8),
+                  height: 1.4,
+                ),
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
+              ),
+            ),
+
+            const Gap(16),
+
+            // 4. Thẻ môn học gợi ý và thêm mới
+            CreatePostTagsSelector(
+              selectedTags: _tags,
+              suggestedTags: ref.watch(communityControllerProvider).tags,
+              onAddTag: (tag) => setState(() => _tags.add(tag)),
+              onRemoveTag: (tag) => setState(() => _tags.remove(tag)),
+              onOpenAddDialog: _showAddTagDialog,
             ),
           ],
         ),
