@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
 /// Khung Card phong cách sổ tay có ghim đỏ và sticky note bảo mật
 class ChangePasswordNotebookCard extends StatelessWidget {

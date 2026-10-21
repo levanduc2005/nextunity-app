@@ -5,17 +5,19 @@ import 'package:rental_car/core/providers/core_providers.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
-import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/origami_decor_painter.dart';
+import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_form.dart';
+import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_top_bar.dart';
+import 'package:rental_car/features/profile/presentation/widgets/edit/profile_detail_view.dart';
 
-class EditProfileScreen extends ConsumerStatefulWidget {
-  const EditProfileScreen({super.key});
+class EditProfilePage extends ConsumerStatefulWidget {
+  const EditProfilePage({super.key});
 
   @override
-  ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
+  ConsumerState<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isEditing = false;

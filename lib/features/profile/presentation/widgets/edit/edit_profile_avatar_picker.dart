@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
-import 'package:rental_car/features/profile/presentation/widgets/common/profile_common.dart';
+import 'package:rental_car/features/profile/presentation/widgets/common/image_picker_bottom_sheet.dart';
 
 class EditProfileAvatarPicker extends ConsumerWidget {
   const EditProfileAvatarPicker({super.key, required this.user});

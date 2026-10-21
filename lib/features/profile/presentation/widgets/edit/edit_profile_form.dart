@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_action_buttons.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_avatar_picker.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_gender_selector.dart';

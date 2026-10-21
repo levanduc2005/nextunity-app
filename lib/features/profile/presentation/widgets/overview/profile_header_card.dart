@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
-import 'package:rental_car/features/profile/presentation/widgets/common/profile_common.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/common/profile_avatar_badge.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_stats_row.dart';
 
 class ProfileHeaderCard extends StatelessWidget {

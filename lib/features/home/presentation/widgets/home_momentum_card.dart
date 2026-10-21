@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
 /// Bento Notebook Card: Điểm thưởng, Hạn mức Gemini AI & Tiến độ mục tiêu học hôm nay
 class HomeMomentumCard extends StatelessWidget {

@@ -5,8 +5,11 @@ import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
-import 'package:rental_car/features/profile/presentation/widgets/overview/profile_overview.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/origami_decor_painter.dart';
+import 'package:rental_car/features/profile/presentation/widgets/overview/profile_header_card.dart';
+import 'package:rental_car/features/profile/presentation/widgets/overview/profile_menu_list.dart';
+import 'package:rental_car/features/profile/presentation/widgets/overview/profile_top_bar.dart';
+import 'package:rental_car/features/profile/presentation/widgets/overview/profile_version_footer.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});

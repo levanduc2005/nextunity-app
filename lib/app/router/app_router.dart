@@ -20,10 +20,11 @@ import 'package:rental_car/features/course/presentation/pages/course_detail_page
 import 'package:rental_car/features/course/presentation/pages/courses_page.dart';
 import 'package:rental_car/features/course/presentation/pages/lesson_detail_page.dart';
 import 'package:rental_car/features/home/presentation/pages/home_page.dart';
-import 'package:rental_car/features/payment/presentation/pages/payos_qr_page.dart';
+import 'package:rental_car/features/payment/domain/entities/payment_result_entity.dart';
+import 'package:rental_car/features/payment/presentation/pages/payment_page.dart';
 import 'package:rental_car/features/payment/presentation/pages/upgrade_plus_page.dart';
 import 'package:rental_car/features/profile/presentation/pages/change_password_page.dart';
-import 'package:rental_car/features/profile/presentation/pages/edit_profile_screen.dart';
+import 'package:rental_car/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:rental_car/features/profile/presentation/pages/profile_page.dart';
 import 'package:rental_car/features/shell/presentation/scaffold_with_nav_bar.dart';
 import 'package:rental_car/features/study_tools/presentation/pages/flashcards_page.dart';
@@ -154,7 +155,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.editProfile.path,
         name: AppRoute.editProfile.name,
-        builder: (_, _) => const EditProfileScreen(),
+        builder: (_, _) => const EditProfilePage(),
       ),
 
       // Course details
@@ -219,16 +220,29 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const CreatePostPage(),
       ),
 
-      // Payment (PayOS)
+      // Payment
       GoRoute(
         path: AppRoute.upgradePlus.path,
         name: AppRoute.upgradePlus.name,
         builder: (_, _) => const UpgradePlusPage(),
       ),
       GoRoute(
-        path: AppRoute.payosQr.path,
-        name: AppRoute.payosQr.name,
-        builder: (_, _) => const PayosQrPage(),
+        path: AppRoute.payment.path,
+        name: AppRoute.payment.name,
+        builder: (_, state) {
+          if (state.extra is PaymentResultEntity) {
+            return PaymentPage(
+              paymentResult: state.extra as PaymentResultEntity,
+            );
+          } else if (state.extra is Map<String, dynamic>) {
+            final map = state.extra as Map<String, dynamic>;
+            return PaymentPage(
+              paymentResult: map['paymentResult'] as PaymentResultEntity?,
+              planName: map['planName'] as String? ?? 'Gói NextUnity Plus',
+            );
+          }
+          return const PaymentPage();
+        },
       ),
 
       // The tabbed app shell (5 main branches)

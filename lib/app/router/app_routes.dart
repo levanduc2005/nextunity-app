@@ -41,7 +41,7 @@ enum AppRoute {
   editProfile('/profile/edit'),
   changePassword('/profile/change-password'),
   upgradePlus('/payment/upgrade-plus'),
-  payosQr('/payment/qr');
+  payment('/payment');
 
   const AppRoute(this.path);
 

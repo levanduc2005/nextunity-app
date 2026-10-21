@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
-import 'package:rental_car/features/profile/presentation/widgets/change_password/change_password_widgets.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/change_password/change_password_notebook_card.dart';
+import 'package:rental_car/features/profile/presentation/widgets/change_password/change_password_step1_form.dart';
+import 'package:rental_car/features/profile/presentation/widgets/change_password/change_password_step2_form.dart';
+import 'package:rental_car/features/profile/presentation/widgets/change_password/change_password_top_bar.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/origami_decor_painter.dart';
 
 /// Màn hình Đổi mật khẩu trong Profile (yêu cầu Access Token).
 /// - Bước 1: Nhập mật khẩu hiện tại, gửi về BE /users/check-password để xác thực.

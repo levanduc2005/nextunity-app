@@ -57,7 +57,7 @@ class ProfileMenuList extends StatelessWidget {
             title: isPlus ? 'Gói Thành Viên PLUS' : 'Nâng cấp NextUnity PLUS',
             subtitle: isPlus
                 ? 'Đang hoạt động (Không giới hạn tính năng)'
-                : 'Thanh toán tự động qua PayOS QR',
+                : 'Thanh toán tự động qua VietQR',
             trailingBadge: isPlus ? 'ACTIVE' : 'HOT',
             badgeBgColor: isPlus
                 ? const Color(0xFFECFDF5)

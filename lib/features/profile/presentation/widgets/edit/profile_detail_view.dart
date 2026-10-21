@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
-import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_decorations.dart';
+import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
 /// Chế độ xem chi tiết hồ sơ cá nhân (Read-Only Mode)
 /// theo phong cách Stationery / Sổ tay sinh viên NextUnity.
