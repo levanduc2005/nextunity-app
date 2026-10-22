@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 
 /// Chân trang hiển thị thông tin phiên bản NextUnity và liên kết điều khoản
@@ -34,7 +35,7 @@ class ProfileVersionFooter extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF3B82F6),
+                color: AppColors.primary,
               ),
             ),
           ),

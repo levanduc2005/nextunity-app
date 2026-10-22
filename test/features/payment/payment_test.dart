@@ -14,6 +14,7 @@ import 'package:rental_car/features/payment/domain/entities/subscription_plan_en
 import 'package:rental_car/features/payment/domain/repositories/payment_repository.dart';
 import 'package:rental_car/features/payment/domain/usecases/create_payment_use_case.dart';
 import 'package:rental_car/features/payment/domain/usecases/get_available_plans_use_case.dart';
+import 'package:rental_car/features/payment/domain/usecases/subscribe_payment_status_use_case.dart';
 import 'package:rental_car/features/payment/domain/usecases/verify_payment_use_case.dart';
 
 class MockPaymentRepository extends Mock implements PaymentRepository {}
@@ -25,12 +26,14 @@ void main() {
     late GetAvailablePlansUseCase getAvailablePlansUseCase;
     late CreatePaymentUseCase createPaymentUseCase;
     late VerifyPaymentUseCase verifyPaymentUseCase;
+    late SubscribePaymentStatusUseCase subscribePaymentStatusUseCase;
 
     setUp(() {
       repository = MockPaymentRepository();
       getAvailablePlansUseCase = GetAvailablePlansUseCase(repository);
       createPaymentUseCase = CreatePaymentUseCase(repository);
       verifyPaymentUseCase = VerifyPaymentUseCase(repository);
+      subscribePaymentStatusUseCase = SubscribePaymentStatusUseCase(repository);
     });
 
     const testPlans = [
@@ -112,6 +115,19 @@ void main() {
       expect(result.valueOrNull?.status, 'PAID');
       verify(() => repository.verifyPayment(123456)).called(1);
     });
+
+    test('SubscribePaymentStatusUseCase emits payment status from stream', () async {
+      when(() => repository.subscribePaymentStatus(123456))
+          .thenAnswer((_) => Stream.value(const Result.ok(testPaymentStatus)));
+
+      final stream = subscribePaymentStatusUseCase(123456);
+
+      await expectLater(
+        stream,
+        emits(const Result.ok(testPaymentStatus)),
+      );
+      verify(() => repository.subscribePaymentStatus(123456)).called(1);
+    });
   });
 
   group('PaymentRepositoryImpl', () {
@@ -190,6 +206,30 @@ void main() {
       expect(result.isErr, isTrue);
       expect(result.failureOrNull, isA<ServerFailure>());
       expect(result.failureOrNull?.message, 'Lỗi máy chủ thanh toán');
+    });
+
+    test('subscribePaymentStatus maps DTO stream to Entity stream', () async {
+      const dto = PaymentStatusModel(
+        orderCode: 998877,
+        amount: 49000,
+        status: 'PAID',
+        plan: 'PLUS_MONTHLY',
+      );
+
+      when(() => remoteDataSource.subscribePaymentStatus(998877))
+          .thenAnswer((_) => Stream.value(dto));
+
+      final stream = repository.subscribePaymentStatus(998877);
+
+      await expectLater(
+        stream,
+        emits(isA<Result<PaymentStatusEntity>>().having(
+          (r) => r.valueOrNull?.isPaid,
+          'isPaid',
+          isTrue,
+        )),
+      );
+      verify(() => remoteDataSource.subscribePaymentStatus(998877)).called(1);
     });
   });
 }

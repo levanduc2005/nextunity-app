@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
-import 'package:rental_car/core/widgets/widgets.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 
+/// Danh sách Menu trang Hồ sơ cá nhân theo phong cách Grouped Cards hiện đại
 class ProfileMenuList extends StatelessWidget {
   const ProfileMenuList({
     super.key,
@@ -16,134 +17,135 @@ class ProfileMenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPlus = user?.isPlus == true;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // NHÓM 1: TÀI KHOẢN & BẢO MẬT
+        const _SectionHeader(title: 'TÀI KHOẢN & BẢO MẬT'),
+        const SizedBox(height: 6),
+        _GroupCard(
+          children: [
+            _MenuTile(
+              icon: Icons.lock_reset_rounded,
+              iconColor: AppColors.primary,
+              iconBgColor: AppColors.primaryContainer,
+              title: 'Đổi mật khẩu',
+              subtitle: 'Cập nhật mật khẩu bảo vệ tài khoản',
+              onTap: () => context.push(AppRoute.changePassword.path),
+            ),
+          ],
+        ),
 
+        const SizedBox(height: 16),
+
+        // NHÓM 2: HỆ THỐNG & HỖ TRỢ
+        const _SectionHeader(title: 'HỖ TRỢ & THÔNG TIN'),
+        const SizedBox(height: 6),
+        _GroupCard(
+          children: [
+            _MenuTile(
+              icon: Icons.help_outline_rounded,
+              iconColor: const Color(0xFF0284C7),
+              iconBgColor: const Color(0xFFF0F9FF),
+              title: 'Trợ giúp & FAQ',
+              subtitle: 'Hướng dẫn sử dụng và câu hỏi thường gặp',
+              onTap: () {
+                showAboutDialog(
+                  context: context,
+                  applicationName: 'NextUnity Platform',
+                  applicationVersion: '2.4.0',
+                  applicationLegalese:
+                      '© 2026 NextUnity Platform. Nền tảng học tập thông minh cho sinh viên.',
+                );
+              },
+            ),
+            const _MenuDivider(),
+            _MenuTile(
+              icon: Icons.info_outline_rounded,
+              iconColor: const Color(0xFF64748B),
+              iconBgColor: const Color(0xFFF1F5F9),
+              title: 'Về NextUnity Studio',
+              subtitle: 'Phiên bản 2.4.0 (Bản phát hành chính thức)',
+              onTap: () {
+                showAboutDialog(
+                  context: context,
+                  applicationName: 'NextUnity Studio',
+                  applicationVersion: '2.4.0',
+                  applicationLegalese:
+                      '© 2026 NextUnity Platform. All rights reserved.',
+                );
+              },
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 16),
+
+        // NHÓM 3: ĐĂNG XUẤT
+        _GroupCard(
+          children: [
+            _MenuTile(
+              icon: Icons.logout_rounded,
+              iconColor: const Color(0xFFDC2626),
+              iconBgColor: const Color(0xFFFEF2F2),
+              title: 'Đăng xuất tài khoản',
+              subtitle: 'Thoát phiên đăng nhập trên thiết bị này',
+              titleColor: const Color(0xFFDC2626),
+              showChevron: false,
+              onTap: onLogout,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 10.5,
+          fontWeight: FontWeight.w800,
+          letterSpacing: 1.0,
+          color: Color(0xFF94A3B8),
+        ),
+      ),
+    );
+  }
+}
+
+class _GroupCard extends StatelessWidget {
+  const _GroupCard({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF1E293B).withValues(alpha: 0.03),
+            color: const Color(0xFF0F172A).withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Column(
-        children: [
-          // 1. My Certificates
-          _MenuTile(
-            icon: Icons.workspace_premium_rounded,
-            iconBgColor: const Color(0xFFEFF6FF),
-            iconColor: const Color(0xFF2563EB),
-            title: 'My Certificates',
-            subtitle: 'Chứng chỉ & Bằng hoàn thành khóa học',
-            trailingBadge: '3 New',
-            onTap: () {
-              context.showSnackBar(
-                'Tính năng chứng chỉ sẽ mở khi bạn hoàn thành khóa học',
-              );
-            },
-          ),
-          const _MenuDivider(),
-
-          // 2. Gói thành viên & Nâng cấp PLUS
-          _MenuTile(
-            icon: Icons.auto_awesome_rounded,
-            iconBgColor: const Color(0xFFFEF3C7),
-            iconColor: const Color(0xFFD97706),
-            title: isPlus ? 'Gói Thành Viên PLUS' : 'Nâng cấp NextUnity PLUS',
-            subtitle: isPlus
-                ? 'Đang hoạt động (Không giới hạn tính năng)'
-                : 'Thanh toán tự động qua VietQR',
-            trailingBadge: isPlus ? 'ACTIVE' : 'HOT',
-            badgeBgColor: isPlus
-                ? const Color(0xFFECFDF5)
-                : const Color(0xFFFEF3C7),
-            badgeTextColor: isPlus
-                ? const Color(0xFF059669)
-                : const Color(0xFFB45309),
-            onTap: () => context.push(AppRoute.upgradePlus.path),
-          ),
-          const _MenuDivider(),
-
-          // 3. Learning Goals & Streak
-          _MenuTile(
-            icon: Icons.flag_rounded,
-            iconBgColor: const Color(0xFFEEF2FF),
-            iconColor: const Color(0xFF4F46E5),
-            title: 'Learning Goals & Streak',
-            subtitle: 'Mục tiêu tuần: 80% hoàn thành',
-            trailingBadge: '80%',
-            badgeBgColor: const Color(0xFFEEF2FF),
-            badgeTextColor: const Color(0xFF4F46E5),
-            onTap: () {
-              context.showSnackBar(
-                'Chuỗi streak hiện tại: ${user?.streak ?? 0} ngày 🔥',
-              );
-            },
-          ),
-          const _MenuDivider(),
-
-          // 4. Saved & Downloads
-          _MenuTile(
-            icon: Icons.bookmark_rounded,
-            iconBgColor: const Color(0xFFECFDF5),
-            iconColor: const Color(0xFF059669),
-            title: 'Saved & Downloads',
-            subtitle: 'Tài liệu và bài giảng ngoại tuyến',
-            trailingBadge: '18 files',
-            badgeBgColor: const Color(0xFFECFDF5),
-            badgeTextColor: const Color(0xFF047857),
-            onTap: () {
-              context.showSnackBar('Đang đồng bộ tài liệu ngoại tuyến');
-            },
-          ),
-          const _MenuDivider(),
-
-          // 5. Account & Security
-          _MenuTile(
-            icon: Icons.shield_outlined,
-            iconBgColor: const Color(0xFFF1F5F9),
-            iconColor: const Color(0xFF475569),
-            title: 'Account & Security',
-            subtitle: 'Đổi mật khẩu, quyền riêng tư',
-            onTap: () => context.push(AppRoute.changePassword.path),
-          ),
-          const _MenuDivider(),
-
-          // 6. Help & Support
-          _MenuTile(
-            icon: Icons.support_agent_rounded,
-            iconBgColor: const Color(0xFFFAF5FF),
-            iconColor: const Color(0xFF9333EA),
-            title: 'Help & Support',
-            subtitle: 'FAQ, liên hệ trợ giúp NextUnity Studio',
-            onTap: () {
-              showAboutDialog(
-                context: context,
-                applicationName: 'NextUnity Studio',
-                applicationVersion: '2.4.0',
-                applicationLegalese:
-                    '© 2026 NextUnity Platform. All rights reserved.',
-              );
-            },
-          ),
-          const _MenuDivider(),
-
-          // 7. Đăng xuất (Logout) - Màu đỏ nhẹ nhàng
-          _MenuTile(
-            icon: Icons.logout_rounded,
-            iconBgColor: const Color(0xFFFEF2F2),
-            iconColor: const Color(0xFFDC2626),
-            title: 'Đăng xuất tài khoản',
-            subtitle: 'Thoát phiên đăng nhập trên thiết bị này',
-            titleColor: const Color(0xFFDC2626),
-            onTap: onLogout,
-          ),
-        ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Column(children: children),
       ),
     );
   }
@@ -152,98 +154,76 @@ class ProfileMenuList extends StatelessWidget {
 class _MenuTile extends StatelessWidget {
   const _MenuTile({
     required this.icon,
-    required this.iconBgColor,
     required this.iconColor,
+    required this.iconBgColor,
     required this.title,
     required this.subtitle,
     required this.onTap,
-    this.trailingBadge,
-    this.badgeBgColor = const Color(0xFFEFF6FF),
-    this.badgeTextColor = const Color(0xFF2563EB),
-    this.titleColor = const Color(0xFF0F172A),
+    this.titleColor = AppColors.textPrimary,
+    this.showChevron = true,
   });
 
   final IconData icon;
-  final Color iconBgColor;
   final Color iconColor;
+  final Color iconBgColor;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-  final String? trailingBadge;
-  final Color badgeBgColor;
-  final Color badgeTextColor;
   final Color titleColor;
+  final bool showChevron;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-        child: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: iconBgColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(icon, size: 20, color: iconColor),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w700,
-                      color: titleColor,
-                    ),
-                  ),
-                  const SizedBox(height: 1.5),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF94A3B8),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-            if (trailingBadge != null) ...[
-              const SizedBox(width: 6),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          child: Row(
+            children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: badgeBgColor,
+                  color: iconBgColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Text(
-                  trailingBadge!,
-                  style: TextStyle(
-                    fontSize: 10.5,
-                    fontWeight: FontWeight.w700,
-                    color: badgeTextColor,
-                  ),
+                child: Icon(icon, size: 20, color: iconColor),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: titleColor,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFF64748B),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              if (showChevron)
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  size: 20,
+                  color: Color(0xFF94A3B8),
+                ),
             ],
-            const SizedBox(width: 4),
-            const Icon(
-              Icons.chevron_right_rounded,
-              size: 18,
-              color: Color(0xFF94A3B8),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -255,12 +235,9 @@ class _MenuDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
-      height: 1,
-      thickness: 1,
-      indent: 62,
-      endIndent: 14,
-      color: Color(0xFFF1F5F9),
+    return const Padding(
+      padding: EdgeInsets.only(left: 64, right: 14),
+      child: Divider(height: 1, thickness: 0.8, color: Color(0xFFF1F5F9)),
     );
   }
 }

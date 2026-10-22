@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class VietQrDisplayCard extends StatelessWidget {
   const VietQrDisplayCard({
@@ -34,7 +35,7 @@ class VietQrDisplayCard extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.qr_code_2_rounded,
-                    color: Color(0xFF2563EB),
+                    color: AppColors.primary,
                     size: 16,
                   ),
                   SizedBox(width: 4),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Card listing all exclusive benefits and features of NextUnity Plus.
 class PlusBenefitsCard extends StatelessWidget {
@@ -42,10 +43,10 @@ class PlusBenefitsCard extends StatelessWidget {
                   vertical: 2.5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
+                  color: const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: const Color(0xFFDBEAFE),
+                    color: const Color(0xFFE2E8F0),
                   ),
                 ),
                 child: const Row(
@@ -53,7 +54,7 @@ class PlusBenefitsCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.auto_awesome_rounded,
-                      color: Color(0xFF2563EB),
+                      color: Color(0xFF0F172A),
                       size: 12,
                     ),
                     SizedBox(width: 4),
@@ -62,7 +63,7 @@ class PlusBenefitsCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF2563EB),
+                        color: Color(0xFF0F172A),
                       ),
                     ),
                   ],
@@ -77,9 +78,8 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 1: 100% Khóa học & Đề thi PE / FE
           _buildBenefitRow(
             icon: Icons.check_circle_rounded,
-            iconColor: const Color(0xFF059669),
-            iconBg: const Color(0xFFECFDF5),
-            iconBorder: const Color(0xFFA7F3D0),
+            iconBg: const Color(0xFFF1F5F9),
+            iconBorder: const Color(0xFFE2E8F0),
             title: '100% Khóa học & Đề thi PE / FE',
             subtitle:
                 'Truy cập toàn bộ video bài giảng, đề thi mẫu có đáp án chi tiết các môn SE, IA, GD.',
@@ -90,9 +90,8 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 2: Trợ lý AI giải bài tập
           _buildBenefitRow(
             icon: Icons.psychology_rounded,
-            iconColor: const Color(0xFF2563EB),
-            iconBg: const Color(0xFFEFF6FF),
-            iconBorder: const Color(0xFFDBEAFE),
+            iconBg: const Color(0xFFF1F5F9),
+            iconBorder: const Color(0xFFE2E8F0),
             title: 'Trợ lý AI giải bài tập không giới hạn',
             badge: 'GPT-4o',
             subtitle:
@@ -104,9 +103,8 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 3: Tải tài liệu & Slide bài giảng
           _buildBenefitRow(
             icon: Icons.cloud_download_rounded,
-            iconColor: const Color(0xFF2563EB),
-            iconBg: const Color(0xFFEFF6FF),
-            iconBorder: const Color(0xFFDBEAFE),
+            iconBg: const Color(0xFFF1F5F9),
+            iconBorder: const Color(0xFFE2E8F0),
             title: 'Tải tài liệu & Slide bài giảng tốc độ cao',
             subtitle:
                 'Tải trọn bộ SRS, Database Diagram, slide mẫu không giới hạn băng thông.',
@@ -117,9 +115,8 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 4: Huy hiệu Plus độc quyền
           _buildBenefitRow(
             icon: Icons.military_tech_rounded,
-            iconColor: const Color(0xFFD97706),
-            iconBg: const Color(0xFFFFFBEB),
-            iconBorder: const Color(0xFFFDE68A),
+            iconBg: const Color(0xFFF1F5F9),
+            iconBorder: const Color(0xFFE2E8F0),
             title: 'Huy hiệu Plus độc quyền trên cộng đồng',
             subtitle:
                 'Huy hiệu vàng kim lấp lánh nhận diện thành viên tích cực, bài viết được ưu tiên hiển thị.',
@@ -131,7 +128,7 @@ class PlusBenefitsCard extends StatelessWidget {
 
   Widget _buildBenefitRow({
     required IconData icon,
-    required Color iconColor,
+    Color iconColor = AppColors.iconPrimary,
     required Color iconBg,
     required Color iconBorder,
     required String title,
@@ -176,16 +173,16 @@ class PlusBenefitsCard extends StatelessWidget {
                           vertical: 1,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDBEAFE),
+                          color: const Color(0xFFDCFCE7),
                           borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: const Color(0xFFBFDBFE)),
+                          border: Border.all(color: const Color(0xFFA7F3D0)),
                         ),
                         child: Text(
                           badge,
                           style: const TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF1D4ED8),
+                            color: Color(0xFF166534),
                           ),
                         ),
                       ),

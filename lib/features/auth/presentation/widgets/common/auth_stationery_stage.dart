@@ -22,10 +22,10 @@ class AuthStationeryStage extends StatelessWidget {
   const AuthStationeryStage({
     super.key,
     required this.child,
-    this.showPaperPlane = true,
-    this.showPen = true,
-    this.showPushPin = true,
-    this.showStickyNote = true,
+    this.showPaperPlane = false,
+    this.showPen = false,
+    this.showPushPin = false,
+    this.showStickyNote = false,
     this.stickyNoteText = '',
     this.cardWidth,
     this.penTop,
@@ -97,18 +97,13 @@ class AuthStationeryStage extends StatelessWidget {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                // Thẻ Card nét đứt
+                // Thẻ Card ApSkil
                 AuthCard(
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF3669A3).withValues(alpha: 0.24),
-                      blurRadius: 36,
-                      offset: const Offset(0, 18),
-                    ),
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
+                      color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
                     ),
                   ],
                   child: child,

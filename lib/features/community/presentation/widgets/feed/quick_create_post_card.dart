@@ -71,14 +71,14 @@ class QuickCreatePostCard extends ConsumerWidget {
             children: [
               _QuickActionItem(
                 icon: Icons.help_outline_rounded,
-                iconColor: const Color(0xFFF43F5E),
+                iconColor: AppColors.iconPrimary,
                 label: 'Đặt câu hỏi',
                 onTap: () => context.push('/community/create-post'),
               ),
               Container(width: 1, height: 16, color: const Color(0xFFE2E8F0)),
               _QuickActionItem(
                 icon: Icons.tag_rounded,
-                iconColor: AppColors.primary,
+                iconColor: AppColors.iconPrimary,
                 label: 'Gắn môn học',
                 onTap: () => context.push('/community/create-post'),
               ),
@@ -95,7 +95,7 @@ class QuickCreatePostCard extends ConsumerWidget {
     if (avatarUrl != null && avatarUrl.isNotEmpty) {
       return CircleAvatar(
         radius: 18,
-        backgroundColor: const Color(0xFF3D5AFE),
+        backgroundColor: AppColors.primary,
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
       );
@@ -107,7 +107,7 @@ class QuickCreatePostCard extends ConsumerWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
+          colors: [AppColors.primary, Color(0xFF16A34A)],
         ),
       ),
       alignment: Alignment.center,

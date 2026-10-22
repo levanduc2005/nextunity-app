@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/presentation/widgets/change_password/password_criteria_box.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_text_field.dart';
 
@@ -162,12 +163,10 @@ class ChangePasswordStep2Form extends StatelessWidget {
                 flex: 3,
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2563EB),
+                    backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     elevation: 3,
-                    shadowColor: const Color(
-                      0xFF2563EB,
-                    ).withValues(alpha: 0.35),
+                    shadowColor: AppColors.primary.withValues(alpha: 0.35),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),

@@ -199,7 +199,7 @@ class EditProfileForm extends StatelessWidget {
               const Positioned(
                 top: -2,
                 right: 2,
-                child: ProfileStickyBadge(title: 'Sửa Đổi ✦'),
+                child: ProfileStickyBadge(title: 'Sửa Đổi'),
               ),
             ],
           ),

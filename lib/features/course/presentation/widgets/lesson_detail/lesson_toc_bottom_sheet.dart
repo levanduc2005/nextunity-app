@@ -97,39 +97,50 @@ class LessonTocBottomSheet extends StatelessWidget {
                       ),
                       ...mod.lessons.map((lesson) {
                         final isCurrent = lesson.id == currentLessonId;
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          leading: lesson.isCompleted
-                              ? const Icon(
-                                  Icons.check_circle,
-                                  color: Color(0xFF10B981),
-                                  size: 20,
-                                )
-                              : (isCurrent
-                                    ? const Icon(
-                                        Icons.play_circle_fill,
-                                        color: AppColors.primary,
-                                        size: 20,
-                                      )
-                                    : const Icon(
-                                        Icons.radio_button_unchecked,
-                                        color: Colors.grey,
-                                        size: 20,
-                                      )),
-                          title: Text(
-                            lesson.title,
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: isCurrent
-                                  ? FontWeight.w800
-                                  : FontWeight.w500,
-                              color: isCurrent
-                                  ? AppColors.primary
-                                  : const Color(0xFF1E293B),
-                            ),
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 4),
+                          decoration: BoxDecoration(
+                            color: isCurrent
+                                ? AppColors.primaryContainer
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          onTap: () => onSelectLesson(lesson),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                            ),
+                            dense: true,
+                            leading: lesson.isCompleted
+                                ? const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: AppColors.primary,
+                                    size: 20,
+                                  )
+                                : (isCurrent
+                                      ? const Icon(
+                                          Icons.play_circle_fill_rounded,
+                                          color: AppColors.primary,
+                                          size: 20,
+                                        )
+                                      : const Icon(
+                                          Icons.radio_button_unchecked,
+                                          color: Color(0xFF94A3B8),
+                                          size: 18,
+                                        )),
+                            title: Text(
+                              lesson.title,
+                              style: TextStyle(
+                                fontSize: 12.5,
+                                fontWeight: isCurrent
+                                    ? FontWeight.w800
+                                    : FontWeight.w600,
+                                color: isCurrent
+                                    ? const Color(0xFF166534)
+                                    : const Color(0xFF1E293B),
+                              ),
+                            ),
+                            onTap: () => onSelectLesson(lesson),
+                          ),
                         );
                       }),
                     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/profile/presentation/widgets/common/profile_top_circle_button.dart';
 
 /// Top App Bar linh hoạt giữa chế độ Xem hồ sơ và chế độ Chỉnh sửa hồ sơ
@@ -65,7 +66,7 @@ class EditProfileTopBar extends StatelessWidget {
           // Nút góc trên: Sửa (chế độ xem) hoặc Lưu nhanh (chế độ sửa)
           ProfileTopCircleButton(
             icon: isEditing ? Icons.check_rounded : Icons.edit_outlined,
-            iconColor: const Color(0xFF2563EB),
+            iconColor: AppColors.primary,
             tooltip: isEditing ? 'Lưu' : 'Chỉnh sửa',
             onTap: isEditing ? (isUpdating ? () {} : onSave) : onStartEdit,
           ),

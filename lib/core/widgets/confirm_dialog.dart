@@ -71,10 +71,10 @@ class _NextUnityConfirmDialog extends StatelessWidget {
         : AppColors.primary;
     final outerRingColor = isDestructive
         ? const Color(0xFFFEF2F2)
-        : const Color(0xFFEFF6FF);
+        : AppColors.primaryContainer;
     final innerRingColor = isDestructive
         ? const Color(0xFFFEE2E2)
-        : const Color(0xFFDBEAFE);
+        : AppColors.primaryBorder;
 
     return Center(
       child: Material(

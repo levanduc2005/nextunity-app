@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
+/// Thanh hành động dính dưới màn hình chuẩn phong cách ApSkil (Dual-Action Bottom Bar)
+/// Bao gồm 2 nút bấm song song đặc trưng của ApSkil:
+/// - Nút phụ bên trái: "Xem giáo trình" (Lihat materi) kèm icon mắt xem
+/// - Nút chính bên phải: "Đăng ký học ngay" (Beli kelas) / "Vào học ngay" (Mulai belajar) màu xanh lá ApSkil
 class CourseDetailBottomBar extends StatelessWidget {
   const CourseDetailBottomBar({
     super.key,
     required this.isEnrolled,
     required this.isEnrolling,
     required this.onTapPrimary,
+    this.onTapCurriculum,
     this.isCompleted = false,
     this.isPremium = false,
     this.isUserPlus = false,
@@ -19,155 +24,139 @@ class CourseDetailBottomBar extends StatelessWidget {
   final bool isPremium;
   final bool isUserPlus;
   final VoidCallback onTapPrimary;
+  final VoidCallback? onTapCurriculum;
   final String lessonLabel;
 
   @override
   Widget build(BuildContext context) {
-    final String topLabel;
-    final String subLabel;
-    final String buttonLabel;
+    final String primaryButtonLabel;
+    final IconData primaryIcon;
 
     if (isCompleted) {
-      topLabel = 'ĐÃ HOÀN THÀNH';
-      subLabel = 'Bạn đã hoàn thành tất cả bài học';
-      buttonLabel = 'Ôn tập lại';
+      primaryButtonLabel = 'Ôn tập bài học';
+      primaryIcon = Icons.replay_rounded;
     } else if (isEnrolled) {
-      topLabel = 'ĐÃ KÍCH HOẠT';
-      subLabel = lessonLabel;
-      buttonLabel = 'Vào học ngay';
+      primaryButtonLabel = 'Vào học ngay';
+      primaryIcon = Icons.arrow_forward_rounded;
     } else if (isPremium) {
-      topLabel = 'NEXTUNITY PLUS';
-      subLabel = isUserPlus
-          ? 'Quyền lợi Plus khả dụng'
-          : 'Yêu cầu tài khoản Plus';
-      buttonLabel = isUserPlus ? 'Đăng ký ngay' : 'Nâng cấp Plus';
+      primaryButtonLabel = isUserPlus ? 'Đăng ký ngay' : 'Nâng cấp Plus';
+      primaryIcon = isUserPlus ? Icons.check_rounded : Icons.workspace_premium_rounded;
     } else {
-      topLabel = 'CHƯƠNG TRÌNH FPT';
-      subLabel = 'Miễn phí cho sinh viên';
-      buttonLabel = 'Đăng ký học ngay';
+      primaryButtonLabel = 'Bắt đầu học';
+      primaryIcon = Icons.check_rounded;
     }
 
     return SafeArea(
       top: false,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.94),
-          borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          color: Colors.white,
+          border: const Border(
+            top: BorderSide(color: Color(0xFFE2E8F0)),
+          ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0F172A).withValues(alpha: 0.12),
-              blurRadius: 24,
-              offset: const Offset(0, 8),
+              color: const Color(0xFF0F172A).withValues(alpha: 0.06),
+              blurRadius: 16,
+              offset: const Offset(0, -4),
             ),
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // 1. Nút phụ bên trái chuẩn ApSkil: 'Xem giáo trình' (Lihat materi)
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
+              flex: 4,
+              child: SizedBox(
+                height: 48,
+                child: OutlinedButton(
+                  onPressed: onTapCurriculum,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFF0F172A),
+                    side: const BorderSide(color: Color(0xFFCBD5E1)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isEnrolled
-                              ? const Color(0xFF10B981)
-                              : (isPremium
-                                    ? const Color(0xFFF59E0B)
-                                    : AppColors.primary),
-                        ),
+                      Icon(
+                        Icons.visibility_outlined,
+                        size: 16,
+                        color: Color(0xFF0F172A),
                       ),
-                      const SizedBox(width: 5),
-                      Text(
-                        topLabel,
-                        style: TextStyle(
-                          fontSize: 9.5,
-                          fontWeight: FontWeight.w900,
-                          color: isEnrolled
-                              ? const Color(0xFF059669)
-                              : (isPremium
-                                    ? const Color(0xFFD97706)
-                                    : AppColors.primary),
-                          letterSpacing: 0.5,
+                      SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
+                          'Giáo trình',
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF0F172A),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    subLabel,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF0F172A),
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                ),
               ),
             ),
-            const SizedBox(width: 12),
-            InkWell(
-              onTap: isEnrolling ? null : onTapPrimary,
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                height: 42,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF3D5AFE), Color(0xFF2563EB)],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF3D5AFE).withValues(alpha: 0.35),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
+            const SizedBox(width: 10),
+
+            // 2. Nút chính bên phải chuẩn ApSkil: 'Bắt đầu học' (Beli kelas / Mulai belajar)
+            Expanded(
+              flex: 6,
+              child: SizedBox(
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: isEnrolling ? null : onTapPrimary,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  ],
-                ),
-                child: isEnrolling
-                    ? const Center(
-                        child: SizedBox(
-                          width: 18,
-                          height: 18,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                  ),
+                  child: isEnrolling
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
-                            ),
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
-                        ),
-                      )
-                    : Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            buttonLabel,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                primaryButtonLabel,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Icon(
+                              primaryIcon,
+                              size: 16,
                               color: Colors.white,
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          const Icon(
-                            Icons.arrow_forward_rounded,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                ),
               ),
             ),
           ],

@@ -120,7 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginEmailSubtitle =>
-      'Sign in to access your AI study sets, courses, and streak.';
+      'Sign in to access your AI study sets and personalized courses.';
 
   @override
   String get emailRequired => 'Please enter your email address.';

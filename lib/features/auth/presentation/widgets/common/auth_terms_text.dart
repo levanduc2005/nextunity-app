@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Đoạn văn bản Điều khoản & Chính sách bảo mật (Terms of Service & Privacy Policy).
 class AuthTermsText extends StatelessWidget {
@@ -13,39 +14,39 @@ class AuthTermsText extends StatelessWidget {
       textAlign: TextAlign.center,
       text: TextSpan(
         style: const TextStyle(
-          fontSize: 11.5,
-          color: Color(0xFF64748B),
-          height: 1.4,
+          fontSize: 12,
+          color: Color(0xFF94A3B8),
+          height: 1.45,
         ),
         children: [
-          const TextSpan(text: 'By Creating An Account, You Agree To Our\n'),
+          const TextSpan(text: 'Bằng việc tiếp tục, bạn đồng ý với '),
           WidgetSpan(
             alignment: PlaceholderAlignment.baseline,
             baseline: TextBaseline.alphabetic,
             child: GestureDetector(
               onTap: onTermsTap,
               child: const Text(
-                'Terms Of Service',
+                'Điều khoản',
                 style: TextStyle(
-                  color: Color(0xFF0284C7),
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w600,
-                  fontSize: 11.5,
+                  fontSize: 12,
                 ),
               ),
             ),
           ),
-          const TextSpan(text: ' And '),
+          const TextSpan(text: ' & '),
           WidgetSpan(
             alignment: PlaceholderAlignment.baseline,
             baseline: TextBaseline.alphabetic,
             child: GestureDetector(
               onTap: onPrivacyTap,
               child: const Text(
-                'Privacy Policy',
+                'Chính sách quyền riêng tư',
                 style: TextStyle(
-                  color: Color(0xFF0284C7),
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w600,
-                  fontSize: 11.5,
+                  fontSize: 12,
                 ),
               ),
             ),

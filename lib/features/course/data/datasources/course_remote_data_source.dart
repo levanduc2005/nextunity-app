@@ -15,6 +15,8 @@ abstract interface class CourseRemoteDataSource {
     String? search,
   });
 
+  Future<List<CourseModel>> getPopularCourses({int limit = 5});
+
   Future<List<EnrollmentModel>> getMyEnrollments();
 
   Future<CourseModel> getCourseDetail(String courseId);
@@ -104,6 +106,28 @@ class CourseRemoteDataSourceImpl implements CourseRemoteDataSource {
         list = data['content'] as List<dynamic>;
       } else if (data is List) {
         list = data;
+      }
+
+      return list
+          .map((item) => CourseModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<CourseModel>> getPopularCourses({int limit = 5}) {
+    return guardApiCall(() async {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/courses/popular',
+        queryParameters: {'limit': limit},
+      );
+
+      final data = response.data?['data'];
+      List<dynamic> list = [];
+      if (data is List) {
+        list = data;
+      } else if (data is Map<String, dynamic> && data['content'] is List) {
+        list = data['content'] as List<dynamic>;
       }
 
       return list

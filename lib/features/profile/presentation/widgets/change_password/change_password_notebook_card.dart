@@ -63,7 +63,7 @@ class ChangePasswordNotebookCard extends StatelessWidget {
         const Positioned(
           top: -2,
           right: 2,
-          child: ProfileStickyBadge(title: 'Bảo Mật ✦'),
+          child: ProfileStickyBadge(title: 'Bảo Mật'),
         ),
       ],
     );

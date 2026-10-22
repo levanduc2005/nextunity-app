@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
 import 'package:rental_car/features/profile/presentation/widgets/common/image_picker_bottom_sheet.dart';
@@ -53,13 +54,13 @@ class ProfileAvatarBadge extends ConsumerWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: const LinearGradient(
-              colors: [Color(0xFF2563EB), Color(0xFF60A5FA), Color(0xFF38BDF8)],
+              colors: [AppColors.primary, AppColors.accent, AppColors.primaryLight],
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF2563EB).withValues(alpha: 0.28),
+                color: AppColors.primary.withValues(alpha: 0.28),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -70,7 +71,7 @@ class ProfileAvatarBadge extends ConsumerWidget {
             height: radius * 2,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFFEFF6FF),
+              color: const Color(0xFFDCFCE7),
               border: Border.all(color: Colors.white, width: 2.5),
             ),
             child: ClipOval(
@@ -132,7 +133,7 @@ class ProfileAvatarBadge extends ConsumerWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                  colors: [AppColors.primary, Color(0xFF15803D)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -171,14 +172,14 @@ class _FallbackAvatar extends StatelessWidget {
         : 'U';
 
     return Container(
-      color: const Color(0xFFDBEAFE),
+      color: const Color(0xFFDCFCE7),
       child: Center(
         child: Text(
           initial,
           style: TextStyle(
             fontSize: radius * 0.75,
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF1E40AF),
+            color: const Color(0xFF166534),
           ),
         ),
       ),

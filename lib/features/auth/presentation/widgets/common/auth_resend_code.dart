@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Widget đếm ngược và gửi lại mã OTP (Resend Code).
 class AuthResendCode extends StatelessWidget {
@@ -36,7 +37,7 @@ class AuthResendCode extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
                 color: canResend
-                    ? const Color(0xFF2563EB)
+                    ? AppColors.primary
                     : const Color(0xFF94A3B8),
               ),
               children: [

@@ -28,21 +28,26 @@ class CourseSyllabusTabView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Lộ trình học tập (Syllabus)',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w900,
-                color: Color(0xFF0F172A),
-                letterSpacing: -0.3,
+            const Expanded(
+              child: Text(
+                'Giáo trình bài học',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF0F172A),
+                  letterSpacing: -0.3,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
+            const SizedBox(width: 8),
             Text(
-              '${modules.length} Modules',
+              '${modules.length} chương',
               style: const TextStyle(
-                fontSize: 11.5,
+                fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF94A3B8),
+                color: Color(0xFF64748B),
               ),
             ),
           ],

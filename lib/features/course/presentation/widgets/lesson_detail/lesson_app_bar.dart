@@ -5,6 +5,7 @@ import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_toc_bottom_sheet.dart';
 
+/// App Bar chi tiết bài học chuẩn phong cách ApSkil (Materi Kelas)
 class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
   const LessonAppBar({
     super.key,
@@ -12,12 +13,14 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.course,
     required this.modules,
     required this.onSelectLesson,
+    this.onFavorite,
   });
 
   final LessonEntity lesson;
   final CourseEntity? course;
   final List<ModuleEntity> modules;
   final ValueChanged<LessonEntity> onSelectLesson;
+  final VoidCallback? onFavorite;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -27,24 +30,22 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
+      scrolledUnderElevation: 1,
       surfaceTintColor: Colors.transparent,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-      ),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-        color: const Color(0xFF1E293B),
+        color: const Color(0xFF0F172A),
         onPressed: () => context.pop(),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            course?.code ?? 'KHÓA HỌC',
+            course?.code.isNotEmpty == true ? course!.code : 'BÀI HỌC',
             style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF94A3B8),
+              color: Color(0xFF64748B),
               letterSpacing: 0.5,
             ),
           ),
@@ -53,8 +54,8 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
+              fontSize: 14,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF0F172A),
             ),
           ),
@@ -62,8 +63,14 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.menu_book_rounded, size: 20),
-          color: const Color(0xFF475569),
+          icon: const Icon(Icons.favorite_border_rounded, size: 20),
+          color: const Color(0xFF0F172A),
+          tooltip: 'Yêu thích bài học',
+          onPressed: onFavorite,
+        ),
+        IconButton(
+          icon: const Icon(Icons.format_list_bulleted_rounded, size: 22),
+          color: const Color(0xFF0F172A),
           tooltip: 'Mục lục bài học',
           onPressed: () {
             LessonTocBottomSheet.show(
@@ -74,6 +81,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
           },
         ),
+        const SizedBox(width: 4),
       ],
     );
   }

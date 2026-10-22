@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Hàng 2 nút Hủy và Lưu Thay Đổi trên trang chỉnh sửa thông tin
 class EditProfileActionButtons extends StatelessWidget {
@@ -46,10 +47,10 @@ class EditProfileActionButtons extends StatelessWidget {
           flex: 3,
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
+              backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               elevation: 3,
-              shadowColor: const Color(0xFF2563EB).withValues(alpha: 0.35),
+              shadowColor: AppColors.primary.withValues(alpha: 0.35),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),

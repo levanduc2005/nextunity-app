@@ -8,6 +8,7 @@ class CoursesState {
     this.activeTab = 0, // 0: Khóa học của tôi, 1: Khám phá tất cả
     this.myEnrollments = const [],
     this.allCourses = const [],
+    this.popularCourses = const [],
     this.categories = const {},
     this.difficulties = const {},
     this.selectedCategory, // null nghĩa là 'Tất cả'
@@ -21,6 +22,7 @@ class CoursesState {
   final int activeTab;
   final List<EnrollmentEntity> myEnrollments;
   final List<CourseEntity> allCourses;
+  final List<CourseEntity> popularCourses;
   final Map<String, String> categories;
   final Map<String, String> difficulties;
   final String? selectedCategory;
@@ -37,6 +39,7 @@ class CoursesState {
     int? activeTab,
     List<EnrollmentEntity>? myEnrollments,
     List<CourseEntity>? allCourses,
+    List<CourseEntity>? popularCourses,
     Map<String, String>? categories,
     Map<String, String>? difficulties,
     String? selectedCategory,
@@ -53,6 +56,7 @@ class CoursesState {
       activeTab: activeTab ?? this.activeTab,
       myEnrollments: myEnrollments ?? this.myEnrollments,
       allCourses: allCourses ?? this.allCourses,
+      popularCourses: popularCourses ?? this.popularCourses,
       categories: categories ?? this.categories,
       difficulties: difficulties ?? this.difficulties,
       selectedCategory: clearCategory
@@ -94,10 +98,14 @@ class CoursesController extends Notifier<CoursesState> {
           search: state.searchQuery.isEmpty ? null : state.searchQuery,
         );
 
+    final popularResult =
+        await ref.read(getPopularCoursesUseCaseProvider).call();
+
     List<EnrollmentEntity> enrollments = [];
     Map<String, String> categories = {};
     Map<String, String> difficulties = {};
     List<CourseEntity> courses = [];
+    List<CourseEntity> popularCourses = [];
     String? error;
 
     enrollmentsResult.when(
@@ -118,9 +126,17 @@ class CoursesController extends Notifier<CoursesState> {
       err: (failure) => error ??= failure.message,
     );
 
+    popularResult.when(
+      ok: (data) => popularCourses = data,
+      err: (_) {},
+    );
+
     state = state.copyWith(
       myEnrollments: enrollments,
       allCourses: courses,
+      popularCourses: popularCourses.isNotEmpty
+          ? popularCourses
+          : courses.take(5).toList(),
       categories: categories,
       difficulties: difficulties,
       isLoading: false,

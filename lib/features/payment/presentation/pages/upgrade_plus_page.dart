@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/payment/domain/entities/subscription_plan_entity.dart';
 import 'package:rental_car/features/payment/presentation/pages/payment_page.dart';
@@ -102,7 +103,7 @@ class _UpgradePlusPageState extends ConsumerState<UpgradePlusPage>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: const Color(0xFFE6F0FC),
+        backgroundColor: AppColors.background,
         body: Stack(
           children: [
             const PlusAmbientBackground(),

@@ -44,7 +44,7 @@ class PushPinWidget extends StatelessWidget {
 
 /// Giấy note vàng kèm kẹp giấy đỏ trang trí góc trên bên phải
 class ProfileStickyBadge extends StatelessWidget {
-  const ProfileStickyBadge({super.key, this.title = 'Hồ Sơ ✦'});
+  const ProfileStickyBadge({super.key, this.title = 'Hồ Sơ'});
 
   final String title;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Origami họa tiết hình học nền cho giao diện profile
 class OrigamiDecorPainter extends CustomPainter {
@@ -6,9 +7,9 @@ class OrigamiDecorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint1 = Paint()..color = const Color(0xFF93C5FD);
-    final paint2 = Paint()..color = const Color(0xFF60A5FA);
-    final paint3 = Paint()..color = const Color(0xFF3B82F6);
+    final paint1 = Paint()..color = AppColors.primaryBorder;
+    final paint2 = Paint()..color = const Color(0xFF86EFAC);
+    final paint3 = Paint()..color = AppColors.primaryLight;
 
     final path1 = Path()
       ..moveTo(size.width * 0.15, size.height * 0.45)

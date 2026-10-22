@@ -17,8 +17,8 @@ class AiStudySetPage extends ConsumerWidget {
         child: Column(
           children: [
             MainTabHeader(
-              subtitle: 'AI Study Set • Học liệu thông minh',
-              streak: user?.streak,
+              displayName: user?.displayName,
+              avatarUrl: user?.avatarUrl,
             ),
             const Expanded(
               child: UnderDevelopmentView(

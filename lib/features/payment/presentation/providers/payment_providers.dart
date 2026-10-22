@@ -6,6 +6,7 @@ import 'package:rental_car/features/payment/domain/entities/subscription_plan_en
 import 'package:rental_car/features/payment/domain/repositories/payment_repository.dart';
 import 'package:rental_car/features/payment/domain/usecases/create_payment_use_case.dart';
 import 'package:rental_car/features/payment/domain/usecases/get_available_plans_use_case.dart';
+import 'package:rental_car/features/payment/domain/usecases/subscribe_payment_status_use_case.dart';
 import 'package:rental_car/features/payment/domain/usecases/verify_payment_use_case.dart';
 
 export 'payment_controller.dart';
@@ -35,6 +36,12 @@ final createPaymentUseCaseProvider = Provider<CreatePaymentUseCase>((ref) {
 final verifyPaymentUseCaseProvider = Provider<VerifyPaymentUseCase>((ref) {
   final repo = ref.watch(paymentRepositoryProvider);
   return VerifyPaymentUseCase(repo);
+});
+
+final subscribePaymentStatusUseCaseProvider =
+    Provider<SubscribePaymentStatusUseCase>((ref) {
+  final repo = ref.watch(paymentRepositoryProvider);
+  return SubscribePaymentStatusUseCase(repo);
 });
 
 // --- Available Plans Provider ---

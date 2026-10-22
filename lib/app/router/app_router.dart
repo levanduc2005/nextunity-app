@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/ai_study_set/presentation/pages/ai_result_page.dart';
 import 'package:rental_car/features/ai_study_set/presentation/pages/ai_study_set_page.dart';
 import 'package:rental_car/features/ai_study_set/presentation/pages/ai_upload_page.dart';
@@ -99,7 +100,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Color(0xFF2563EB),
+                      AppColors.primary,
                     ),
                   ),
                 ),

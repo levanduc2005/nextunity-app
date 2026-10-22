@@ -38,7 +38,7 @@ class PaymentTrustBadges extends StatelessWidget {
           children: [
             Icon(
               Icons.bolt_rounded,
-              color: Color(0xFF2563EB),
+              color: Color(0xFF059669),
               size: 16,
             ),
             SizedBox(width: 3),

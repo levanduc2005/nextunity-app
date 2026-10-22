@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Card displaying bank transfer details with one-click copy buttons.
 class BankTransferInfoCard extends StatelessWidget {
@@ -90,7 +91,7 @@ class BankTransferInfoCard extends StatelessWidget {
                   color: isWarning
                       ? const Color(0xFF92400E)
                       : (isBold
-                          ? const Color(0xFF2563EB)
+                          ? AppColors.primary
                           : const Color(0xFF0F172A)),
                 ),
               ),

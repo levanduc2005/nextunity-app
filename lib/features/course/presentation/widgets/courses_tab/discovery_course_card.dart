@@ -30,7 +30,7 @@ class DiscoveryCourseCard extends StatelessWidget {
           border: Border.all(color: const Color(0xFFF1F5F9)),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF1E3A8A).withValues(alpha: 0.04),
+              color: const Color(0xFF0F172A).withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 3),
             ),
@@ -142,16 +142,16 @@ class DiscoveryCourseCard extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFEFF6FF),
+                          color: AppColors.primaryContainer,
                           borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: const Color(0xFFBFDBFE)),
+                          border: Border.all(color: AppColors.primaryBorder),
                         ),
                         child: Text(
                           code,
                           style: const TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF1D4ED8),
+                            color: AppColors.primaryForeground,
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -210,7 +210,7 @@ class DiscoveryCourseCard extends StatelessWidget {
 
                   const SizedBox(height: 4),
 
-                  // Row 3: Instructor & Total lessons
+                  // Row 3: Instructor
                   Row(
                     children: [
                       const Icon(
@@ -221,7 +221,7 @@ class DiscoveryCourseCard extends StatelessWidget {
                       const SizedBox(width: 3),
                       Expanded(
                         child: Text(
-                          '${course.creatorName ?? "Ban Đào Tạo FPT"} • ${course.totalLessons} bài',
+                          course.creatorName ?? 'Ban Đào Tạo FPT',
                           style: const TextStyle(
                             fontSize: 10.5,
                             color: Color(0xFF64748B),
@@ -236,25 +236,27 @@ class DiscoveryCourseCard extends StatelessWidget {
 
                   const SizedBox(height: 8),
 
-                  // Row 4: Rating & Action Button
+                  // Row 4: Module & Lesson count & Action Button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Rating
+                      // Lesson stats (Real data, no mock rating)
                       Row(
                         children: [
                           const Icon(
-                            Icons.star_rounded,
-                            size: 14,
-                            color: Color(0xFFF59E0B),
+                            Icons.auto_stories_outlined,
+                            size: 13,
+                            color: Color(0xFF64748B),
                           ),
-                          const SizedBox(width: 2),
+                          const SizedBox(width: 4),
                           Text(
-                            course.rating.toStringAsFixed(1),
+                            course.totalModules > 0
+                                ? '${course.totalModules} chương • ${course.totalLessons} bài'
+                                : '${course.totalLessons} bài học',
                             style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF334155),
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF64748B),
                             ),
                           ),
                         ],
@@ -268,8 +270,8 @@ class DiscoveryCourseCard extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: isEnrolled
-                              ? const Color(0xFFECFDF5)
-                              : const Color(0xFFEEF2FF),
+                              ? AppColors.primaryContainer
+                              : const Color(0xFFF1F5F9),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
@@ -311,7 +313,7 @@ class DiscoveryCourseCard extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1E3A8A), Color(0xFF312E81)],
+          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
         ),

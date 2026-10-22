@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Tiêu đề phân nhóm thông tin trên form hồ sơ
 class EditProfileSectionTitle extends StatelessWidget {
@@ -15,7 +16,7 @@ class EditProfileSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF2563EB)),
+        Icon(icon, size: 16, color: AppColors.iconPrimary),
         const SizedBox(width: 6),
         Text(
           title,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class BankAppGrid extends StatelessWidget {
   const BankAppGrid({
@@ -56,12 +57,12 @@ class BankAppGrid extends StatelessWidget {
                 duration: const Duration(milliseconds: 150),
                 decoration: BoxDecoration(
                   color: isBankSelected
-                      ? const Color(0xFFEFF6FF)
+                      ? const Color(0xFFDCFCE7)
                       : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isBankSelected
-                        ? const Color(0xFF2563EB)
+                        ? AppColors.primary
                         : const Color(0xFFE2E8F0),
                     width: isBankSelected ? 2 : 1,
                   ),
@@ -109,7 +110,7 @@ class BankAppGrid extends StatelessWidget {
                         right: 3,
                         child: CircleAvatar(
                           radius: 6,
-                          backgroundColor: Color(0xFF2563EB),
+                          backgroundColor: AppColors.primary,
                           child: Icon(
                             Icons.check,
                             color: Colors.white,
@@ -130,7 +131,7 @@ class BankAppGrid extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
+              backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 13),
               shape: RoundedRectangleBorder(

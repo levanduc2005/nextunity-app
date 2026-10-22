@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 
+/// Mục Giới thiệu môn học chuẩn phong cách ApSkil
+/// - Hiển thị mô tả thực tế của môn học
+/// - Thông số môn học thực tế từ NextUnity (Mã môn, Chuyên ngành, Cấp độ, Số chương & Bài học)
+/// - Thông tin Giảng viên / Người biên soạn thực tế nếu có (không mock)
 class CourseAboutSection extends StatelessWidget {
   const CourseAboutSection({super.key, required this.course});
 
@@ -8,135 +13,209 @@ class CourseAboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final description =
-        (course.description != null && course.description!.trim().isNotEmpty)
+    final hasCustomDescription =
+        course.description != null && course.description!.trim().isNotEmpty;
+    final description = hasCustomDescription
         ? course.description!
-        : 'Khóa học được thiết kế bám sát chương trình giảng dạy của Đại học FPT, cung cấp hệ thống bài học chi tiết, tài liệu slide và bài tập trắc nghiệm giúp sinh viên tự tin nắm vững kiến thức.';
+        : 'Môn học ${course.code.isNotEmpty ? course.code : "FPT"} thuộc chương trình đào tạo Đại học FPT, cung cấp hệ thống bài giảng và tài liệu học tập bám sát giáo trình chuyên ngành.';
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF3D5AFE).withValues(alpha: 0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+    final hasCreator =
+        course.creatorName != null && course.creatorName!.trim().isNotEmpty;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 1. Tiêu đề mục "Giới thiệu môn học" & Nội dung mô tả
+        const Text(
+          'Giới thiệu môn học',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF0F172A),
+            letterSpacing: -0.3,
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Section Title
-          const Row(
+        ),
+        const SizedBox(height: 8),
+
+        Text(
+          description,
+          style: const TextStyle(
+            fontSize: 13,
+            height: 1.6,
+            color: Color(0xFF475569),
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // 2. Thẻ tóm tắt thông số môn học thực tế chuẩn ApSkil
+        Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+          ),
+          child: Column(
             children: [
-              Icon(
-                Icons.info_outline_rounded,
-                size: 18,
-                color: Color(0xFF3D5AFE),
+              _buildInfoRow(
+                icon: Icons.code_rounded,
+                label: 'Mã môn học',
+                value: course.code.isNotEmpty ? course.code : 'Chưa cập nhật',
               ),
-              SizedBox(width: 8),
-              Text(
-                'Giới thiệu môn học',
-                style: TextStyle(
-                  fontSize: 14.5,
-                  fontWeight: FontWeight.w900,
-                  color: Color(0xFF0F172A),
-                  letterSpacing: -0.2,
-                ),
+              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              _buildInfoRow(
+                icon: Icons.category_outlined,
+                label: 'Chuyên ngành',
+                value: course.categoryName ?? course.category ?? 'Đại học FPT',
+              ),
+              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              _buildInfoRow(
+                icon: Icons.signal_cellular_alt_rounded,
+                label: 'Cấp độ',
+                value: course.difficultyName ??
+                    (course.difficulty == 'ADVANCED'
+                        ? 'Nâng cao'
+                        : (course.difficulty == 'INTERMEDIATE'
+                            ? 'Trung cấp'
+                            : 'Cơ bản')),
+              ),
+              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              _buildInfoRow(
+                icon: Icons.auto_stories_outlined,
+                label: 'Cấu trúc',
+                value: '${course.totalModules} chương • ${course.totalLessons} bài học',
               ),
             ],
           ),
-          const SizedBox(height: 10),
+        ),
 
-          // Description Paragraph from DB
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1.55,
-              color: Color(0xFF475569),
-              fontWeight: FontWeight.w500,
+        // 3. Thẻ Giảng viên / Người biên soạn nếu có
+        if (hasCreator) ...[
+          const SizedBox(height: 20),
+          const Text(
+            'Giảng viên phụ trách',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0F172A),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
 
-          // Highlights Grid (Coursera Style with real metrics)
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
-              borderRadius: BorderRadius.circular(14),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E8F0)),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Row(
               children: [
-                Expanded(
-                  child: _buildHighlightItem(
-                    icon: Icons.category_rounded,
-                    label: 'Thể loại',
-                    value: course.categoryName ?? 'Môn học',
-                    color: const Color(0xFF059669),
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primaryContainer,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      course.creatorName!.trim().split(' ').last.substring(0, 1),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ),
                 ),
-                Container(width: 1, height: 36, color: const Color(0xFFE2E8F0)),
+                const SizedBox(width: 12),
                 Expanded(
-                  child: _buildHighlightItem(
-                    icon: Icons.menu_book_rounded,
-                    label: 'Nội dung',
-                    value: '${course.totalLessons} bài học',
-                    color: const Color(0xFF2563EB),
-                  ),
-                ),
-                Container(width: 1, height: 36, color: const Color(0xFFE2E8F0)),
-                Expanded(
-                  child: _buildHighlightItem(
-                    icon: Icons.signal_cellular_alt_rounded,
-                    label: 'Trình độ',
-                    value: course.difficultyName ?? course.difficulty,
-                    color: const Color(0xFFD97706),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              course.creatorName!,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                color: Color(0xFF0F172A),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(
+                            Icons.verified_rounded,
+                            size: 14,
+                            color: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'Người biên soạn • Giảng viên Đại học FPT',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF64748B),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
         ],
-      ),
+      ],
     );
   }
 
-  Widget _buildHighlightItem({
+  Widget _buildInfoRow({
     required IconData icon,
     required String label,
     required String value,
-    required Color color,
   }) {
-    return Column(
+    return Row(
       children: [
-        Icon(icon, size: 18, color: color),
-        const SizedBox(height: 4),
+        Icon(icon, size: 16, color: const Color(0xFF64748B)),
+        const SizedBox(width: 8),
         Text(
           label,
           style: const TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF94A3B8),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF64748B),
           ),
         ),
-        const SizedBox(height: 1),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+        const Spacer(),
+        Flexible(
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF0F172A),
+            ),
+            textAlign: TextAlign.end,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

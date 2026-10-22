@@ -45,7 +45,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
     if (isCompleted) {
       headerBorderColor = const Color(0xFFA7F3D0);
     } else if (isEnrolled) {
-      headerBorderColor = const Color(0xFFBFDBFE);
+      headerBorderColor = const Color(0xFFBBF7D0);
     }
 
     return Container(
@@ -59,7 +59,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF3D5AFE).withValues(alpha: 0.04),
+            color: const Color(0xFF0F172A).withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -208,8 +208,8 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
     Color itemBg = const Color(0xFFF8FAFC);
     Color itemBorder = const Color(0xFFF1F5F9);
     if (isActive) {
-      itemBg = const Color(0xFFEFF6FF);
-      itemBorder = const Color(0xFF93C5FD);
+      itemBg = const Color(0xFFF0FDF4);
+      itemBorder = const Color(0xFF86EFAC);
     }
 
     return Container(

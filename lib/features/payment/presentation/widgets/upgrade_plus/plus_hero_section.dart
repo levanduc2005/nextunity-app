@@ -110,7 +110,7 @@ class PlusHeroSection extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
-                color: Color(0xFFDBEAFE),
+                color: Color(0xFFDCFCE7),
                 height: 1.4,
                 fontWeight: FontWeight.w400,
               ),

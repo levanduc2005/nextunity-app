@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Central Material 3 theme definition.
 ///
 /// Both light and dark themes are derived from a single [seedColor] so the
 /// palette stays consistent. Tweak [seedColor] to re-brand the whole app.
 abstract final class AppTheme {
-  static const Color seedColor = Color(0xFF3D5AFE);
+  static const Color seedColor = AppColors.primary;
 
   static ThemeData light() => _base(Brightness.light);
   static ThemeData dark() => _base(Brightness.dark);
@@ -19,6 +20,9 @@ abstract final class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
+      iconTheme: const IconThemeData(
+        color: AppColors.iconPrimary,
+      ),
       appBarTheme: AppBarTheme(
         centerTitle: false,
         elevation: 0,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_text_field.dart';
 
-/// Form nhập liệu đăng nhập (Email/Password) bao gồm nút Sign In, Quên MK và Điều khoản.
+/// Form nhập liệu đăng nhập (Email/Password) chuẩn phong cách ApSkil EdTech.
 class LoginForm extends StatefulWidget {
   final void Function(String email, String password) onSignIn;
   final bool isLoading;
@@ -37,46 +39,62 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Tiêu đề Card
+          // 1. Nhãn & Ô nhập Email
           const Text(
-            'Sign In To Your Account',
-            textAlign: TextAlign.center,
+            'Email hoặc Mã sinh viên',
             style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
-              letterSpacing: -0.3,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 16),
-
-          // Trường Email / Username
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _emailController,
-            hintText: 'Email',
+            hintText: 'sinhvien@fpt.edu.vn',
             keyboardType: TextInputType.emailAddress,
+            prefixIcon: const Icon(
+              Icons.mail_outline_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Vui lòng nhập Email hoặc Username';
+                return 'Vui lòng nhập Email hoặc Mã sinh viên';
               }
               return null;
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
 
-          // Trường Password
+          // 2. Nhãn & Ô nhập Password
+          const Text(
+            'Mật khẩu',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
+            ),
+          ),
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _passwordController,
-            hintText: 'Password',
+            hintText: 'Nhập mật khẩu của bạn',
             obscureText: _obscurePassword,
+            prefixIcon: const Icon(
+              Icons.lock_outline_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscurePassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF818CF8),
+                color: const Color(0xFF94A3B8),
                 size: 20,
               ),
               onPressed: () {
@@ -92,35 +110,34 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 10),
 
-          // Nút Sign In Gradient
-          AuthGradientButton(
-            text: 'Sign In',
-            height: 44,
-            isLoading: widget.isLoading,
-            onPressed: _submit,
-          ),
-          const SizedBox(height: 12),
-
-          // Link Quên mật khẩu
-          GestureDetector(
-            onTap: () {
-              context.pushNamed(AppRoute.forgotPassword.name);
-            },
-            child: const Text(
-              'Forgot Password ?',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF0284C7),
+          // 3. Link Quên mật khẩu
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(AppRoute.forgotPassword.name);
+              },
+              child: const Text(
+                'Quên mật khẩu?',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
 
-          // Điều khoản & Chính sách
-          const AuthTermsText(),
+          // 4. Nút Đăng nhập ApSkil Green
+          AuthGradientButton(
+            text: 'Đăng nhập',
+            height: 50,
+            isLoading: widget.isLoading,
+            onPressed: _submit,
+          ),
         ],
       ),
     );

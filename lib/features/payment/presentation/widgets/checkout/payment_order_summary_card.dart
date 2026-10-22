@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class PaymentOrderSummaryCard extends StatelessWidget {
   const PaymentOrderSummaryCard({
@@ -41,7 +42,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                     const Icon(
                       Icons.workspace_premium_rounded,
                       size: 16,
-                      color: Color(0xFF2563EB),
+                      color: AppColors.primary,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -49,7 +50,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF2563EB),
+                        color: AppColors.primary,
                       ),
                     ),
                   ],

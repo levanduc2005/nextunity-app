@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rental_car/core/widgets/main_tab_header.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/nextunity_logo.dart';
+import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_header_card.dart';
-import 'package:rental_car/features/profile/presentation/widgets/overview/profile_stats_row.dart';
-import 'package:rental_car/features/profile/presentation/widgets/overview/profile_top_bar.dart';
 
 class _MockProfileController extends ProfileController {
   @override
@@ -29,21 +29,21 @@ void main() {
     isPlus: true,
   );
 
-  testWidgets('Test ProfileTopBar layout on 360px screen', (tester) async {
+  testWidgets('Test MainTabHeader layout on 360px screen', (tester) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 3.0; // 360 logical width
     addTearDown(() => tester.view.resetPhysicalSize());
 
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: Scaffold(body: ProfileTopBar())),
+        child: MaterialApp(home: Scaffold(body: MainTabHeader())),
       ),
     );
     await tester.pump();
-    expect(find.byType(ProfileTopBar), findsOneWidget);
+    expect(find.byType(MainTabHeader), findsOneWidget);
   });
 
-  testWidgets('Test ProfileTopBar layout on compact 320px screen', (
+  testWidgets('Test MainTabHeader layout on compact 320px screen', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(640, 1280);
@@ -52,11 +52,11 @@ void main() {
 
     await tester.pumpWidget(
       const ProviderScope(
-        child: MaterialApp(home: Scaffold(body: ProfileTopBar())),
+        child: MaterialApp(home: Scaffold(body: MainTabHeader())),
       ),
     );
     await tester.pump();
-    expect(find.byType(ProfileTopBar), findsOneWidget);
+    expect(find.byType(MainTabHeader), findsOneWidget);
   });
 
   testWidgets('Test ProfileHeaderCard layout on 360px with very long data', (
@@ -109,22 +109,6 @@ void main() {
     expect(find.byType(ProfileHeaderCard), findsOneWidget);
   });
 
-  testWidgets('Test ProfileStatsRow layout', (tester) async {
-    tester.view.physicalSize = const Size(1080, 2400);
-    tester.view.devicePixelRatio = 3.0;
-    addTearDown(() => tester.view.resetPhysicalSize());
-
-    await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
-          home: Scaffold(body: ProfileStatsRow(user: userLongData)),
-        ),
-      ),
-    );
-    await tester.pump();
-    expect(find.byType(ProfileStatsRow), findsOneWidget);
-  });
-
   testWidgets('Test NextUnityHeader layout', (tester) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 3.0;
@@ -135,5 +119,51 @@ void main() {
     );
     await tester.pump();
     expect(find.byType(NextUnityHeader), findsOneWidget);
+  });
+
+  testWidgets('Test LessonBottomBar layout on 360px screen', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 3.0;
+    addTearDown(() => tester.view.resetPhysicalSize());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          bottomNavigationBar: LessonBottomBar(
+            isCompleted: false,
+            isUpdating: false,
+            onTapPrevious: () {},
+            onToggleComplete: () {},
+            onTapNext: () {},
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.byType(LessonBottomBar), findsOneWidget);
+  });
+
+  testWidgets('Test LessonBottomBar layout on compact 320px screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(640, 1280);
+    tester.view.devicePixelRatio = 2.0; // 320 logical width
+    addTearDown(() => tester.view.resetPhysicalSize());
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          bottomNavigationBar: LessonBottomBar(
+            isCompleted: false,
+            isUpdating: false,
+            onTapPrevious: () {},
+            onToggleComplete: () {},
+            onTapNext: () {},
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.byType(LessonBottomBar), findsOneWidget);
   });
 }

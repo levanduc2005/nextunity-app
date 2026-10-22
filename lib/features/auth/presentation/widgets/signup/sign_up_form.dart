@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/core/utils/validators.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_text_field.dart';
 
-/// Form đăng ký tài khoản mới (Username, Email, Password, Confirm Password).
+/// Form đăng ký tài khoản mới (Họ tên, Email, Mật khẩu, Xác nhận mật khẩu) chuẩn ApSkil.
 class SignUpForm extends StatefulWidget {
   final void Function(String fullName, String email, String password) onSignUp;
   final bool isLoading;
@@ -46,25 +47,27 @@ class _SignUpFormState extends State<SignUpForm> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Tiêu đề form
+          // 1. Họ và tên
           const Text(
-            'Create Your Account',
+            'Họ và tên',
             style: TextStyle(
-              fontSize: 19,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF111827),
-              letterSpacing: -0.2,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 12),
-
-          // Họ và tên
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _fullNameController,
-            hintText: 'Full Name',
-            borderColor: const Color(0xFF5B6CD4),
+            hintText: 'Nguyễn Văn A',
+            prefixIcon: const Icon(
+              Icons.person_outline_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
                 return 'Vui lòng nhập họ và tên';
@@ -75,34 +78,60 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 14),
 
-          // Email
+          // 2. Email sinh viên
+          const Text(
+            'Email sinh viên',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
+            ),
+          ),
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _emailController,
-            hintText: 'Email',
+            hintText: 'sinhvien@fpt.edu.vn',
             keyboardType: TextInputType.emailAddress,
-            borderColor: const Color(0xFF5B6CD4),
+            prefixIcon: const Icon(
+              Icons.mail_outline_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             validator: (val) => AppValidators.email(
               val,
               requiredMessage: 'Vui lòng nhập email',
               invalidMessage: 'Email không hợp lệ',
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 14),
 
-          // Password
+          // 3. Mật khẩu
+          const Text(
+            'Mật khẩu',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
+            ),
+          ),
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _passwordController,
-            hintText: 'Password',
+            hintText: 'Tối thiểu 6 ký tự',
             obscureText: _obscurePassword,
-            borderColor: const Color(0xFF5B6CD4),
+            prefixIcon: const Icon(
+              Icons.lock_outline_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscurePassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF7988D8),
+                color: const Color(0xFF94A3B8),
                 size: 20,
               ),
               onPressed: () {
@@ -121,20 +150,33 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 14),
 
-          // Confirm Password
+          // 4. Xác nhận mật khẩu
+          const Text(
+            'Xác nhận mật khẩu',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF334155),
+            ),
+          ),
+          const SizedBox(height: 7),
           AuthTextField(
             controller: _confirmPasswordController,
-            hintText: 'Confirm Password',
+            hintText: 'Nhập lại mật khẩu',
             obscureText: _obscureConfirmPassword,
-            borderColor: const Color(0xFF5B6CD4),
+            prefixIcon: const Icon(
+              Icons.lock_reset_rounded,
+              size: 20,
+              color: Color(0xFF94A3B8),
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscureConfirmPassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF7988D8),
+                color: const Color(0xFF94A3B8),
                 size: 20,
               ),
               onPressed: () {
@@ -153,21 +195,15 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 20),
 
-          // Nút Sign Up Gradient
+          // 5. Nút Đăng ký tài khoản
           AuthGradientButton(
-            text: 'Sign Up',
+            text: 'Đăng ký tài khoản',
             isLoading: widget.isLoading,
-            height: 44,
-            gradientColors: const [Color(0xFF0D62D0), Color(0xFF518AD9)],
-            shadowColor: const Color(0xFF0D62D0),
+            height: 50,
             onPressed: _submit,
           ),
-          const SizedBox(height: 10),
-
-          // Điều khoản & Chính sách
-          const AuthTermsText(),
         ],
       ),
     );

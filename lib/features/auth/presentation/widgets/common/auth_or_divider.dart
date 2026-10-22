@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-/// Đường phân cách "Or" giữa Form và Social Logins.
+/// Đường phân cách "Hoặc" giữa Form và Social Logins.
 class AuthOrDivider extends StatelessWidget {
   final String text;
   final EdgeInsetsGeometry padding;
 
   const AuthOrDivider({
     super.key,
-    this.text = 'Or',
+    this.text = 'Hoặc',
     this.padding = const EdgeInsets.symmetric(vertical: 8),
   });
 
@@ -17,27 +17,27 @@ class AuthOrDivider extends StatelessWidget {
       padding: padding,
       child: Row(
         children: [
-          Expanded(
-            child: Container(
-              height: 1,
-              color: const Color(0xFF94A3B8).withValues(alpha: 0.4),
+          const Expanded(
+            child: Divider(
+              color: Color(0xFFE2E8F0),
+              thickness: 1,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Text(
               text,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 12.5,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF64748B),
+                color: Color(0xFF94A3B8),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              height: 1,
-              color: const Color(0xFF94A3B8).withValues(alpha: 0.4),
+          const Expanded(
+            child: Divider(
+              color: Color(0xFFE2E8F0),
+              thickness: 1,
             ),
           ),
         ],

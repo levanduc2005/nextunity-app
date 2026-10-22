@@ -43,7 +43,6 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
   @override
   void dispose() {
     _scrollController.dispose();
-    ref.read(lessonDetailControllerProvider.notifier).reset();
     super.dispose();
   }
 
@@ -137,7 +136,11 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
             onPressed: () => context.pop(),
           ),
         ),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+          ),
+        ),
       );
     }
 
@@ -153,12 +156,15 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
     final nextLesson = hasNext ? allLessons[currentIndex + 1] : null;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEBF3FC),
+      backgroundColor: AppColors.background,
       appBar: LessonAppBar(
         lesson: lesson,
         course: courseDetailState.course,
         modules: courseDetailState.modules,
         onSelectLesson: (selected) => _switchLesson(selected.id),
+        onFavorite: () {
+          context.showSuccessSnackBar('Đã lưu bài học vào danh sách yêu thích');
+        },
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -167,6 +173,7 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
         child: LessonContentCard(
           lesson: lesson,
           isCompleted: state.isCompleted,
+          instructorName: courseDetailState.course?.creatorName,
         ),
       ),
       bottomNavigationBar: LessonBottomBar(
@@ -187,7 +194,7 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
             _switchLesson(nextLesson.id);
           } else {
             context.showSuccessSnackBar(
-              '🎉 Bạn đã học tới bài cuối cùng của khóa học!',
+              'Bạn đã học tới bài cuối cùng của khóa học!',
             );
           }
         },

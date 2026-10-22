@@ -6,7 +6,7 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
 import 'package:rental_car/features/auth/presentation/widgets/forgot_password/forgot_password_email_step.dart';
 import 'package:rental_car/features/auth/presentation/widgets/forgot_password/forgot_password_otp_step.dart';
 
@@ -164,7 +164,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
     final email = _emailController.text.trim();
 
     return Scaffold(
-      backgroundColor: AppColors.pastelBackground,
+      backgroundColor: const Color(0xFFF8FAFC),
       body: Stack(
         children: [
           // 1. Ánh sáng loang nền
@@ -174,8 +174,9 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
+                  horizontal: 20,
                   vertical: 20,
                 ),
                 child: ConstrainedBox(
@@ -183,12 +184,42 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   child: Column(
                     children: [
                       // Header logo
-                      const NextunityLogo(height: 48),
-                      const SizedBox(height: 12),
+                      Center(
+                        child: Container(
+                          width: 68,
+                          height: 68,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF0FDF4),
+                            borderRadius: BorderRadius.circular(22),
+                            border: Border.all(
+                              color: const Color(0xFFDCFCE7),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
+                                blurRadius: 18,
+                                offset: const Offset(0, 6),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(12),
+                          child: Center(
+                            child: Image.asset(
+                              'public/app_logo.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
 
-                      // Sân khấu chính với Card và các phụ kiện đồ dùng
-                      AuthStationeryStage(
-                        stickyNoteText: 'Check Mail',
+                      // Sân khấu chính với Card
+                      AuthCard(
+                        innerPadding: const EdgeInsets.symmetric(
+                          horizontal: 22,
+                          vertical: 24,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -217,11 +248,11 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                               onPressed: () =>
                                   context.goNamed(AppRoute.login.name),
                               child: const Text(
-                                'Back to Login',
+                                'Quay lại Đăng nhập',
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 13.5,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF2563EB),
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -280,25 +311,25 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
           children: [
             Positioned(
               top: -60,
-              left: -60,
+              right: -60,
               child: Container(
-                width: 320,
-                height: 320,
+                width: 260,
+                height: 260,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.45),
+                  color: AppColors.primary.withValues(alpha: 0.05),
                 ),
               ),
             ),
             Positioned(
               bottom: -50,
-              right: -50,
+              left: -50,
               child: Container(
-                width: 320,
-                height: 320,
+                width: 240,
+                height: 240,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF93C5FD).withValues(alpha: 0.25),
+                  color: AppColors.primary.withValues(alpha: 0.03),
                 ),
               ),
             ),

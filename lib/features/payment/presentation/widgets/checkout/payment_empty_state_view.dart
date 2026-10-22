@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class PaymentEmptyStateView extends StatelessWidget {
   const PaymentEmptyStateView({super.key});
@@ -8,7 +9,7 @@ class PaymentEmptyStateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE6F0FC),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text('Thanh toán đơn hàng'),
         centerTitle: true,
@@ -38,7 +39,7 @@ class PaymentEmptyStateView extends StatelessWidget {
                 const Icon(
                   Icons.payments_rounded,
                   size: 64,
-                  color: Color(0xFF2563EB),
+                  color: AppColors.primary,
                 ),
                 const SizedBox(height: 12),
                 const Text(
@@ -63,7 +64,7 @@ class PaymentEmptyStateView extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2563EB),
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

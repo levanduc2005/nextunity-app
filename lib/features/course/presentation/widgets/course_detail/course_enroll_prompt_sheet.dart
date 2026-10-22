@@ -78,7 +78,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: course.isPremium
                       ? const Color(0xFFFEF3C7)
-                      : const Color(0xFFEFF6FF),
+                      : AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Center(

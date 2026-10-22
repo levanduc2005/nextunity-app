@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/providers/core_providers.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/core/widgets/main_tab_header.dart';
 import 'package:rental_car/features/course/presentation/providers/course_providers.dart';
-import 'package:rental_car/features/course/presentation/widgets/courses_tab/all_courses_tab_view.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/course_filter_modal.dart';
+import 'package:rental_car/features/course/presentation/widgets/courses_tab/course_search_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/courses_active_filters_bar.dart';
-import 'package:rental_car/features/course/presentation/widgets/courses_tab/courses_tab_selector.dart';
-import 'package:rental_car/features/course/presentation/widgets/courses_tab/courses_top_header.dart';
-import 'package:rental_car/features/course/presentation/widgets/courses_tab/my_courses_tab_view.dart';
+import 'package:rental_car/features/course/presentation/widgets/courses_tab/courses_empty_view.dart';
+import 'package:rental_car/features/course/presentation/widgets/courses_tab/discovery_course_card.dart';
+import 'package:rental_car/features/course/presentation/widgets/courses_tab/ongoing_courses_section.dart';
 
 class CoursesPage extends ConsumerWidget {
   const CoursesPage({super.key});
@@ -19,39 +22,47 @@ class CoursesPage extends ConsumerWidget {
     final controller = ref.read(coursesControllerProvider.notifier);
     final user = ref.watch(currentUserProvider);
 
-    final streak = user?.streak ?? 15;
-    final university = user?.university ?? 'FPT University';
-
     return Scaffold(
-      backgroundColor: AppColors.pastelBackground,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
             // Sticky Top Header with Search & Filter
-            CoursesTopHeader(
-              university: university,
-              streak: streak,
-              searchQuery: state.searchQuery,
-              hasActiveFilter: state.hasActiveFilter,
-              onSearch: controller.search,
-              onOpenFilter: () {
-                CourseFilterModal.show(
-                  context: context,
-                  categories: state.categories,
-                  difficulties: state.difficulties,
-                  selectedCategory: state.selectedCategory,
-                  selectedDifficulty: state.selectedDifficulty,
-                  onApply: (category, difficulty) {
-                    controller.applyFilters(
-                      category: category,
-                      difficulty: difficulty,
-                    );
-                  },
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 6),
+              child: Column(
+                children: [
+                  MainTabHeader(
+                    displayName: user?.displayName,
+                    avatarUrl: user?.avatarUrl,
+                    padding: EdgeInsets.zero,
+                  ),
+                  const SizedBox(height: 12),
+                  CourseSearchBar(
+                    initialValue: state.searchQuery,
+                    onSearch: controller.search,
+                    onOpenFilter: () {
+                      CourseFilterModal.show(
+                        context: context,
+                        categories: state.categories,
+                        difficulties: state.difficulties,
+                        selectedCategory: state.selectedCategory,
+                        selectedDifficulty: state.selectedDifficulty,
+                        onApply: (category, difficulty) {
+                          controller.applyFilters(
+                            category: category,
+                            difficulty: difficulty,
+                          );
+                        },
+                      );
+                    },
+                    hasActiveFilter: state.hasActiveFilter,
+                  ),
+                ],
+              ),
             ),
 
-            // Scrollable Content
+            // Continuous Scrollable Content (ApSkil Behance Style)
             Expanded(
               child: RefreshIndicator(
                 onRefresh: controller.refresh,
@@ -59,16 +70,8 @@ class CoursesPage extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(16, 6, 16, 24),
                   physics: const AlwaysScrollableScrollPhysics(),
                   children: [
-                    // Segmented Pill Tab Switcher
-                    CoursesTabSelector(
-                      activeTab: state.activeTab,
-                      enrolledCount: state.myEnrollments.length,
-                      onTabChanged: controller.switchTab,
-                    ),
-
                     // Active Filters Summary (if any filter is selected)
                     if (state.hasActiveFilter) ...[
-                      const SizedBox(height: 10),
                       CoursesActiveFiltersBar(
                         categories: state.categories,
                         difficulties: state.difficulties,
@@ -82,11 +85,60 @@ class CoursesPage extends ConsumerWidget {
                         ),
                         onResetAll: controller.resetFilters,
                       ),
-                      const SizedBox(height: 10),
-                    ] else ...[
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 12),
                     ],
 
+                    // Section 1: Ongoing Courses Carousel (Kelas berlangsung)
+                    OngoingCoursesSection(
+                      enrollments: state.myEnrollments,
+                      onTapCourse: (enr) {
+                        context.push(
+                          AppRoute.courseDetail.path
+                              .replaceFirst(':id', enr.courseId),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Section 2 Header: All Courses Title & Count
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 4,
+                              height: 14,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            const Text(
+                              'Danh sách môn học',
+                              style: TextStyle(
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF0F172A),
+                                letterSpacing: -0.2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          '${state.allCourses.length} môn học',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF64748B),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Section 3 Body: Discovery List
                     if (state.isLoading)
                       const Center(
                         child: Padding(
@@ -94,16 +146,22 @@ class CoursesPage extends ConsumerWidget {
                           child: CircularProgressIndicator(),
                         ),
                       )
-                    else if (state.activeTab == 0)
-                      MyCoursesTabView(
-                        enrollments: state.myEnrollments,
-                        onExplore: () => controller.switchTab(1),
-                      )
+                    else if (state.allCourses.isEmpty)
+                      const CoursesEmptySearchView()
                     else
-                      AllCoursesTabView(
-                        courses: state.allCourses,
-                        enrollments: state.myEnrollments,
-                      ),
+                      ...state.allCourses.map((c) {
+                        final isEnrolled = state.myEnrollments.any(
+                          (e) => e.courseId == c.id,
+                        );
+                        return DiscoveryCourseCard(
+                          course: c,
+                          isEnrolled: isEnrolled,
+                          onTap: () => context.push(
+                            AppRoute.courseDetail.path
+                                .replaceFirst(':id', c.id),
+                          ),
+                        );
+                      }),
                   ],
                 ),
               ),

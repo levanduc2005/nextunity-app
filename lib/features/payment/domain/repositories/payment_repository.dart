@@ -7,4 +7,5 @@ abstract interface class PaymentRepository {
   Future<Result<List<SubscriptionPlanEntity>>> getAvailablePlans();
   Future<Result<PaymentResultEntity>> createPayment(String planCode);
   Future<Result<PaymentStatusEntity>> verifyPayment(int orderCode);
+  Stream<Result<PaymentStatusEntity>> subscribePaymentStatus(int orderCode);
 }

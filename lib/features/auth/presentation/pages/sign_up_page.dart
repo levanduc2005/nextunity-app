@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
-import 'package:rental_car/core/theme/theme.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_or_divider.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_terms_text.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/social_auth_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/signup/sign_up_form.dart';
 
-/// Trang Đăng Ký (SignUpPage) chuyển thể chính xác từ bản thiết kế HTML / Tailwind.
+/// Trang Đăng Ký (SignUpPage) chuẩn phong cách ApSkil E-Learning.
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
@@ -52,9 +54,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       context.goNamed(AppRoute.home.name);
     } else {
       final error = ref.read(authControllerProvider).errorMessage;
-      if (error != null) {
+      if (error != null &&
+          error.isNotEmpty &&
+          !error.toLowerCase().contains('hủy') &&
+          !error.toLowerCase().contains('cancel')) {
         context.showErrorSnackBar(error);
       }
+    }
+  }
+
+  void _handleBack() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.goNamed(AppRoute.login.name);
     }
   }
 
@@ -63,84 +76,184 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.pastelBackground,
+      backgroundColor: const Color(0xFFF8FAFC),
       body: Stack(
         children: [
-          // Background decorative soft fluid waves
-          const AuthBackgroundWaves(),
+          // Hiệu ứng ánh sáng nền phong cách ApSkil
+          Positioned(
+            top: -80,
+            right: -80,
+            child: Container(
+              width: 260,
+              height: 260,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary.withValues(alpha: 0.05),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -60,
+            left: -60,
+            child: Container(
+              width: 220,
+              height: 220,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary.withValues(alpha: 0.03),
+              ),
+            ),
+          ),
 
-          // Main responsive content co giãn vừa khít 100% màn hình, tự động cuộn khi mở bàn phím
           SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 8,
+            child: Column(
+              children: [
+                // Top App Bar với nút quay lại
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: _handleBack,
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 20,
+                          color: Color(0xFF0F172A),
+                        ),
+                        tooltip: 'Quay lại',
+                      ),
+                    ],
                   ),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight - 16,
-                      maxWidth: 440,
-                    ),
-                    child: IntrinsicHeight(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // Header: Logo Graphic & Brand Title
-                          const NextUnityHeader(
-                            logoHeight: 48,
-                            titleFontSize: 20,
-                            gap: 6,
-                          ),
+                ),
 
-                          // Main Card with Stitched Border & Sticky Note
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              AuthCard(
-                                padding: const EdgeInsets.all(10),
-                                innerPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 14,
+                // Nội dung chính có thể cuộn
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 420),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // 1. Biểu tượng Logo & Lời chào ApSkil
+                            Center(
+                              child: Container(
+                                width: 68,
+                                height: 68,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF0FDF4),
+                                  borderRadius: BorderRadius.circular(22),
+                                  border: Border.all(
+                                    color: const Color(0xFFDCFCE7),
+                                    width: 1.5,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
+                                      blurRadius: 18,
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
                                 ),
-                                dashStrokeWidth: 2.0,
-                                dashRadius: 16,
-                                child: SignUpForm(
-                                  onSignUp: _handleSignUp,
-                                  isLoading: authState.isLoading,
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Image.asset(
+                                    'public/app_logo.png',
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
-                              // Sticky Note ghim bên cạnh trái gần đường viền nét đứt
-                              const Positioned(
-                                left: -16,
-                                top: 6,
-                                child: StickyNoteBadge(),
+                            ),
+                            const SizedBox(height: 18),
+
+                            const Text(
+                              'Tạo tài khoản mới',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF0F172A),
+                                letterSpacing: -0.5,
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 6),
+                            const Text(
+                              'Bắt đầu trải nghiệm học tập cùng cộng đồng FPT',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13.5,
+                                color: Color(0xFF64748B),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 24),
 
-                          // Section Divider "Or"
-                          const AuthOrDivider(
-                            padding: EdgeInsets.symmetric(vertical: 2),
-                          ),
+                            // 2. Thẻ Card Đăng ký màu trắng chuẩn ApSkil
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22,
+                                vertical: 24,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                                border: Border.all(color: const Color(0xFFE2E8F0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                                    blurRadius: 24,
+                                    offset: const Offset(0, 8),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SignUpForm(
+                                    onSignUp: _handleSignUp,
+                                    isLoading: authState.isLoading,
+                                  ),
+                                  const SizedBox(height: 18),
 
-                          // Social Logins Section
-                          SocialAuthButton(
-                            icon: const GmailBrandIcon(),
-                            label: 'Continue With Gmail',
-                            onTap: _handleGoogleSignIn,
-                          ),
+                                  // Phân cách Hoặc
+                                  const AuthOrDivider(
+                                    text: 'Hoặc đăng ký với',
+                                    padding: EdgeInsets.symmetric(vertical: 2),
+                                  ),
+                                  const SizedBox(height: 16),
 
-                          // Alternative Sign In Action dạng text link
-                          _buildAlternativeSignInAction(context),
-                        ],
+                                  // Nút đăng ký với Google
+                                  SocialAuthButton(
+                                    icon: const GmailBrandIcon(),
+                                    label: 'Đăng ký với Google',
+                                    onTap: _handleGoogleSignIn,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 22),
+
+                            // 3. Chuyển sang trang Đăng nhập (Sign In)
+                            _buildBottomSignInButton(context),
+                            const SizedBox(height: 16),
+
+                            // 4. Điều khoản & Chính sách bảo mật
+                            const AuthTermsText(),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
         ],
@@ -148,41 +261,36 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
   }
 
-  Widget _buildAlternativeSignInAction(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Already have an account? ',
+  Widget _buildBottomSignInButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          'Đã có tài khoản? ',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF64748B),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.goNamed(AppRoute.login.name);
+            }
+          },
+          child: const Text(
+            'Đăng nhập ngay',
             style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF64748B),
+              fontWeight: FontWeight.w800,
+              color: AppColors.primary,
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              if (context.canPop()) {
-                context.pop();
-              } else {
-                context.goNamed(AppRoute.login.name);
-              }
-            },
-            child: const Text(
-              'Sign In',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF0284C7),
-                decoration: TextDecoration.underline,
-                decorationColor: Color(0xFF0284C7),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

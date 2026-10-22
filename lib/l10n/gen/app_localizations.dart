@@ -311,7 +311,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginEmailSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to access your AI study sets, courses, and streak.'**
+  /// **'Sign in to access your AI study sets and personalized courses.'**
   String get loginEmailSubtitle;
 
   /// No description provided for @emailRequired.

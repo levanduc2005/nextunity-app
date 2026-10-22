@@ -81,8 +81,8 @@ class PostOptionsBottomSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.md),
             _OptionTile(
               icon: Icons.link_rounded,
-              iconColor: AppColors.info,
-              iconBgColor: AppColors.info.withValues(alpha: 0.1),
+              iconColor: const Color(0xFF0F172A),
+              iconBgColor: const Color(0xFFF1F5F9),
               title: 'Sao chép liên kết',
               subtitle: 'Sao chép đường dẫn bài viết để chia sẻ',
               onTap: onCopyLink,
@@ -90,8 +90,8 @@ class PostOptionsBottomSheet extends StatelessWidget {
             if (canDelete && onDelete != null)
               _OptionTile(
                 icon: Icons.delete_outline_rounded,
-                iconColor: AppColors.error,
-                iconBgColor: AppColors.error.withValues(alpha: 0.1),
+                iconColor: const Color(0xFF0F172A),
+                iconBgColor: const Color(0xFFF1F5F9),
                 title: 'Xóa bài viết',
                 subtitle: 'Gỡ bài viết này khỏi cộng đồng',
                 isDestructive: true,

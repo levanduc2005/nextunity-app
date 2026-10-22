@@ -14,6 +14,8 @@ abstract interface class CourseRepository {
     String? search,
   });
 
+  Future<Result<List<CourseEntity>>> getPopularCourses({int limit = 5});
+
   Future<Result<List<EnrollmentEntity>>> getMyEnrollments();
 
   Future<Result<CourseEntity>> getCourseDetail(String courseId);

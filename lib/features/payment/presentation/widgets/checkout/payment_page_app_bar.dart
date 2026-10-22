@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/payment/presentation/widgets/dialogs/plus_faq_dialog.dart';
 
 class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -52,7 +53,7 @@ class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.help_outline_rounded,
-              color: Color(0xFF2563EB)),
+              color: AppColors.primary),
           onPressed: () => showPlusFaqDialog(context),
         ),
       ],

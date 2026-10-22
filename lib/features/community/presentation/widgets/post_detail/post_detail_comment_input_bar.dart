@@ -38,7 +38,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
           if (replyTarget != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              color: const Color(0xFFEFF6FF),
+              color: AppColors.primaryContainer,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class GenderOptionItem {
   const GenderOptionItem({
@@ -89,11 +90,11 @@ class _GenderOption extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFEFF6FF) : Colors.white,
+            color: isSelected ? const Color(0xFFDCFCE7) : Colors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: isSelected
-                  ? const Color(0xFF2563EB)
+                  ? AppColors.primary
                   : const Color(0xFFE2E8F0),
               width: isSelected ? 1.6 : 1,
             ),
@@ -105,7 +106,7 @@ class _GenderOption extends StatelessWidget {
                 icon,
                 size: 16,
                 color: isSelected
-                    ? const Color(0xFF2563EB)
+                    ? AppColors.primary
                     : const Color(0xFF64748B),
               ),
               const SizedBox(width: 4),
@@ -115,7 +116,7 @@ class _GenderOption extends StatelessWidget {
                   fontSize: 12.5,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   color: isSelected
-                      ? const Color(0xFF1E40AF)
+                      ? const Color(0xFF166534)
                       : const Color(0xFF64748B),
                 ),
               ),

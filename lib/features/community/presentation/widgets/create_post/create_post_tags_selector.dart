@@ -56,7 +56,7 @@ class CreatePostTagsSelector extends StatelessWidget {
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEF2FF),
+                  color: AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: AppColors.primary.withAlpha(50)),
                 ),

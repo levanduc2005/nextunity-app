@@ -37,7 +37,7 @@ class UnderDevelopmentView extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     AppColors.primary.withValues(alpha: 0.15),
-                    const Color(0xFF6366F1).withValues(alpha: 0.08),
+                    const Color(0xFF16A34A).withValues(alpha: 0.08),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,

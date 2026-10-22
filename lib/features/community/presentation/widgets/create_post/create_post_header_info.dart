@@ -41,9 +41,9 @@ class CreatePostHeaderInfo extends StatelessWidget {
                   vertical: 3.5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEEF2FF),
+                  color: AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: const Color(0xFFE0E7FF)),
+                  border: Border.all(color: AppColors.primaryBorder),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
@@ -76,7 +76,7 @@ class CreatePostHeaderInfo extends StatelessWidget {
     if (avatarUrl != null && avatarUrl.isNotEmpty) {
       return CircleAvatar(
         radius: 20,
-        backgroundColor: const Color(0xFF3D5AFE),
+        backgroundColor: AppColors.primary,
         backgroundImage: NetworkImage(avatarUrl),
         onBackgroundImageError: (_, _) {},
       );
@@ -88,7 +88,7 @@ class CreatePostHeaderInfo extends StatelessWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
+          colors: [AppColors.primary, Color(0xFF16A34A)],
         ),
       ),
       alignment: Alignment.center,

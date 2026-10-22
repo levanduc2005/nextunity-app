@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
@@ -104,18 +105,18 @@ class ProfileDetailView extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   gradient: const LinearGradient(
                                     colors: [
-                                      Color(0xFF3B82F6),
-                                      Color(0xFF60A5FA),
-                                      Color(0xFF93C5FD),
+                                      AppColors.primary,
+                                      Color(0xFF16A34A),
+                                      Color(0xFF86EFAC),
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(
-                                        0xFF2563EB,
-                                      ).withValues(alpha: 0.25),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.25,
+                                      ),
                                       blurRadius: 12,
                                       offset: const Offset(0, 4),
                                     ),
@@ -175,8 +176,8 @@ class ProfileDetailView extends StatelessWidget {
                                   _BadgeChip(
                                     icon: Icons.tag_rounded,
                                     label: studentId,
-                                    bgColor: const Color(0xFFEFF6FF),
-                                    textColor: const Color(0xFF2563EB),
+                                    bgColor: const Color(0xFFDCFCE7),
+                                    textColor: AppColors.primary,
                                   ),
                                   _BadgeChip(
                                     icon: isPlus
@@ -293,10 +294,10 @@ class ProfileDetailView extends StatelessWidget {
         // NÚT CHUYỂN SANG CHẾ ĐỘ CHỈNH SỬA
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF2563EB),
+            backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
             elevation: 3,
-            shadowColor: const Color(0xFF2563EB).withValues(alpha: 0.35),
+            shadowColor: AppColors.primary.withValues(alpha: 0.35),
             padding: const EdgeInsets.symmetric(vertical: 14),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -329,7 +330,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF2563EB)),
+        Icon(icon, size: 16, color: AppColors.iconPrimary),
         const SizedBox(width: 6),
         Text(
           title,
@@ -377,7 +378,7 @@ class _InfoRowTile extends StatelessWidget {
               color: Color(0xFFF8FAFC),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 16, color: const Color(0xFF64748B)),
+            child: Icon(icon, size: 16, color: AppColors.iconPrimary),
           ),
           const SizedBox(width: 10),
           Expanded(

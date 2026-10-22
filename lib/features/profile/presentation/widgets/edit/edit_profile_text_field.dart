@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Ô nhập liệu được thiết kế đồng bộ theo phong cách NextUnity Studio
 class EditProfileTextField extends StatelessWidget {
@@ -83,7 +84,7 @@ class EditProfileTextField extends StatelessWidget {
                     child: Icon(
                       prefixIcon,
                       size: 19,
-                      color: const Color(0xFF2563EB),
+                      color: AppColors.primary,
                     ),
                   )
                 : null,
@@ -102,7 +103,7 @@ class EditProfileTextField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(
-                color: Color(0xFF2563EB),
+                color: AppColors.primary,
                 width: 1.6,
               ),
             ),

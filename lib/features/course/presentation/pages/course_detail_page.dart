@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/providers/core_providers.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
-import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
@@ -12,9 +11,7 @@ import 'package:rental_car/features/course/presentation/providers/course_provide
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_about_section.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_bottom_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_hero_header.dart';
-import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_tab_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_enroll_prompt_sheet.dart';
-import 'package:rental_car/features/course/presentation/widgets/course_detail/course_progress_card.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_syllabus_tab_view.dart';
 
 class CourseDetailPage extends ConsumerStatefulWidget {
@@ -27,7 +24,7 @@ class CourseDetailPage extends ConsumerStatefulWidget {
 }
 
 class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
-  int _selectedTabIndex = 0;
+  final GlobalKey _syllabusKey = GlobalKey();
 
   @override
   void initState() {
@@ -51,7 +48,6 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
 
   @override
   void dispose() {
-    ref.read(courseDetailControllerProvider.notifier).reset();
     super.dispose();
   }
 
@@ -113,6 +109,17 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
     return null;
   }
 
+  void _scrollToSyllabus() {
+    final keyContext = _syllabusKey.currentContext;
+    if (keyContext != null) {
+      Scrollable.ensureVisible(
+        keyContext,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(courseDetailControllerProvider);
@@ -127,7 +134,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
     if (state.isLoading || !isDataReady) {
       if (state.errorMessage != null && !isDataReady) {
         return Scaffold(
-          backgroundColor: AppColors.pastelBackground,
+          backgroundColor: AppColors.background,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -178,7 +185,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
       }
 
       return Scaffold(
-        backgroundColor: AppColors.pastelBackground,
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -187,7 +194,11 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
             onPressed: () => context.pop(),
           ),
         ),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+          ),
+        ),
       );
     }
 
@@ -218,7 +229,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
         : (incompleteLesson ?? firstLesson);
 
     return Scaffold(
-      backgroundColor: AppColors.pastelBackground,
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           // Scrollable Body
@@ -227,55 +238,33 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 1. Sleek Hero Header
+                // 1. Sleek Hero Header chuẩn ApSkil
                 CourseDetailHeroHeader(
                   course: course,
-                  onShare: () {
-                    context.showSuccessSnackBar('Đã sao chép liên kết môn học');
-                  },
+                  completedCount: completedCount,
+                  totalLessons: totalLessons,
+                  onPlayTrailer: () => _handleEnrollOrLearn(
+                    context,
+                    course,
+                    isUserPlus,
+                    targetLesson,
+                  ),
                 ),
 
-                // 2. Main Content
+                // 2. Main Content: Giới thiệu ở TRÊN, Giáo trình ở DƯỚI chung 1 trang
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Overlap hero banner slightly
-                      Transform.translate(
-                        offset: const Offset(0, -24),
-                        child: CourseProgressCard(
-                          course: course,
-                          modules: modules,
-                          isEnrolled: course.isEnrolled,
-                          isEnrolling: state.isEnrolling,
-                          isUserPlus: isUserPlus,
-                          ctaTitle: isCourseCompleted
-                              ? 'Ôn tập lại bài học'
-                              : (course.isEnrolled && incompleteLesson != null
-                                    ? 'Tiếp tục: ${incompleteLesson.title}'
-                                    : null),
-                          onTapCta: () => _handleEnrollOrLearn(
-                            context,
-                            course,
-                            isUserPlus,
-                            targetLesson,
-                          ),
-                        ),
-                      ),
+                      // 2.1 Giới thiệu môn học (TRÊN)
+                      CourseAboutSection(course: course),
+                      const SizedBox(height: 24),
 
-                      // 2.1 Segmented Tab Bar
-                      CourseDetailTabBar(
-                        selectedIndex: _selectedTabIndex,
-                        moduleCount: modules.length,
-                        onTabChanged: (index) =>
-                            setState(() => _selectedTabIndex = index),
-                      ),
-                      const SizedBox(height: 14),
-
-                      // 2.2 Tab Content
-                      if (_selectedTabIndex == 0)
-                        CourseSyllabusTabView(
+                      // 2.2 Giáo trình môn học (DƯỚI)
+                      KeyedSubtree(
+                        key: _syllabusKey,
+                        child: CourseSyllabusTabView(
                           modules: modules,
                           isEnrolled: course.isEnrolled,
                           isCourseCompleted: isCourseCompleted,
@@ -292,9 +281,8 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
                               );
                             }
                           },
-                        )
-                      else
-                        CourseAboutSection(course: course),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -302,7 +290,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
             ),
           ),
 
-          // 3. Sticky Bottom Action Bar
+          // 3. Sticky Bottom Action Bar chuẩn ApSkil
           Positioned(
             bottom: 0,
             left: 0,
@@ -313,8 +301,9 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
               isCompleted: isCourseCompleted,
               isPremium: course.isPremium,
               isUserPlus: isUserPlus,
+              onTapCurriculum: _scrollToSyllabus,
               lessonLabel: isCourseCompleted
-                  ? 'Bạn đã hoàn thành tất cả bài học 🎉'
+                  ? 'Bạn đã hoàn thành tất cả bài học'
                   : (incompleteLesson != null
                         ? '${incompleteLesson.title} • ${incompleteLesson.estimatedMinutes} phút'
                         : (firstLesson != null

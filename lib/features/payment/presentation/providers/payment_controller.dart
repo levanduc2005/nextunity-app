@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_car/core/utils/result.dart';
 import 'package:rental_car/features/payment/domain/entities/payment_result_entity.dart';
 import 'package:rental_car/features/payment/domain/entities/payment_status_entity.dart';
 import 'package:rental_car/features/payment/domain/usecases/create_payment_use_case.dart';
+import 'package:rental_car/features/payment/domain/usecases/subscribe_payment_status_use_case.dart';
 import 'package:rental_car/features/payment/domain/usecases/verify_payment_use_case.dart';
 import 'package:rental_car/features/payment/presentation/providers/payment_providers.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
@@ -45,6 +47,22 @@ class PaymentController extends Notifier<PaymentState> {
 
   VerifyPaymentUseCase get _verifyPayment =>
       ref.read(verifyPaymentUseCaseProvider);
+
+  SubscribePaymentStatusUseCase get _subscribePayment =>
+      ref.read(subscribePaymentStatusUseCaseProvider);
+
+  Stream<PaymentStatusEntity> subscribePayment(int orderCode) async* {
+    final stream = _subscribePayment(orderCode);
+    await for (final result in stream) {
+      if (result case Ok(:final value)) {
+        state = state.copyWith(statusEntity: value);
+        if (value.isPaid) {
+          ref.read(profileControllerProvider.notifier).refreshProfile();
+        }
+        yield value;
+      }
+    }
+  }
 
   Future<PaymentResultEntity?> createPayment(String planCode) async {
     state = state.copyWith(isLoading: true);

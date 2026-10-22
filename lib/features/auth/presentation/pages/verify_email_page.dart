@@ -6,8 +6,10 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
-import 'package:rental_car/features/auth/presentation/widgets/decorations/envelope_illustration.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_otp_row.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_resend_code.dart';
 
 /// Trang xác thực mã OTP gửi về Email (Verify Your Email).
 class VerifyEmailPage extends ConsumerStatefulWidget {
@@ -140,68 +142,95 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.pastelBackground,
+      backgroundColor: const Color(0xFFF8FAFC),
       body: Stack(
         children: [
-          // 1. Ánh sáng loang nền
+          // 1. Ánh sáng loang nền phong cách ApSkil
           _buildAmbientLights(),
 
           // 2. Nội dung cuộn chính
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
+                  horizontal: 20,
+                  vertical: 16,
                 ),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 420),
                   child: Column(
                     children: [
                       // Header logo
-                      const NextunityLogo(height: 48),
-                      const SizedBox(height: 14),
+                      Center(
+                        child: Container(
+                          width: 68,
+                          height: 68,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF0FDF4),
+                            borderRadius: BorderRadius.circular(22),
+                            border: Border.all(
+                              color: const Color(0xFFDCFCE7),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
+                                blurRadius: 18,
+                                offset: const Offset(0, 6),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(12),
+                          child: Center(
+                            child: Image.asset(
+                              'public/app_logo.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
 
-                      // Khung sân khấu Stationery và Card
-                      AuthStationeryStage(
-                        stickyNoteText: 'Check Mail',
+                      // Khung Card ApSkil
+                      AuthCard(
+                        innerPadding: const EdgeInsets.symmetric(
+                          horizontal: 22,
+                          vertical: 24,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(height: 10),
-                            // Minh họa bì thư mở
-                            const EnvelopeIllustration(width: 140, height: 105),
-                            const SizedBox(height: 20),
-
+                            const SizedBox(height: 6),
                             // Tiêu đề & Thông báo
                             const Text(
-                              'Verify Your Email',
+                              'Xác thực Email',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 24,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w900,
                                 color: Color(0xFF0F172A),
                                 letterSpacing: -0.5,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 8),
                             const Text(
-                              "We've Sent A Verification Link To",
+                              'Mã OTP xác thực 6 số đã được gửi đến:',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF334155),
+                                color: Color(0xFF64748B),
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            const SizedBox(height: 4),
                             Text(
                               _displayEmail,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 13.5,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF0F172A),
+                                color: AppColors.primary,
                               ),
                             ),
                             const SizedBox(height: 24),
@@ -213,7 +242,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                               onChanged: _onDigitChanged,
                               onCompleted: _verifyCode,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 12),
 
                             // Dòng chú thích thời gian sống OTP
                             const Row(
@@ -221,8 +250,8 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                               children: [
                                 Icon(
                                   Icons.schedule_rounded,
-                                  size: 13.5,
-                                  color: Color(0xFF64748B),
+                                  size: 14,
+                                  color: Color(0xFF94A3B8),
                                 ),
                                 SizedBox(width: 4),
                                 Text(
@@ -230,19 +259,19 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: Color(0xFF64748B),
+                                    color: Color(0xFF94A3B8),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 20),
 
                             // Nút xác thực
                             AuthGradientButton(
-                              text: 'Verify Code',
+                              text: 'Xác nhận OTP',
                               isLoading: authState.isLoading,
                               onPressed: _verifyCode,
-                              borderRadius: 12,
+                              height: 50,
                             ),
                             const SizedBox(height: 18),
 
@@ -252,7 +281,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                               isLoading: authState.isLoading,
                               onResend: _resendCode,
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 12),
 
                             // Nút quay lại Đăng ký
                             TextButton.icon(
@@ -260,14 +289,14 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                               icon: const Icon(
                                 Icons.arrow_back_rounded,
                                 size: 16,
-                                color: Color(0xFF2563EB),
+                                color: AppColors.primary,
                               ),
                               label: const Text(
                                 'Quay lại Đăng ký',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF2563EB),
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -326,25 +355,25 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
           children: [
             Positioned(
               top: -60,
-              left: -60,
+              right: -60,
               child: Container(
-                width: 320,
-                height: 320,
+                width: 260,
+                height: 260,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.45),
+                  color: AppColors.primary.withValues(alpha: 0.05),
                 ),
               ),
             ),
             Positioned(
               bottom: -50,
-              right: -50,
+              left: -50,
               child: Container(
-                width: 300,
-                height: 300,
+                width: 240,
+                height: 240,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF93C5FD).withValues(alpha: 0.3),
+                  color: AppColors.primary.withValues(alpha: 0.03),
                 ),
               ),
             ),

@@ -312,7 +312,12 @@ class AuthController extends Notifier<AuthState> {
         return true;
       },
       err: (failure) {
-        state = state.copyWith(errorMessage: failure.message, isLoading: false);
+        final isCancelled = failure.message.toLowerCase().contains('hủy') ||
+            failure.message.toLowerCase().contains('cancel');
+        state = state.copyWith(
+          errorMessage: isCancelled ? null : failure.message,
+          isLoading: false,
+        );
         return false;
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/l10n/l10n.dart';
 
 /// A stationery-inspired bottom navigation bar designed for NextUnity.
@@ -116,13 +117,13 @@ class _NavBarItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const activeColor = Color(0xFF2563EB);
+    const activeColor = AppColors.primary;
     final inactiveColor = isDark
-        ? const Color(0xFF64748B)
-        : const Color(0xFF94A3B8);
+        ? AppColors.textSecondary
+        : AppColors.textMuted;
     final activeBgColor = isDark
-        ? const Color(0xFF1E3A8A).withValues(alpha: 0.5)
-        : const Color(0xFFEFF6FF);
+        ? AppColors.primaryDark.withValues(alpha: 0.5)
+        : AppColors.primaryContainer;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,

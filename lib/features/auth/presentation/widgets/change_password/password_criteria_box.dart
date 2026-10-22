@@ -19,17 +19,18 @@ class PasswordCriteriaBox extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFD2E8F8).withValues(alpha: 0.85),
-        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xFFF0FDF4),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFDCFCE7)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildItem('At least 8 characters', hasMin8Chars),
+          _buildItem('Tối thiểu 8 ký tự', hasMin8Chars),
           const SizedBox(height: 6),
-          _buildItem('Include uppercase and lowercase', hasUpperAndLower),
+          _buildItem('Bao gồm chữ hoa và chữ thường', hasUpperAndLower),
           const SizedBox(height: 6),
-          _buildItem('Include a number', hasNumber),
+          _buildItem('Bao gồm ít nhất 1 chữ số', hasNumber),
         ],
       ),
     );
@@ -39,17 +40,17 @@ class PasswordCriteriaBox extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          isValid ? Icons.check_circle_rounded : Icons.circle_outlined,
-          size: 15,
-          color: isValid ? const Color(0xFF047857) : const Color(0xFF0E6F5C),
+          isValid ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
+          size: 16,
+          color: isValid ? const Color(0xFF2E7D32) : const Color(0xFF94A3B8),
         ),
         const SizedBox(width: 8),
         Text(
           label,
           style: TextStyle(
             fontSize: 12.5,
-            fontWeight: isValid ? FontWeight.w700 : FontWeight.w500,
-            color: const Color(0xFF0E6F5C),
+            fontWeight: isValid ? FontWeight.w600 : FontWeight.w400,
+            color: isValid ? const Color(0xFF1B5E20) : const Color(0xFF64748B),
           ),
         ),
       ],

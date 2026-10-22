@@ -46,11 +46,11 @@ class _CommunityPageState extends ConsumerState<CommunityPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   MainTabHeader(
-                    subtitle: 'Cộng đồng sinh viên FPTU',
-                    streak: user?.streak,
+                    displayName: user?.displayName,
+                    avatarUrl: user?.avatarUrl,
                     padding: EdgeInsets.zero,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   // Search & Filter Bar
                   Row(
                     children: [

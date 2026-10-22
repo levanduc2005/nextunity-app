@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/payment/domain/entities/payment_result_entity.dart';
+import 'package:rental_car/features/payment/domain/entities/payment_status_entity.dart';
 import 'package:rental_car/features/payment/presentation/constants/supported_banks.dart';
 import 'package:rental_car/features/payment/presentation/providers/payment_providers.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/bank_app_grid.dart';
@@ -38,13 +40,14 @@ class PaymentPage extends ConsumerStatefulWidget {
   ConsumerState<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _PaymentPageState extends ConsumerState<PaymentPage> {
+class _PaymentPageState extends ConsumerState<PaymentPage>
+    with WidgetsBindingObserver {
   String _selectedOption = 'bank';
   String _selectedBankName = 'MBBank';
   String _selectedBankId = 'mbbank';
 
   Timer? _countdownTimer;
-  Timer? _pollingTimer;
+  StreamSubscription<PaymentStatusEntity>? _sseSubscription;
   late int _secondsLeft;
   bool _isChecking = false;
   PaymentResultEntity? _currentPayment;
@@ -54,19 +57,29 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _currentPayment = widget.paymentResult;
     _secondsLeft = _calculateInitialSeconds();
     if (_currentPayment != null && _secondsLeft > 0) {
       _startCountdown();
-      _startPolling();
+      _subscribePaymentRealtime();
     }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _countdownTimer?.cancel();
-    _pollingTimer?.cancel();
+    _sseSubscription?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _secondsLeft > 0) {
+      // Khi người dùng quay lại từ app ngân hàng: kiểm tra ngay 1 lần duy nhất
+      _checkPaymentStatusSilently();
+    }
   }
 
   int _calculateInitialSeconds() {
@@ -83,7 +96,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsLeft <= 0) {
         timer.cancel();
-        _pollingTimer?.cancel();
+        _sseSubscription?.cancel();
         if (mounted) {
           setState(() => _secondsLeft = 0);
         }
@@ -95,24 +108,45 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     });
   }
 
-  void _startPolling() {
+  void _subscribePaymentRealtime() {
     final payment = _currentPayment;
     if (payment == null) return;
 
-    _pollingTimer?.cancel();
-    _pollingTimer =
-        Timer.periodic(const Duration(milliseconds: 3500), (timer) async {
-      final status = await ref
-          .read(paymentControllerProvider.notifier)
-          .verifyPayment(payment.orderCode);
-      if (status != null && status.isPaid) {
-        timer.cancel();
-        if (mounted) {
-          ref.read(authControllerProvider.notifier).checkAuthStatus();
-          showPaymentSuccessDialog(context, planName: widget.planName);
+    _sseSubscription?.cancel();
+    _sseSubscription = ref
+        .read(paymentControllerProvider.notifier)
+        .subscribePayment(payment.orderCode)
+        .listen(
+      (status) {
+        if (status.isPaid) {
+          _handlePaymentSuccess();
         }
-      }
-    });
+      },
+      onError: (_) {
+        // SSE đứt kết nối do mạng, sẽ tự phục hồi qua lifecycle resumed
+      },
+    );
+  }
+
+  Future<void> _checkPaymentStatusSilently() async {
+    final payment = _currentPayment;
+    if (payment == null) return;
+
+    final status = await ref
+        .read(paymentControllerProvider.notifier)
+        .verifyPayment(payment.orderCode);
+    if (status != null && status.isPaid) {
+      _handlePaymentSuccess();
+    }
+  }
+
+  void _handlePaymentSuccess() {
+    _countdownTimer?.cancel();
+    _sseSubscription?.cancel();
+    if (mounted) {
+      ref.read(authControllerProvider.notifier).checkAuthStatus();
+      showPaymentSuccessDialog(context, planName: widget.planName);
+    }
   }
 
   Future<void> _openBankApp() async {
@@ -152,10 +186,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     }
 
     if (status != null && status.isPaid) {
-      if (mounted) {
-        ref.read(authControllerProvider.notifier).checkAuthStatus();
-        showPaymentSuccessDialog(context, planName: widget.planName);
-      }
+      _handlePaymentSuccess();
     } else {
       if (mounted) {
         context.showSnackBar(
@@ -200,7 +231,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
         'https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${Uri.encodeComponent(payment.qrCode)}';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFE6F0FC),
+      backgroundColor: AppColors.background,
       appBar: const PaymentPageAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),

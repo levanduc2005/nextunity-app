@@ -36,6 +36,14 @@ class CourseRepositoryImpl implements CourseRepository {
   }
 
   @override
+  Future<Result<List<CourseEntity>>> getPopularCourses({int limit = 5}) {
+    return safeCall(() async {
+      final models = await _remoteDataSource.getPopularCourses(limit: limit);
+      return models.map((m) => m.toEntity()).toList();
+    });
+  }
+
+  @override
   Future<Result<List<EnrollmentEntity>>> getMyEnrollments() {
     return safeCall(() async {
       final models = await _remoteDataSource.getMyEnrollments();

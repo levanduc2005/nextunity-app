@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class PaymentMethodOptionCard extends StatelessWidget {
   const PaymentMethodOptionCard({
@@ -27,13 +28,13 @@ class PaymentMethodOptionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color:
-              isSelected ? const Color(0xFF2563EB) : const Color(0xFFE2E8F0),
+              isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
           width: isSelected ? 2 : 1,
         ),
         boxShadow: [
           BoxShadow(
             color: isSelected
-                ? const Color(0xFF2563EB).withValues(alpha: 0.08)
+                ? AppColors.primary.withValues(alpha: 0.08)
                 : Colors.black.withValues(alpha: 0.02),
             blurRadius: 12,
             offset: const Offset(0, 4),
@@ -60,11 +61,11 @@ class PaymentMethodOptionCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: isSelected
-                            ? const Color(0xFF2563EB)
+                            ? AppColors.primary
                             : Colors.white,
                         border: Border.all(
                           color: isSelected
-                              ? const Color(0xFF2563EB)
+                              ? AppColors.primary
                               : const Color(0xFFCBD5E1),
                           width: 2,
                         ),

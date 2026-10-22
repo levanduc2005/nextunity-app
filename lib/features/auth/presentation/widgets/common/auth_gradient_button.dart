@@ -17,13 +17,12 @@ class AuthGradientButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.height = 48.0,
-    this.borderRadius = 10.0,
+    this.borderRadius = 14.0,
     this.gradientColors = const [
-      Color(0xFF1D63D8),
-      Color(0xFF2563EB),
-      Color(0xFF4F86F7),
+      Color(0xFF2E7D32),
+      Color(0xFF1B5E20),
     ],
-    this.shadowColor = const Color(0xFF2563EB),
+    this.shadowColor = const Color(0xFF2E7D32),
     this.textStyle,
   });
 

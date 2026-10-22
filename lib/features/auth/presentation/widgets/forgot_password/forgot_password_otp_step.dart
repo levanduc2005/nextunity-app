@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/features/auth/presentation/widgets/common/auth_common.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_otp_row.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_resend_code.dart';
 import 'package:rental_car/features/auth/presentation/widgets/decorations/envelope_illustration.dart';
 
 /// Bước 2 của Quên mật khẩu: Nhập 6 ô OTP xác thực gửi về Email.
@@ -34,33 +36,33 @@ class ForgotPasswordOtpStep extends StatelessWidget {
         const EnvelopeIllustration(),
         const SizedBox(height: 16),
         const Text(
-          'Verify Your Email',
+          'Nhập mã xác thực',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 24,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w900,
             color: Color(0xFF0F172A),
-            letterSpacing: -0.4,
+            letterSpacing: -0.5,
           ),
         ),
         const SizedBox(height: 6),
         const Text(
-          "We've Sent A Verification Code To",
+          'Mã OTP 6 số đã được gửi đến địa chỉ:',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 12.5,
-            color: Color(0xFF475569),
+            fontSize: 13,
+            color: Color(0xFF64748B),
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: 4),
         Text(
           email,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: AppColors.primary,
           ),
         ),
         const SizedBox(height: 22),

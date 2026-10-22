@@ -210,29 +210,119 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Thêm thẻ môn học'),
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        titlePadding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        actionsPadding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFDCFCE7),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.tag_rounded,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              'Thêm thẻ môn học',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 16,
+                color: Color(0xFF0F172A),
+              ),
+            ),
+          ],
+        ),
         content: TextField(
           controller: tagCtrl,
           autofocus: true,
-          decoration: const InputDecoration(
+          style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
+          decoration: InputDecoration(
             hintText: 'Nhập mã môn (ví dụ: MAS291, PRO192)...',
-            prefixText: '#',
+            hintStyle: const TextStyle(fontSize: 12.5, color: Color(0xFF94A3B8)),
+            prefixText: '# ',
+            prefixStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              color: AppColors.primary,
+            ),
+            filled: true,
+            fillColor: const Color(0xFFF8FAFC),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+            ),
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Hủy'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              final newTag = tagCtrl.text.trim().replaceAll('#', '');
-              if (newTag.isNotEmpty && !_tags.contains(newTag)) {
-                setState(() => _tags.add(newTag));
-              }
-              Navigator.pop(ctx);
-            },
-            child: const Text('Thêm'),
+          Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 42,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Color(0xFFE2E8F0)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(ctx),
+                    child: const Text(
+                      'Hủy',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SizedBox(
+                  height: 42,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      final newTag = tagCtrl.text.trim().replaceAll('#', '');
+                      if (newTag.isNotEmpty && !_tags.contains(newTag)) {
+                        setState(() => _tags.add(newTag));
+                      }
+                      Navigator.pop(ctx);
+                    },
+                    child: const Text(
+                      'Thêm thẻ',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

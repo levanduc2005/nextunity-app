@@ -308,7 +308,7 @@ class CommentBubbleItem extends StatelessWidget {
                                                     ),
                                                 decoration: BoxDecoration(
                                                   color: const Color(
-                                                    0xFFDBEAFE,
+                                                    0xFFDCFCE7,
                                                   ),
                                                   borderRadius:
                                                       BorderRadius.circular(4),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Interactive subscription plan selection card for NextUnity Plus.
 /// Features smooth elevation pop (-3px lift), glowing blue drop shadows,
@@ -47,14 +48,14 @@ class PlusPlanCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected
-                      ? const Color(0xFF2563EB)
+                      ? AppColors.primary
                       : const Color(0xFFE2E8F0),
                   width: isSelected ? 2 : 1,
                 ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: const Color(0xFF2563EB).withValues(alpha: 0.18),
+                          color: AppColors.primary.withValues(alpha: 0.18),
                           blurRadius: 18,
                           offset: const Offset(0, 8),
                         ),
@@ -82,10 +83,10 @@ class PlusPlanCard extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 2),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isSelected ? const Color(0xFF2563EB) : Colors.white,
+                      color: isSelected ? AppColors.primary : Colors.white,
                       border: Border.all(
                         color: isSelected
-                            ? const Color(0xFF2563EB)
+                            ? AppColors.primary
                             : const Color(0xFFCBD5E1),
                         width: 2,
                       ),
@@ -135,7 +136,7 @@ class PlusPlanCard extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
                                 color: isSelected
-                                    ? const Color(0xFF2563EB)
+                                    ? AppColors.primary
                                     : const Color(0xFF1E293B),
                               ),
                             ),
@@ -199,7 +200,7 @@ class PlusPlanCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? const Color(0xFFDBEAFE)
+                            ? const Color(0xFFDCFCE7)
                             : const Color(0xFFF1F5F9),
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -210,7 +211,7 @@ class PlusPlanCard extends StatelessWidget {
                           fontWeight:
                               isSelected ? FontWeight.w700 : FontWeight.w500,
                           color: isSelected
-                              ? const Color(0xFF2563EB)
+                              ? AppColors.primary
                               : const Color(0xFF475569),
                           letterSpacing: -0.2,
                         ),
@@ -230,13 +231,13 @@ class PlusPlanCard extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? const Color(0xFF2563EB)
+                        ? AppColors.primary
                         : const Color(0xFF475569),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
                         color: isSelected
-                            ? const Color(0xFF2563EB).withValues(alpha: 0.35)
+                            ? AppColors.primary.withValues(alpha: 0.35)
                             : Colors.black26,
                         blurRadius: 4,
                         offset: const Offset(0, 1),

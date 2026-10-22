@@ -10,6 +10,7 @@ import 'package:rental_car/features/course/domain/usecases/get_course_modules_us
 import 'package:rental_car/features/course/domain/usecases/get_courses_usecase.dart';
 import 'package:rental_car/features/course/domain/usecases/get_lesson_detail_usecase.dart';
 import 'package:rental_car/features/course/domain/usecases/get_my_enrollments_usecase.dart';
+import 'package:rental_car/features/course/domain/usecases/get_popular_courses_usecase.dart';
 import 'package:rental_car/features/course/domain/usecases/update_lesson_progress_usecase.dart';
 import 'package:rental_car/features/course/presentation/providers/course_detail_controller.dart';
 import 'package:rental_car/features/course/presentation/providers/courses_controller.dart';
@@ -40,6 +41,10 @@ final getCourseFilterOptionsUseCaseProvider =
 
 final getCoursesUseCaseProvider = Provider<GetCoursesUseCase>((ref) {
   return GetCoursesUseCase(ref.watch(courseRepositoryProvider));
+});
+
+final getPopularCoursesUseCaseProvider = Provider<GetPopularCoursesUseCase>((ref) {
+  return GetPopularCoursesUseCase(ref.watch(courseRepositoryProvider));
 });
 
 final getMyEnrollmentsUseCaseProvider = Provider<GetMyEnrollmentsUseCase>((

@@ -46,7 +46,7 @@
   "errorUnknown": "An unexpected error occurred.",
   "loginTopBarTitle": "Sign in",
   "loginEmailTitle": "Enter your email to continue",
-  "loginEmailSubtitle": "Sign in to access your AI study sets, courses, and streak.",
+  "loginEmailSubtitle": "Sign in to access your AI study sets and personalized courses.",
   "emailRequired": "Please enter your email address.",
   "continueButton": "Continue",
   "orDivider": "or",

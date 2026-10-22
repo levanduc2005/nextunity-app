@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 class PlanCardSkeleton extends StatelessWidget {
   const PlanCardSkeleton({super.key});
@@ -106,7 +107,7 @@ class PlanErrorView extends StatelessWidget {
             icon: const Icon(Icons.refresh_rounded, size: 16),
             label: const Text('Thử lại'),
             style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF2563EB),
+              foregroundColor: AppColors.primary,
               visualDensity: VisualDensity.compact,
             ),
           ),

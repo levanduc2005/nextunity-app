@@ -1,310 +1,584 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 
+/// Header chi tiết khóa học chuẩn ApSkil (Detail Kelas)
+/// Thiết kế thanh lịch, thoáng đãng:
+/// - Top bar với nút Back, Search bar và Bookmark
+/// - Tiêu đề 'Chi tiết môn học' kèm nút Share
+/// - Khung Video trailer xem trước 16:9 với nút Play trung tâm chuẩn ApSkil
+/// - Thông tin khóa học liền mạch (Title, Rating, Sinh viên, Giá, Tiến độ & Banner mẹo học tập)
 class CourseDetailHeroHeader extends StatelessWidget {
-  const CourseDetailHeroHeader({super.key, required this.course, this.onShare});
+  const CourseDetailHeroHeader({
+    super.key,
+    required this.course,
+    this.completedCount = 0,
+    this.totalLessons = 0,
+    this.onPlayTrailer,
+  });
 
   final CourseEntity course;
-  final VoidCallback? onShare;
+  final int completedCount;
+  final int totalLessons;
+  final VoidCallback? onPlayTrailer;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveTotal = totalLessons > 0 ? totalLessons : course.totalLessons;
+    final progressFraction = effectiveTotal > 0
+        ? (completedCount / effectiveTotal).clamp(0.0, 1.0)
+        : course.progress.clamp(0.0, 1.0);
+    final progressPercent = (progressFraction * 100).round();
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 44, 16, 48),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF070B19), Color(0xFF0F172A), Color(0xFF172554)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      color: Colors.transparent,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // 1. Top Navigation Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Frosted circular back button
-              InkWell(
-                onTap: () => context.pop(),
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  width: 38,
-                  height: 38,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.12),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.18),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.arrow_back_rounded,
+          // 1. Nút quay lại tròn tinh gọn
+          SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  onTap: () => context.pop(),
+                  borderRadius: BorderRadius.circular(22),
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      size: 18,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Color(0xFF0F172A),
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),
               ),
+            ),
+          ),
 
-              // Right-side controls
-              Row(
-                children: [
-                  // PRO COURSE or FREE pill badge
-                  if (course.isPremium)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF59E0B).withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: const Color(0xFFF59E0B).withValues(alpha: 0.4),
-                        ),
-                      ),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.workspace_premium_rounded,
-                            size: 13,
-                            color: Color(0xFFFBBF24),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            'PRO COURSE',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFFFDE68A),
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  else
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF10B981).withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: const Color(0xFF10B981).withValues(alpha: 0.4),
-                        ),
-                      ),
-                      child: const Text(
-                        'FREE COURSE',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w900,
-                          color: Color(0xFF6EE7B7),
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                  const SizedBox(width: 8),
-
-                  // Share button
-                  InkWell(
-                    onTap: onShare,
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.12),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.18),
-                        ),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.share_rounded,
-                          color: Colors.white.withValues(alpha: 0.9),
-                          size: 17,
-                        ),
-                      ),
-                    ),
+          // 3. Hero Video Preview Card (16:9 Aspect Ratio chuẩn ApSkil)
+          GestureDetector(
+            onTap: onPlayTrailer,
+            child: Container(
+              height: 195,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF0F172A).withValues(alpha: 0.08),
+                    blurRadius: 18,
+                    offset: const Offset(0, 6),
                   ),
                 ],
               ),
-            ],
-          ),
-
-          const SizedBox(height: 18),
-
-          // 2. Course Hero Image Banner
-          Container(
-            height: 165,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.5),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-                BoxShadow(
-                  color: const Color(0xFF3D5AFE).withValues(alpha: 0.2),
-                  blurRadius: 28,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(19),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  if (course.imageUrl != null && course.imageUrl!.isNotEmpty)
-                    Image.network(
-                      course.imageUrl!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, _, _) => _buildFallbackImage(course),
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          color: const Color(0xFF0F172A),
-                          child: const Center(
-                            child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Color(0xFF3D5AFE),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(19),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    // Ảnh bìa môn học
+                    if (course.imageUrl != null && course.imageUrl!.isNotEmpty)
+                      Image.network(
+                        course.imageUrl!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => _buildFallbackImage(course),
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            color: const Color(0xFF0F172A),
+                            child: const Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    )
-                  else
-                    _buildFallbackImage(course),
+                          );
+                        },
+                      )
+                    else
+                      _buildFallbackImage(course),
 
-                  // Subtle gradient overlay at the bottom of the image
-                  Positioned.fill(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withValues(alpha: 0.45),
+                    // Lớp phủ tối nhẹ để nổi bật nút Play
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withValues(alpha: 0.25),
+                      ),
+                    ),
+
+                    // Nút Play tròn nổi bật ApSkil
+                    Center(
+                      child: Container(
+                        width: 54,
+                        height: 54,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.25),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.35),
+                              blurRadius: 20,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.play_arrow_rounded,
+                            color: AppColors.primary,
+                            size: 32,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Badge góc trên bên trái
+                    Positioned(
+                      top: 12,
+                      left: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.65),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.play_circle_outline_rounded,
+                              size: 13,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              'Trailer môn học',
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                  ),
 
-                  // Category or Subject Code Tag on image
-                  Positioned(
-                    bottom: 12,
-                    left: 14,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.6),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.2),
+                    // Badge số lượng bài học góc dưới bên phải
+                    Positioned(
+                      bottom: 12,
+                      right: 12,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.65),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.schedule_rounded,
+                              size: 12,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '$effectiveTotal bài học',
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.local_library_rounded,
-                            size: 13,
-                            color: Color(0xFF60A5FA),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            course.categoryName ?? course.code,
-                            style: const TextStyle(
-                              fontSize: 10.5,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
+          const SizedBox(height: 14),
 
-          const SizedBox(height: 18),
-
-          // 3. Bottom Overlaid Tag inside Banner
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // 4. Thông tin môn học thoáng đãng liền mạch (Course Meta)
+          // Tag phân loại môn học & Cấp độ
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
             children: [
+              if (course.code.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE0F2FE),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    course.code,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF0284C7),
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ),
+              if (course.categoryName != null || course.category != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF1F5F9),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    course.categoryName ?? course.category ?? 'Chuyên ngành FPT',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF475569),
+                    ),
+                  ),
+                ),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF3B82F6).withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFF60A5FA).withValues(alpha: 0.35),
+                  color: const Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Text(
+                  course.difficultyName ??
+                      (course.difficulty == 'ADVANCED'
+                          ? 'Nâng cao'
+                          : (course.difficulty == 'INTERMEDIATE'
+                              ? 'Trung cấp'
+                              : 'Cơ bản')),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF64748B),
                   ),
                 ),
-                child: Row(
+              ),
+              if (course.isPremium)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFEF3C7),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.workspace_premium_rounded,
+                        size: 13,
+                        color: Color(0xFFD97706),
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        'PLUS',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xFF92400E),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          // Tên môn học
+          Text(
+            course.title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF0F172A),
+              letterSpacing: -0.4,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          // Dải thông số thực tế của môn học chuẩn ApSkil
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 6,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.menu_book_rounded,
+                    size: 15,
+                    color: Color(0xFF64748B),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${course.totalModules} chương',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF475569),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                width: 3,
+                height: 3,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFCBD5E1),
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.play_circle_outline_rounded,
+                    size: 15,
+                    color: Color(0xFF64748B),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    '$totalLessons bài học',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF475569),
+                    ),
+                  ),
+                ],
+              ),
+              if (course.creatorName != null &&
+                  course.creatorName!.trim().isNotEmpty) ...[
+                Container(
+                  width: 3,
+                  height: 3,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFFCBD5E1),
+                  ),
+                ),
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF38BDF8),
-                      ),
+                    const Icon(
+                      Icons.person_outline_rounded,
+                      size: 15,
+                      color: Color(0xFF64748B),
                     ),
-                    const SizedBox(width: 6),
-                    Text(
-                      course.categoryName ??
-                          (course.code.isNotEmpty
-                              ? 'MÔN HỌC • ${course.code}'
-                              : 'MÔN HỌC'),
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xFF93C5FD),
-                        letterSpacing: 0.5,
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        course.creatorName!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF475569),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              Text(
-                '${course.totalLessons} bài học',
-                style: const TextStyle(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFCBD5E1),
-                ),
-              ),
+              ],
             ],
+          ),
+
+          // 5. Nếu sinh viên đã đăng ký: Hiển thị thanh tiến độ học tập chuẩn ApSkil 'Kelas Berlangsung'
+          if (course.isEnrolled) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '$completedCount bài học đã hoàn thành',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF0F172A),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '$effectiveTotal bài học',
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF64748B),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  // Progress Bar với chấm tròn chuẩn ApSkil
+                  Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      Container(
+                        height: 6,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE2E8F0),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: progressFraction.clamp(0.02, 1.0),
+                        child: Container(
+                          height: 6,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Text(
+                        'Tiến độ: $progressPercent%',
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF166534),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          progressFraction >= 1.0
+                              ? 'Đã hoàn thành xuất sắc'
+                              : 'Còn ${effectiveTotal - completedCount} bài học tiếp theo',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF64748B),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          // 6. ApSkil Signature Tip Banner: 'Ketahui tentang alur belajar yang baik >'
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+            decoration: BoxDecoration(
+              color: AppColors.primaryContainer,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppColors.primaryBorder),
+            ),
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.lightbulb_outline_rounded,
+                  size: 18,
+                  color: AppColors.primary,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Lộ trình đề xuất: Xem video, ghi chú và làm bài tập sau mỗi bài',
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF166534),
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 18,
+                  color: AppColors.primary,
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -316,7 +590,7 @@ class CourseDetailHeroHeader extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF0F172A)],
+          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32), Color(0xFF388E3C)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -329,9 +603,8 @@ class CourseDetailHeroHeader extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: Colors.white.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
               ),
               child: const Center(
                 child: Icon(
@@ -341,7 +614,7 @@ class CourseDetailHeroHeader extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Text(
               code,
               style: const TextStyle(
@@ -351,23 +624,6 @@ class CourseDetailHeroHeader extends StatelessWidget {
                 letterSpacing: 1.2,
               ),
             ),
-            if (course.title.isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  course.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.7),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
           ],
         ),
       ),

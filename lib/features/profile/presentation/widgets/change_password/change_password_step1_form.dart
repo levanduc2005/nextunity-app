@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_text_field.dart';
 
 /// Form Bước 1: Xác thực mật khẩu hiện tại
@@ -34,13 +35,13 @@ class ChangePasswordStep1Form extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF3B82F6), Color(0xFF1D4ED8)],
+                  colors: [AppColors.primary, Color(0xFF15803D)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -109,7 +110,7 @@ class ChangePasswordStep1Form extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF2563EB),
+                  color: AppColors.primary,
                 ),
               ),
             ),
@@ -119,10 +120,10 @@ class ChangePasswordStep1Form extends StatelessWidget {
           // Nút Xác thực & Tiếp tục
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
+              backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               elevation: 3,
-              shadowColor: const Color(0xFF2563EB).withValues(alpha: 0.35),
+              shadowColor: AppColors.primary.withValues(alpha: 0.35),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),

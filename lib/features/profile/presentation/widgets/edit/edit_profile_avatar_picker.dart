@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
@@ -52,16 +53,16 @@ class EditProfileAvatarPicker extends ConsumerWidget {
                 shape: BoxShape.circle,
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF2563EB),
-                    Color(0xFF60A5FA),
-                    Color(0xFF38BDF8),
+                    AppColors.primary,
+                    AppColors.accent,
+                    AppColors.primaryLight,
                   ],
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF2563EB).withValues(alpha: 0.28),
+                    color: AppColors.primary.withValues(alpha: 0.28),
                     blurRadius: 14,
                     offset: const Offset(0, 5),
                   ),
@@ -72,7 +73,7 @@ class EditProfileAvatarPicker extends ConsumerWidget {
                 height: 88,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFFEFF6FF),
+                  color: const Color(0xFFDCFCE7),
                   border: Border.all(color: Colors.white, width: 2.5),
                 ),
                 child: ClipOval(
@@ -133,7 +134,7 @@ class EditProfileAvatarPicker extends ConsumerWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                      colors: [AppColors.primary, Color(0xFF15803D)],
                     ),
                     border: Border.all(color: Colors.white, width: 2),
                     boxShadow: [
@@ -160,14 +161,18 @@ class EditProfileAvatarPicker extends ConsumerWidget {
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.edit_outlined, size: 13, color: Color(0xFF2563EB)),
+              Icon(
+                Icons.edit_outlined,
+                size: 13,
+                color: AppColors.iconPrimary,
+              ),
               SizedBox(width: 4),
               Text(
                 'Chạm để đổi ảnh đại diện',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF2563EB),
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
@@ -187,14 +192,14 @@ class _AvatarInitial extends StatelessWidget {
   Widget build(BuildContext context) {
     final initial = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
     return Container(
-      color: const Color(0xFFDBEAFE),
+      color: const Color(0xFFDCFCE7),
       child: Center(
         child: Text(
           initial,
           style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1E40AF),
+            color: Color(0xFF166534),
           ),
         ),
       ),

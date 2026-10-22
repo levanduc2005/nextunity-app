@@ -119,7 +119,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get loginEmailSubtitle =>
-      'Đăng nhập để lưu tiến độ học tập, duy trì chuỗi Streak và nhận điểm thưởng.';
+      'Đăng nhập để lưu tiến độ học tập và trải nghiệm đầy đủ tính năng.';
 
   @override
   String get emailRequired => 'Vui lòng nhập địa chỉ email.';

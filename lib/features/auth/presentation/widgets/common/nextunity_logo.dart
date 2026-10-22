@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Widget hiển thị Logo icon chính thức của NextUnity từ file asset `public/Icon-app.png`.
 class NextunityLogo extends StatelessWidget {
@@ -63,7 +64,7 @@ class NextUnityHeader extends StatelessWidget {
               TextSpan(text: 'Welcome To '),
               TextSpan(
                 text: 'NEXTUNITY',
-                style: TextStyle(color: Color(0xFF008EFB)),
+                style: TextStyle(color: AppColors.primary),
               ),
             ],
           ),

@@ -65,7 +65,7 @@ class DashedBorderPainter extends CustomPainter {
   }
 }
 
-/// Card màu trắng viền nét đứt dùng chung cho các màn hình Auth.
+/// Thẻ Card màu trắng bo góc chuẩn phong cách ApSkil hiện đại dùng chung cho các màn hình Auth.
 class AuthCard extends StatelessWidget {
   final Widget child;
   final double? width;
@@ -78,23 +78,22 @@ class AuthCard extends StatelessWidget {
   final double dashStrokeWidth;
   final double dashRadius;
   final List<BoxShadow>? boxShadow;
+  final bool showDashedBorder;
 
   const AuthCard({
     super.key,
     required this.child,
     this.width,
-    this.padding = const EdgeInsets.all(12),
-    this.innerPadding = const EdgeInsets.symmetric(
-      horizontal: 18,
-      vertical: 24,
-    ),
+    this.padding = const EdgeInsets.all(0),
+    this.innerPadding = const EdgeInsets.all(22),
     this.borderRadius = 24.0,
     this.backgroundColor = Colors.white,
-    this.borderColor,
-    this.dashColor = const Color(0xFF9CA3AF),
-    this.dashStrokeWidth = 1.8,
-    this.dashRadius = 14.0,
+    this.borderColor = const Color(0xFFE2E8F0),
+    this.dashColor = const Color(0xFFE2E8F0),
+    this.dashStrokeWidth = 1.0,
+    this.dashRadius = 24.0,
     this.boxShadow,
+    this.showDashedBorder = false,
   });
 
   @override
@@ -105,27 +104,29 @@ class AuthCard extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(borderRadius),
         border: borderColor != null
-            ? Border.all(color: borderColor!, width: 1.5)
+            ? Border.all(color: borderColor!)
             : null,
         boxShadow:
             boxShadow ??
             [
               BoxShadow(
-                color: const Color(0xFF2563EB).withValues(alpha: 0.08),
+                color: const Color(0xFF0F172A).withValues(alpha: 0.04),
                 blurRadius: 24,
                 offset: const Offset(0, 8),
               ),
             ],
       ),
       padding: padding,
-      child: CustomPaint(
-        painter: DashedBorderPainter(
-          color: dashColor,
-          strokeWidth: dashStrokeWidth,
-          radius: dashRadius,
-        ),
-        child: Padding(padding: innerPadding, child: child),
-      ),
+      child: showDashedBorder
+          ? CustomPaint(
+              painter: DashedBorderPainter(
+                color: dashColor,
+                strokeWidth: dashStrokeWidth,
+                radius: dashRadius,
+              ),
+              child: Padding(padding: innerPadding, child: child),
+            )
+          : Padding(padding: innerPadding, child: child),
     );
   }
 }

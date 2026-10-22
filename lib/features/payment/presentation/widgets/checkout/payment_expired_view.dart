@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_page_app_bar.dart';
 import 'package:rental_car/features/payment/presentation/widgets/common/payment_trust_badges.dart';
 
@@ -174,7 +175,7 @@ class PaymentExpiredView extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () => _handleBackToPlans(context),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2563EB),
+                          backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           elevation: 0,
                           shape: RoundedRectangleBorder(

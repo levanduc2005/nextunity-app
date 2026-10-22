@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Hàng 6 ô nhập mã OTP dùng chung cho VerifyEmailPage và ForgotPasswordPage.
 class AuthOtpRow extends StatelessWidget {
@@ -62,14 +63,14 @@ class AuthOtpRow extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(
-                    color: Color(0xFF60A5FA),
+                    color: Color(0xFFA7F3D0),
                     width: 1.5,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(
-                    color: Color(0xFF2563EB),
+                    color: AppColors.primary,
                     width: 2.0,
                   ),
                 ),
