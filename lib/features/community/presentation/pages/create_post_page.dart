@@ -131,6 +131,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
             CreatePostHeaderInfo(
               userName: userName,
               avatarUrl: user?.avatarUrl,
+              isPlus: user?.isPlus == true,
             ),
 
             const Gap(AppSpacing.md),
@@ -247,7 +248,10 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
           decoration: InputDecoration(
             hintText: 'Nhập mã môn (ví dụ: MAS291, PRO192)...',
-            hintStyle: const TextStyle(fontSize: 12.5, color: Color(0xFF94A3B8)),
+            hintStyle: const TextStyle(
+              fontSize: 12.5,
+              color: Color(0xFF94A3B8),
+            ),
             prefixText: '# ',
             prefixStyle: const TextStyle(
               fontSize: 14,
@@ -256,7 +260,10 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
             ),
             filled: true,
             fillColor: const Color(0xFFF8FAFC),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 12,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
@@ -267,7 +274,10 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderSide: const BorderSide(
+                color: AppColors.primary,
+                width: 1.5,
+              ),
             ),
           ),
         ),

@@ -71,17 +71,11 @@ class PaymentController extends Notifier<PaymentState> {
 
     return result.when(
       ok: (PaymentResultEntity payment) {
-        state = state.copyWith(
-          isLoading: false,
-          currentPayment: payment,
-        );
+        state = state.copyWith(isLoading: false, currentPayment: payment);
         return payment;
       },
       err: (failure) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: failure.message,
-        );
+        state = state.copyWith(isLoading: false, errorMessage: failure.message);
         return null;
       },
     );

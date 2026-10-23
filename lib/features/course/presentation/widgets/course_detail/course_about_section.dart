@@ -63,28 +63,42 @@ class CourseAboutSection extends StatelessWidget {
                 label: 'Mã môn học',
                 value: course.code.isNotEmpty ? course.code : 'Chưa cập nhật',
               ),
-              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              const Divider(
+                height: 16,
+                thickness: 0.8,
+                color: Color(0xFFE2E8F0),
+              ),
               _buildInfoRow(
                 icon: Icons.category_outlined,
                 label: 'Chuyên ngành',
                 value: course.categoryName ?? course.category ?? 'Đại học FPT',
               ),
-              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              const Divider(
+                height: 16,
+                thickness: 0.8,
+                color: Color(0xFFE2E8F0),
+              ),
               _buildInfoRow(
                 icon: Icons.signal_cellular_alt_rounded,
                 label: 'Cấp độ',
-                value: course.difficultyName ??
+                value:
+                    course.difficultyName ??
                     (course.difficulty == 'ADVANCED'
                         ? 'Nâng cao'
                         : (course.difficulty == 'INTERMEDIATE'
-                            ? 'Trung cấp'
-                            : 'Cơ bản')),
+                              ? 'Trung cấp'
+                              : 'Cơ bản')),
               ),
-              const Divider(height: 16, thickness: 0.8, color: Color(0xFFE2E8F0)),
+              const Divider(
+                height: 16,
+                thickness: 0.8,
+                color: Color(0xFFE2E8F0),
+              ),
               _buildInfoRow(
                 icon: Icons.auto_stories_outlined,
                 label: 'Cấu trúc',
-                value: '${course.totalModules} chương • ${course.totalLessons} bài học',
+                value:
+                    '${course.totalModules} chương • ${course.totalLessons} bài học',
               ),
             ],
           ),
@@ -128,7 +142,11 @@ class CourseAboutSection extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      course.creatorName!.trim().split(' ').last.substring(0, 1),
+                      course.creatorName!
+                          .trim()
+                          .split(' ')
+                          .last
+                          .substring(0, 1),
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,

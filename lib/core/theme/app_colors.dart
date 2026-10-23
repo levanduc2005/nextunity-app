@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 
-/// Bảng màu chuẩn (Design Tokens) lấy cảm hứng từ phong cách ApSkil E-Learning.
+/// Bảng màu chuẩn (Design Tokens) phong cách NextUnity Electric Blue & Sky Cyan.
 ///
-/// Tông màu chủ đạo là Sage / Forest Green dịu mắt, kết hợp nền trắng ngà ấm áp
-/// và điểm nhấn cam đào pastel cho các thông báo học tập.
+/// Tông màu chủ đạo là Electric / Royal Blue hiện đại, kết hợp nền trắng ngà dịu mắt
+/// và điểm nhấn Sky Cyan đồng bộ với biểu tượng ứng dụng.
 abstract final class AppColors {
-  // --- Màu thương hiệu ApSkil (Brand Colors) ---
-  /// Màu xanh lá chủ đạo chuẩn ApSkil (Forest / Sage Green)
-  static const Color primary = Color(0xFF2E7D32);
+  // --- Màu thương hiệu NextUnity (Brand Colors) ---
+  /// Màu xanh điện chính (Primary Electric / Royal Blue)
+  static const Color primary = Color(0xFF3D5AFE);
 
-  /// Màu xanh lá nhấn phụ (Emerald Accent)
-  static const Color accent = Color(0xFF16A34A);
+  /// Màu xanh nhấn phụ (Sky Cyan Accent)
+  static const Color accent = Color(0xFF00B0FF);
 
-  /// Màu xanh lá đậm sâu (Forest Deep / Tailwind Green-900) - Dùng cho Banner, Ambient Glow, Bottom Nav
-  static const Color primaryDark = Color(0xFF14532D);
+  /// Màu xanh đậm sâu (Navy Deep / Blue-900) - Dùng cho Banner, Ambient Glow, Bottom Nav
+  static const Color primaryDark = Color(0xFF1E3A8A);
 
-  /// Màu xanh lá tối nhất (Forest Darkest) - Dùng cho gradient nền tối
-  static const Color primaryDarkest = Color(0xFF0F3923);
+  /// Màu xanh tối nhất (Navy Darkest / Slate-950) - Dùng cho gradient nền tối
+  static const Color primaryDarkest = Color(0xFF0A1128);
 
-  /// Màu xanh lá sáng / điểm nhấn tương phản cao trên nền tối (Light Green / Mint Accent)
-  static const Color primaryLight = Color(0xFF4ADE80);
+  /// Màu xanh sáng / điểm nhấn tương phản cao trên nền tối (Light Cyan / Sky Accent)
+  static const Color primaryLight = Color(0xFF60A5FA);
 
-  /// Màu nền xanh ngọc pastel (Soft Mint Surface - dùng cho Chip, Badge)
-  static const Color primaryContainer = Color(0xFFDCFCE7);
+  /// Màu nền xanh ngọc pastel (Soft Ice Sky Blue Surface - dùng cho Chip, Badge)
+  static const Color primaryContainer = Color(0xFFEFF6FF);
 
-  /// Màu đường viền xanh nhạt (Mint Border)
-  static const Color primaryBorder = Color(0xFFBBF7D0);
+  /// Màu đường viền xanh nhạt (Blue Border)
+  static const Color primaryBorder = Color(0xFFBFDBFE);
 
-  /// Màu chữ xanh đậm tương phản trên nền xanh pastel (Forest Dark Text)
-  static const Color primaryForeground = Color(0xFF166534);
+  /// Màu chữ xanh đậm tương phản trên nền xanh pastel (Blue Dark Text)
+  static const Color primaryForeground = Color(0xFF1D4ED8);
 
   // --- Màu văn bản & Biểu tượng (Typography & Icon Colors) ---
   /// Màu chữ chính (Đen than Slate-900) - Dùng cho tiêu đề, văn bản quan trọng
@@ -40,6 +40,15 @@ abstract final class AppColors {
   /// Alias tiện lợi cho màu đen than Slate-900
   static const Color darkIcon = Color(0xFF0F172A);
 
+  /// Màu chữ tiêu đề phụ / số OTP đậm (Đen Slate-800)
+  static const Color textDark = Color(0xFF1E293B);
+
+  /// Màu nhãn / tiêu đề mục (Xám Slate-700)
+  static const Color textLabel = Color(0xFF334155);
+
+  /// Màu văn bản phụ tối / icon phụ (Xám Slate-600)
+  static const Color textSecondaryDark = Color(0xFF475569);
+
   /// Màu chữ phụ (Xám Slate-500) - Dùng cho phụ đề, nhãn, mô tả
   static const Color textSecondary = Color(0xFF64748B);
 
@@ -47,22 +56,28 @@ abstract final class AppColors {
   static const Color textMuted = Color(0xFF94A3B8);
 
   // --- Màu nền & Bề mặt (Background & Surface) ---
-  /// Nền chính của toàn app (Trắng xám ngà dịu mắt chuẩn ApSkil)
-  static const Color background = Color(0xFFF8F9FA);
+  /// Nền chính của toàn app (Xanh pastel dịu mắt Soft Ice Sky Blue)
+  static const Color background = Color(0xFFE6F0FC);
 
-  /// Nền pastel thanh thoát (Soft Pale Sage)
-  static const Color pastelBackground = Color(0xFFF8F9FA);
+  /// Nền xanh pastel đồng bộ cho các trang Auth và Profile (Soft Ice Sky Blue)
+  static const Color pastelBackground = Color(0xFFE6F0FC);
 
   /// Bề mặt thẻ, ô nhập, hộp thoại (Trắng tinh khiết)
   static const Color surface = Colors.white;
+
+  /// Bề mặt xám phụ (Slate-100) cho chip, badge, nút phụ, thanh phân cách
+  static const Color surfaceSubtle = Color(0xFFF1F5F9);
+
+  /// Màu viền trung bình / viền vô hiệu hóa (Xám Slate-300)
+  static const Color borderMedium = Color(0xFFCBD5E1);
 
   /// Màu viền chuẩn (Xám nhạt Slate-200) cho input, card, divider
   static const Color border = Color(0xFFE2E8F0);
 
   /// Màu viền khi được chọn (Active / Focused border)
-  static const Color borderFocused = Color(0xFF2E7D32);
+  static const Color borderFocused = Color(0xFF3D5AFE);
 
-  // --- Màu thông báo & Nhắc nhở buổi học (ApSkil Alert Banner) ---
+  // --- Màu thông báo & Nhắc nhở buổi học (Alert Banner) ---
   /// Nền banner thông báo màu cam đào pastel
   static const Color alertBannerBg = Color(0xFFFFF7ED);
 
@@ -72,16 +87,46 @@ abstract final class AppColors {
   /// Màu chữ / icon cảnh báo trong banner
   static const Color alertBannerText = Color(0xFFC2410C);
 
-  // --- Màu trạng thái (Feedback Colors) ---
-  /// Trạng thái thành công (Xanh lục)
-  static const Color success = Color(0xFF16A34A);
+  // --- Màu trạng thái (Feedback Colors - Success, Warning, Error, Info) ---
+  /// Trạng thái thành công chính (Xanh lục Emerald-500)
+  static const Color success = Color(0xFF10B981);
 
-  /// Trạng thái cảnh báo (Cam vàng)
+  /// Trạng thái thành công đậm (Emerald-600) - Dùng cho icon, nút bấm xác nhận
+  static const Color successDark = Color(0xFF059669);
+
+  /// Nền trạng thái thành công pastel (Green-100) - Dùng cho chip, badge, thẻ đã hoàn thành
+  static const Color successContainer = Color(0xFFDCFCE7);
+
+  /// Đường viền trạng thái thành công (Green-200)
+  static const Color successBorder = Color(0xFFA7F3D0);
+
+  /// Màu chữ trạng thái thành công tương phản cao (Green-800)
+  static const Color successForeground = Color(0xFF166534);
+
+  /// Trạng thái cảnh báo chính (Cam vàng Amber-500)
   static const Color warning = Color(0xFFF59E0B);
 
-  /// Trạng thái lỗi (Đỏ)
+  /// Nền trạng thái cảnh báo pastel (Amber-100)
+  static const Color warningContainer = Color(0xFFFEF3C7);
+
+  /// Đường viền trạng thái cảnh báo (Amber-200)
+  static const Color warningBorder = Color(0xFFFDE68A);
+
+  /// Màu chữ trạng thái cảnh báo tương phản cao (Amber-700 / Amber-800)
+  static const Color warningForeground = Color(0xFFD97706);
+
+  /// Trạng thái lỗi chính (Đỏ Red-500)
   static const Color error = Color(0xFFEF4444);
 
-  /// Trạng thái thông tin (Xanh dương)
-  static const Color info = Color(0xFF2563EB);
+  /// Nền trạng thái lỗi pastel (Red-100)
+  static const Color errorContainer = Color(0xFFFEE2E2);
+
+  /// Đường viền trạng thái lỗi (Red-200)
+  static const Color errorBorder = Color(0xFFFECACA);
+
+  /// Màu chữ trạng thái lỗi tương phản cao (Red-700)
+  static const Color errorForeground = Color(0xFFDC2626);
+
+  /// Trạng thái thông tin (Xanh dương Blue-500)
+  static const Color info = Color(0xFF3B82F6);
 }

@@ -47,23 +47,23 @@ class PaymentRepositoryImpl implements PaymentRepository {
           (model) => Result.ok(model.toEntity()),
         )
         .handleError((dynamic error) {
-      if (error is ServerException) {
-        return Result<PaymentStatusEntity>.err(
-          ServerFailure(
-            message: error.message,
-            statusCode: error.statusCode,
-            cause: error,
-          ),
-        );
-      }
-      if (error is NetworkException) {
-        return Result<PaymentStatusEntity>.err(
-          NetworkFailure(message: error.message, cause: error),
-        );
-      }
-      return Result<PaymentStatusEntity>.err(
-        UnknownFailure(message: error.toString(), cause: error),
-      );
-    });
+          if (error is ServerException) {
+            return Result<PaymentStatusEntity>.err(
+              ServerFailure(
+                message: error.message,
+                statusCode: error.statusCode,
+                cause: error,
+              ),
+            );
+          }
+          if (error is NetworkException) {
+            return Result<PaymentStatusEntity>.err(
+              NetworkFailure(message: error.message, cause: error),
+            );
+          }
+          return Result<PaymentStatusEntity>.err(
+            UnknownFailure(message: error.toString(), cause: error),
+          );
+        });
   }
 }

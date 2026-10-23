@@ -43,7 +43,9 @@ final getCoursesUseCaseProvider = Provider<GetCoursesUseCase>((ref) {
   return GetCoursesUseCase(ref.watch(courseRepositoryProvider));
 });
 
-final getPopularCoursesUseCaseProvider = Provider<GetPopularCoursesUseCase>((ref) {
+final getPopularCoursesUseCaseProvider = Provider<GetPopularCoursesUseCase>((
+  ref,
+) {
   return GetPopularCoursesUseCase(ref.watch(courseRepositoryProvider));
 });
 

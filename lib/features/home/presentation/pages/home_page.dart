@@ -52,6 +52,7 @@ class HomePage extends ConsumerWidget {
                 MainTabHeader(
                   displayName: displayName,
                   avatarUrl: userProfile?.avatarUrl,
+                  isPlus: userProfile?.isPlus == true,
                   showSearch: true,
                   padding: EdgeInsets.zero,
                 ),

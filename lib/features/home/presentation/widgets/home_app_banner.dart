@@ -59,7 +59,7 @@ class HomeAppBanner extends StatelessWidget {
                 height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF4ADE80).withValues(alpha: 0.12),
+                  color: AppColors.primaryLight.withValues(alpha: 0.16),
                 ),
               ),
             ),
@@ -106,7 +106,7 @@ class HomeAppBanner extends StatelessWidget {
                             const Text(
                               'Tự động tóm tắt bài giảng, tạo flashcard và đề thi thử theo giáo trình FPTU.',
                               style: TextStyle(
-                                color: Color(0xFFD1FAE5),
+                                color: Color(0xFFDBEAFE),
                                 fontSize: 11.5,
                                 height: 1.35,
                                 fontWeight: FontWeight.w400,
@@ -166,7 +166,7 @@ class HomeAppBanner extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: const Color(0xFFDCFCE7),
+                            color: AppColors.primaryBorder,
                             width: 2.5,
                           ),
                           boxShadow: [

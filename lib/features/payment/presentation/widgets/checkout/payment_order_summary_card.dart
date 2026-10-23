@@ -80,10 +80,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
             children: [
               const Text(
                 'Hết hạn sau',
-                style: TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF64748B),
-                ),
+                style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
               ),
               const SizedBox(height: 4),
               Container(

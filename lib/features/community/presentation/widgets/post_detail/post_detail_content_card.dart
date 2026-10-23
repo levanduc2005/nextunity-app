@@ -20,6 +20,7 @@ class PostDetailContentCard extends StatelessWidget {
     this.onReactionCleared,
     required this.onCommentPressed,
     required this.onSharePressed,
+    this.isAuthorPlus = false,
   });
 
   final PostEntity post;
@@ -31,6 +32,7 @@ class PostDetailContentCard extends StatelessWidget {
   final VoidCallback? onReactionCleared;
   final VoidCallback onCommentPressed;
   final VoidCallback onSharePressed;
+  final bool isAuthorPlus;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,12 @@ class PostDetailContentCard extends StatelessWidget {
           // Header: Avatar, Name, Tag, Time
           Row(
             children: [
-              _buildAvatar(post.authorAvatar, post.initials),
+              AppAvatar(
+                name: post.displayAuthor,
+                imageUrl: post.authorAvatar,
+                radius: 19,
+                isPlus: isAuthorPlus,
+              ),
               const Gap.h(10),
               Expanded(
                 child: Column(
@@ -240,37 +247,6 @@ class PostDetailContentCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar(String? avatarUrl, String initial) {
-    if (avatarUrl != null && avatarUrl.isNotEmpty) {
-      return CircleAvatar(
-        radius: 19,
-        backgroundColor: const Color(0xFF3D5AFE),
-        backgroundImage: NetworkImage(avatarUrl),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial.toUpperCase(),
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

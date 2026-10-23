@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
 
 class PlusAmbientBackground extends StatelessWidget {
   const PlusAmbientBackground({super.key, this.height = 330});
@@ -18,11 +17,7 @@ class PlusAmbientBackground extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              AppColors.primaryDark,
-              AppColors.primaryForeground,
-              AppColors.primary,
-            ],
+            colors: [Color(0xFF1E1B16), Color(0xFF2E2214), Color(0xFF5A3207)],
           ),
         ),
       ),

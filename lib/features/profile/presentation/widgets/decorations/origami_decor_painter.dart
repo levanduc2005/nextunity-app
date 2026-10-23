@@ -8,7 +8,7 @@ class OrigamiDecorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint1 = Paint()..color = AppColors.primaryBorder;
-    final paint2 = Paint()..color = const Color(0xFF86EFAC);
+    final paint2 = Paint()..color = const Color(0xFFBAE6FD);
     final paint3 = Paint()..color = AppColors.primaryLight;
 
     final path1 = Path()

@@ -40,7 +40,9 @@ class CourseDetailBottomBar extends StatelessWidget {
       primaryIcon = Icons.arrow_forward_rounded;
     } else if (isPremium) {
       primaryButtonLabel = isUserPlus ? 'Đăng ký ngay' : 'Nâng cấp Plus';
-      primaryIcon = isUserPlus ? Icons.check_rounded : Icons.workspace_premium_rounded;
+      primaryIcon = isUserPlus
+          ? Icons.check_rounded
+          : Icons.workspace_premium_rounded;
     } else {
       primaryButtonLabel = 'Bắt đầu học';
       primaryIcon = Icons.check_rounded;
@@ -52,9 +54,7 @@ class CourseDetailBottomBar extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          border: const Border(
-            top: BorderSide(color: Color(0xFFE2E8F0)),
-          ),
+          border: const Border(top: BorderSide(color: Color(0xFFE2E8F0))),
           boxShadow: [
             BoxShadow(
               color: const Color(0xFF0F172A).withValues(alpha: 0.06),
@@ -130,7 +130,9 @@ class CourseDetailBottomBar extends StatelessWidget {
                           height: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         )
                       : Row(
@@ -149,11 +151,7 @@ class CourseDetailBottomBar extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 6),
-                            Icon(
-                              primaryIcon,
-                              size: 16,
-                              color: Colors.white,
-                            ),
+                            Icon(primaryIcon, size: 16, color: Colors.white),
                           ],
                         ),
                 ),

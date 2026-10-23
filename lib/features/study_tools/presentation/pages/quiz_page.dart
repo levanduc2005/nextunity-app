@@ -44,13 +44,12 @@ class _QuizPageState extends State<QuizPage> {
       id: 'q2',
       question:
           'Khái niệm "StatefulWidget" trong Flutter khác với "StatelessWidget" ở điểm nào?',
-      options:
-          [
-            'Có thể tự động thay đổi giao diện theo thời gian hoặc tương tác',
-            'Chỉ dùng để hiển thị text tĩnh không thay đổi',
-            'Không cần hàm build để vẽ giao diện',
-            'Bắt buộc phải kết hợp với cơ sở dữ liệu SQLite',
-          ],
+      options: [
+        'Có thể tự động thay đổi giao diện theo thời gian hoặc tương tác',
+        'Chỉ dùng để hiển thị text tĩnh không thay đổi',
+        'Không cần hàm build để vẽ giao diện',
+        'Bắt buộc phải kết hợp với cơ sở dữ liệu SQLite',
+      ],
       correctIndex: 0,
       explanation:
           'StatefulWidget có thể quản lý trạng thái động và gọi setState() để kích hoạt rebuild giao diện.',
@@ -73,12 +72,7 @@ class _QuizPageState extends State<QuizPage> {
       id: 'q4',
       question:
           'Phương thức nào được gọi đúng một lần khi một State object được chèn vào cây widget?',
-      options: [
-        'build()',
-        'initState()',
-        'didUpdateWidget()',
-        'dispose()',
-      ],
+      options: ['build()', 'initState()', 'didUpdateWidget()', 'dispose()'],
       correctIndex: 1,
       explanation:
           'initState() được Flutter framework gọi duy nhất một lần khi đối tượng State được tạo.',
@@ -239,8 +233,9 @@ class _QuizPageState extends State<QuizPage> {
                   value: progress,
                   minHeight: 6,
                   backgroundColor: const Color(0xFFE2E8F0),
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.primary,
+                  ),
                 ),
               ),
             ],
@@ -264,8 +259,7 @@ class _QuizPageState extends State<QuizPage> {
                     border: Border.all(color: const Color(0xFFE2E8F0)),
                     boxShadow: [
                       BoxShadow(
-                        color:
-                            const Color(0xFF0F172A).withValues(alpha: 0.04),
+                        color: const Color(0xFF0F172A).withValues(alpha: 0.04),
                         blurRadius: 16,
                         offset: const Offset(0, 4),
                       ),
@@ -336,9 +330,9 @@ class _QuizPageState extends State<QuizPage> {
                             BoxShadow(
                               color: isSelected
                                   ? AppColors.primary.withValues(alpha: 0.08)
-                                  : const Color(0xFF0F172A).withValues(
-                                      alpha: 0.03,
-                                    ),
+                                  : const Color(
+                                      0xFF0F172A,
+                                    ).withValues(alpha: 0.03),
                               blurRadius: 10,
                               offset: const Offset(0, 3),
                             ),
@@ -410,9 +404,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.white,
-              border: const Border(
-                top: BorderSide(color: Color(0xFFE2E8F0)),
-              ),
+              border: const Border(top: BorderSide(color: Color(0xFFE2E8F0))),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF0F172A).withValues(alpha: 0.05),

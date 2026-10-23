@@ -90,12 +90,10 @@ class _GenderOption extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFDCFCE7) : Colors.white,
+            color: isSelected ? AppColors.primaryContainer : AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isSelected
-                  ? AppColors.primary
-                  : const Color(0xFFE2E8F0),
+              color: isSelected ? AppColors.primary : AppColors.border,
               width: isSelected ? 1.6 : 1,
             ),
           ),
@@ -105,9 +103,7 @@ class _GenderOption extends StatelessWidget {
               Icon(
                 icon,
                 size: 16,
-                color: isSelected
-                    ? AppColors.primary
-                    : const Color(0xFF64748B),
+                color: isSelected ? AppColors.primary : AppColors.textSecondary,
               ),
               const SizedBox(width: 4),
               Text(
@@ -116,8 +112,8 @@ class _GenderOption extends StatelessWidget {
                   fontSize: 12.5,
                   fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
                   color: isSelected
-                      ? const Color(0xFF166534)
-                      : const Color(0xFF64748B),
+                      ? AppColors.primaryForeground
+                      : AppColors.textSecondary,
                 ),
               ),
             ],

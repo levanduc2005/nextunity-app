@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gal/gal.dart';
 import 'package:intl/intl.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
@@ -10,11 +12,10 @@ import 'package:rental_car/features/payment/domain/entities/payment_result_entit
 import 'package:rental_car/features/payment/domain/entities/payment_status_entity.dart';
 import 'package:rental_car/features/payment/presentation/constants/supported_banks.dart';
 import 'package:rental_car/features/payment/presentation/providers/payment_providers.dart';
+import 'package:rental_car/features/payment/presentation/utils/vietqr_helper.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/bank_app_grid.dart';
-import 'package:rental_car/features/payment/presentation/widgets/checkout/bank_transfer_info_card.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_empty_state_view.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_expired_view.dart';
-import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_manual_verify_button.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_method_option_card.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_order_summary_card.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_page_app_bar.dart';
@@ -49,7 +50,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
   Timer? _countdownTimer;
   StreamSubscription<PaymentStatusEntity>? _sseSubscription;
   late int _secondsLeft;
-  bool _isChecking = false;
   PaymentResultEntity? _currentPayment;
 
   final currencyFormatter = NumberFormat('#,###', 'vi_VN');
@@ -117,15 +117,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
         .read(paymentControllerProvider.notifier)
         .subscribePayment(payment.orderCode)
         .listen(
-      (status) {
-        if (status.isPaid) {
-          _handlePaymentSuccess();
-        }
-      },
-      onError: (_) {
-        // SSE đứt kết nối do mạng, sẽ tự phục hồi qua lifecycle resumed
-      },
-    );
+          (status) {
+            if (status.isPaid) {
+              _handlePaymentSuccess();
+            }
+          },
+          onError: (_) {
+            // SSE đứt kết nối do mạng, sẽ tự phục hồi qua lifecycle resumed
+          },
+        );
   }
 
   Future<void> _checkPaymentStatusSilently() async {
@@ -153,52 +153,131 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
     final payment = _currentPayment;
     if (payment == null) return;
 
-    final checkoutUri = Uri.tryParse(payment.checkoutUrl);
-    if (checkoutUri != null) {
-      try {
-        final launched = await launchUrl(
-          checkoutUri,
-          mode: LaunchMode.externalApplication,
-        );
-        if (!launched && mounted) {
-          context.showSnackBar(
-            'Vui lòng quét mã QR hoặc chuyển khoản theo thông tin bên dưới.',
+    // 1. Tự động sao chép mã nội dung chuyển khoản vào Clipboard
+    final orderCodeText = 'NEXTUNITY ${payment.orderCode}';
+    Clipboard.setData(ClipboardData(text: orderCodeText));
+
+    final bank = SupportedBanks.findById(_selectedBankId);
+    final bankName = bank?['name'] as String? ?? 'Ngân hàng';
+    final appId = bank?['appId'] as String?;
+    final scheme = bank?['scheme'] as String?;
+
+    if (mounted) {
+      context.showSnackBar(
+        'Đã sao chép nội dung: "$orderCodeText". Vui lòng dán vào ô nội dung trong app $bankName nếu chưa tự điền!',
+      );
+    }
+
+    final qrInfo = VietqrHelper.parse(payment.qrCode);
+    bool launched = false;
+
+    // 2. Thử mở trực tiếp app ngân hàng bằng VietQR universal deeplink
+    if (appId != null) {
+      final deeplinkUrl = VietqrHelper.buildDeeplink(
+        appId: appId,
+        accountNumber: qrInfo.accountNumber,
+        bin: qrInfo.bin,
+        amount: payment.amount,
+        orderCode: payment.orderCode,
+      );
+      final deeplinkUri = Uri.tryParse(deeplinkUrl);
+      if (deeplinkUri != null) {
+        try {
+          launched = await launchUrl(
+            deeplinkUri,
+            mode: LaunchMode.externalApplication,
           );
-        }
-      } catch (e) {
-        if (mounted) {
-          context.showSnackBar('Lỗi mở ứng dụng ngân hàng: $e');
+        } catch (_) {
+          launched = false;
         }
       }
     }
+
+    // 2. Nếu universal link không mở được, thử mở trực tiếp qua custom scheme của app ngân hàng
+    if (!launched && scheme != null) {
+      final schemeUri = Uri.tryParse('$scheme://');
+      if (schemeUri != null) {
+        try {
+          if (await canLaunchUrl(schemeUri)) {
+            launched = await launchUrl(
+              schemeUri,
+              mode: LaunchMode.externalApplication,
+            );
+          }
+        } catch (_) {
+          launched = false;
+        }
+      }
+    }
+
+    // 3. Fallback: Nếu thiết bị chưa cài app ngân hàng đó, điều hướng sang web checkout PayOS
+    if (!launched) {
+      final checkoutUri = Uri.tryParse(payment.checkoutUrl);
+      if (checkoutUri != null) {
+        try {
+          launched = await launchUrl(
+            checkoutUri,
+            mode: LaunchMode.externalApplication,
+          );
+        } catch (_) {
+          launched = false;
+        }
+      }
+    }
+
+    if (!launched && mounted) {
+      context.showSnackBar(
+        'Không thể mở ứng dụng ngân hàng. Vui lòng quét mã QR hoặc chuyển khoản theo thông tin bên dưới.',
+      );
+    }
   }
 
-  Future<void> _manualVerify() async {
+  Future<void> _handleSaveQr(String qrImageUrl) async {
     final payment = _currentPayment;
     if (payment == null) return;
 
-    setState(() => _isChecking = true);
-    final status = await ref
-        .read(paymentControllerProvider.notifier)
-        .verifyPayment(payment.orderCode);
-    if (mounted) {
-      setState(() => _isChecking = false);
-    }
+    Clipboard.setData(ClipboardData(text: payment.qrCode));
 
-    if (status != null && status.isPaid) {
-      _handlePaymentSuccess();
-    } else {
+    try {
+      final response = await Dio().get<List<int>>(
+        qrImageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      final bytes = response.data;
+      if (bytes != null && bytes.isNotEmpty) {
+        await Gal.putImageBytes(
+          Uint8List.fromList(bytes),
+          name: 'nextunity_qr_${payment.orderCode}',
+        );
+
+        if (mounted) {
+          context.showSnackBar(
+            'Đã lưu ảnh mã QR vào Thư viện ảnh! Bạn có thể mở app ngân hàng chọn "Quét QR từ ảnh" để thanh toán.',
+          );
+        }
+        return;
+      }
+      throw Exception('Không tải được dữ liệu ảnh');
+    } on MissingPluginException {
       if (mounted) {
         context.showSnackBar(
-          'Hệ thống đang kiểm tra tiền vào tài khoản. Vui lòng đợi trong giây lát!',
+          'Vui lòng khởi động lại app (Stop & Run lại) để kích hoạt thư viện lưu ảnh vào máy.',
+        );
+      }
+    } on GalException catch (e) {
+      if (mounted) {
+        context.showSnackBar(
+          'Không thể lưu vào thư viện (${e.type.message}). Vui lòng cấp quyền Thư viện ảnh cho app!',
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        context.showSnackBar(
+          'Không thể lưu ảnh QR ($e). Đã sao chép mã VietQR vào bộ nhớ tạm!',
         );
       }
     }
-  }
-
-  void _copyToClipboard(String text, String label) {
-    Clipboard.setData(ClipboardData(text: text));
-    context.showSnackBar('Đã sao chép $label');
   }
 
   String _formatTimer() {
@@ -226,7 +305,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
       );
     }
 
-    final orderCodeStr = 'NEXTUNITY ${payment.orderCode}';
     final qrImageUrl =
         'https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${Uri.encodeComponent(payment.qrCode)}';
 
@@ -259,9 +337,9 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
             // Option 1: Mở app ngân hàng (Deeplink)
             PaymentMethodOptionCard(
               title: 'Mở ứng dụng Ngân hàng',
-              badge: 'Tự điền form',
+              badge: 'Chuyển nhanh',
               subtitle:
-                  'Mở app banking bạn đang dùng và tự động điền STK, số tiền, nội dung',
+                  'Mở app banking bạn đang dùng. Hệ thống sẽ tự động sao chép mã đơn hàng để bạn dán nếu app chưa tự điền.',
               isSelected: _selectedOption == 'bank',
               onTap: () => setState(() => _selectedOption = 'bank'),
               child: BankAppGrid(
@@ -287,28 +365,13 @@ class _PaymentPageState extends ConsumerState<PaymentPage>
                   'Dành cho quét từ thiết bị khác hoặc lưu ảnh QR vào thư viện',
               isSelected: _selectedOption == 'qr',
               onTap: () => setState(() => _selectedOption = 'qr'),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  VietQrDisplayCard(
-                    qrImageUrl: qrImageUrl,
-                    onOpenCheckoutUrl: _openBankApp,
-                  ),
-                  const SizedBox(height: 12),
-                  BankTransferInfoCard(
-                    amountFormatted: amountFormatted,
-                    orderCode: orderCodeStr,
-                    onCopy: _copyToClipboard,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: VietQrDisplayCard(
+                  qrImageUrl: qrImageUrl,
+                  onSaveQr: () => _handleSaveQr(qrImageUrl),
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-
-            // Confirm manual verify button
-            PaymentManualVerifyButton(
-              isChecking: _isChecking,
-              onPressed: _manualVerify,
             ),
             const SizedBox(height: 20),
 

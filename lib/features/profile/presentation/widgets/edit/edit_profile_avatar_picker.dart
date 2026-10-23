@@ -40,120 +40,19 @@ class EditProfileAvatarPicker extends ConsumerWidget {
     final isUploading = profileState.isUploadingAvatar;
     final avatarUrl = user?.avatarUrl;
     final displayName = user?.displayName ?? 'User';
+    final isPlus = user?.isPlus == true;
 
     return Column(
       children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            // Vòng Gradient Avatar cao cấp
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: const LinearGradient(
-                  colors: [
-                    AppColors.primary,
-                    AppColors.accent,
-                    AppColors.primaryLight,
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.28),
-                    blurRadius: 14,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFFDCFCE7),
-                  border: Border.all(color: Colors.white, width: 2.5),
-                ),
-                child: ClipOval(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      if (avatarUrl != null && avatarUrl.isNotEmpty)
-                        Image.network(
-                          avatarUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, _, _) =>
-                              _AvatarInitial(name: displayName),
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                              child: SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                      else
-                        _AvatarInitial(name: displayName),
-
-                      if (isUploading)
-                        Container(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          child: const Center(
-                            child: SizedBox(
-                              width: 26,
-                              height: 26,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2.5,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Nút Camera nhỏ ở góc avatar
-            Positioned(
-              bottom: 2,
-              right: 2,
-              child: GestureDetector(
-                onTap: isUploading ? null : () => _pickAvatar(context, ref),
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: const LinearGradient(
-                      colors: [AppColors.primary, Color(0xFF15803D)],
-                    ),
-                    border: Border.all(color: Colors.white, width: 2),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.photo_camera_rounded,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        AppAvatar(
+          name: displayName,
+          imageUrl: avatarUrl,
+          radius: 44,
+          isPlus: isPlus,
+          isUploading: isUploading,
+          showCameraBadge: !isPlus,
+          onTap: isUploading ? null : () => _pickAvatar(context, ref),
+          onCameraTap: isUploading ? null : () => _pickAvatar(context, ref),
         ),
         const SizedBox(height: 8),
         GestureDetector(
@@ -161,11 +60,7 @@ class EditProfileAvatarPicker extends ConsumerWidget {
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.edit_outlined,
-                size: 13,
-                color: AppColors.iconPrimary,
-              ),
+              Icon(Icons.edit_outlined, size: 13, color: AppColors.iconPrimary),
               SizedBox(width: 4),
               Text(
                 'Chạm để đổi ảnh đại diện',
@@ -179,30 +74,6 @@ class EditProfileAvatarPicker extends ConsumerWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _AvatarInitial extends StatelessWidget {
-  const _AvatarInitial({required this.name});
-
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    final initial = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
-    return Container(
-      color: const Color(0xFFDCFCE7),
-      child: Center(
-        child: Text(
-          initial,
-          style: const TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF166534),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -33,7 +33,12 @@ class QuickCreatePostCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              _buildUserAvatar(user?.avatarUrl, user?.displayName ?? 'Tôi'),
+              AppAvatar(
+                name: user?.displayName ?? 'Tôi',
+                imageUrl: user?.avatarUrl,
+                radius: 18,
+                isPlus: user?.isPlus == true,
+              ),
               const Gap.h(10),
               Expanded(
                 child: InkWell(
@@ -85,39 +90,6 @@ class QuickCreatePostCard extends ConsumerWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildUserAvatar(String? avatarUrl, String name) {
-    final initial = name.trim().isNotEmpty ? name.trim()[0].toUpperCase() : 'U';
-
-    if (avatarUrl != null && avatarUrl.isNotEmpty) {
-      return CircleAvatar(
-        radius: 18,
-        backgroundColor: AppColors.primary,
-        backgroundImage: NetworkImage(avatarUrl),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: 36,
-      height: 36,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [AppColors.primary, Color(0xFF16A34A)],
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_or_divider.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_terms_text.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/social_auth_button.dart';
@@ -59,67 +60,49 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Hiệu ứng ánh sáng nền nhẹ phong cách ApSkil
-          Positioned(
-            top: -80,
-            right: -80,
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.05),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -60,
-            left: -60,
-            child: Container(
-              width: 220,
-              height: 220,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.03),
-              ),
-            ),
-          ),
+          // Background decorative soft fluid waves phong cách NextUnity
+          const AuthBackgroundWaves(),
 
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                physics: const ClampingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 420),
+                  constraints: const BoxConstraints(maxWidth: 400),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // 1. Biểu tượng Logo & Lời chào ApSkil
+                      // 1. Biểu tượng Logo & Lời chào
                       Center(
                         child: Container(
-                          width: 68,
-                          height: 68,
+                          width: 50,
+                          height: 50,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF0FDF4),
-                            borderRadius: BorderRadius.circular(22),
+                            color: AppColors.primaryContainer,
+                            borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: const Color(0xFFDCFCE7),
-                              width: 1.5,
+                              color: AppColors.primaryBorder,
+                              width: 1.2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
-                                blurRadius: 18,
-                                offset: const Offset(0, 6),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.12,
+                                ),
+                                blurRadius: 14,
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(9),
                           child: Center(
                             child: Image.asset(
                               'public/app_logo.png',
@@ -128,42 +111,47 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 10),
 
                       const Text(
                         'Chào mừng trở lại',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          color: Color(0xFF0F172A),
-                          letterSpacing: -0.5,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -0.4,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 3),
                       const Text(
                         'Đăng nhập tài khoản NextUnity để tiếp tục học tập',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 13.5,
-                          color: Color(0xFF64748B),
+                          fontSize: 12.5,
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
-                      // 2. Thẻ Card Đăng nhập màu trắng bo góc chuẩn ApSkil chứa toàn bộ form & social login
+                      // 2. Thẻ Card Đăng nhập màu trắng bo góc
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 24),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: const Color(0xFFE2E8F0)),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.border),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF0F172A).withValues(alpha: 0.04),
-                              blurRadius: 24,
-                              offset: const Offset(0, 8),
+                              color: AppColors.textPrimary.withValues(
+                                alpha: 0.04,
+                              ),
+                              blurRadius: 20,
+                              offset: const Offset(0, 6),
                             ),
                           ],
                         ),
@@ -175,29 +163,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               onSignIn: _handleSignIn,
                               isLoading: authState.isLoading,
                             ),
-                            const SizedBox(height: 18),
+                            const SizedBox(height: 12),
 
                             // Phân cách Hoặc
                             const AuthOrDivider(
                               text: 'Hoặc tiếp tục với',
-                              padding: EdgeInsets.symmetric(vertical: 2),
+                              padding: EdgeInsets.zero,
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 12),
 
                             // Nút đăng nhập Google
                             SocialAuthButton(
-                              icon: const GmailBrandIcon(),
+                              icon: const GoogleBrandIcon(size: 20),
                               label: 'Tiếp tục với Google',
+                              height: 44,
                               onTap: _handleGoogleSignIn,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 12),
 
                       // 3. Chuyển sang trang Đăng ký (Sign Up)
                       _buildBottomSignUpButton(context),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
 
                       // 4. Điều khoản & Chính sách bảo mật
                       const AuthTermsText(),
@@ -213,15 +202,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Widget _buildBottomSignUpButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         const Text(
           'Chưa có tài khoản? ',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
           ),
         ),
         GestureDetector(
@@ -229,7 +219,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: const Text(
             'Đăng ký ngay',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.w800,
               color: AppColors.primary,
             ),

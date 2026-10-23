@@ -20,10 +20,10 @@ abstract class SubscriptionPlanModel with _$SubscriptionPlanModel {
       _$SubscriptionPlanModelFromJson(json);
 
   SubscriptionPlanEntity toEntity() => SubscriptionPlanEntity(
-        code: code,
-        name: name,
-        price: price,
-        durationDays: durationDays,
-        description: description,
-      );
+    code: code,
+    name: name,
+    price: price,
+    durationDays: durationDays,
+    description: description,
+  );
 }

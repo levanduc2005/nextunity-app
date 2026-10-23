@@ -20,9 +20,8 @@ abstract final class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-      iconTheme: const IconThemeData(
-        color: AppColors.iconPrimary,
-      ),
+      scaffoldBackgroundColor: AppColors.background,
+      iconTheme: const IconThemeData(color: AppColors.iconPrimary),
       appBarTheme: AppBarTheme(
         centerTitle: false,
         elevation: 0,

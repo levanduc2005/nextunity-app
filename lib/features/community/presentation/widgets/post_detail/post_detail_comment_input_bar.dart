@@ -14,6 +14,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
     this.replyTarget,
     required this.onCancelReply,
     required this.onSend,
+    this.isPlus = false,
   });
 
   final TextEditingController commentController;
@@ -23,6 +24,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
   final CommentEntity? replyTarget;
   final VoidCallback onCancelReply;
   final VoidCallback onSend;
+  final bool isPlus;
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +79,11 @@ class PostDetailCommentInputBar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
               children: [
-                _buildAvatar(
-                  currentUserAvatarUrl,
-                  currentUserName.isNotEmpty ? currentUserName[0] : 'U',
+                AppAvatar(
+                  name: currentUserName,
+                  imageUrl: currentUserAvatarUrl,
+                  radius: 16,
+                  isPlus: isPlus,
                 ),
                 const Gap.h(8),
                 Expanded(
@@ -133,39 +137,6 @@ class PostDetailCommentInputBar extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar(String? avatarUrl, String initial, {double radius = 16}) {
-    if (avatarUrl != null && avatarUrl.isNotEmpty) {
-      return CircleAvatar(
-        radius: radius,
-        backgroundColor: const Color(0xFF3D5AFE),
-        backgroundImage: NetworkImage(avatarUrl),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: radius * 2,
-      height: radius * 2,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial.toUpperCase(),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: radius * 0.75,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

@@ -54,18 +54,22 @@ class _SignUpFormState extends State<SignUpForm> {
           const Text(
             'Họ và tên',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _fullNameController,
             hintText: 'Nguyễn Văn A',
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.person_outline_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             validator: (val) {
@@ -78,25 +82,29 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 8),
 
           // 2. Email sinh viên
           const Text(
             'Email sinh viên',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _emailController,
             hintText: 'sinhvien@fpt.edu.vn',
             keyboardType: TextInputType.emailAddress,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.mail_outline_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             validator: (val) => AppValidators.email(
@@ -105,25 +113,29 @@ class _SignUpFormState extends State<SignUpForm> {
               invalidMessage: 'Email không hợp lệ',
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 8),
 
           // 3. Mật khẩu
           const Text(
             'Mật khẩu',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _passwordController,
             hintText: 'Tối thiểu 6 ký tự',
             obscureText: _obscurePassword,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.lock_outline_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             suffixIcon: IconButton(
@@ -132,7 +144,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
                 color: const Color(0xFF94A3B8),
-                size: 20,
+                size: 19,
               ),
               onPressed: () {
                 setState(() {
@@ -150,25 +162,29 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 8),
 
           // 4. Xác nhận mật khẩu
           const Text(
             'Xác nhận mật khẩu',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _confirmPasswordController,
             hintText: 'Nhập lại mật khẩu',
             obscureText: _obscureConfirmPassword,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.lock_reset_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             suffixIcon: IconButton(
@@ -177,7 +193,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
                 color: const Color(0xFF94A3B8),
-                size: 20,
+                size: 19,
               ),
               onPressed: () {
                 setState(() {
@@ -195,13 +211,13 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
 
           // 5. Nút Đăng ký tài khoản
           AuthGradientButton(
             text: 'Đăng ký tài khoản',
             isLoading: widget.isLoading,
-            height: 50,
+            height: 44,
             onPressed: _submit,
           ),
         ],

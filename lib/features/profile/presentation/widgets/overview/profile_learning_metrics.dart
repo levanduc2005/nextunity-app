@@ -20,12 +20,12 @@ class ProfileLearningMetrics extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+            color: AppColors.textPrimary.withValues(alpha: 0.04),
             blurRadius: 14,
             offset: const Offset(0, 4),
           ),
@@ -42,30 +42,22 @@ class ProfileLearningMetrics extends ConsumerWidget {
               label: 'Đang học',
             ),
           ),
-          Container(
-            height: 36,
-            width: 1,
-            color: const Color(0xFFF1F5F9),
-          ),
+          Container(height: 36, width: 1, color: AppColors.surfaceSubtle),
           Expanded(
             child: _buildMetricItem(
               icon: Icons.task_alt_rounded,
-              iconColor: const Color(0xFF059669),
-              iconBgColor: const Color(0xFFD1FAE5),
+              iconColor: const Color(0xFF0284C7),
+              iconBgColor: const Color(0xFFE0F2FE),
               count: completedCount.toString(),
               label: 'Hoàn thành',
             ),
           ),
-          Container(
-            height: 36,
-            width: 1,
-            color: const Color(0xFFF1F5F9),
-          ),
+          Container(height: 36, width: 1, color: AppColors.surfaceSubtle),
           Expanded(
             child: _buildMetricItem(
               icon: Icons.workspace_premium_rounded,
-              iconColor: const Color(0xFFD97706),
-              iconBgColor: const Color(0xFFFEF3C7),
+              iconColor: AppColors.warningForeground,
+              iconBgColor: AppColors.warningContainer,
               count: certCount.toString(),
               label: 'Chứng chỉ',
             ),
@@ -88,13 +80,8 @@ class ProfileLearningMetrics extends ConsumerWidget {
         Container(
           width: 36,
           height: 36,
-          decoration: BoxDecoration(
-            color: iconBgColor,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(icon, size: 18, color: iconColor),
-          ),
+          decoration: BoxDecoration(color: iconBgColor, shape: BoxShape.circle),
+          child: Center(child: Icon(icon, size: 18, color: iconColor)),
         ),
         const SizedBox(height: 8),
         Text(
@@ -102,7 +89,7 @@ class ProfileLearningMetrics extends ConsumerWidget {
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -112,7 +99,7 @@ class ProfileLearningMetrics extends ConsumerWidget {
           style: const TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
           ),
         ),
       ],

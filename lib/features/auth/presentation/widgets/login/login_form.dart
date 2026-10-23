@@ -44,49 +44,57 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           // 1. Nhãn & Ô nhập Email
           const Text(
-            'Email hoặc Mã sinh viên',
+            'Email',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _emailController,
             hintText: 'sinhvien@fpt.edu.vn',
             keyboardType: TextInputType.emailAddress,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.mail_outline_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Vui lòng nhập Email hoặc Mã sinh viên';
+                return 'Vui lòng nhập Email';
               }
               return null;
             },
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
 
           // 2. Nhãn & Ô nhập Password
           const Text(
             'Mật khẩu',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 12.5,
               fontWeight: FontWeight.w600,
               color: Color(0xFF334155),
             ),
           ),
-          const SizedBox(height: 7),
+          const SizedBox(height: 4),
           AuthTextField(
             controller: _passwordController,
             hintText: 'Nhập mật khẩu của bạn',
             obscureText: _obscurePassword,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 10,
+            ),
             prefixIcon: const Icon(
               Icons.lock_outline_rounded,
-              size: 20,
+              size: 19,
               color: Color(0xFF94A3B8),
             ),
             suffixIcon: IconButton(
@@ -95,7 +103,7 @@ class _LoginFormState extends State<LoginForm> {
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
                 color: const Color(0xFF94A3B8),
-                size: 20,
+                size: 19,
               ),
               onPressed: () {
                 setState(() {
@@ -110,7 +118,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
 
           // 3. Link Quên mật khẩu
           Align(
@@ -122,19 +130,19 @@ class _LoginFormState extends State<LoginForm> {
               child: const Text(
                 'Quên mật khẩu?',
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 12.5,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primary,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 14),
 
-          // 4. Nút Đăng nhập ApSkil Green
+          // 4. Nút Đăng nhập
           AuthGradientButton(
             text: 'Đăng nhập',
-            height: 50,
+            height: 46,
             isLoading: widget.isLoading,
             onPressed: _submit,
           ),

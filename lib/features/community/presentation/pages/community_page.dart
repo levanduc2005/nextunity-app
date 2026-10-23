@@ -48,6 +48,7 @@ class _CommunityPageState extends ConsumerState<CommunityPage> {
                   MainTabHeader(
                     displayName: user?.displayName,
                     avatarUrl: user?.avatarUrl,
+                    isPlus: user?.isPlus == true,
                     padding: EdgeInsets.zero,
                   ),
                   const SizedBox(height: 10),

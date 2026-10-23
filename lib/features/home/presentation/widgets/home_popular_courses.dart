@@ -29,7 +29,7 @@ class HomePopularCourses extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
                 letterSpacing: -0.3,
               ),
             ),
@@ -41,16 +41,16 @@ class HomePopularCourses extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: AppColors.border),
                 ),
                 child: const Text(
                   'Xem tất cả',
                   style: TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF475569),
+                    color: AppColors.textSecondaryDark,
                   ),
                 ),
               ),
@@ -73,14 +73,14 @@ class HomePopularCourses extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: const Center(
               child: Text(
                 'Chưa có khóa học nào để hiển thị',
-                style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
               ),
             ),
           )
@@ -105,10 +105,7 @@ class HomePopularCourses extends StatelessWidget {
 }
 
 class _PopularCourseCard extends StatelessWidget {
-  const _PopularCourseCard({
-    required this.course,
-    required this.isEven,
-  });
+  const _PopularCourseCard({required this.course, required this.isEven});
 
   final CourseEntity course;
   final bool isEven;
@@ -118,11 +115,14 @@ class _PopularCourseCard extends StatelessWidget {
     final tagLabel = course.categoryName?.isNotEmpty == true
         ? course.categoryName!
         : (course.category?.isNotEmpty == true
-            ? course.category!
-            : (course.difficultyName ?? course.difficulty));
-    final tagBg = isEven ? const Color(0xFFFFE4E6) : const Color(0xFFDCFCE7);
-    final tagTextColor =
-        isEven ? const Color(0xFF9F1239) : const Color(0xFF166534);
+              ? course.category!
+              : (course.difficultyName ?? course.difficulty));
+    final tagBg = isEven
+        ? AppColors.primaryContainer
+        : AppColors.warningContainer;
+    final tagTextColor = isEven
+        ? AppColors.primaryForeground
+        : AppColors.warningForeground;
 
     return Material(
       color: Colors.transparent,
@@ -134,12 +134,12 @@ class _PopularCourseCard extends StatelessWidget {
         child: Container(
           width: 215,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                color: AppColors.textPrimary.withValues(alpha: 0.03),
                 blurRadius: 12,
                 offset: const Offset(0, 3),
               ),
@@ -156,7 +156,7 @@ class _PopularCourseCard extends StatelessWidget {
                 child: Container(
                   height: 110,
                   width: double.infinity,
-                  color: const Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   child: course.imageUrl != null && course.imageUrl!.isNotEmpty
                       ? Image.network(
                           course.imageUrl!,
@@ -202,7 +202,7 @@ class _PopularCourseCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                         height: 1.25,
                       ),
                       maxLines: 2,
@@ -219,7 +219,7 @@ class _PopularCourseCard extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         Row(
@@ -227,7 +227,7 @@ class _PopularCourseCard extends StatelessWidget {
                             const Icon(
                               Icons.star_rounded,
                               size: 14,
-                              color: Color(0xFFF59E0B),
+                              color: AppColors.warning,
                             ),
                             const SizedBox(width: 2),
                             Text(
@@ -235,7 +235,7 @@ class _PopularCourseCard extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF334155),
+                                color: AppColors.textLabel,
                               ),
                             ),
                           ],
@@ -256,7 +256,7 @@ class _PopularCourseCard extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1E293B), Color(0xFF334155)],
+          colors: [AppColors.textDark, AppColors.textLabel],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -271,4 +271,3 @@ class _PopularCourseCard extends StatelessWidget {
     );
   }
 }
-

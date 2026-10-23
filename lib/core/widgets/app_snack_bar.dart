@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Phân loại thông báo Toast / SnackBar
 enum SnackType { info, success, error, warning }
@@ -92,31 +93,31 @@ class _AppToastContent extends StatelessWidget {
     final (icon, iconColor, iconBg, borderColor, bgColor) = switch (type) {
       SnackType.success => (
         Icons.check_circle_rounded,
-        const Color(0xFF059669),
+        AppColors.successDark,
         const Color(0xFFD1FAE5),
-        const Color(0xFFA7F3D0),
+        AppColors.successBorder,
         const Color(0xFFF0FDF4),
       ),
       SnackType.error => (
         Icons.error_rounded,
-        const Color(0xFFDC2626),
-        const Color(0xFFFEE2E2),
-        const Color(0xFFFECACA),
+        AppColors.errorForeground,
+        AppColors.errorContainer,
+        AppColors.errorBorder,
         const Color(0xFFFEF2F2),
       ),
       SnackType.warning => (
         Icons.warning_amber_rounded,
-        const Color(0xFFD97706),
-        const Color(0xFFFEF3C7),
-        const Color(0xFFFDE68A),
+        AppColors.warningForeground,
+        AppColors.warningContainer,
+        AppColors.warningBorder,
         const Color(0xFFFFFBEB),
       ),
       SnackType.info => (
         Icons.info_rounded,
         const Color(0xFF2563EB),
         const Color(0xFFDBEAFE),
-        const Color(0xFFBFDBFE),
-        const Color(0xFFEFF6FF),
+        AppColors.primaryBorder,
+        AppColors.primaryContainer,
       ),
     };
 
@@ -128,7 +129,7 @@ class _AppToastContent extends StatelessWidget {
         border: Border.all(color: borderColor, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.08),
+            color: AppColors.textPrimary.withValues(alpha: 0.08),
             blurRadius: 18,
             offset: const Offset(0, 6),
             spreadRadius: -2,
@@ -163,7 +164,7 @@ class _AppToastContent extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 13.5,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                       letterSpacing: -0.2,
                     ),
                   ),
@@ -174,7 +175,7 @@ class _AppToastContent extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                    color: AppColors.textDark,
                     height: 1.35,
                   ),
                 ),

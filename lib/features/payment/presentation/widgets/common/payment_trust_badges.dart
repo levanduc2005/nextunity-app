@@ -6,71 +6,57 @@ class PaymentTrustBadges extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return const Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 6,
+      runSpacing: 4,
       children: [
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.verified_user_rounded,
               color: Color(0xFF059669),
-              size: 15,
+              size: 14,
             ),
             SizedBox(width: 4),
             Text(
               'Bảo mật 100%',
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10.5,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF64748B),
               ),
             ),
           ],
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            '•',
-            style: TextStyle(color: Color(0xFFCBD5E1)),
-          ),
-        ),
+        Text('•', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 10.5)),
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.bolt_rounded,
-              color: Color(0xFF059669),
-              size: 16,
-            ),
+            Icon(Icons.bolt_rounded, color: Color(0xFF059669), size: 15),
             SizedBox(width: 3),
             Text(
-              'Kích hoạt tức thì 24/7',
+              'Kích hoạt tức thì',
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10.5,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF64748B),
               ),
             ),
           ],
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            '•',
-            style: TextStyle(color: Color(0xFFCBD5E1)),
-          ),
-        ),
+        Text('•', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 10.5)),
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.sync_rounded,
-              color: Color(0xFFF59E0B),
-              size: 15,
-            ),
+            Icon(Icons.sync_rounded, color: Color(0xFFF59E0B), size: 14),
             SizedBox(width: 4),
             Text(
               'Hoàn tiền 48h',
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10.5,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF64748B),
               ),

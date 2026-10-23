@@ -40,10 +40,10 @@ class PlusPlanListSection extends ConsumerWidget {
         final standardTotal = monthlyPlan.price * effectiveMonths;
         if (plan.price < standardTotal) {
           originalPrice = '${formatter.format(standardTotal)}đ';
-          final discountPercent =
-              ((1.0 - (plan.price / standardTotal)) * 100).round();
+          final discountPercent = ((1.0 - (plan.price / standardTotal)) * 100)
+              .round();
           if (discountPercent > 0) {
-            popularTag = 'PHỔ BIẾN NHẤT • TIẾT KIỆM $discountPercent%';
+            popularTag = 'TIẾT KIỆM $discountPercent%';
           }
         }
       }
@@ -85,14 +85,18 @@ class PlusPlanListSection extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Chọn gói đăng ký phù hợp',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+              Flexible(
+                child: Text(
+                  'Chọn gói đăng ký phù hợp',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF0F172A),
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              SizedBox(width: 8),
               Text(
                 'Hủy bất cứ lúc nào',
                 style: TextStyle(
@@ -124,14 +128,20 @@ class PlusPlanListSection extends ConsumerWidget {
               return const PlanEmptyView();
             }
 
-            final effectiveSelectedPlan = selectedPlanCode != null &&
+            final effectiveSelectedPlan =
+                selectedPlanCode != null &&
                     plans.any((p) => p.code == selectedPlanCode)
                 ? selectedPlanCode!
                 : (plans
-                    .firstWhere((p) => p.isSemester, orElse: () => plans.first)
-                    .code);
+                      .firstWhere(
+                        (p) => p.isSemester,
+                        orElse: () => plans.first,
+                      )
+                      .code);
 
-            final monthlyPlan = plans.cast<SubscriptionPlanEntity?>().firstWhere(
+            final monthlyPlan = plans
+                .cast<SubscriptionPlanEntity?>()
+                .firstWhere(
                   (p) =>
                       p != null &&
                       (p.durationDays == 30 || p.code.contains('MONTH')),

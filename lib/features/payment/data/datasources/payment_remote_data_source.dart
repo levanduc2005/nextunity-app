@@ -22,15 +22,16 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
   @override
   Future<List<SubscriptionPlanModel>> getAvailablePlans() {
     return guardApiCall(() async {
-      final response =
-          await _dio.get<Map<String, dynamic>>('/payments/plans');
+      final response = await _dio.get<Map<String, dynamic>>('/payments/plans');
       final data = response.data?['data'] as List<dynamic>?;
       if (data == null) {
         throw const ParsingException('Không tìm thấy danh sách gói đăng ký.');
       }
       return data
-          .map((item) =>
-              SubscriptionPlanModel.fromJson(item as Map<String, dynamic>))
+          .map(
+            (item) =>
+                SubscriptionPlanModel.fromJson(item as Map<String, dynamic>),
+          )
           .toList();
     });
   }
@@ -150,7 +151,9 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
       }
       if (!controller.isClosed) {
         controller.addError(
-          ServerException(message: e.message ?? 'Lỗi kết nối stream thanh toán'),
+          ServerException(
+            message: e.message ?? 'Lỗi kết nối stream thanh toán',
+          ),
         );
         await controller.close();
       }

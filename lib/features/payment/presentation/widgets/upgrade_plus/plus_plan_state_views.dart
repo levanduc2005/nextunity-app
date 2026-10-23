@@ -96,10 +96,7 @@ class PlanErrorView extends StatelessWidget {
           Text(
             errorMessage,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 11,
-              color: Color(0xFF64748B),
-            ),
+            style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
           ),
           const SizedBox(height: 12),
           TextButton.icon(
@@ -132,11 +129,7 @@ class PlanEmptyView extends StatelessWidget {
       ),
       child: const Column(
         children: [
-          Icon(
-            Icons.inventory_2_outlined,
-            color: Color(0xFF94A3B8),
-            size: 32,
-          ),
+          Icon(Icons.inventory_2_outlined, color: Color(0xFF94A3B8), size: 32),
           SizedBox(height: 8),
           Text(
             'Hiện tại chưa có gói đăng ký nào khả dụng',

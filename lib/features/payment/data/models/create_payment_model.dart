@@ -21,11 +21,11 @@ abstract class CreatePaymentModel with _$CreatePaymentModel {
       _$CreatePaymentModelFromJson(json);
 
   PaymentResultEntity toEntity() => PaymentResultEntity(
-        orderCode: orderCode,
-        checkoutUrl: checkoutUrl,
-        qrCode: qrCode,
-        amount: amount,
-        plan: plan,
-        expiresAt: expiresAt,
-      );
+    orderCode: orderCode,
+    checkoutUrl: checkoutUrl,
+    qrCode: qrCode,
+    amount: amount,
+    plan: plan,
+    expiresAt: expiresAt,
+  );
 }

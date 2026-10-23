@@ -38,7 +38,10 @@ class PaymentExpiredView extends StatelessWidget {
               const SizedBox(height: 12),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 28),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 22,
+                  vertical: 28,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
@@ -61,7 +64,10 @@ class PaymentExpiredView extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF1F2),
                         shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFFFECDD3), width: 2),
+                        border: Border.all(
+                          color: const Color(0xFFFECDD3),
+                          width: 2,
+                        ),
                       ),
                       child: const Center(
                         child: Icon(

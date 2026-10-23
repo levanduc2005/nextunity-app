@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
 
 /// Màn hình thông báo tài khoản đã tạo thành công chuẩn ApSkil.
@@ -11,27 +12,19 @@ class AccountCreatedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Hiệu ứng ánh sáng nền phong cách ApSkil
-          Positioned(
-            top: -80,
-            right: -80,
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.05),
-              ),
-            ),
-          ),
+          // Background decorative soft fluid waves phong cách NextUnity
+          const AuthBackgroundWaves(),
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 24,
+                ),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 420),
                   child: Container(
@@ -42,10 +35,10 @@ class AccountCreatedPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.border),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                          color: AppColors.textPrimary.withValues(alpha: 0.04),
                           blurRadius: 24,
                           offset: const Offset(0, 8),
                         ),
@@ -59,15 +52,17 @@ class AccountCreatedPage extends StatelessWidget {
                           width: 88,
                           height: 88,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF0FDF4),
+                            color: AppColors.primaryContainer,
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: const Color(0xFFDCFCE7),
+                              color: AppColors.primaryBorder,
                               width: 2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF2E7D32).withValues(alpha: 0.12),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.12,
+                                ),
                                 blurRadius: 20,
                                 offset: const Offset(0, 6),
                               ),
@@ -90,7 +85,7 @@ class AccountCreatedPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w900,
-                            color: Color(0xFF0F172A),
+                            color: AppColors.textPrimary,
                             letterSpacing: -0.5,
                           ),
                         ),
@@ -104,7 +99,7 @@ class AccountCreatedPage extends StatelessWidget {
                             fontSize: 14,
                             height: 1.5,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 32),

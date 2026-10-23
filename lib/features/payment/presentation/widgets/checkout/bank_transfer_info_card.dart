@@ -29,10 +29,7 @@ class BankTransferInfoCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildCopyRow(
-            label: 'Ngân hàng thụ hưởng',
-            value: bankName,
-          ),
+          _buildCopyRow(label: 'Ngân hàng thụ hưởng', value: bankName),
           const Divider(height: 16),
           _buildCopyRow(
             label: 'Số tài khoản',
@@ -86,13 +83,12 @@ class BankTransferInfoCard extends StatelessWidget {
                 value,
                 style: TextStyle(
                   fontSize: 12.5,
-                  fontWeight:
-                      isBold || isWarning ? FontWeight.w800 : FontWeight.w600,
+                  fontWeight: isBold || isWarning
+                      ? FontWeight.w800
+                      : FontWeight.w600,
                   color: isWarning
                       ? const Color(0xFF92400E)
-                      : (isBold
-                          ? AppColors.primary
-                          : const Color(0xFF0F172A)),
+                      : (isBold ? AppColors.primary : const Color(0xFF0F172A)),
                 ),
               ),
             ],
@@ -101,10 +97,12 @@ class BankTransferInfoCard extends StatelessWidget {
         if (canCopy)
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  isWarning ? const Color(0xFFF59E0B) : Colors.white,
-              foregroundColor:
-                  isWarning ? Colors.white : const Color(0xFF1E293B),
+              backgroundColor: isWarning
+                  ? const Color(0xFFF59E0B)
+                  : Colors.white,
+              foregroundColor: isWarning
+                  ? Colors.white
+                  : const Color(0xFF1E293B),
               elevation: isWarning ? 1 : 0,
               side: isWarning
                   ? null

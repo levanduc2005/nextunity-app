@@ -4,10 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// Top hero section on the NextUnity Plus upgrade page, showing the golden crown,
 /// PRO tag, headline, and value proposition.
 class PlusHeroSection extends StatelessWidget {
-  const PlusHeroSection({
-    super.key,
-    this.pulseAnimation,
-  });
+  const PlusHeroSection({super.key, this.pulseAnimation});
 
   final Animation<double>? pulseAnimation;
 
@@ -47,16 +44,10 @@ class PlusHeroSection extends StatelessWidget {
           top: -6,
           right: -8,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 7,
-              vertical: 2,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [
-                  Color(0xFFF59E0B),
-                  Color(0xFFD97706),
-                ],
+                colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -80,10 +71,7 @@ class PlusHeroSection extends StatelessWidget {
         children: [
           // Golden Crown in Amber Badge (Clean, sharp, no outer glow)
           if (pulseAnimation != null)
-            ScaleTransition(
-              scale: pulseAnimation!,
-              child: badgeWidget,
-            )
+            ScaleTransition(scale: pulseAnimation!, child: badgeWidget)
           else
             badgeWidget,
           const SizedBox(height: 12),
@@ -110,7 +98,7 @@ class PlusHeroSection extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
-                color: Color(0xFFDCFCE7),
+                color: Color(0xFFFEF3C7),
                 height: 1.4,
                 fontWeight: FontWeight.w400,
               ),

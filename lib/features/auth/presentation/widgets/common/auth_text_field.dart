@@ -19,6 +19,7 @@ class AuthTextField extends StatelessWidget {
   final Color fillColor;
   final double borderRadius;
   final bool autofocus;
+  final EdgeInsetsGeometry? contentPadding;
 
   const AuthTextField({
     super.key,
@@ -38,6 +39,7 @@ class AuthTextField extends StatelessWidget {
     this.fillColor = const Color(0xFFF8FAFC),
     this.borderRadius = 14.0,
     this.autofocus = false,
+    this.contentPadding,
   });
 
   @override
@@ -65,10 +67,9 @@ class AuthTextField extends StatelessWidget {
         ),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 13,
-        ),
+        contentPadding:
+            contentPadding ??
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
         filled: true,
         fillColor: fillColor,
         enabledBorder: OutlineInputBorder(

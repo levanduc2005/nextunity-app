@@ -5,6 +5,7 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_or_divider.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_terms_text.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/social_auth_button.dart';
@@ -76,184 +77,157 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Hiệu ứng ánh sáng nền phong cách ApSkil
+          // Background decorative soft fluid waves phong cách NextUnity
+          const AuthBackgroundWaves(),
+
+          // Nút quay lại góc trên trái
           Positioned(
-            top: -80,
-            right: -80,
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.05),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -60,
-            left: -60,
-            child: Container(
-              width: 220,
-              height: 220,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary.withValues(alpha: 0.03),
+            top: 6,
+            left: 6,
+            child: SafeArea(
+              child: IconButton(
+                onPressed: _handleBack,
+                icon: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 20,
+                  color: AppColors.textPrimary,
+                ),
+                tooltip: 'Quay lại',
               ),
             ),
           ),
 
           SafeArea(
-            child: Column(
-              children: [
-                // Top App Bar với nút quay lại
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: _handleBack,
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 20,
-                          color: Color(0xFF0F172A),
-                        ),
-                        tooltip: 'Quay lại',
-                      ),
-                    ],
-                  ),
+            child: Center(
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
                 ),
-
-                // Nội dung chính có thể cuộn
-                Expanded(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // 1. Biểu tượng Logo & Lời chào gọn gàng
+                      Center(
+                        child: Container(
+                          width: 46,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryContainer,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: AppColors.primaryBorder,
+                              width: 1.2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.12,
+                                ),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: Center(
+                            child: Image.asset(
+                              'public/app_logo.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
                       ),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 420),
+                      const SizedBox(height: 8),
+
+                      const Text(
+                        'Tạo tài khoản mới',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -0.4,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'Bắt đầu trải nghiệm học tập cùng NextUnity',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      // 2. Thẻ Card Đăng ký màu trắng
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.border),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.textPrimary.withValues(
+                                alpha: 0.04,
+                              ),
+                              blurRadius: 18,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            // 1. Biểu tượng Logo & Lời chào ApSkil
-                            Center(
-                              child: Container(
-                                width: 68,
-                                height: 68,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF0FDF4),
-                                  borderRadius: BorderRadius.circular(22),
-                                  border: Border.all(
-                                    color: const Color(0xFFDCFCE7),
-                                    width: 1.5,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
-                                      blurRadius: 18,
-                                      offset: const Offset(0, 6),
-                                    ),
-                                  ],
-                                ),
-                                padding: const EdgeInsets.all(12),
-                                child: Center(
-                                  child: Image.asset(
-                                    'public/app_logo.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
+                            SignUpForm(
+                              onSignUp: _handleSignUp,
+                              isLoading: authState.isLoading,
                             ),
-                            const SizedBox(height: 18),
+                            const SizedBox(height: 10),
 
-                            const Text(
-                              'Tạo tài khoản mới',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFF0F172A),
-                                letterSpacing: -0.5,
-                              ),
+                            // Phân cách Hoặc
+                            const AuthOrDivider(
+                              text: 'Hoặc đăng ký với',
+                              padding: EdgeInsets.zero,
                             ),
-                            const SizedBox(height: 6),
-                            const Text(
-                              'Bắt đầu trải nghiệm học tập cùng cộng đồng FPT',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13.5,
-                                color: Color(0xFF64748B),
-                                fontWeight: FontWeight.w500,
-                              ),
+                            const SizedBox(height: 10),
+
+                            // Nút đăng ký với Google
+                            SocialAuthButton(
+                              icon: const GoogleBrandIcon(size: 20),
+                              label: 'Đăng ký với Google',
+                              height: 42,
+                              onTap: _handleGoogleSignIn,
                             ),
-                            const SizedBox(height: 24),
-
-                            // 2. Thẻ Card Đăng ký màu trắng chuẩn ApSkil
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 22,
-                                vertical: 24,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(24),
-                                border: Border.all(color: const Color(0xFFE2E8F0)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: const Color(0xFF0F172A).withValues(alpha: 0.04),
-                                    blurRadius: 24,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SignUpForm(
-                                    onSignUp: _handleSignUp,
-                                    isLoading: authState.isLoading,
-                                  ),
-                                  const SizedBox(height: 18),
-
-                                  // Phân cách Hoặc
-                                  const AuthOrDivider(
-                                    text: 'Hoặc đăng ký với',
-                                    padding: EdgeInsets.symmetric(vertical: 2),
-                                  ),
-                                  const SizedBox(height: 16),
-
-                                  // Nút đăng ký với Google
-                                  SocialAuthButton(
-                                    icon: const GmailBrandIcon(),
-                                    label: 'Đăng ký với Google',
-                                    onTap: _handleGoogleSignIn,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 22),
-
-                            // 3. Chuyển sang trang Đăng nhập (Sign In)
-                            _buildBottomSignInButton(context),
-                            const SizedBox(height: 16),
-
-                            // 4. Điều khoản & Chính sách bảo mật
-                            const AuthTermsText(),
-                            const SizedBox(height: 12),
                           ],
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 10),
+
+                      // 3. Chuyển sang trang Đăng nhập (Sign In)
+                      _buildBottomSignInButton(context),
+                      const SizedBox(height: 6),
+
+                      // 4. Điều khoản & Chính sách bảo mật
+                      const AuthTermsText(),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -262,15 +236,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   }
 
   Widget _buildBottomSignInButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         const Text(
           'Đã có tài khoản? ',
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
           ),
         ),
         GestureDetector(
@@ -284,7 +259,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           child: const Text(
             'Đăng nhập ngay',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.w800,
               color: AppColors.primary,
             ),

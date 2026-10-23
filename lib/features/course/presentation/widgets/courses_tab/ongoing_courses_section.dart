@@ -26,9 +26,9 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFFF0FDF4),
+          color: AppColors.primaryContainer,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFBBF7D0)),
+          border: Border.all(color: AppColors.primaryBorder),
         ),
         child: Row(
           children: [
@@ -74,10 +74,12 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
       );
     }
 
-    final ongoingList =
-        widget.enrollments.where((e) => !e.isCompleted).toList();
-    final completedList =
-        widget.enrollments.where((e) => e.isCompleted).toList();
+    final ongoingList = widget.enrollments
+        .where((e) => !e.isCompleted)
+        .toList();
+    final completedList = widget.enrollments
+        .where((e) => e.isCompleted)
+        .toList();
     final activeList = _showCompleted ? completedList : ongoingList;
 
     return Column(
@@ -243,10 +245,7 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
 }
 
 class _OngoingCourseCard extends StatelessWidget {
-  const _OngoingCourseCard({
-    required this.enrollment,
-    required this.onTap,
-  });
+  const _OngoingCourseCard({required this.enrollment, required this.onTap});
 
   final EnrollmentEntity enrollment;
   final VoidCallback onTap;
@@ -317,8 +316,9 @@ class _OngoingCourseCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: AppColors.primaryContainer,
                               borderRadius: BorderRadius.circular(6),
-                              border:
-                                  Border.all(color: AppColors.primaryBorder),
+                              border: Border.all(
+                                color: AppColors.primaryBorder,
+                              ),
                             ),
                             child: Text(
                               code,
@@ -389,8 +389,10 @@ class _OngoingCourseCard extends StatelessWidget {
                 LayoutBuilder(
                   builder: (context, constraints) {
                     final barWidth = constraints.maxWidth;
-                    final activeWidth =
-                        (barWidth * progress).clamp(0.0, barWidth);
+                    final activeWidth = (barWidth * progress).clamp(
+                      0.0,
+                      barWidth,
+                    );
 
                     return Stack(
                       clipBehavior: Clip.none,
@@ -426,8 +428,10 @@ class _OngoingCourseCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: const Color(0xFF059669),
                                 shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: Colors.white, width: 1.5),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1.5,
+                                ),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black.withValues(alpha: 0.15),
@@ -496,7 +500,7 @@ class _OngoingCourseCard extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+          colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
         ),

@@ -3,8 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rental_car/core/widgets/main_tab_header.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
+import 'package:rental_car/features/auth/presentation/pages/login_page.dart';
+import 'package:rental_car/features/auth/presentation/pages/sign_up_page.dart';
+import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/nextunity_logo.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
+import 'package:rental_car/features/payment/domain/entities/subscription_plan_entity.dart';
+import 'package:rental_car/features/payment/presentation/pages/upgrade_plus_page.dart';
+import 'package:rental_car/features/payment/presentation/providers/payment_providers.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_header_card.dart';
 
@@ -13,6 +19,11 @@ class _MockProfileController extends ProfileController {
   ProfileState build() {
     return const ProfileState();
   }
+}
+
+class _MockAuthController extends AuthController {
+  @override
+  AuthState build() => const AuthState();
 }
 
 void main() {
@@ -166,4 +177,72 @@ void main() {
     await tester.pump();
     expect(find.byType(LessonBottomBar), findsOneWidget);
   });
+
+  testWidgets(
+    'Test LoginPage and SignUpPage render without overflow on 390x844 screen',
+    (tester) async {
+      tester.view.physicalSize = const Size(1170, 2532);
+      tester.view.devicePixelRatio = 3.0; // 390x844 logical width & height
+      addTearDown(() => tester.view.resetPhysicalSize());
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            authControllerProvider.overrideWith(_MockAuthController.new),
+          ],
+          child: const MaterialApp(home: Scaffold(body: LoginPage())),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(LoginPage), findsOneWidget);
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            authControllerProvider.overrideWith(_MockAuthController.new),
+          ],
+          child: const MaterialApp(home: Scaffold(body: SignUpPage())),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(SignUpPage), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Test UpgradePlusPage renders without overflow on compact 320px screen',
+    (tester) async {
+      tester.view.physicalSize = const Size(640, 1280);
+      tester.view.devicePixelRatio = 2.0; // 320 logical width
+      addTearDown(() => tester.view.resetPhysicalSize());
+
+      final mockPlans = <SubscriptionPlanEntity>[
+        const SubscriptionPlanEntity(
+          name: 'Gói 1 Học kỳ (4 tháng)',
+          code: 'PLUS_SEMESTER',
+          price: 129000,
+          durationDays: 120,
+          description: 'Trọn gói học kỳ, tiết kiệm tối đa chi phí học tập',
+        ),
+        const SubscriptionPlanEntity(
+          name: 'Gói 1 Tháng',
+          code: 'PLUS_MONTHLY',
+          price: 59000,
+          durationDays: 30,
+          description: 'Gia hạn linh hoạt hàng tháng',
+        ),
+      ];
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            availablePlansProvider.overrideWith((ref) async => mockPlans),
+          ],
+          child: const MaterialApp(home: UpgradePlusPage()),
+        ),
+      );
+      await tester.pump();
+      expect(find.byType(UpgradePlusPage), findsOneWidget);
+    },
+  );
 }

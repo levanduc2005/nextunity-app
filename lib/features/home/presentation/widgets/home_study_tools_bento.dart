@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Bộ công cụ ôn luyện thông minh dạng Bento hiện đại (Flashcards, Quiz AI, Mindmap, Đọc Slide/PDF)
 class HomeStudyToolsBento extends StatelessWidget {
@@ -11,12 +12,12 @@ class HomeStudyToolsBento extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+            color: AppColors.textPrimary.withValues(alpha: 0.04),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -34,7 +35,7 @@ class HomeStudyToolsBento extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -44,16 +45,16 @@ class HomeStudyToolsBento extends StatelessWidget {
                   vertical: 2.5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.surfaceSubtle,
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: AppColors.border),
                 ),
                 child: const Text(
                   '4 công cụ',
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF475569),
+                    color: AppColors.textSecondaryDark,
                   ),
                 ),
               ),
@@ -159,7 +160,7 @@ class HomeStudyToolsBento extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF334155),
+                  color: AppColors.textLabel,
                   letterSpacing: -0.2,
                 ),
                 maxLines: 1,

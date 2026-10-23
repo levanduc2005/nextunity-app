@@ -26,7 +26,7 @@ class HomeOngoingCourses extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.3,
           ),
         ),
@@ -46,9 +46,9 @@ class HomeOngoingCourses extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: Row(
               children: [
@@ -56,7 +56,7 @@ class HomeOngoingCourses extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFDCFCE7),
+                    color: AppColors.primaryContainer,
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Icon(
@@ -75,7 +75,7 @@ class HomeOngoingCourses extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       SizedBox(height: 2),
@@ -83,7 +83,7 @@ class HomeOngoingCourses extends StatelessWidget {
                         'Đăng ký khóa học ngay để theo dõi tiến độ học tập!',
                         style: TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -147,8 +147,9 @@ class _OngoingCourseCard extends StatelessWidget {
         : 'FPT';
     final imageUrl = enrollment.courseThumbnailUrl;
     final progress = enrollment.progressRatio.clamp(0.0, 1.0);
-    final totalLessons =
-        enrollment.totalLessons > 0 ? enrollment.totalLessons : 8;
+    final totalLessons = enrollment.totalLessons > 0
+        ? enrollment.totalLessons
+        : 8;
     final completedCount = (progress * totalLessons).round();
     final metaText = [
       if (enrollment.courseDifficultyName != null &&
@@ -174,12 +175,12 @@ class _OngoingCourseCard extends StatelessWidget {
           width: 300,
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                color: AppColors.textPrimary.withValues(alpha: 0.03),
                 blurRadius: 12,
                 offset: const Offset(0, 3),
               ),
@@ -239,7 +240,7 @@ class _OngoingCourseCard extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: AppColors.textPrimary,
                             height: 1.25,
                           ),
                           maxLines: 2,
@@ -267,7 +268,7 @@ class _OngoingCourseCard extends StatelessWidget {
                           Container(
                             height: 6,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE2E8F0),
+                              color: AppColors.border,
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
@@ -320,7 +321,7 @@ class _OngoingCourseCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       Text(
@@ -328,7 +329,7 @@ class _OngoingCourseCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -344,7 +345,7 @@ class _OngoingCourseCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF94A3B8),
+                    color: AppColors.textMuted,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -361,7 +362,7 @@ class _OngoingCourseCard extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+          colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
         ),
@@ -370,11 +371,7 @@ class _OngoingCourseCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.school_rounded,
-              size: 20,
-              color: Colors.white,
-            ),
+            const Icon(Icons.school_rounded, size: 20, color: Colors.white),
             const SizedBox(height: 2),
             Text(
               code.length > 5 ? code.substring(0, 5) : code,
@@ -393,4 +390,3 @@ class _OngoingCourseCard extends StatelessWidget {
     );
   }
 }
-

@@ -54,10 +54,7 @@ class PaymentEmptyStateView extends StatelessWidget {
                 const Text(
                   'Vui lòng chọn gói đăng ký NextUnity Plus để khởi tạo đơn thanh toán.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    color: Color(0xFF64748B),
-                  ),
+                  style: TextStyle(fontSize: 12.5, color: Color(0xFF64748B)),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

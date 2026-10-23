@@ -25,7 +25,9 @@ class CourseDetailHeroHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTotal = totalLessons > 0 ? totalLessons : course.totalLessons;
+    final effectiveTotal = totalLessons > 0
+        ? totalLessons
+        : course.totalLessons;
     final progressFraction = effectiveTotal > 0
         ? (completedCount / effectiveTotal).clamp(0.0, 1.0)
         : course.progress.clamp(0.0, 1.0);
@@ -56,7 +58,9 @@ class CourseDetailHeroHeader extends StatelessWidget {
                       border: Border.all(color: const Color(0xFFE2E8F0)),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                          color: const Color(
+                            0xFF0F172A,
+                          ).withValues(alpha: 0.04),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -273,7 +277,9 @@ class CourseDetailHeroHeader extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    course.categoryName ?? course.category ?? 'Chuyên ngành FPT',
+                    course.categoryName ??
+                        course.category ??
+                        'Chuyên ngành FPT',
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
@@ -296,8 +302,8 @@ class CourseDetailHeroHeader extends StatelessWidget {
                       (course.difficulty == 'ADVANCED'
                           ? 'Nâng cao'
                           : (course.difficulty == 'INTERMEDIATE'
-                              ? 'Trung cấp'
-                              : 'Cơ bản')),
+                                ? 'Trung cấp'
+                                : 'Cơ bản')),
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
@@ -590,7 +596,7 @@ class CourseDetailHeroHeader extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1B5E20), Color(0xFF2E7D32), Color(0xFF388E3C)],
+          colors: [Color(0xFF1E1B4B), Color(0xFF1E3A8A), Color(0xFF0F172A)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

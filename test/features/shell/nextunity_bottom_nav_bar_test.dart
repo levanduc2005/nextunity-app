@@ -22,7 +22,7 @@ void main() {
   }
 
   group('NextUnityBottomNavBar Tests', () {
-    testWidgets('renders all 5 navigation tabs', (tester) async {
+    testWidgets('renders all 4 navigation tabs', (tester) async {
       await tester.pumpWidget(buildTestWidget(currentIndex: 0, onTap: (_) {}));
       await tester.pumpAndSettle();
 
@@ -30,7 +30,7 @@ void main() {
       expect(find.text('Khóa học'), findsOneWidget);
       expect(find.text('AI Study'), findsOneWidget);
       expect(find.text('Cộng đồng'), findsOneWidget);
-      expect(find.text('Cá nhân'), findsOneWidget);
+      expect(find.text('Cá nhân'), findsNothing);
     });
 
     testWidgets('triggers onTap callback when a tab is tapped', (tester) async {
@@ -51,20 +51,20 @@ void main() {
       await tester.pumpAndSettle();
       expect(tappedIndex, equals(1));
 
-      // Tap on 'Cá nhân' (tab 4)
-      await tester.tap(find.text('Cá nhân'));
+      // Tap on 'Cộng đồng' (tab 3)
+      await tester.tap(find.text('Cộng đồng'));
       await tester.pumpAndSettle();
-      expect(tappedIndex, equals(4));
+      expect(tappedIndex, equals(3));
     });
 
     testWidgets('displays active indicators for selected index', (
       tester,
     ) async {
-      await tester.pumpWidget(buildTestWidget(currentIndex: 4, onTap: (_) {}));
+      await tester.pumpWidget(buildTestWidget(currentIndex: 3, onTap: (_) {}));
       await tester.pumpAndSettle();
 
-      // Profile tab (index 4) should display selected icon Icons.person_rounded
-      expect(find.byIcon(Icons.person_rounded), findsOneWidget);
+      // Community tab (index 3) should display selected icon Icons.forum_rounded
+      expect(find.byIcon(Icons.forum_rounded), findsOneWidget);
       // Other inactive tabs should display outline icons
       expect(find.byIcon(Icons.explore_outlined), findsOneWidget);
       expect(find.byIcon(Icons.local_library_outlined), findsOneWidget);

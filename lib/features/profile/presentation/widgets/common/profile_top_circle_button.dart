@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Nút tròn góc trên tiêu chuẩn cho toàn bộ màn hình Profile & Edit Profile
 class ProfileTopCircleButton extends StatelessWidget {
@@ -6,7 +7,7 @@ class ProfileTopCircleButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onTap,
-    this.iconColor = const Color(0xFF334155),
+    this.iconColor = AppColors.textLabel,
     this.tooltip,
   });
 

@@ -105,7 +105,11 @@ class CommentBubbleItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildAvatar(comment.authorAvatar, comment.initials),
+              AppAvatar(
+                name: comment.authorName,
+                imageUrl: comment.authorAvatar,
+                radius: 16,
+              ),
               const Gap.h(8),
               Expanded(
                 child: Column(
@@ -248,9 +252,9 @@ class CommentBubbleItem extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildAvatar(
-                          reply.authorAvatar,
-                          reply.initials,
+                        AppAvatar(
+                          name: reply.authorName,
+                          imageUrl: reply.authorAvatar,
                           radius: 14,
                         ),
                         const Gap.h(8),
@@ -396,37 +400,6 @@ class CommentBubbleItem extends StatelessWidget {
               ),
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar(String? avatarUrl, String initial, {double radius = 16}) {
-    if (avatarUrl != null && avatarUrl.isNotEmpty) {
-      return CircleAvatar(
-        radius: radius,
-        backgroundColor: const Color(0xFF3D5AFE),
-        backgroundImage: NetworkImage(avatarUrl),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: radius * 2,
-      height: radius * 2,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial.toUpperCase(),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: radius * 0.75,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

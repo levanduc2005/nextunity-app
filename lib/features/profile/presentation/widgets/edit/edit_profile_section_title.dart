@@ -23,7 +23,7 @@ class EditProfileSectionTitle extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1E293B),
+            color: AppColors.textDark,
             letterSpacing: -0.2,
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/core/widgets/app_avatar.dart';
 import 'package:rental_car/core/widgets/app_snack_bar.dart';
 
 /// Top App Bar thống nhất cho toàn bộ các Tab chính (Home, Courses, AI, Community, Profile).
@@ -22,7 +23,11 @@ class MainTabHeader extends StatelessWidget {
     this.bottom,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.backgroundColor,
+    this.isPlus = false,
   });
+
+  /// Cờ xác định thành viên gói NextUnity PLUS để hiển thị viền vàng & tag PLUS
+  final bool isPlus;
 
   /// Tên hiển thị người dùng (mặc định 'Sinh viên FPT').
   final String? displayName;
@@ -68,12 +73,9 @@ class MainTabHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveDisplayName =
         (displayName != null && displayName!.trim().isNotEmpty)
-            ? displayName!.trim()
-            : 'Sinh viên FPT';
+        ? displayName!.trim()
+        : 'Sinh viên FPT';
     final effectiveGreeting = greeting ?? subtitle ?? _defaultGreeting;
-    final initial = effectiveDisplayName.isNotEmpty
-        ? effectiveDisplayName.split(' ').last[0].toUpperCase()
-        : 'S';
 
     return Container(
       color: backgroundColor,
@@ -90,39 +92,18 @@ class MainTabHeader extends StatelessWidget {
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     try {
+                      context.pushNamed(AppRoute.profile.name);
+                    } catch (_) {
                       context.go(AppRoute.profile.path);
-                    } catch (_) {}
+                    }
                   },
                   child: Row(
                     children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.primaryBorder,
-                            width: 2,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.12),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ClipOval(
-                          child: avatarUrl != null &&
-                                  avatarUrl!.trim().isNotEmpty
-                              ? Image.network(
-                                  avatarUrl!,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (_, _, _) =>
-                                      _buildFallbackAvatar(initial),
-                                )
-                              : _buildFallbackAvatar(initial),
-                        ),
+                      AppAvatar(
+                        name: effectiveDisplayName,
+                        imageUrl: avatarUrl,
+                        radius: 22,
+                        isPlus: isPlus,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -170,7 +151,8 @@ class MainTabHeader extends StatelessWidget {
                     _HeaderIconButton(
                       icon: Icons.search_rounded,
                       tooltip: 'Tìm kiếm khóa học',
-                      onTap: onSearchTap ??
+                      onTap:
+                          onSearchTap ??
                           () {
                             try {
                               context.go(AppRoute.courses.path);
@@ -185,7 +167,8 @@ class MainTabHeader extends StatelessWidget {
                     icon: Icons.notifications_none_rounded,
                     tooltip: 'Thông báo',
                     hasBadge: notificationCount > 0,
-                    onTap: onNotificationTap ??
+                    onTap:
+                        onNotificationTap ??
                         () =>
                             context.showSnackBar('Chưa có thông báo mới nào.'),
                   ),
@@ -199,32 +182,8 @@ class MainTabHeader extends StatelessWidget {
             ],
           ),
 
-          if (bottom != null) ...[
-            const SizedBox(height: 10),
-            bottom!,
-          ],
+          if (bottom != null) ...[const SizedBox(height: 10), bottom!],
         ],
-      ),
-    );
-  }
-
-  Widget _buildFallbackAvatar(String initial) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.primary, AppColors.accent],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 17,
-          fontWeight: FontWeight.w800,
-        ),
       ),
     );
   }
@@ -268,13 +227,7 @@ class _HeaderIconButton extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              Center(
-                child: Icon(
-                  icon,
-                  size: 21,
-                  color: AppColors.iconPrimary,
-                ),
-              ),
+              Center(child: Icon(icon, size: 21, color: AppColors.iconPrimary)),
               if (hasBadge)
                 Positioned(
                   top: 9,
@@ -285,10 +238,7 @@ class _HeaderIconButton extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: const Color(0xFFEF4444),
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 1.5,
-                      ),
+                      border: Border.all(color: Colors.white, width: 1.5),
                     ),
                   ),
                 ),

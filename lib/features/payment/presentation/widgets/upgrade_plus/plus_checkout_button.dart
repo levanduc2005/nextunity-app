@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
 
 class PlusCheckoutButton extends StatelessWidget {
   const PlusCheckoutButton({
@@ -24,17 +23,14 @@ class PlusCheckoutButton extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [
-                AppColors.primary,
-                Color(0xFF16A34A),
-              ],
+              colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
             ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: canProceed
                 ? [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.28),
-                      blurRadius: 12,
+                      color: const Color(0xFFF59E0B).withValues(alpha: 0.38),
+                      blurRadius: 14,
                       offset: const Offset(0, 4),
                     ),
                   ]
@@ -45,35 +41,43 @@ class PlusCheckoutButton extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
               onTap: canProceed && !isLoading ? onTap : null,
-              child: Center(
-                child: isLoading
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2.2,
-                        ),
-                      )
-                    : const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Tiếp tục thanh toán',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.5,
-                            ),
-                          ),
-                          SizedBox(width: 6),
-                          Icon(
-                            Icons.arrow_forward_rounded,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Center(
+                  child: isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
                             color: Colors.white,
-                            size: 18,
+                            strokeWidth: 2.2,
                           ),
-                        ],
-                      ),
+                        )
+                      : const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                'Tiếp tục thanh toán',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14.5,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                ),
               ),
             ),
           ),

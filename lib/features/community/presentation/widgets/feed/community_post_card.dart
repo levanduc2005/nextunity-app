@@ -44,6 +44,14 @@ class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
   @override
   Widget build(BuildContext context) {
     final post = widget.post;
+    final currentUser = ref.watch(authControllerProvider).user;
+    final isAuthorCurrentUser =
+        currentUser != null &&
+        (currentUser.id == post.authorId ||
+            (post.authorName != null &&
+                currentUser.fullName?.trim().toLowerCase() ==
+                    post.authorName!.trim().toLowerCase()));
+    final isAuthorPlus = isAuthorCurrentUser && currentUser.isPlus;
 
     return Container(
       decoration: BoxDecoration(
@@ -78,7 +86,12 @@ class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildAvatar(post),
+                        AppAvatar(
+                          name: post.displayAuthor,
+                          imageUrl: post.authorAvatar,
+                          radius: 19,
+                          isPlus: isAuthorPlus,
+                        ),
                         const Gap.h(10),
                         Expanded(
                           child: Column(
@@ -331,39 +344,6 @@ class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar(PostEntity post) {
-    if (post.authorAvatar != null && post.authorAvatar!.isNotEmpty) {
-      return CircleAvatar(
-        radius: 19,
-        backgroundColor: const Color(0xFF3D5AFE),
-        backgroundImage: NetworkImage(post.authorAvatar!),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: 38,
-      height: 38,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [Color(0xFF3D5AFE), Color(0xFF60A5FA)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        post.initials,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 13,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }

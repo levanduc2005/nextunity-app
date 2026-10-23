@@ -37,7 +37,7 @@ class EditProfileTextField extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1E293B),
+                color: AppColors.textDark,
                 letterSpacing: -0.2,
               ),
             ),
@@ -46,7 +46,7 @@ class EditProfileTextField extends StatelessWidget {
               const Text(
                 '*',
                 style: TextStyle(
-                  color: Color(0xFFEF4444),
+                  color: AppColors.error,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
@@ -63,17 +63,17 @@ class EditProfileTextField extends StatelessWidget {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
           ),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(
               fontSize: 13.5,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: AppColors.surface,
             contentPadding: EdgeInsets.symmetric(
               horizontal: 14,
               vertical: maxLines > 1 ? 12 : 11,
@@ -81,11 +81,7 @@ class EditProfileTextField extends StatelessWidget {
             prefixIcon: prefixIcon != null
                 ? Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    child: Icon(
-                      prefixIcon,
-                      size: 19,
-                      color: AppColors.primary,
-                    ),
+                    child: Icon(prefixIcon, size: 19, color: AppColors.primary),
                   )
                 : null,
             prefixIconConstraints: const BoxConstraints(
@@ -94,11 +90,11 @@ class EditProfileTextField extends StatelessWidget {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: const BorderSide(color: AppColors.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: const BorderSide(color: AppColors.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
@@ -109,14 +105,11 @@ class EditProfileTextField extends StatelessWidget {
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFEF4444)),
+              borderSide: const BorderSide(color: AppColors.error),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(
-                color: Color(0xFFEF4444),
-                width: 1.6,
-              ),
+              borderSide: const BorderSide(color: AppColors.error, width: 1.6),
             ),
           ),
         ),

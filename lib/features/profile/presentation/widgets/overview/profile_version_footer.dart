@@ -17,13 +17,13 @@ class ProfileVersionFooter extends StatelessWidget {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
           ),
           const SizedBox(width: 6),
           const Text(
             '•',
-            style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 12),
+            style: TextStyle(color: AppColors.borderMedium, fontSize: 12),
           ),
           const SizedBox(width: 6),
           GestureDetector(

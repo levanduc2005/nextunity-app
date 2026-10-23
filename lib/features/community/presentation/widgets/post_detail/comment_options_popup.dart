@@ -106,26 +106,6 @@ class CommentOptionsPopup extends StatelessWidget {
     );
   }
 
-  static Widget _buildAvatar(String? avatarUrl, String initials) {
-    return CircleAvatar(
-      radius: 15,
-      backgroundColor: const Color(0xFFE2E8F0),
-      backgroundImage: (avatarUrl != null && avatarUrl.isNotEmpty)
-          ? NetworkImage(avatarUrl)
-          : null,
-      child: (avatarUrl == null || avatarUrl.isEmpty)
-          ? Text(
-              initials,
-              style: const TextStyle(
-                fontSize: 10.5,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF475569),
-              ),
-            )
-          : null,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -258,7 +238,11 @@ class CommentOptionsPopup extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildAvatar(authorAvatar, authorInitials),
+                      AppAvatar(
+                        name: authorName,
+                        imageUrl: authorAvatar,
+                        radius: 15,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Column(

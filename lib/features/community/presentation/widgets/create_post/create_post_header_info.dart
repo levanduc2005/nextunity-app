@@ -8,18 +8,18 @@ class CreatePostHeaderInfo extends StatelessWidget {
     super.key,
     required this.userName,
     this.avatarUrl,
+    this.isPlus = false,
   });
 
   final String userName;
   final String? avatarUrl;
+  final bool isPlus;
 
   @override
   Widget build(BuildContext context) {
-    final initial = userName.trim().isNotEmpty ? userName.trim()[0] : 'U';
-
     return Row(
       children: [
-        _buildAvatar(avatarUrl, initial),
+        AppAvatar(name: userName, imageUrl: avatarUrl, isPlus: isPlus),
         const Gap.h(10),
         Expanded(
           child: Column(
@@ -69,37 +69,6 @@ class CreatePostHeaderInfo extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildAvatar(String? avatarUrl, String initial) {
-    if (avatarUrl != null && avatarUrl.isNotEmpty) {
-      return CircleAvatar(
-        radius: 20,
-        backgroundColor: AppColors.primary,
-        backgroundImage: NetworkImage(avatarUrl),
-        onBackgroundImageError: (_, _) {},
-      );
-    }
-
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [AppColors.primary, Color(0xFF16A34A)],
-        ),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        initial.toUpperCase(),
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
     );
   }
 }

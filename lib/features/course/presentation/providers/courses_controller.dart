@@ -98,8 +98,9 @@ class CoursesController extends Notifier<CoursesState> {
           search: state.searchQuery.isEmpty ? null : state.searchQuery,
         );
 
-    final popularResult =
-        await ref.read(getPopularCoursesUseCaseProvider).call();
+    final popularResult = await ref
+        .read(getPopularCoursesUseCaseProvider)
+        .call();
 
     List<EnrollmentEntity> enrollments = [];
     Map<String, String> categories = {};
@@ -126,10 +127,7 @@ class CoursesController extends Notifier<CoursesState> {
       err: (failure) => error ??= failure.message,
     );
 
-    popularResult.when(
-      ok: (data) => popularCourses = data,
-      err: (_) {},
-    );
+    popularResult.when(ok: (data) => popularCourses = data, err: (_) {});
 
     state = state.copyWith(
       myEnrollments: enrollments,

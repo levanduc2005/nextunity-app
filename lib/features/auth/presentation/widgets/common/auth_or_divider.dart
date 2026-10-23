@@ -18,10 +18,7 @@ class AuthOrDivider extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(
-            child: Divider(
-              color: Color(0xFFE2E8F0),
-              thickness: 1,
-            ),
+            child: Divider(color: Color(0xFFE2E8F0), thickness: 1),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -35,10 +32,7 @@ class AuthOrDivider extends StatelessWidget {
             ),
           ),
           const Expanded(
-            child: Divider(
-              color: Color(0xFFE2E8F0),
-              thickness: 1,
-            ),
+            child: Divider(color: Color(0xFFE2E8F0), thickness: 1),
           ),
         ],
       ),

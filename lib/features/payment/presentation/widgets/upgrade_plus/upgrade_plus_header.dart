@@ -20,9 +20,7 @@ class UpgradePlusHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.20),
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.25),
-                ),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
@@ -40,25 +38,31 @@ class UpgradePlusHeader extends StatelessWidget {
           ),
 
           // Title with Amber Workspace Premium Icon
-          const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.workspace_premium_rounded,
-                color: Color(0xFFFCD34D), // amber-300
-                size: 19,
-              ),
-              SizedBox(width: 6),
-              Text(
-                'Nâng cấp NextUnity Plus',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  letterSpacing: -0.2,
+          const Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.workspace_premium_rounded,
+                  color: Color(0xFFFCD34D), // amber-300
+                  size: 19,
                 ),
-              ),
-            ],
+                SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    'Nâng cấp NextUnity Plus',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      letterSpacing: -0.2,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
 
           // Help Button
@@ -70,9 +74,7 @@ class UpgradePlusHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.20),
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.25),
-                ),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,

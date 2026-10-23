@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/providers/core_providers.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/profile/presentation/providers/profile_providers.dart';
+import 'package:rental_car/features/profile/presentation/widgets/common/profile_top_circle_button.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_header_card.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_learning_metrics.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_menu_list.dart';
-import 'package:rental_car/features/profile/presentation/widgets/overview/profile_plus_card.dart';
 import 'package:rental_car/features/profile/presentation/widgets/overview/profile_version_footer.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -36,9 +38,40 @@ class ProfilePage extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            MainTabHeader(
-              displayName: user?.displayName,
-              avatarUrl: user?.avatarUrl,
+            // 1. TOP BAR CÓ NÚT QUAY LẠI
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ProfileTopCircleButton(
+                    icon: Icons.arrow_back_ios_new_rounded,
+                    tooltip: 'Quay lại',
+                    onTap: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go(AppRoute.home.path);
+                      }
+                    },
+                  ),
+                  const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Hồ Sơ Cá Nhân',
+                        style: TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 36),
+                ],
+              ),
             ),
 
             // 2. SCROLLABLE PROFILE CONTENT
@@ -61,10 +94,6 @@ class ProfilePage extends ConsumerWidget {
 
                       // 2. 3 CHỈ SỐ HỌC TẬP CHUẨN APSKIL
                       const ProfileLearningMetrics(),
-                      const SizedBox(height: 14),
-
-                      // 3. PLUS MEMBERSHIP STATUS / UPGRADE BANNER
-                      ProfilePlusCard(user: user),
                       const SizedBox(height: 16),
 
                       // 3. GROUPED SETTINGS & SUPPORT MENU

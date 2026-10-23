@@ -87,20 +87,22 @@ class LessonBottomBar extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: isCompleted
                           ? const LinearGradient(
-                              colors: [Color(0xFF2E7D32), Color(0xFF1B5E20)],
+                              colors: [Color(0xFF2563EB), Color(0xFF1E40AF)],
                             )
                           : null,
-                      color: isCompleted ? null : const Color(0xFFF0FDF4),
+                      color: isCompleted ? null : AppColors.primaryContainer,
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
                         color: isCompleted
-                            ? const Color(0xFF1B5E20)
-                            : const Color(0xFFBBF7D0),
+                            ? AppColors.primaryDark
+                            : AppColors.primaryBorder,
                       ),
                       boxShadow: isCompleted
                           ? [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.25),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.25,
+                                ),
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
                               ),
@@ -150,7 +152,9 @@ class LessonBottomBar extends StatelessWidget {
                         const SizedBox(width: 8),
                         Flexible(
                           child: Text(
-                            isCompleted ? 'Đã hoàn thành' : 'Hoàn thành bài học',
+                            isCompleted
+                                ? 'Đã hoàn thành'
+                                : 'Hoàn thành bài học',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w800,

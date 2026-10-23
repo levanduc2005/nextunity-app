@@ -154,6 +154,11 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Profile details
       GoRoute(
+        path: AppRoute.profile.path,
+        name: AppRoute.profile.name,
+        builder: (_, _) => const ProfilePage(),
+      ),
+      GoRoute(
         path: AppRoute.editProfile.path,
         name: AppRoute.editProfile.name,
         builder: (_, _) => const EditProfilePage(),
@@ -288,16 +293,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: AppRoute.community.path,
                 name: AppRoute.community.name,
                 builder: (_, _) => const CommunityPage(),
-              ),
-            ],
-          ),
-          // Branch 4: Profile
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.profile.path,
-                name: AppRoute.profile.name,
-                builder: (_, _) => const ProfilePage(),
               ),
             ],
           ),

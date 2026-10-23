@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
@@ -97,48 +98,11 @@ class ProfileDetailView extends StatelessWidget {
                         Center(
                           child: Column(
                             children: [
-                              Container(
-                                width: 92,
-                                height: 92,
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      AppColors.primary,
-                                      Color(0xFF16A34A),
-                                      Color(0xFF86EFAC),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.25,
-                                      ),
-                                      blurRadius: 12,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: CircleAvatar(
-                                  radius: 43,
-                                  backgroundColor: const Color(0xFFE2E8F0),
-                                  backgroundImage:
-                                      avatarUrl != null && avatarUrl.isNotEmpty
-                                      ? NetworkImage(avatarUrl)
-                                      : null,
-                                  onBackgroundImageError:
-                                      avatarUrl != null && avatarUrl.isNotEmpty
-                                      ? (_, _) {}
-                                      : null,
-                                  child: const Icon(
-                                    Icons.person_rounded,
-                                    size: 48,
-                                    color: Color(0xFF94A3B8),
-                                  ),
-                                ),
+                              AppAvatar(
+                                name: fullName,
+                                imageUrl: avatarUrl,
+                                radius: 46,
+                                isPlus: isPlus,
                               ),
                               const SizedBox(height: 12),
 
@@ -149,7 +113,7 @@ class ProfileDetailView extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF0F172A),
+                                  color: AppColors.textPrimary,
                                   letterSpacing: -0.4,
                                 ),
                               ),
@@ -162,7 +126,7 @@ class ProfileDetailView extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xFF64748B),
+                                  color: AppColors.textSecondary,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -176,7 +140,7 @@ class ProfileDetailView extends StatelessWidget {
                                   _BadgeChip(
                                     icon: Icons.tag_rounded,
                                     label: studentId,
-                                    bgColor: const Color(0xFFDCFCE7),
+                                    bgColor: AppColors.primaryContainer,
                                     textColor: AppColors.primary,
                                   ),
                                   _BadgeChip(
@@ -186,10 +150,10 @@ class ProfileDetailView extends StatelessWidget {
                                     label: isPlus ? 'PLUS MEMBER' : 'SINH VIÊN',
                                     bgColor: isPlus
                                         ? const Color(0xFFFEF3C7)
-                                        : const Color(0xFFF1F5F9),
+                                        : AppColors.surfaceSubtle,
                                     textColor: isPlus
                                         ? const Color(0xFFD97706)
-                                        : const Color(0xFF475569),
+                                        : AppColors.textSecondaryDark,
                                   ),
                                 ],
                               ),
@@ -259,9 +223,11 @@ class ProfileDetailView extends StatelessWidget {
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF8FAFC),
+                            color: AppColors.surfaceSubtle.withValues(
+                              alpha: 0.5,
+                            ),
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                            border: Border.all(color: AppColors.border),
                           ),
                           child: Text(
                             bio,
@@ -269,8 +235,8 @@ class ProfileDetailView extends StatelessWidget {
                               fontSize: 13,
                               fontStyle: FontStyle.italic,
                               color: user?.bio?.trim().isNotEmpty == true
-                                  ? const Color(0xFF334155)
-                                  : const Color(0xFF94A3B8),
+                                  ? AppColors.textLabel
+                                  : AppColors.textMuted,
                               height: 1.45,
                             ),
                           ),
@@ -337,7 +303,7 @@ class _SectionHeader extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1E293B),
+            color: AppColors.textDark,
             letterSpacing: -0.2,
           ),
         ),
@@ -365,17 +331,17 @@ class _InfoRowTile extends StatelessWidget {
       margin: EdgeInsets.only(bottom: isLast ? 0 : 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFF1F5F9)),
+        border: Border.all(color: AppColors.surfaceSubtle),
       ),
       child: Row(
         children: [
           Container(
             width: 32,
             height: 32,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF8FAFC),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceSubtle.withValues(alpha: 0.6),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, size: 16, color: AppColors.iconPrimary),
@@ -390,7 +356,7 @@ class _InfoRowTile extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF94A3B8),
+                    color: AppColors.textMuted,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -399,7 +365,7 @@ class _InfoRowTile extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ],

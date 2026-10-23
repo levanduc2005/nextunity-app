@@ -31,12 +31,14 @@ class _LessonContentCardState extends State<LessonContentCard> {
   Widget build(BuildContext context) {
     final lesson = widget.lesson;
     final isCompleted = widget.isCompleted;
-    final isVideoLesson = lesson.type == 'VIDEO' ||
+    final isVideoLesson =
+        lesson.type == 'VIDEO' ||
         (lesson.videoUrl != null && lesson.videoUrl!.trim().isNotEmpty);
     final hasSlide =
         lesson.slideUrl != null && lesson.slideUrl!.trim().isNotEmpty;
     final hasInstructor =
-        widget.instructorName != null && widget.instructorName!.trim().isNotEmpty;
+        widget.instructorName != null &&
+        widget.instructorName!.trim().isNotEmpty;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,16 +48,15 @@ class _LessonContentCardState extends State<LessonContentCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: const Color(0xFFE0F2FE),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                (lesson.typeName ?? (isVideoLesson ? 'Video bài giảng' : 'Lý thuyết')).toUpperCase(),
+                (lesson.typeName ??
+                        (isVideoLesson ? 'Video bài giảng' : 'Lý thuyết'))
+                    .toUpperCase(),
                 style: const TextStyle(
                   fontSize: 10.5,
                   fontWeight: FontWeight.w800,
@@ -66,10 +67,7 @@ class _LessonContentCardState extends State<LessonContentCard> {
             ),
             if (isCompleted)
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 3,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
                   color: const Color(0xFFDCFCE7),
                   borderRadius: BorderRadius.circular(6),
@@ -124,7 +122,11 @@ class _LessonContentCardState extends State<LessonContentCard> {
                 ),
                 child: Center(
                   child: Text(
-                    widget.instructorName!.trim().split(' ').last.substring(0, 1),
+                    widget.instructorName!
+                        .trim()
+                        .split(' ')
+                        .last
+                        .substring(0, 1),
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w800,
@@ -454,8 +456,9 @@ class _LessonContentCardState extends State<LessonContentCard> {
                         boxShadow: _activeContentTab == 0
                             ? [
                                 BoxShadow(
-                                  color: const Color(0xFF0F172A)
-                                      .withValues(alpha: 0.05),
+                                  color: const Color(
+                                    0xFF0F172A,
+                                  ).withValues(alpha: 0.05),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 ),
@@ -492,8 +495,9 @@ class _LessonContentCardState extends State<LessonContentCard> {
                         boxShadow: _activeContentTab == 1
                             ? [
                                 BoxShadow(
-                                  color: const Color(0xFF0F172A)
-                                      .withValues(alpha: 0.05),
+                                  color: const Color(
+                                    0xFF0F172A,
+                                  ).withValues(alpha: 0.05),
                                   blurRadius: 6,
                                   offset: const Offset(0, 2),
                                 ),

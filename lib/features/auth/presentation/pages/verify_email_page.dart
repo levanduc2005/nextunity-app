@@ -6,6 +6,7 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_otp_row.dart';
@@ -142,11 +143,11 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // 1. Ánh sáng loang nền phong cách ApSkil
-          _buildAmbientLights(),
+          // 1. Background decorative soft fluid waves phong cách NextUnity
+          const AuthBackgroundWaves(),
 
           // 2. Nội dung cuộn chính
           SafeArea(
@@ -167,15 +168,17 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                           width: 68,
                           height: 68,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF0FDF4),
+                            color: AppColors.primaryContainer,
                             borderRadius: BorderRadius.circular(22),
                             border: Border.all(
-                              color: const Color(0xFFDCFCE7),
+                              color: AppColors.primaryBorder,
                               width: 1.5,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF2E7D32).withValues(alpha: 0.10),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.12,
+                                ),
                                 blurRadius: 18,
                                 offset: const Offset(0, 6),
                               ),
@@ -344,41 +347,6 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildAmbientLights() {
-    return Positioned.fill(
-      child: IgnorePointer(
-        child: Stack(
-          children: [
-            Positioned(
-              top: -60,
-              right: -60,
-              child: Container(
-                width: 260,
-                height: 260,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary.withValues(alpha: 0.05),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -50,
-              left: -50,
-              child: Container(
-                width: 240,
-                height: 240,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary.withValues(alpha: 0.03),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

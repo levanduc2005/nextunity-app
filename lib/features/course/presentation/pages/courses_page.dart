@@ -35,6 +35,7 @@ class CoursesPage extends ConsumerWidget {
                   MainTabHeader(
                     displayName: user?.displayName,
                     avatarUrl: user?.avatarUrl,
+                    isPlus: user?.isPlus == true,
                     padding: EdgeInsets.zero,
                   ),
                   const SizedBox(height: 12),
@@ -93,8 +94,10 @@ class CoursesPage extends ConsumerWidget {
                       enrollments: state.myEnrollments,
                       onTapCourse: (enr) {
                         context.push(
-                          AppRoute.courseDetail.path
-                              .replaceFirst(':id', enr.courseId),
+                          AppRoute.courseDetail.path.replaceFirst(
+                            ':id',
+                            enr.courseId,
+                          ),
                         );
                       },
                     ),
@@ -157,8 +160,10 @@ class CoursesPage extends ConsumerWidget {
                           course: c,
                           isEnrolled: isEnrolled,
                           onTap: () => context.push(
-                            AppRoute.courseDetail.path
-                                .replaceFirst(':id', c.id),
+                            AppRoute.courseDetail.path.replaceFirst(
+                              ':id',
+                              c.id,
+                            ),
                           ),
                         );
                       }),

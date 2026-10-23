@@ -62,8 +62,8 @@ class ProfileMenuList extends StatelessWidget {
             const _MenuDivider(),
             _MenuTile(
               icon: Icons.info_outline_rounded,
-              iconColor: const Color(0xFF64748B),
-              iconBgColor: const Color(0xFFF1F5F9),
+              iconColor: AppColors.textSecondary,
+              iconBgColor: AppColors.surfaceSubtle,
               title: 'Về NextUnity Studio',
               subtitle: 'Phiên bản 2.4.0 (Bản phát hành chính thức)',
               onTap: () {
@@ -86,11 +86,11 @@ class ProfileMenuList extends StatelessWidget {
           children: [
             _MenuTile(
               icon: Icons.logout_rounded,
-              iconColor: const Color(0xFFDC2626),
-              iconBgColor: const Color(0xFFFEF2F2),
+              iconColor: AppColors.errorForeground,
+              iconBgColor: AppColors.errorContainer,
               title: 'Đăng xuất tài khoản',
               subtitle: 'Thoát phiên đăng nhập trên thiết bị này',
-              titleColor: const Color(0xFFDC2626),
+              titleColor: AppColors.errorForeground,
               showChevron: false,
               onTap: onLogout,
             ),
@@ -116,7 +116,7 @@ class _SectionHeader extends StatelessWidget {
           fontSize: 10.5,
           fontWeight: FontWeight.w800,
           letterSpacing: 1.0,
-          color: Color(0xFF94A3B8),
+          color: AppColors.textMuted,
         ),
       ),
     );
@@ -132,12 +132,12 @@ class _GroupCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+            color: AppColors.textPrimary.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -209,7 +209,7 @@ class _MenuTile extends StatelessWidget {
                       subtitle,
                       style: const TextStyle(
                         fontSize: 11,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -220,7 +220,7 @@ class _MenuTile extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   size: 20,
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textMuted,
                 ),
             ],
           ),
@@ -237,7 +237,7 @@ class _MenuDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.only(left: 64, right: 14),
-      child: Divider(height: 1, thickness: 0.8, color: Color(0xFFF1F5F9)),
+      child: Divider(height: 1, thickness: 0.8, color: AppColors.surfaceSubtle),
     );
   }
 }

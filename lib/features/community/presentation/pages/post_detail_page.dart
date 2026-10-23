@@ -52,7 +52,6 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
     if (!mounted) return;
     if (success) {
       _commentController.clear();
-      context.showSuccessSnackBar('Đã đăng bình luận!');
     } else {
       context.showErrorSnackBar('Gửi bình luận thất bại. Vui lòng thử lại!');
     }
@@ -232,6 +231,15 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                         PostDetailContentCard(
                           post: post,
                           isLiked: isPostLiked,
+                          isAuthorPlus:
+                              user != null &&
+                              user.isPlus &&
+                              (user.id == post.authorId ||
+                                  (post.authorName != null &&
+                                      user.fullName?.trim().toLowerCase() ==
+                                          post.authorName!
+                                              .trim()
+                                              .toLowerCase())),
                           currentReaction: communityState.getPostReaction(
                             post.id,
                           ),
@@ -284,6 +292,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
               replyTarget: detailState.replyTarget,
               onCancelReply: detailController.cancelReply,
               onSend: _handleSendComment,
+              isPlus: user?.isPlus == true,
             ),
           ],
         ),

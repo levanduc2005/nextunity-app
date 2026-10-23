@@ -49,10 +49,9 @@ class BankAppGrid extends StatelessWidget {
             final bank = banks[index];
             final isBankSelected = selectedBankId == bank['id'];
             return GestureDetector(
-              onTap: () => onSelectBank(
-                bank['id'] as String,
-                bank['name'] as String,
-              ),
+              onTap: () {
+                onSelectBank(bank['id'] as String, bank['name'] as String);
+              },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 decoration: BoxDecoration(
@@ -141,13 +140,41 @@ class BankAppGrid extends StatelessWidget {
             ),
             onPressed: onOpenBankApp,
             icon: const Icon(Icons.account_balance_rounded, size: 18),
-            label: Text(
-              'Mở App $selectedBankName để thanh toán',
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 13,
-              ),
+            label: const Text(
+              'Thanh toán',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
             ),
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Tip text
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+          ),
+          child: const Row(
+            children: [
+              Icon(
+                Icons.info_outline_rounded,
+                size: 14,
+                color: Color(0xFF64748B),
+              ),
+              SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  'Hệ thống sẽ tự động sao chép mã đơn hàng để bạn dán vào app ngân hàng.',
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    color: Color(0xFF64748B),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],

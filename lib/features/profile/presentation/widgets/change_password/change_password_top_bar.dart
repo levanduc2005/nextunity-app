@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/profile/presentation/widgets/common/profile_top_circle_button.dart';
 
 /// Thanh top bar của trang Đổi Mật Khẩu
@@ -39,7 +40,7 @@ class ChangePasswordTopBar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -48,7 +49,7 @@ class ChangePasswordTopBar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],

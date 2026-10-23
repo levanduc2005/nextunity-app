@@ -36,9 +36,7 @@ class AuthResendCode extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: canResend
-                    ? AppColors.primary
-                    : const Color(0xFF94A3B8),
+                color: canResend ? AppColors.primary : const Color(0xFF94A3B8),
               ),
               children: [
                 const TextSpan(text: 'Resend Code '),

@@ -18,7 +18,9 @@ import 'package:rental_car/features/payment/domain/usecases/subscribe_payment_st
 import 'package:rental_car/features/payment/domain/usecases/verify_payment_use_case.dart';
 
 class MockPaymentRepository extends Mock implements PaymentRepository {}
-class MockPaymentRemoteDataSource extends Mock implements PaymentRemoteDataSource {}
+
+class MockPaymentRemoteDataSource extends Mock
+    implements PaymentRemoteDataSource {}
 
 void main() {
   group('Payment Feature Use Cases', () {
@@ -70,8 +72,9 @@ void main() {
     );
 
     test('GetAvailablePlansUseCase returns plans on success', () async {
-      when(() => repository.getAvailablePlans())
-          .thenAnswer((_) async => const Result.ok(testPlans));
+      when(
+        () => repository.getAvailablePlans(),
+      ).thenAnswer((_) async => const Result.ok(testPlans));
 
       final result = await getAvailablePlansUseCase();
 
@@ -82,8 +85,9 @@ void main() {
     });
 
     test('GetAvailablePlansUseCase returns failure when repo fails', () async {
-      when(() => repository.getAvailablePlans())
-          .thenAnswer((_) async => const Result.err(ServerFailure(message: 'Network error')));
+      when(() => repository.getAvailablePlans()).thenAnswer(
+        (_) async => const Result.err(ServerFailure(message: 'Network error')),
+      );
 
       final result = await getAvailablePlansUseCase();
 
@@ -92,8 +96,9 @@ void main() {
     });
 
     test('CreatePaymentUseCase returns payment details on success', () async {
-      when(() => repository.createPayment('PLUS_SEMESTER'))
-          .thenAnswer((_) async => const Result.ok(testPaymentResult));
+      when(
+        () => repository.createPayment('PLUS_SEMESTER'),
+      ).thenAnswer((_) async => const Result.ok(testPaymentResult));
 
       final result = await createPaymentUseCase('PLUS_SEMESTER');
 
@@ -105,8 +110,9 @@ void main() {
     });
 
     test('VerifyPaymentUseCase returns payment status on success', () async {
-      when(() => repository.verifyPayment(123456))
-          .thenAnswer((_) async => const Result.ok(testPaymentStatus));
+      when(
+        () => repository.verifyPayment(123456),
+      ).thenAnswer((_) async => const Result.ok(testPaymentStatus));
 
       final result = await verifyPaymentUseCase(123456);
 
@@ -116,18 +122,19 @@ void main() {
       verify(() => repository.verifyPayment(123456)).called(1);
     });
 
-    test('SubscribePaymentStatusUseCase emits payment status from stream', () async {
-      when(() => repository.subscribePaymentStatus(123456))
-          .thenAnswer((_) => Stream.value(const Result.ok(testPaymentStatus)));
+    test(
+      'SubscribePaymentStatusUseCase emits payment status from stream',
+      () async {
+        when(
+          () => repository.subscribePaymentStatus(123456),
+        ).thenAnswer((_) => Stream.value(const Result.ok(testPaymentStatus)));
 
-      final stream = subscribePaymentStatusUseCase(123456);
+        final stream = subscribePaymentStatusUseCase(123456);
 
-      await expectLater(
-        stream,
-        emits(const Result.ok(testPaymentStatus)),
-      );
-      verify(() => repository.subscribePaymentStatus(123456)).called(1);
-    });
+        await expectLater(stream, emits(const Result.ok(testPaymentStatus)));
+        verify(() => repository.subscribePaymentStatus(123456)).called(1);
+      },
+    );
   });
 
   group('PaymentRepositoryImpl', () {
@@ -149,8 +156,9 @@ void main() {
         ),
       ];
 
-      when(() => remoteDataSource.getAvailablePlans())
-          .thenAnswer((_) async => dtoList);
+      when(
+        () => remoteDataSource.getAvailablePlans(),
+      ).thenAnswer((_) async => dtoList);
 
       final result = await repository.getAvailablePlans();
 
@@ -169,14 +177,18 @@ void main() {
         plan: 'PLUS_MONTHLY',
       );
 
-      when(() => remoteDataSource.createPayment('PLUS_MONTHLY'))
-          .thenAnswer((_) async => dto);
+      when(
+        () => remoteDataSource.createPayment('PLUS_MONTHLY'),
+      ).thenAnswer((_) async => dto);
 
       final result = await repository.createPayment('PLUS_MONTHLY');
 
       expect(result.isOk, isTrue);
       expect(result.valueOrNull?.orderCode, 998877);
-      expect(result.valueOrNull?.checkoutUrl, 'https://pay.payos.vn/web/998877');
+      expect(
+        result.valueOrNull?.checkoutUrl,
+        'https://pay.payos.vn/web/998877',
+      );
     });
 
     test('maps PaymentStatusModel DTO to Entity', () async {
@@ -187,8 +199,9 @@ void main() {
         plan: 'PLUS_MONTHLY',
       );
 
-      when(() => remoteDataSource.verifyPayment(998877))
-          .thenAnswer((_) async => dto);
+      when(
+        () => remoteDataSource.verifyPayment(998877),
+      ).thenAnswer((_) async => dto);
 
       final result = await repository.verifyPayment(998877);
 
@@ -198,8 +211,9 @@ void main() {
     });
 
     test('catches ServerException and returns ServerFailure', () async {
-      when(() => remoteDataSource.createPayment(any()))
-          .thenThrow(const ServerException(message: 'Lỗi máy chủ thanh toán'));
+      when(
+        () => remoteDataSource.createPayment(any()),
+      ).thenThrow(const ServerException(message: 'Lỗi máy chủ thanh toán'));
 
       final result = await repository.createPayment('PLUS_MONTHLY');
 
@@ -216,18 +230,21 @@ void main() {
         plan: 'PLUS_MONTHLY',
       );
 
-      when(() => remoteDataSource.subscribePaymentStatus(998877))
-          .thenAnswer((_) => Stream.value(dto));
+      when(
+        () => remoteDataSource.subscribePaymentStatus(998877),
+      ).thenAnswer((_) => Stream.value(dto));
 
       final stream = repository.subscribePaymentStatus(998877);
 
       await expectLater(
         stream,
-        emits(isA<Result<PaymentStatusEntity>>().having(
-          (r) => r.valueOrNull?.isPaid,
-          'isPaid',
-          isTrue,
-        )),
+        emits(
+          isA<Result<PaymentStatusEntity>>().having(
+            (r) => r.valueOrNull?.isPaid,
+            'isPaid',
+            isTrue,
+          ),
+        ),
       );
       verify(() => remoteDataSource.subscribePaymentStatus(998877)).called(1);
     });

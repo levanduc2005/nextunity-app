@@ -5,11 +5,11 @@ class VietQrDisplayCard extends StatelessWidget {
   const VietQrDisplayCard({
     super.key,
     required this.qrImageUrl,
-    required this.onOpenCheckoutUrl,
+    required this.onSaveQr,
   });
 
   final String qrImageUrl;
-  final VoidCallback onOpenCheckoutUrl;
+  final VoidCallback onSaveQr;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class VietQrDisplayCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
 
           // QR Image
           ClipRRect(
@@ -71,15 +71,26 @@ class VietQrDisplayCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(height: 6),
-          TextButton.icon(
-            onPressed: onOpenCheckoutUrl,
-            icon: const Icon(Icons.open_in_new_rounded, size: 14),
-            label: const Text(
-              'Mở trang thanh toán',
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
+          const SizedBox(height: 14),
+
+          // Nút Lưu mã
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 1.5,
+              ),
+              onPressed: onSaveQr,
+              icon: const Icon(Icons.download_rounded, size: 18),
+              label: const Text(
+                'Lưu mã',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
               ),
             ),
           ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/payment/domain/entities/subscription_plan_entity.dart';
 import 'package:rental_car/features/payment/presentation/pages/payment_page.dart';
@@ -47,7 +46,9 @@ class _UpgradePlusPageState extends ConsumerState<UpgradePlusPage>
     super.dispose();
   }
 
-  Future<void> _handleProceedPayment(SubscriptionPlanEntity selectedPlan) async {
+  Future<void> _handleProceedPayment(
+    SubscriptionPlanEntity selectedPlan,
+  ) async {
     final paymentState = ref.read(paymentControllerProvider);
     if (paymentState.isLoading) return;
 
@@ -60,14 +61,13 @@ class _UpgradePlusPageState extends ConsumerState<UpgradePlusPage>
     if (result != null) {
       Navigator.of(context).push(
         MaterialPageRoute<void>(
-          builder: (_) => PaymentPage(
-            paymentResult: result,
-            planName: selectedPlan.name,
-          ),
+          builder: (_) =>
+              PaymentPage(paymentResult: result, planName: selectedPlan.name),
         ),
       );
     } else {
-      final errorMsg = ref.read(paymentControllerProvider).errorMessage ??
+      final errorMsg =
+          ref.read(paymentControllerProvider).errorMessage ??
           'Không thể tạo giao dịch thanh toán. Vui lòng thử lại sau.';
       context.showSnackBar(errorMsg);
     }
@@ -83,11 +83,14 @@ class _UpgradePlusPageState extends ConsumerState<UpgradePlusPage>
 
     final effectiveSelectedPlan = hasValidPlans
         ? (_selectedPlan != null &&
-                loadedPlans.any((p) => p.code == _selectedPlan)
-            ? _selectedPlan!
-            : (loadedPlans
-                .firstWhere((p) => p.isSemester, orElse: () => loadedPlans.first)
-                .code))
+                  loadedPlans.any((p) => p.code == _selectedPlan)
+              ? _selectedPlan!
+              : (loadedPlans
+                    .firstWhere(
+                      (p) => p.isSemester,
+                      orElse: () => loadedPlans.first,
+                    )
+                    .code))
         : null;
 
     final selectedEntity = hasValidPlans && effectiveSelectedPlan != null
@@ -103,7 +106,7 @@ class _UpgradePlusPageState extends ConsumerState<UpgradePlusPage>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: const Color(0xFFF9F8F5),
         body: Stack(
           children: [
             const PlusAmbientBackground(),

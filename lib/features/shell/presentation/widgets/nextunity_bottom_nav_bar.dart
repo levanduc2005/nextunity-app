@@ -43,17 +43,10 @@ class NextUnityBottomNavBar extends StatelessWidget {
         selectedIcon: Icons.forum_rounded,
         label: l10n.tabCommunity,
       ),
-      _NavItemData(
-        icon: Icons.person_outline_rounded,
-        selectedIcon: Icons.person_rounded,
-        label: l10n.tabProfile,
-      ),
     ];
 
-    final backgroundColor = isDark ? const Color(0xFF1E293B) : Colors.white;
-    final borderColor = isDark
-        ? const Color(0xFF334155)
-        : const Color(0xFFE2E8F0);
+    final backgroundColor = isDark ? AppColors.textDark : AppColors.surface;
+    final borderColor = isDark ? AppColors.textLabel : AppColors.border;
 
     return Container(
       decoration: BoxDecoration(

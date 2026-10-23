@@ -3,16 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rental_car/features/home/presentation/widgets/home_app_banner.dart';
 
 void main() {
-  testWidgets('HomeAppBanner renders title, CTA and triggers onTap', (tester) async {
+  testWidgets('HomeAppBanner renders title, CTA and triggers onTap', (
+    tester,
+  ) async {
     bool tapped = false;
 
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(
-          body: HomeAppBanner(
-            onTap: () => tapped = true,
-          ),
-        ),
+        home: Scaffold(body: HomeAppBanner(onTap: () => tapped = true)),
       ),
     );
 

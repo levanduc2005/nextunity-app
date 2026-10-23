@@ -3,10 +3,7 @@ import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/payment/presentation/widgets/dialogs/plus_faq_dialog.dart';
 
 class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PaymentPageAppBar({
-    super.key,
-    this.title = 'Thanh toán đơn hàng',
-  });
+  const PaymentPageAppBar({super.key, this.title = 'Thanh toán đơn hàng'});
 
   final String title;
 
@@ -52,8 +49,10 @@ class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.help_outline_rounded,
-              color: AppColors.primary),
+          icon: const Icon(
+            Icons.help_outline_rounded,
+            color: AppColors.primary,
+          ),
           onPressed: () => showPlusFaqDialog(context),
         ),
       ],

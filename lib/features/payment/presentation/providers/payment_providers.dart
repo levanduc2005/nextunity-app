@@ -12,7 +12,9 @@ import 'package:rental_car/features/payment/domain/usecases/verify_payment_use_c
 export 'payment_controller.dart';
 
 // --- Data Sources & Repositories ---
-final paymentRemoteDataSourceProvider = Provider<PaymentRemoteDataSource>((ref) {
+final paymentRemoteDataSourceProvider = Provider<PaymentRemoteDataSource>((
+  ref,
+) {
   final dio = ref.watch(dioProvider);
   return PaymentRemoteDataSourceImpl(dio: dio);
 });
@@ -23,7 +25,9 @@ final paymentRepositoryProvider = Provider<PaymentRepository>((ref) {
 });
 
 // --- Use Cases ---
-final getAvailablePlansUseCaseProvider = Provider<GetAvailablePlansUseCase>((ref) {
+final getAvailablePlansUseCaseProvider = Provider<GetAvailablePlansUseCase>((
+  ref,
+) {
   final repo = ref.watch(paymentRepositoryProvider);
   return GetAvailablePlansUseCase(repo);
 });
@@ -40,13 +44,14 @@ final verifyPaymentUseCaseProvider = Provider<VerifyPaymentUseCase>((ref) {
 
 final subscribePaymentStatusUseCaseProvider =
     Provider<SubscribePaymentStatusUseCase>((ref) {
-  final repo = ref.watch(paymentRepositoryProvider);
-  return SubscribePaymentStatusUseCase(repo);
-});
+      final repo = ref.watch(paymentRepositoryProvider);
+      return SubscribePaymentStatusUseCase(repo);
+    });
 
 // --- Available Plans Provider ---
-final availablePlansProvider =
-    FutureProvider<List<SubscriptionPlanEntity>>((ref) async {
+final availablePlansProvider = FutureProvider<List<SubscriptionPlanEntity>>((
+  ref,
+) async {
   final useCase = ref.watch(getAvailablePlansUseCaseProvider);
   final result = await useCase();
   return result.when(

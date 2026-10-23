@@ -297,8 +297,9 @@ class _FlashcardsPageState extends State<FlashcardsPage>
                     ),
                   ),
                   IconButton(
-                    onPressed:
-                        _currentIndex < _cards.length - 1 ? _nextCard : null,
+                    onPressed: _currentIndex < _cards.length - 1
+                        ? _nextCard
+                        : null,
                     icon: const Icon(Icons.arrow_forward_rounded),
                     color: const Color(0xFF475569),
                     tooltip: 'Thẻ sau',

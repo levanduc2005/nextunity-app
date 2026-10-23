@@ -19,6 +19,7 @@ class AiStudySetPage extends ConsumerWidget {
             MainTabHeader(
               displayName: user?.displayName,
               avatarUrl: user?.avatarUrl,
+              isPlus: user?.isPlus == true,
             ),
             const Expanded(
               child: UnderDevelopmentView(

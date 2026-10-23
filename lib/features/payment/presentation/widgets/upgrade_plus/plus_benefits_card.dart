@@ -28,33 +28,35 @@ class PlusBenefitsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'ĐẶC QUYỀN HỘI VIÊN PLUS',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF64748B),
-                  letterSpacing: 0.5,
+              const Flexible(
+                child: Text(
+                  'ĐẶC QUYỀN HỘI VIÊN PLUS',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF64748B),
+                    letterSpacing: 0.5,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,
                   vertical: 2.5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: const Color(0xFFFFFBEB),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFE2E8F0),
-                  ),
+                  border: Border.all(color: const Color(0xFFFDE68A)),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.auto_awesome_rounded,
-                      color: Color(0xFF0F172A),
+                      color: Color(0xFFD97706),
                       size: 12,
                     ),
                     SizedBox(width: 4),
@@ -63,7 +65,7 @@ class PlusBenefitsCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: Color(0xFFB45309),
                       ),
                     ),
                   ],
@@ -78,8 +80,9 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 1: 100% Khóa học & Đề thi PE / FE
           _buildBenefitRow(
             icon: Icons.check_circle_rounded,
-            iconBg: const Color(0xFFF1F5F9),
-            iconBorder: const Color(0xFFE2E8F0),
+            iconBg: const Color(0xFFFFFBEB),
+            iconBorder: const Color(0xFFFDE68A),
+            iconColor: const Color(0xFFD97706),
             title: '100% Khóa học & Đề thi PE / FE',
             subtitle:
                 'Truy cập toàn bộ video bài giảng, đề thi mẫu có đáp án chi tiết các môn SE, IA, GD.',
@@ -90,8 +93,9 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 2: Trợ lý AI giải bài tập
           _buildBenefitRow(
             icon: Icons.psychology_rounded,
-            iconBg: const Color(0xFFF1F5F9),
-            iconBorder: const Color(0xFFE2E8F0),
+            iconBg: const Color(0xFFFFFBEB),
+            iconBorder: const Color(0xFFFDE68A),
+            iconColor: const Color(0xFFD97706),
             title: 'Trợ lý AI giải bài tập không giới hạn',
             badge: 'GPT-4o',
             subtitle:
@@ -103,8 +107,9 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 3: Tải tài liệu & Slide bài giảng
           _buildBenefitRow(
             icon: Icons.cloud_download_rounded,
-            iconBg: const Color(0xFFF1F5F9),
-            iconBorder: const Color(0xFFE2E8F0),
+            iconBg: const Color(0xFFFFFBEB),
+            iconBorder: const Color(0xFFFDE68A),
+            iconColor: const Color(0xFFD97706),
             title: 'Tải tài liệu & Slide bài giảng tốc độ cao',
             subtitle:
                 'Tải trọn bộ SRS, Database Diagram, slide mẫu không giới hạn băng thông.',
@@ -115,8 +120,9 @@ class PlusBenefitsCard extends StatelessWidget {
           // Benefit 4: Huy hiệu Plus độc quyền
           _buildBenefitRow(
             icon: Icons.military_tech_rounded,
-            iconBg: const Color(0xFFF1F5F9),
-            iconBorder: const Color(0xFFE2E8F0),
+            iconBg: const Color(0xFFFFFBEB),
+            iconBorder: const Color(0xFFFDE68A),
+            iconColor: const Color(0xFFD97706),
             title: 'Huy hiệu Plus độc quyền trên cộng đồng',
             subtitle:
                 'Huy hiệu vàng kim lấp lánh nhận diện thành viên tích cực, bài viết được ưu tiên hiển thị.',
@@ -157,12 +163,14 @@ class PlusBenefitsCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF0F172A),
+                        ),
                       ),
                     ),
                     if (badge != null) ...[
@@ -173,16 +181,16 @@ class PlusBenefitsCard extends StatelessWidget {
                           vertical: 1,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDCFCE7),
+                          color: const Color(0xFFFFFBEB),
                           borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: const Color(0xFFA7F3D0)),
+                          border: Border.all(color: const Color(0xFFFDE68A)),
                         ),
                         child: Text(
                           badge,
                           style: const TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF166534),
+                            color: Color(0xFFB45309),
                           ),
                         ),
                       ),

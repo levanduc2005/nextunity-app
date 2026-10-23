@@ -19,10 +19,10 @@ abstract class PaymentStatusModel with _$PaymentStatusModel {
       _$PaymentStatusModelFromJson(json);
 
   PaymentStatusEntity toEntity() => PaymentStatusEntity(
-        orderCode: orderCode,
-        amount: amount,
-        status: status,
-        plan: plan,
-        isPaid: status.toUpperCase() == 'PAID',
-      );
+    orderCode: orderCode,
+    amount: amount,
+    status: status,
+    plan: plan,
+    isPaid: status.toUpperCase() == 'PAID',
+  );
 }
