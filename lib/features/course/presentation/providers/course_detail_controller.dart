@@ -66,7 +66,27 @@ class CourseDetailController extends Notifier<CourseDetailState> {
     );
 
     modulesResult.when(
-      ok: (data) => modules = data,
+      ok: (data) {
+        final locallyCompletedLessonIds = {
+          for (final m in state.modules)
+            for (final l in m.lessons)
+              if (l.isCompleted) l.id,
+        };
+
+        if (locallyCompletedLessonIds.isNotEmpty) {
+          modules = data.map((mod) {
+            final lessons = mod.lessons.map((l) {
+              if (locallyCompletedLessonIds.contains(l.id)) {
+                return l.copyWith(isCompleted: true);
+              }
+              return l;
+            }).toList();
+            return mod.copyWith(lessons: lessons);
+          }).toList();
+        } else {
+          modules = data;
+        }
+      },
       err: (failure) => error ??= failure.message,
     );
 
@@ -76,6 +96,20 @@ class CourseDetailController extends Notifier<CourseDetailState> {
       isLoading: false,
       errorMessage: error,
     );
+  }
+
+  void markLessonCompleted(String lessonId, {required bool isCompleted}) {
+    final updatedModules = state.modules.map((module) {
+      final updatedLessons = module.lessons.map((lesson) {
+        if (lesson.id == lessonId) {
+          return lesson.copyWith(isCompleted: isCompleted);
+        }
+        return lesson;
+      }).toList();
+      return module.copyWith(lessons: updatedLessons);
+    }).toList();
+
+    state = state.copyWith(modules: updatedModules);
   }
 
   Future<bool> enroll() async {

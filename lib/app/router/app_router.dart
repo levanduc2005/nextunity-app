@@ -27,11 +27,13 @@ import 'package:rental_car/features/payment/presentation/pages/upgrade_plus_page
 import 'package:rental_car/features/profile/presentation/pages/change_password_page.dart';
 import 'package:rental_car/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:rental_car/features/profile/presentation/pages/profile_page.dart';
+import 'package:rental_car/features/quiz/domain/entities/quiz_result_entity.dart';
+import 'package:rental_car/features/quiz/presentation/pages/quiz_page.dart';
+import 'package:rental_car/features/quiz/presentation/pages/quiz_submission_detail_page.dart';
 import 'package:rental_car/features/shell/presentation/scaffold_with_nav_bar.dart';
 import 'package:rental_car/features/study_tools/presentation/pages/flashcards_page.dart';
 import 'package:rental_car/features/study_tools/presentation/pages/mindmap_page.dart';
 import 'package:rental_car/features/study_tools/presentation/pages/pdf_viewer_page.dart';
-import 'package:rental_car/features/study_tools/presentation/pages/quiz_page.dart';
 import 'package:rental_car/l10n/l10n.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -45,37 +47,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     refreshListenable: refresh,
     redirect: (context, state) {
       final authState = ref.read(authControllerProvider);
-      final loggedIn = authState.isAuthenticated;
-      final isInitial = authState.status == AuthStatus.initial;
-      final onSplash = state.matchedLocation == AppRoute.splash.path;
-      final onAuthPage =
-          state.matchedLocation == AppRoute.login.path ||
-          state.matchedLocation == AppRoute.signUp.path ||
-          state.matchedLocation == AppRoute.otp.path ||
-          state.matchedLocation == AppRoute.verifyEmail.path ||
-          state.matchedLocation == AppRoute.accountCreated.path ||
-          state.matchedLocation == AppRoute.forgotPassword.path ||
-          state.matchedLocation == AppRoute.resetPassword.path;
-
-      // Đang kiểm tra token / cache người dùng khi mới bật app
-      if (isInitial) {
-        return onSplash ? null : AppRoute.splash.path;
-      }
-
-      // Chưa đăng nhập
-      if (!loggedIn) {
-        return onAuthPage ? null : AppRoute.login.path;
-      }
-
-      // Đã đăng nhập: nếu đang ở splash hoặc các trang auth thì tự động vào home
-      if (onAuthPage || onSplash) {
-        if (state.matchedLocation == AppRoute.accountCreated.path ||
-            state.matchedLocation == AppRoute.resetPassword.path) {
-          return null;
-        }
-        return AppRoute.home.path;
-      }
-      return null;
+      return appRouterRedirect(
+        authState: authState,
+        matchedLocation: state.matchedLocation,
+      );
     },
     routes: [
       // Splash route
@@ -187,7 +162,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.quiz.path,
         name: AppRoute.quiz.name,
-        builder: (_, _) => const QuizPage(),
+        builder: (_, state) =>
+            QuizPage(quizId: state.uri.queryParameters['quizId']),
+      ),
+      GoRoute(
+        path: AppRoute.quizSubmissionDetail.path,
+        name: AppRoute.quizSubmissionDetail.name,
+        builder: (_, state) => QuizSubmissionDetailPage(
+          submissionId: state.pathParameters['id'] ?? '',
+          initialSubmission: state.extra as QuizResultEntity?,
+        ),
       ),
       GoRoute(
         path: AppRoute.mindmap.path,
@@ -312,4 +296,42 @@ class _AuthRefreshNotifier extends ChangeNotifier {
   _AuthRefreshNotifier(Ref ref) {
     ref.listen(authControllerProvider, (_, _) => notifyListeners());
   }
+}
+
+String? appRouterRedirect({
+  required AuthState authState,
+  required String matchedLocation,
+}) {
+  final loggedIn = authState.isAuthenticated;
+  final isInitial = authState.status == AuthStatus.initial;
+  final onSplash = matchedLocation == AppRoute.splash.path;
+  final onAuthPage =
+      matchedLocation == AppRoute.login.path ||
+      matchedLocation == AppRoute.signUp.path ||
+      matchedLocation == AppRoute.otp.path ||
+      matchedLocation == AppRoute.verifyEmail.path ||
+      matchedLocation == AppRoute.accountCreated.path ||
+      matchedLocation == AppRoute.forgotPassword.path ||
+      matchedLocation == AppRoute.resetPassword.path;
+
+  // Đang kiểm tra token / cache người dùng khi mới bật app
+  if (isInitial) {
+    return onSplash ? null : AppRoute.splash.path;
+  }
+
+  // Chưa đăng nhập
+  if (!loggedIn) {
+    return onAuthPage ? null : AppRoute.login.path;
+  }
+
+  // Đã đăng nhập: nếu đang ở splash hoặc các trang auth thì tự động vào home
+  if (onAuthPage || onSplash) {
+    if (matchedLocation == AppRoute.accountCreated.path ||
+        matchedLocation == AppRoute.resetPassword.path ||
+        matchedLocation == AppRoute.forgotPassword.path) {
+      return null;
+    }
+    return AppRoute.home.path;
+  }
+  return null;
 }

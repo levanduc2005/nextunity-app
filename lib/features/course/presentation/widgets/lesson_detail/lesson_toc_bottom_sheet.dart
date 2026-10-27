@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
+import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_toc_item_tile.dart';
+import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_toc_module_header.dart';
 
 class LessonTocBottomSheet extends StatelessWidget {
   const LessonTocBottomSheet({
@@ -23,9 +25,9 @@ class LessonTocBottomSheet extends StatelessWidget {
   }) {
     return showModalBottomSheet<void>(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       builder: (ctx) => LessonTocBottomSheet(
         currentLessonId: currentLessonId,
         modules: modules,
@@ -39,116 +41,136 @@ class LessonTocBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Mục lục khóa học',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w900,
-                  color: Color(0xFF0F172A),
+    final maxHeight = MediaQuery.of(context).size.height * 0.8;
+
+    return Container(
+      constraints: BoxConstraints(maxHeight: maxHeight),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Drag handle
+            Center(
+              child: Container(
+                width: 44,
+                height: 4.5,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFCBD5E1),
+                  borderRadius: BorderRadius.circular(2.5),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close_rounded, size: 20),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          if (modules.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 24),
-              child: Center(
-                child: Text(
-                  'Không có bài học nào trong danh mục',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
-                ),
-              ),
-            )
-          else
-            Flexible(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: modules.length,
-                itemBuilder: (ctx, mIdx) {
-                  final mod = modules[mIdx];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Text(
-                          'MODULE ${mIdx + 1}: ${mod.title}',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                            color: Color(0xFF64748B),
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                      ...mod.lessons.map((lesson) {
-                        final isCurrent = lesson.id == currentLessonId;
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 4),
-                          decoration: BoxDecoration(
-                            color: isCurrent
-                                ? AppColors.primaryContainer
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                            ),
-                            dense: true,
-                            leading: lesson.isCompleted
-                                ? const Icon(
-                                    Icons.check_circle_rounded,
-                                    color: AppColors.primary,
-                                    size: 20,
-                                  )
-                                : (isCurrent
-                                      ? const Icon(
-                                          Icons.play_circle_fill_rounded,
-                                          color: AppColors.primary,
-                                          size: 20,
-                                        )
-                                      : const Icon(
-                                          Icons.radio_button_unchecked,
-                                          color: Color(0xFF94A3B8),
-                                          size: 18,
-                                        )),
-                            title: Text(
-                              lesson.title,
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                fontWeight: isCurrent
-                                    ? FontWeight.w800
-                                    : FontWeight.w600,
-                                color: isCurrent
-                                    ? const Color(0xFF166534)
-                                    : const Color(0xFF1E293B),
-                              ),
-                            ),
-                            onTap: () => onSelectLesson(lesson),
-                          ),
-                        );
-                      }),
-                    ],
-                  );
-                },
               ),
             ),
-        ],
+            const SizedBox(height: 16),
+
+            // Header
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFEFF6FF),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.format_list_bulleted_rounded,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Mục lục khóa học',
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF0F172A),
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        'Chạm vào bài học để chuyển bài nhanh',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF64748B),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    size: 22,
+                    color: Color(0xFF64748B),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+
+            if (modules.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 36),
+                child: Center(
+                  child: Text(
+                    'Không có bài học nào trong danh mục',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF94A3B8),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: modules.length,
+                  itemBuilder: (ctx, mIdx) {
+                    final mod = modules[mIdx];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Module Heading Header
+                        LessonTocModuleHeader(
+                          moduleIndex: mIdx + 1,
+                          title: mod.title,
+                          isFirst: mIdx == 0,
+                        ),
+
+                        // Module Lessons List
+                        ...mod.lessons.map((lesson) {
+                          return LessonTocItemTile(
+                            lesson: lesson,
+                            isCurrent: lesson.id == currentLessonId,
+                            onSelect: () => onSelectLesson(lesson),
+                          );
+                        }),
+                      ],
+                    );
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

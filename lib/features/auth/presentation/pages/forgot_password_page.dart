@@ -6,8 +6,10 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_app_logo_badge.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_floating_back_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/forgot_password/forgot_password_email_step.dart';
 import 'package:rental_car/features/auth/presentation/widgets/forgot_password/forgot_password_otp_step.dart';
 
@@ -41,6 +43,15 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
 
   int _resendCountdown = 60;
   Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    final userEmail = ref.read(authControllerProvider).user?.email;
+    if (userEmail != null && userEmail.isNotEmpty) {
+      _emailController.text = userEmail;
+    }
+  }
 
   @override
   void dispose() {
@@ -184,37 +195,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                   constraints: const BoxConstraints(maxWidth: 420),
                   child: Column(
                     children: [
-                      // Header logo
-                      Center(
-                        child: Container(
-                          width: 68,
-                          height: 68,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryContainer,
-                            borderRadius: BorderRadius.circular(22),
-                            border: Border.all(
-                              color: AppColors.primaryBorder,
-                              width: 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.12,
-                                ),
-                                blurRadius: 18,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12),
-                          child: Center(
-                            child: Image.asset(
-                              'public/app_logo.png',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
+                      const AuthAppLogoBadge(),
                       const SizedBox(height: 18),
 
                       // Sân khấu chính với Card
@@ -246,13 +227,22 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                               ),
                             const SizedBox(height: 12),
 
-                            // Nút quay lại đăng nhập
+                            // Nút quay lại đăng nhập hoặc quay lại trang trước
                             TextButton(
-                              onPressed: () =>
-                                  context.goNamed(AppRoute.login.name),
-                              child: const Text(
-                                'Quay lại Đăng nhập',
-                                style: TextStyle(
+                              onPressed: () {
+                                if (context.canPop()) {
+                                  context.pop();
+                                } else {
+                                  context.goNamed(AppRoute.login.name);
+                                }
+                              },
+                              child: Text(
+                                ref
+                                        .watch(authControllerProvider)
+                                        .isAuthenticated
+                                    ? 'Quay lại'
+                                    : 'Quay lại Đăng nhập',
+                                style: const TextStyle(
                                   fontSize: 13.5,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.primary,
@@ -269,39 +259,8 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             ),
           ),
 
-          // 3. Nút quay lại góc trên bên trái
-          Positioned(
-            top: 8,
-            left: 12,
-            child: SafeArea(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: _handleBack,
-                  borderRadius: BorderRadius.circular(24),
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.92),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.08),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 18,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // 3. Nút quay lại nổi
+          AuthFloatingBackButton(onBack: _handleBack),
         ],
       ),
     );

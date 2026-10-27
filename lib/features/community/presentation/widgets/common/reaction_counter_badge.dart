@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/reaction_type_ui.dart';
 
 /// Huy hiệu hiển thị các loại cảm xúc nổi bật xếp chồng kèm tổng số lượt tương tác
 class ReactionCounterBadge extends StatelessWidget {

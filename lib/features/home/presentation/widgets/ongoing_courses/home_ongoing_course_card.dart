@@ -4,136 +4,9 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/enrollment_entity.dart';
 
-/// Danh sách khóa học đang diễn ra chuẩn phong cách ApSkil (Thanh tiến độ 2 đầu kèm mốc tròn)
-class HomeOngoingCourses extends StatelessWidget {
-  const HomeOngoingCourses({
-    super.key,
-    required this.enrollments,
-    this.isLoading = false,
-  });
-
-  final List<EnrollmentEntity> enrollments;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Tiêu đề phần "Khóa học đang học"
-        const Text(
-          'Khóa học đang học',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary,
-            letterSpacing: -0.3,
-          ),
-        ),
-        const SizedBox(height: 12),
-
-        if (isLoading && enrollments.isEmpty)
-          const SizedBox(
-            height: 160,
-            child: Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2.5,
-                color: AppColors.primary,
-              ),
-            ),
-          )
-        else if (enrollments.isEmpty)
-          Container(
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: AppColors.border),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryContainer,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: const Icon(
-                    Icons.school_outlined,
-                    color: AppColors.primary,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Chưa tham gia khóa học nào',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      SizedBox(height: 2),
-                      Text(
-                        'Đăng ký khóa học ngay để theo dõi tiến độ học tập!',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () => context.go(AppRoute.courses.path),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    'Khám phá',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800),
-                  ),
-                ),
-              ],
-            ),
-          )
-        else
-          SizedBox(
-            height: 168,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              clipBehavior: Clip.none,
-              itemCount: enrollments.length,
-              separatorBuilder: (context, index) => const SizedBox(width: 14),
-              itemBuilder: (context, index) {
-                final enrollment = enrollments[index];
-                return _OngoingCourseCard(enrollment: enrollment);
-              },
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _OngoingCourseCard extends StatelessWidget {
-  const _OngoingCourseCard({required this.enrollment});
+/// Thẻ khóa học đang học trên trang chủ với thanh tiến độ slider pin ApSkil
+class HomeOngoingCourseCard extends StatelessWidget {
+  const HomeOngoingCourseCard({super.key, required this.enrollment});
 
   final EnrollmentEntity enrollment;
 
@@ -360,13 +233,7 @@ class _OngoingCourseCard extends StatelessWidget {
 
   Widget _buildFallbackThumbnail(String code) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-        ),
-      ),
+      color: const Color(0xFF1E3A8A),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

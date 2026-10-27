@@ -228,16 +228,17 @@ class AuthController extends Notifier<AuthState> {
       newPassword: newPassword,
     );
 
-    return result.when(
-      ok: (_) {
-        state = state.copyWith(isLoading: false);
-        return true;
-      },
-      err: (failure) {
-        state = state.copyWith(errorMessage: failure.message, isLoading: false);
-        return false;
-      },
-    );
+    if (result.isOk) {
+      await _logoutUseCase();
+      state = const AuthState(status: AuthStatus.unauthenticated);
+      return true;
+    } else {
+      state = state.copyWith(
+        errorMessage: result.failureOrNull?.message,
+        isLoading: false,
+      );
+      return false;
+    }
   }
 
   Future<bool> sendOtp(String email) async {

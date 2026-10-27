@@ -26,6 +26,7 @@ enum AppRoute {
   // Study Tools
   flashcards('/study/flashcards'),
   quiz('/study/quiz'),
+  quizSubmissionDetail('/study/quiz/submissions/:id'),
   mindmap('/study/mindmap'),
   slidePdfViewer('/study/pdf-viewer'),
 

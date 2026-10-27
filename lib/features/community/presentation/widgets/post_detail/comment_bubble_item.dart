@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_nested_replies_list.dart';
 import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_options_popup.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/single_comment_bubble.dart';
 
 /// Widget hiển thị 1 bình luận dạng bong bóng chat Facebook (hỗ trợ reply con lồng nhau)
-/// - Giờ hiển thị cạnh tên người dùng
-/// - Nhấn giữ (hold) để mở thanh cảm xúc ở trên và các tùy chọn (sao chép, trả lời, báo cáo, xóa) ở dưới
-/// - Hiển thị icon cảm xúc hiện tại gọn gàng bên cạnh nút 'Trả lời'
 class CommentBubbleItem extends StatelessWidget {
   const CommentBubbleItem({
     super.key,
@@ -102,303 +98,27 @@ class CommentBubbleItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 1. Bình luận cha
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppAvatar(
-                name: comment.authorName,
-                imageUrl: comment.authorAvatar,
-                radius: 16,
+          Builder(
+            builder: (bubbleContext) => SingleCommentBubble(
+              comment: comment,
+              onLongPress: () => _showCommentOptions(bubbleContext),
+              onReply: onReply,
+              onReactionSelected: (reaction) =>
+                  onToggleReaction(comment.id, reaction),
+              onReactionCleared: () => onToggleReaction(
+                comment.id,
+                comment.currentUserReaction ?? ReactionType.like,
               ),
-              const Gap.h(8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Builder(
-                      builder: (bubbleContext) => GestureDetector(
-                        onLongPress: () => _showCommentOptions(bubbleContext),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF0F2F5),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Header: Tên người dùng + Giờ bên cạnh
-                              Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Text(
-                                    comment.authorName,
-                                    style: const TextStyle(
-                                      fontSize: 12.5,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF0F172A),
-                                    ),
-                                  ),
-                                  const Gap.h(6),
-                                  Text(
-                                    comment.formattedTime,
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      color: Color(0xFF94A3B8),
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  if (comment.authorBadge != null) ...[
-                                    const Gap.h(6),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 5,
-                                        vertical: 1,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFE2E8F0),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        comment.authorBadge!,
-                                        style: const TextStyle(
-                                          fontSize: 9.5,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xFF475569),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ],
-                              ),
-                              const Gap(2),
-                              // Nội dung bình luận
-                              Text(
-                                comment.content,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Color(0xFF1E293B),
-                                  height: 1.4,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Sub-actions dưới bong bóng: Icon Like (chạm/hold) + Trả lời + Đếm cảm xúc
-                    Padding(
-                      padding: const EdgeInsets.only(left: 6, top: 4),
-                      child: Row(
-                        children: [
-                          PostReactionButton(
-                            isCompact: true,
-                            showLabel: false,
-                            currentReaction: comment.currentUserReaction,
-                            onReactionSelected: (reaction) =>
-                                onToggleReaction(comment.id, reaction),
-                            onReactionCleared: () => onToggleReaction(
-                              comment.id,
-                              comment.currentUserReaction ?? ReactionType.like,
-                            ),
-                          ),
-                          const Gap.h(6),
-                          InkWell(
-                            onTap: onReply,
-                            borderRadius: BorderRadius.circular(4),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 6,
-                                vertical: 2,
-                              ),
-                              child: Text(
-                                'Trả lời',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF64748B),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (comment.reactionCount > 0) ...[
-                            const Gap.h(6),
-                            ReactionCounterBadge(
-                              topReactions: comment.topReactions,
-                              totalCount: comment.reactionCount,
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
 
           // 2. Bình luận con (Nested Replies)
-          if (comment.replies.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(left: 36, top: 8),
-              child: Column(
-                children: comment.replies.map((reply) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppAvatar(
-                          name: reply.authorName,
-                          imageUrl: reply.authorAvatar,
-                          radius: 14,
-                        ),
-                        const Gap.h(8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Builder(
-                                builder: (replyBubbleContext) => GestureDetector(
-                                  onLongPress: () => _showReplyOptions(
-                                    replyBubbleContext,
-                                    reply,
-                                  ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFF0F2F5),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Wrap(
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          children: [
-                                            Text(
-                                              reply.authorName,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700,
-                                                color: Color(0xFF0F172A),
-                                              ),
-                                            ),
-                                            const Gap.h(6),
-                                            Text(
-                                              reply.formattedTime,
-                                              style: const TextStyle(
-                                                fontSize: 10.5,
-                                                color: Color(0xFF94A3B8),
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                            if (reply.authorBadge != null) ...[
-                                              const Gap.h(6),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 1,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: const Color(
-                                                    0xFFDCFCE7,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                                child: Text(
-                                                  reply.authorBadge!,
-                                                  style: const TextStyle(
-                                                    fontSize: 9.5,
-                                                    fontWeight: FontWeight.w800,
-                                                    color: AppColors.primary,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ],
-                                        ),
-                                        const Gap(2),
-                                        Text(
-                                          reply.content,
-                                          style: const TextStyle(
-                                            fontSize: 12.5,
-                                            color: Color(0xFF1E293B),
-                                            height: 1.4,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Sub-actions dưới bong bóng trả lời: Icon Like + Trả lời + Đếm cảm xúc
-                              Padding(
-                                padding: const EdgeInsets.only(left: 6, top: 4),
-                                child: Row(
-                                  children: [
-                                    PostReactionButton(
-                                      isCompact: true,
-                                      showLabel: false,
-                                      currentReaction:
-                                          reply.currentUserReaction,
-                                      onReactionSelected: (reaction) =>
-                                          onToggleReaction(reply.id, reaction),
-                                      onReactionCleared: () => onToggleReaction(
-                                        reply.id,
-                                        reply.currentUserReaction ??
-                                            ReactionType.like,
-                                      ),
-                                    ),
-                                    const Gap.h(6),
-                                    InkWell(
-                                      onTap: () => onReplyToChild(reply),
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 6,
-                                          vertical: 2,
-                                        ),
-                                        child: Text(
-                                          'Trả lời',
-                                          style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF64748B),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    if (reply.reactionCount > 0) ...[
-                                      const Gap.h(6),
-                                      ReactionCounterBadge(
-                                        topReactions: reply.topReactions,
-                                        totalCount: reply.reactionCount,
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+          CommentNestedRepliesList(
+            replies: comment.replies,
+            onLongPressReply: _showReplyOptions,
+            onReplyToChild: onReplyToChild,
+            onToggleReaction: onToggleReaction,
+          ),
         ],
       ),
     );

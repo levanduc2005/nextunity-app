@@ -18,6 +18,7 @@ _LessonModel _$LessonModelFromJson(Map<String, dynamic> json) => _LessonModel(
   videoUrl: json['videoUrl'] as String?,
   estimatedMinutes: (json['estimatedMinutes'] as num?)?.toInt() ?? 15,
   slideUrl: json['slideUrl'] as String?,
+  quizId: json['quizId'] as String?,
   createdAt: json['createdAt'] == null
       ? null
       : DateTime.parse(json['createdAt'] as String),
@@ -36,5 +37,6 @@ Map<String, dynamic> _$LessonModelToJson(_LessonModel instance) =>
       'videoUrl': instance.videoUrl,
       'estimatedMinutes': instance.estimatedMinutes,
       'slideUrl': instance.slideUrl,
+      'quizId': instance.quizId,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

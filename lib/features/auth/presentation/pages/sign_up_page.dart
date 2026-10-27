@@ -5,10 +5,12 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_app_logo_badge.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_or_divider.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_terms_text.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/social_auth_button.dart';
+import 'package:rental_car/features/auth/presentation/widgets/signup/sign_up_bottom_prompt.dart';
 import 'package:rental_car/features/auth/presentation/widgets/signup/sign_up_form.dart';
 
 /// Trang Đăng Ký (SignUpPage) chuẩn phong cách ApSkil E-Learning.
@@ -115,36 +117,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // 1. Biểu tượng Logo & Lời chào gọn gàng
-                      Center(
-                        child: Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryContainer,
-                            borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: AppColors.primaryBorder,
-                              width: 1.2,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.12,
-                                ),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: Center(
-                            child: Image.asset(
-                              'public/app_logo.png',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
+                      const AuthAppLogoBadge(size: 46),
                       const SizedBox(height: 8),
 
                       const Text(
@@ -219,7 +192,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       const SizedBox(height: 10),
 
                       // 3. Chuyển sang trang Đăng nhập (Sign In)
-                      _buildBottomSignInButton(context),
+                      const SignUpBottomPrompt(),
                       const SizedBox(height: 6),
 
                       // 4. Điều khoản & Chính sách bảo mật
@@ -232,40 +205,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildBottomSignInButton(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        const Text(
-          'Đã có tài khoản? ',
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (context.canPop()) {
-              context.pop();
-            } else {
-              context.goNamed(AppRoute.login.name);
-            }
-          },
-          child: const Text(
-            'Đăng nhập ngay',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              color: AppColors.primary,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

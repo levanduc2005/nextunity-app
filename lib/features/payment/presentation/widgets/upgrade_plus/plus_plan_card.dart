@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_floating_badge.dart';
+import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_price_row.dart';
 
 /// Interactive subscription plan selection card for NextUnity Plus.
 /// Features smooth elevation pop (-3px lift), glowing blue drop shadows,
@@ -132,62 +134,13 @@ class PlusPlanCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
 
-                        // Price row (Wrap to avoid overflow on small screens)
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: 5,
-                          runSpacing: 2,
-                          children: [
-                            Text(
-                              price,
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w900,
-                                color: isSelected
-                                    ? const Color(0xFFB45309)
-                                    : const Color(0xFF1E293B),
-                              ),
-                            ),
-                            if (priceUnit != null)
-                              Text(
-                                priceUnit!,
-                                style: const TextStyle(
-                                  fontSize: 11.5,
-                                  color: Color(0xFF64748B),
-                                ),
-                              ),
-                            if (originalPrice != null)
-                              Text(
-                                originalPrice!,
-                                style: const TextStyle(
-                                  fontSize: 11.5,
-                                  color: Color(0xFF94A3B8),
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              ),
-                            if (discountTag != null)
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                  vertical: 1.5,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFFFBEB),
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                    color: const Color(0xFFFDE68A),
-                                  ),
-                                ),
-                                child: Text(
-                                  discountTag!,
-                                  style: const TextStyle(
-                                    fontSize: 9.5,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFB45309),
-                                  ),
-                                ),
-                              ),
-                          ],
+                        // Price row
+                        PlusPlanPriceRow(
+                          price: price,
+                          priceUnit: priceUnit,
+                          originalPrice: originalPrice,
+                          discountTag: discountTag,
+                          isSelected: isSelected,
                         ),
                       ],
                     ),
@@ -231,53 +184,7 @@ class PlusPlanCard extends StatelessWidget {
 
             // Optional Floating Badge (e.g. Popular)
             if (popularTag != null)
-              Positioned(
-                top: -11,
-                right: 16,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: isSelected
-                        ? const LinearGradient(
-                            colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
-                          )
-                        : null,
-                    color: isSelected ? null : const Color(0xFF475569),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isSelected
-                            ? const Color(0xFFF59E0B).withValues(alpha: 0.38)
-                            : Colors.black26,
-                        blurRadius: 4,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.local_fire_department_rounded,
-                        color: Colors.white,
-                        size: 13,
-                      ),
-                      const SizedBox(width: 3),
-                      Text(
-                        popularTag!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              PlusPlanFloatingBadge(tag: popularTag!, isSelected: isSelected),
           ],
         ),
       ),

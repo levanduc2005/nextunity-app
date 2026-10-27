@@ -58,9 +58,10 @@ class LessonDetailController extends Notifier<LessonDetailState> {
 
     result.when(
       ok: (data) {
+        final completed = data.isCompleted || state.isCompleted;
         state = state.copyWith(
-          lesson: data,
-          isCompleted: data.isCompleted,
+          lesson: data.copyWith(isCompleted: completed),
+          isCompleted: completed,
           isLoading: false,
         );
       },
@@ -70,24 +71,35 @@ class LessonDetailController extends Notifier<LessonDetailState> {
     );
   }
 
-  Future<bool> toggleComplete() async {
+  void markCompleted({required bool isCompleted}) {
+    if (state.lesson != null) {
+      state = state.copyWith(
+        isCompleted: isCompleted,
+        lesson: state.lesson!.copyWith(isCompleted: isCompleted),
+      );
+    } else {
+      state = state.copyWith(isCompleted: isCompleted);
+    }
+  }
+
+  Future<bool> markAsComplete() async {
     final currentLesson = state.lesson;
     if (currentLesson == null) return false;
+    if (state.isCompleted) return true;
 
-    final newCompletedStatus = !state.isCompleted;
     state = state.copyWith(isUpdatingProgress: true);
 
     final result = await ref
         .read(updateLessonProgressUseCaseProvider)
-        .call(currentLesson.id, isCompleted: newCompletedStatus);
+        .call(currentLesson.id, isCompleted: true);
 
     return result.when(
       ok: (percent) {
         state = state.copyWith(
-          isCompleted: newCompletedStatus,
+          isCompleted: true,
           courseProgressPercent: percent,
           isUpdatingProgress: false,
-          lesson: currentLesson.copyWith(isCompleted: newCompletedStatus),
+          lesson: currentLesson.copyWith(isCompleted: true),
         );
         // Refresh danh sách khóa học
         ref.read(coursesControllerProvider.notifier).refresh();
@@ -109,6 +121,9 @@ class LessonDetailController extends Notifier<LessonDetailState> {
       },
     );
   }
+
+  /// Backward-compatible alias
+  Future<bool> toggleComplete() => markAsComplete();
 
   void reset() {
     state = const LessonDetailState();

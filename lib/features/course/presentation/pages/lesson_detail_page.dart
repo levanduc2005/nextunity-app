@@ -7,6 +7,8 @@ import 'package:rental_car/features/course/presentation/providers/course_provide
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_app_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_content_card.dart';
+import 'package:rental_car/features/quiz/domain/entities/quiz_submission_summary_entity.dart';
+import 'package:rental_car/features/quiz/presentation/providers/quiz_providers.dart';
 
 class LessonDetailPage extends ConsumerStatefulWidget {
   const LessonDetailPage({required this.lessonId, super.key});
@@ -146,8 +148,38 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
 
     final lesson = state.lesson!;
 
+    final quizId = lesson.quizId;
+    bool hasPassedQuiz = false;
+    if (quizId != null && quizId.isNotEmpty) {
+      final quizSubmissions =
+          ref.watch(myQuizSubmissionsProvider(quizId)).asData?.value ??
+          const <QuizSubmissionSummaryEntity>[];
+      final quizState = ref.watch(quizControllerProvider);
+      final justPassed =
+          quizState.isSubmitted &&
+          quizState.result?.quizId == quizId &&
+          (quizState.result?.isPassed ?? false);
+      hasPassedQuiz =
+          justPassed ||
+          quizSubmissions.any((QuizSubmissionSummaryEntity s) => s.isPassed);
+    }
+    final effectiveIsCompleted = state.isCompleted || hasPassedQuiz;
+
+    final modulesWithUpdatedStatus = hasPassedQuiz
+        ? courseDetailState.modules.map((m) {
+            return m.copyWith(
+              lessons: m.lessons.map((l) {
+                if (l.id == lesson.id) {
+                  return l.copyWith(isCompleted: true);
+                }
+                return l;
+              }).toList(),
+            );
+          }).toList()
+        : courseDetailState.modules;
+
     final allLessons = [
-      for (final module in courseDetailState.modules) ...module.lessons,
+      for (final module in modulesWithUpdatedStatus) ...module.lessons,
     ];
     final currentIndex = allLessons.indexWhere((l) => l.id == lesson.id);
     final hasPrev = currentIndex > 0;
@@ -160,11 +192,9 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
       appBar: LessonAppBar(
         lesson: lesson,
         course: courseDetailState.course,
-        modules: courseDetailState.modules,
+        modules: modulesWithUpdatedStatus,
         onSelectLesson: (selected) => _switchLesson(selected.id),
-        onFavorite: () {
-          context.showSuccessSnackBar('Đã lưu bài học vào danh sách yêu thích');
-        },
+        isCompleted: effectiveIsCompleted,
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -172,15 +202,16 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
         physics: const BouncingScrollPhysics(),
         child: LessonContentCard(
           lesson: lesson,
-          isCompleted: state.isCompleted,
+          isCompleted: effectiveIsCompleted,
           instructorName: courseDetailState.course?.creatorName,
         ),
       ),
       bottomNavigationBar: LessonBottomBar(
-        isCompleted: state.isCompleted,
+        isCompleted: effectiveIsCompleted,
         isUpdating: state.isUpdatingProgress,
         hasPrevious: hasPrev,
         hasNext: hasNext,
+        isQuiz: lesson.type == 'QUIZ',
         onTapPrevious: () {
           if (hasPrev && prevLesson != null) {
             _switchLesson(prevLesson.id);
@@ -188,7 +219,7 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
             context.pop();
           }
         },
-        onToggleComplete: controller.toggleComplete,
+        onToggleComplete: controller.markAsComplete,
         onTapNext: () {
           if (hasNext && nextLesson != null) {
             _switchLesson(nextLesson.id);

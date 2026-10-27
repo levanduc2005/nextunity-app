@@ -7,10 +7,11 @@ import 'package:rental_car/features/auth/presentation/providers/auth_controller.
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/providers/community_providers.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/post_options_bottom_sheet.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/post_detail_app_bar.dart';
 import 'package:rental_car/features/community/presentation/widgets/post_detail/post_detail_comment_input_bar.dart';
 import 'package:rental_car/features/community/presentation/widgets/post_detail/post_detail_comments_section.dart';
 import 'package:rental_car/features/community/presentation/widgets/post_detail/post_detail_content_card.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/post_detail_empty_state.dart';
 
 /// Màn hình Chi tiết bài viết & Bình luận (Tích hợp API Backend thật 100%)
 class PostDetailPage extends ConsumerStatefulWidget {
@@ -142,54 +143,10 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xFF334155),
-            size: 24,
-          ),
-          onPressed: () => context.pop(),
-        ),
-        centerTitle: true,
-        title: Column(
-          children: [
-            const Text(
-              'Bài viết',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF0F172A),
-              ),
-            ),
-            if (post != null)
-              Text(
-                'Tác giả: ${post.displayAuthor}',
-                style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
-              ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.more_horiz_rounded,
-              color: Color(0xFF334155),
-              size: 24,
-            ),
-            onPressed: () {
-              PostOptionsBottomSheet.show(
-                context,
-                canDelete: isAuthor || isAdmin,
-                onCopyLink: () =>
-                    context.showSnackBar('Đã sao chép liên kết bài viết!'),
-                onDelete: (isAuthor || isAdmin) ? _confirmDeletePost : null,
-              );
-            },
-          ),
-        ],
+      appBar: PostDetailAppBar(
+        post: post,
+        canDelete: isAuthor || isAdmin,
+        onDeletePost: _confirmDeletePost,
       ),
       body: SafeArea(
         child: Column(
@@ -202,28 +159,8 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                       ),
                     )
                   : post == null
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.error_outline_rounded,
-                            size: 48,
-                            color: Colors.grey,
-                          ),
-                          const Gap(12),
-                          const Text(
-                            'Không tìm thấy bài viết hoặc bài viết đã bị xóa.',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          const Gap(12),
-                          ElevatedButton(
-                            onPressed: () =>
-                                detailController.init(widget.postId),
-                            child: const Text('Thử lại'),
-                          ),
-                        ],
-                      ),
+                  ? PostDetailEmptyState(
+                      onRetry: () => detailController.init(widget.postId),
                     )
                   : ListView(
                       padding: const EdgeInsets.only(bottom: 24),

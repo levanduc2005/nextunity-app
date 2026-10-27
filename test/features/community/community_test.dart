@@ -17,7 +17,7 @@ import 'package:rental_car/features/community/domain/usecases/get_comments_use_c
 import 'package:rental_car/features/community/domain/usecases/get_post_detail_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_tags_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/toggle_reaction_use_case.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/common/reaction_type_ui.dart';
 
 class MockCommunityRepository extends Mock implements CommunityRepository {}
 

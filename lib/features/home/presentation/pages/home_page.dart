@@ -5,10 +5,10 @@ import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/main_tab_header.dart';
 import 'package:rental_car/features/course/presentation/providers/course_providers.dart';
 import 'package:rental_car/features/home/presentation/providers/home_providers.dart';
-import 'package:rental_car/features/home/presentation/widgets/home_app_banner.dart';
-import 'package:rental_car/features/home/presentation/widgets/home_ongoing_courses.dart';
-import 'package:rental_car/features/home/presentation/widgets/home_popular_courses.dart';
-import 'package:rental_car/features/home/presentation/widgets/home_study_tools_bento.dart';
+import 'package:rental_car/features/home/presentation/widgets/ongoing_courses/home_ongoing_courses.dart';
+import 'package:rental_car/features/home/presentation/widgets/overview/home_app_banner.dart';
+import 'package:rental_car/features/home/presentation/widgets/overview/home_study_tools_bento.dart';
+import 'package:rental_car/features/home/presentation/widgets/popular_courses/home_popular_courses.dart';
 
 /// Màn hình Trang Chủ (Home Page) thiết kế chuẩn 100% theo phong cách ApSkil E-Learning
 class HomePage extends ConsumerWidget {

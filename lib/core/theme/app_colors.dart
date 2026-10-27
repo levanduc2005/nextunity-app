@@ -129,4 +129,41 @@ abstract final class AppColors {
 
   /// Trạng thái thông tin (Xanh dương Blue-500)
   static const Color info = Color(0xFF3B82F6);
+
+  /// Màu xanh hành động phụ (Royal Blue-600) - Dùng cho nút phụ, liên kết, tag flashcard
+  static const Color primaryAction = Color(0xFF2563EB);
+
+  /// Màu xanh cyan đậm (Sky-600) - Dùng cho nhãn ApSkil, tag kỹ năng
+  static const Color accentDark = Color(0xFF0284C7);
+
+  // --- Các sắc thái bổ sung dùng chung (Extended Common Palettes) ---
+  /// Nền bề mặt sáng phụ (Slate-50) - Dùng cho nền thẻ con, hộp giải thích, bảng câu hỏi
+  static const Color surfaceLight = Color(0xFFF8FAFC);
+
+  /// Nền cảnh báo siêu nhẹ (Amber-50) - Dùng cho nền thẻ thông báo nhắc nhở, streak
+  static const Color warningLight = Color(0xFFFFFBEB);
+
+  /// Chữ cảnh báo tương phản đậm (Amber-700) - Dùng cho nhãn, chữ cảnh báo
+  static const Color warningDark = Color(0xFFB45309);
+
+  /// Trạng thái thành công tươi (Green-600) - Dùng cho nút Đã hoàn thành, huy hiệu Pass
+  static const Color successVibrant = Color(0xFF16A34A);
+
+  /// Trạng thái thành công đậm đặc (Green-700) - Dùng cho chữ hoặc viền thẻ đã pass
+  static const Color successDarkText = Color(0xFF15803D);
+
+  /// Nền thành công siêu nhẹ (Green-50) - Dùng cho nền thẻ hoàn thành, flashcard thuộc bài
+  static const Color successSurfaceLight = Color(0xFFF0FDF4);
+
+  /// Đường viền thành công nhẹ (Green-200) - Dùng cho viền câu trả lời đúng, thẻ hoàn thành
+  static const Color successBorderLight = Color(0xFFBBF7D0);
+
+  /// Chữ lỗi/thất bại tương phản đậm (Red-700/800) - Dùng cho chữ rớt bài thi, đáp án sai
+  static const Color errorDark = Color(0xFFB91C1C);
+
+  /// Đường viền lỗi nhẹ (Red-300) - Dùng cho viền câu trả lời sai
+  static const Color errorBorderLight = Color(0xFFFCA5A5);
+
+  /// Nền lỗi siêu nhẹ (Red-50) - Dùng cho nền câu hỏi sai, thẻ chưa đạt
+  static const Color errorSurfaceLight = Color(0xFFFEF2F2);
 }

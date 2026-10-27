@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LessonModel {
 
- String get id; String get title; String get moduleId; int get orderIndex; bool get isCompleted; String? get content; String get type; String? get typeName; String? get videoUrl; int get estimatedMinutes; String? get slideUrl; DateTime? get createdAt;
+ String get id; String get title; String get moduleId; int get orderIndex; bool get isCompleted; String? get content; String get type; String? get typeName; String? get videoUrl; int get estimatedMinutes; String? get slideUrl; String? get quizId; DateTime? get createdAt;
 /// Create a copy of LessonModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LessonModelCopyWith<LessonModel> get copyWith => _$LessonModelCopyWithImpl<Less
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LessonModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.moduleId, moduleId) || other.moduleId == moduleId)&&(identical(other.orderIndex, orderIndex) || other.orderIndex == orderIndex)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.content, content) || other.content == content)&&(identical(other.type, type) || other.type == type)&&(identical(other.typeName, typeName) || other.typeName == typeName)&&(identical(other.videoUrl, videoUrl) || other.videoUrl == videoUrl)&&(identical(other.estimatedMinutes, estimatedMinutes) || other.estimatedMinutes == estimatedMinutes)&&(identical(other.slideUrl, slideUrl) || other.slideUrl == slideUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LessonModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.moduleId, moduleId) || other.moduleId == moduleId)&&(identical(other.orderIndex, orderIndex) || other.orderIndex == orderIndex)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.content, content) || other.content == content)&&(identical(other.type, type) || other.type == type)&&(identical(other.typeName, typeName) || other.typeName == typeName)&&(identical(other.videoUrl, videoUrl) || other.videoUrl == videoUrl)&&(identical(other.estimatedMinutes, estimatedMinutes) || other.estimatedMinutes == estimatedMinutes)&&(identical(other.slideUrl, slideUrl) || other.slideUrl == slideUrl)&&(identical(other.quizId, quizId) || other.quizId == quizId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,moduleId,orderIndex,isCompleted,content,type,typeName,videoUrl,estimatedMinutes,slideUrl,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,moduleId,orderIndex,isCompleted,content,type,typeName,videoUrl,estimatedMinutes,slideUrl,quizId,createdAt);
 
 @override
 String toString() {
-  return 'LessonModel(id: $id, title: $title, moduleId: $moduleId, orderIndex: $orderIndex, isCompleted: $isCompleted, content: $content, type: $type, typeName: $typeName, videoUrl: $videoUrl, estimatedMinutes: $estimatedMinutes, slideUrl: $slideUrl, createdAt: $createdAt)';
+  return 'LessonModel(id: $id, title: $title, moduleId: $moduleId, orderIndex: $orderIndex, isCompleted: $isCompleted, content: $content, type: $type, typeName: $typeName, videoUrl: $videoUrl, estimatedMinutes: $estimatedMinutes, slideUrl: $slideUrl, quizId: $quizId, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $LessonModelCopyWith<$Res>  {
   factory $LessonModelCopyWith(LessonModel value, $Res Function(LessonModel) _then) = _$LessonModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String moduleId, int orderIndex, bool isCompleted, String? content, String type, String? typeName, String? videoUrl, int estimatedMinutes, String? slideUrl, DateTime? createdAt
+ String id, String title, String moduleId, int orderIndex, bool isCompleted, String? content, String type, String? typeName, String? videoUrl, int estimatedMinutes, String? slideUrl, String? quizId, DateTime? createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$LessonModelCopyWithImpl<$Res>
 
 /// Create a copy of LessonModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? moduleId = null,Object? orderIndex = null,Object? isCompleted = null,Object? content = freezed,Object? type = null,Object? typeName = freezed,Object? videoUrl = freezed,Object? estimatedMinutes = null,Object? slideUrl = freezed,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? moduleId = null,Object? orderIndex = null,Object? isCompleted = null,Object? content = freezed,Object? type = null,Object? typeName = freezed,Object? videoUrl = freezed,Object? estimatedMinutes = null,Object? slideUrl = freezed,Object? quizId = freezed,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -78,6 +78,7 @@ as String,typeName: freezed == typeName ? _self.typeName : typeName // ignore: c
 as String?,videoUrl: freezed == videoUrl ? _self.videoUrl : videoUrl // ignore: cast_nullable_to_non_nullable
 as String?,estimatedMinutes: null == estimatedMinutes ? _self.estimatedMinutes : estimatedMinutes // ignore: cast_nullable_to_non_nullable
 as int,slideUrl: freezed == slideUrl ? _self.slideUrl : slideUrl // ignore: cast_nullable_to_non_nullable
+as String?,quizId: freezed == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -164,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  String? quizId,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LessonModel() when $default != null:
-return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.quizId,_that.createdAt);case _:
   return orElse();
 
 }
@@ -185,10 +186,10 @@ return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCom
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  String? quizId,  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _LessonModel():
-return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.quizId,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +206,10 @@ return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCom
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String moduleId,  int orderIndex,  bool isCompleted,  String? content,  String type,  String? typeName,  String? videoUrl,  int estimatedMinutes,  String? slideUrl,  String? quizId,  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _LessonModel() when $default != null:
-return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCompleted,_that.content,_that.type,_that.typeName,_that.videoUrl,_that.estimatedMinutes,_that.slideUrl,_that.quizId,_that.createdAt);case _:
   return null;
 
 }
@@ -220,7 +221,7 @@ return $default(_that.id,_that.title,_that.moduleId,_that.orderIndex,_that.isCom
 @JsonSerializable()
 
 class _LessonModel extends LessonModel {
-  const _LessonModel({required this.id, required this.title, this.moduleId = '', this.orderIndex = 1, this.isCompleted = false, this.content, this.type = 'TEXT', this.typeName, this.videoUrl, this.estimatedMinutes = 15, this.slideUrl, this.createdAt}): super._();
+  const _LessonModel({required this.id, required this.title, this.moduleId = '', this.orderIndex = 1, this.isCompleted = false, this.content, this.type = 'TEXT', this.typeName, this.videoUrl, this.estimatedMinutes = 15, this.slideUrl, this.quizId, this.createdAt}): super._();
   factory _LessonModel.fromJson(Map<String, dynamic> json) => _$LessonModelFromJson(json);
 
 @override final  String id;
@@ -234,6 +235,7 @@ class _LessonModel extends LessonModel {
 @override final  String? videoUrl;
 @override@JsonKey() final  int estimatedMinutes;
 @override final  String? slideUrl;
+@override final  String? quizId;
 @override final  DateTime? createdAt;
 
 /// Create a copy of LessonModel
@@ -249,16 +251,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LessonModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.moduleId, moduleId) || other.moduleId == moduleId)&&(identical(other.orderIndex, orderIndex) || other.orderIndex == orderIndex)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.content, content) || other.content == content)&&(identical(other.type, type) || other.type == type)&&(identical(other.typeName, typeName) || other.typeName == typeName)&&(identical(other.videoUrl, videoUrl) || other.videoUrl == videoUrl)&&(identical(other.estimatedMinutes, estimatedMinutes) || other.estimatedMinutes == estimatedMinutes)&&(identical(other.slideUrl, slideUrl) || other.slideUrl == slideUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LessonModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.moduleId, moduleId) || other.moduleId == moduleId)&&(identical(other.orderIndex, orderIndex) || other.orderIndex == orderIndex)&&(identical(other.isCompleted, isCompleted) || other.isCompleted == isCompleted)&&(identical(other.content, content) || other.content == content)&&(identical(other.type, type) || other.type == type)&&(identical(other.typeName, typeName) || other.typeName == typeName)&&(identical(other.videoUrl, videoUrl) || other.videoUrl == videoUrl)&&(identical(other.estimatedMinutes, estimatedMinutes) || other.estimatedMinutes == estimatedMinutes)&&(identical(other.slideUrl, slideUrl) || other.slideUrl == slideUrl)&&(identical(other.quizId, quizId) || other.quizId == quizId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,moduleId,orderIndex,isCompleted,content,type,typeName,videoUrl,estimatedMinutes,slideUrl,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,moduleId,orderIndex,isCompleted,content,type,typeName,videoUrl,estimatedMinutes,slideUrl,quizId,createdAt);
 
 @override
 String toString() {
-  return 'LessonModel(id: $id, title: $title, moduleId: $moduleId, orderIndex: $orderIndex, isCompleted: $isCompleted, content: $content, type: $type, typeName: $typeName, videoUrl: $videoUrl, estimatedMinutes: $estimatedMinutes, slideUrl: $slideUrl, createdAt: $createdAt)';
+  return 'LessonModel(id: $id, title: $title, moduleId: $moduleId, orderIndex: $orderIndex, isCompleted: $isCompleted, content: $content, type: $type, typeName: $typeName, videoUrl: $videoUrl, estimatedMinutes: $estimatedMinutes, slideUrl: $slideUrl, quizId: $quizId, createdAt: $createdAt)';
 }
 
 
@@ -269,7 +271,7 @@ abstract mixin class _$LessonModelCopyWith<$Res> implements $LessonModelCopyWith
   factory _$LessonModelCopyWith(_LessonModel value, $Res Function(_LessonModel) _then) = __$LessonModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String moduleId, int orderIndex, bool isCompleted, String? content, String type, String? typeName, String? videoUrl, int estimatedMinutes, String? slideUrl, DateTime? createdAt
+ String id, String title, String moduleId, int orderIndex, bool isCompleted, String? content, String type, String? typeName, String? videoUrl, int estimatedMinutes, String? slideUrl, String? quizId, DateTime? createdAt
 });
 
 
@@ -286,7 +288,7 @@ class __$LessonModelCopyWithImpl<$Res>
 
 /// Create a copy of LessonModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? moduleId = null,Object? orderIndex = null,Object? isCompleted = null,Object? content = freezed,Object? type = null,Object? typeName = freezed,Object? videoUrl = freezed,Object? estimatedMinutes = null,Object? slideUrl = freezed,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? moduleId = null,Object? orderIndex = null,Object? isCompleted = null,Object? content = freezed,Object? type = null,Object? typeName = freezed,Object? videoUrl = freezed,Object? estimatedMinutes = null,Object? slideUrl = freezed,Object? quizId = freezed,Object? createdAt = freezed,}) {
   return _then(_LessonModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -299,6 +301,7 @@ as String,typeName: freezed == typeName ? _self.typeName : typeName // ignore: c
 as String?,videoUrl: freezed == videoUrl ? _self.videoUrl : videoUrl // ignore: cast_nullable_to_non_nullable
 as String?,estimatedMinutes: null == estimatedMinutes ? _self.estimatedMinutes : estimatedMinutes // ignore: cast_nullable_to_non_nullable
 as int,slideUrl: freezed == slideUrl ? _self.slideUrl : slideUrl // ignore: cast_nullable_to_non_nullable
+as String?,quizId: freezed == quizId ? _self.quizId : quizId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

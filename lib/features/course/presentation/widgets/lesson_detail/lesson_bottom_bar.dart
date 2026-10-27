@@ -11,6 +11,7 @@ class LessonBottomBar extends StatelessWidget {
     required this.onTapNext,
     this.hasPrevious = true,
     this.hasNext = true,
+    this.isQuiz = false,
   });
 
   final bool isCompleted;
@@ -20,6 +21,7 @@ class LessonBottomBar extends StatelessWidget {
   final VoidCallback onTapNext;
   final bool hasPrevious;
   final bool hasNext;
+  final bool isQuiz;
 
   @override
   Widget build(BuildContext context) {
@@ -42,173 +44,259 @@ class LessonBottomBar extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // 1. Nút quay lại bài trước (Chuẩn ApSkil Icon Button)
-            Tooltip(
-              message: hasPrevious ? 'Bài trước' : 'Quay lại',
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: onTapPrevious,
-                  borderRadius: BorderRadius.circular(14),
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF8FAFC),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        hasPrevious
-                            ? Icons.arrow_back_rounded
-                            : Icons.arrow_back_ios_new_rounded,
-                        size: 18,
-                        color: const Color(0xFF475569),
+            if (isQuiz) ...[
+              // Khi là Quiz: chỉ hiển thị 2 nút điều hướng Bài trước và Bài tiếp theo
+              Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onTapPrevious,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            hasPrevious
+                                ? Icons.arrow_back_rounded
+                                : Icons.arrow_back_ios_new_rounded,
+                            size: 16,
+                            color: const Color(0xFF475569),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            hasPrevious ? 'Bài trước' : 'Quay lại',
+                            style: const TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF475569),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-
-            // 2. Nút trạng thái hoàn thành bài học (Primary Action Center)
-            Expanded(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: isUpdating ? null : onToggleComplete,
-                  borderRadius: BorderRadius.circular(14),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    height: 42,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      gradient: isCompleted
-                          ? const LinearGradient(
-                              colors: [Color(0xFF2563EB), Color(0xFF1E40AF)],
-                            )
-                          : null,
-                      color: isCompleted ? null : AppColors.primaryContainer,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: isCompleted
-                            ? AppColors.primaryDark
-                            : AppColors.primaryBorder,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onTapNext,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
-                      boxShadow: isCompleted
-                          ? [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.25,
-                                ),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (isUpdating)
-                          const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            hasNext ? 'Bài tiếp' : 'Hoàn tất',
+                            style: const TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
                             ),
-                          )
-                        else
-                          Container(
-                            width: 18,
-                            height: 18,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isCompleted
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              border: Border.all(
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(
+                            hasNext
+                                ? Icons.arrow_forward_rounded
+                                : Icons.check_circle_outline_rounded,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ] else ...[
+              // 1. Nút quay lại bài trước (Chuẩn ApSkil Icon Button)
+              Tooltip(
+                message: hasPrevious ? 'Bài trước' : 'Quay lại',
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onTapPrevious,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8FAFC),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          hasPrevious
+                              ? Icons.arrow_back_rounded
+                              : Icons.arrow_back_ios_new_rounded,
+                          size: 18,
+                          color: const Color(0xFF475569),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+
+              // 2. Nút trạng thái hoàn thành bài học (Primary Action Center)
+              Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: (isUpdating || isCompleted)
+                        ? null
+                        : onToggleComplete,
+                    borderRadius: BorderRadius.circular(14),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      height: 42,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: isCompleted
+                            ? const Color(0xFF16A34A)
+                            : AppColors.primaryContainer,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: isCompleted
+                              ? const Color(0xFF15803D)
+                              : AppColors.primaryBorder,
+                        ),
+                        boxShadow: isCompleted
+                            ? [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF16A34A,
+                                  ).withValues(alpha: 0.25),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : null,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (isUpdating)
+                            const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                          else
+                            Container(
+                              width: 18,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isCompleted
+                                    ? Colors.white
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: isCompleted
+                                      ? Colors.white
+                                      : const Color(0xFF166534),
+                                  width: 1.5,
+                                ),
+                              ),
+                              child: isCompleted
+                                  ? const Center(
+                                      child: Icon(
+                                        Icons.check_rounded,
+                                        size: 12,
+                                        color: Color(0xFF15803D),
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              isCompleted
+                                  ? 'Đã hoàn thành'
+                                  : 'Hoàn thành bài học',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
                                 color: isCompleted
                                     ? Colors.white
                                     : const Color(0xFF166534),
-                                width: 1.5,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            child: isCompleted
-                                ? const Center(
-                                    child: Icon(
-                                      Icons.check_rounded,
-                                      size: 12,
-                                      color: AppColors.primary,
-                                    ),
-                                  )
-                                : null,
                           ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            isCompleted
-                                ? 'Đã hoàn thành'
-                                : 'Hoàn thành bài học',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800,
-                              color: isCompleted
-                                  ? Colors.white
-                                  : const Color(0xFF166534),
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-
-            // 3. Nút chuyển sang bài tiếp theo / Hoàn tất
-            Tooltip(
-              message: hasNext ? 'Bài tiếp' : 'Hoàn tất',
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: onTapNext,
-                  borderRadius: BorderRadius.circular(14),
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.3),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(
-                        hasNext
-                            ? Icons.arrow_forward_rounded
-                            : Icons.check_circle_outline_rounded,
-                        size: 18,
-                        color: Colors.white,
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(width: 8),
+
+              // 3. Nút chuyển sang bài tiếp theo / Hoàn tất
+              Tooltip(
+                message: hasNext ? 'Bài tiếp' : 'Hoàn tất',
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: onTapNext,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          hasNext
+                              ? Icons.arrow_forward_rounded
+                              : Icons.check_circle_outline_rounded,
+                          size: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

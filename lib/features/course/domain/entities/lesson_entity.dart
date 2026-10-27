@@ -16,6 +16,7 @@ abstract class LessonEntity with _$LessonEntity {
     String? videoUrl,
     @Default(15) int estimatedMinutes,
     String? slideUrl,
+    String? quizId,
     DateTime? createdAt,
   }) = _LessonEntity;
 

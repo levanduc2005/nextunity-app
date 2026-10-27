@@ -6,11 +6,14 @@ import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_app_logo_badge.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_background_waves.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
+import 'package:rental_car/features/auth/presentation/widgets/common/auth_floating_back_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_otp_row.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_resend_code.dart';
+import 'package:rental_car/features/auth/presentation/widgets/signup/verify_email_card_header.dart';
 
 /// Trang xác thực mã OTP gửi về Email (Verify Your Email).
 class VerifyEmailPage extends ConsumerStatefulWidget {
@@ -162,37 +165,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                   constraints: const BoxConstraints(maxWidth: 420),
                   child: Column(
                     children: [
-                      // Header logo
-                      Center(
-                        child: Container(
-                          width: 68,
-                          height: 68,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryContainer,
-                            borderRadius: BorderRadius.circular(22),
-                            border: Border.all(
-                              color: AppColors.primaryBorder,
-                              width: 1.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.12,
-                                ),
-                                blurRadius: 18,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(12),
-                          child: Center(
-                            child: Image.asset(
-                              'public/app_logo.png',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
+                      const AuthAppLogoBadge(),
                       const SizedBox(height: 18),
 
                       // Khung Card ApSkil
@@ -204,38 +177,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const SizedBox(height: 6),
-                            // Tiêu đề & Thông báo
-                            const Text(
-                              'Xác thực Email',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFF0F172A),
-                                letterSpacing: -0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            const Text(
-                              'Mã OTP xác thực 6 số đã được gửi đến:',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF64748B),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              _displayEmail,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primary,
-                              ),
-                            ),
+                            VerifyEmailCardHeader(displayEmail: _displayEmail),
                             const SizedBox(height: 24),
 
                             // 6 ô nhập mã OTP
@@ -313,39 +255,8 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
             ),
           ),
 
-          // 3. Nút quay lại góc trên bên trái (Top-left back button)
-          Positioned(
-            top: 8,
-            left: 12,
-            child: SafeArea(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: _handleBack,
-                  borderRadius: BorderRadius.circular(24),
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.92),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.08),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 18,
-                      color: Color(0xFF0F172A),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // 3. Nút quay lại góc trên bên trái
+          AuthFloatingBackButton(onBack: _handleBack),
         ],
       ),
     );

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
-import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
-import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_actions_menu.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_preview_card.dart';
+import 'package:rental_car/features/community/presentation/widgets/post_detail/comment_reaction_capsule_bar.dart';
 
 /// Popup nổi xuất hiện khi nhấn giữ (hold) vào một bình luận:
-/// - Phía trên: Thanh chọn cảm xúc (👍 ❤️ 😆 😮 😢 😡)
+/// - Phía trên: Thanh chọn cảm xúc
 /// - Ở giữa: Đoạn comment xem trước nổi bật trên nền mờ
 /// - Phía dưới: Menu các tùy chọn (Sao chép, Trả lời, Báo cáo, Xóa)
 class CommentOptionsPopup extends StatelessWidget {
@@ -159,287 +159,42 @@ class CommentOptionsPopup extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 1. Phía trên: Thanh cảm xúc (Reactions Capsule)
-                Container(
+                CommentReactionCapsuleBar(
                   width: cardWidth,
                   height: reactionBarHeight,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(50),
-                        blurRadius: 18,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: ReactionType.values.map((reaction) {
-                      final isSelected = currentReaction == reaction;
-                      return InkWell(
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          Navigator.of(context).pop();
-                          if (isSelected) {
-                            onReactionCleared();
-                          } else {
-                            onReactionSelected(reaction);
-                          }
-                        },
-                        borderRadius: BorderRadius.circular(20),
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 150),
-                          width: 40,
-                          height: 40,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? reaction.color.withAlpha(35)
-                                : Colors.transparent,
-                            shape: BoxShape.circle,
-                            border: isSelected
-                                ? Border.all(color: reaction.color, width: 1.5)
-                                : null,
-                          ),
-                          child: Text(
-                            reaction.emoji,
-                            style: const TextStyle(fontSize: 22),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                  currentReaction: currentReaction,
+                  onReactionSelected: onReactionSelected,
+                  onReactionCleared: onReactionCleared,
                 ),
 
                 const SizedBox(height: 10),
 
                 // 2. Ở giữa: Đoạn comment (Comment Preview Card)
-                Container(
+                CommentPreviewCard(
                   width: cardWidth,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(45),
-                        blurRadius: 18,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppAvatar(
-                        name: authorName,
-                        imageUrl: authorAvatar,
-                        radius: 15,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Header: Tên người dùng + Giờ bên cạnh
-                            Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text(
-                                  authorName,
-                                  style: const TextStyle(
-                                    fontSize: 12.5,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF0F172A),
-                                  ),
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  formattedTime,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFF94A3B8),
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                if (authorBadge != null) ...[
-                                  const SizedBox(width: 6),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 5,
-                                      vertical: 1,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFE2E8F0),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Text(
-                                      authorBadge!,
-                                      style: const TextStyle(
-                                        fontSize: 9.5,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFF475569),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            // Nội dung bình luận
-                            Text(
-                              commentContent,
-                              maxLines: 6,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF1E293B),
-                                height: 1.4,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  authorName: authorName,
+                  formattedTime: formattedTime,
+                  authorAvatar: authorAvatar,
+                  authorBadge: authorBadge,
+                  commentContent: commentContent,
                 ),
 
                 const SizedBox(height: 10),
 
                 // 3. Phía dưới: Menu các tùy chọn (Options Card)
-                Container(
+                CommentActionsMenu(
                   width: optionsCardWidth,
-                  decoration: BoxDecoration(
-                    color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(40),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                    border: Border.all(color: AppColors.border),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _PopupOptionRow(
-                          icon: Icons.copy_rounded,
-                          title: 'Sao chép',
-                          onTap: () {
-                            Clipboard.setData(
-                              ClipboardData(text: commentContent),
-                            );
-                            Navigator.of(context).pop();
-                            context.showSnackBar(
-                              'Đã sao chép nội dung bình luận',
-                            );
-                          },
-                        ),
-                        const Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: Color(0xFFF1F5F9),
-                        ),
-                        _PopupOptionRow(
-                          icon: Icons.reply_rounded,
-                          title: 'Trả lời',
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            onReply();
-                          },
-                        ),
-                        const Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: Color(0xFFF1F5F9),
-                        ),
-                        _PopupOptionRow(
-                          icon: Icons.flag_outlined,
-                          title: 'Báo cáo',
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            onReport();
-                          },
-                        ),
-                        if (canDelete && onDelete != null) ...[
-                          const Divider(
-                            height: 1,
-                            thickness: 1,
-                            color: Color(0xFFF1F5F9),
-                          ),
-                          _PopupOptionRow(
-                            icon: Icons.delete_outline_rounded,
-                            title: 'Xóa bình luận',
-                            isDestructive: true,
-                            onTap: () {
-                              Navigator.of(context).pop();
-                              onDelete!();
-                            },
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
+                  commentContent: commentContent,
+                  onReply: onReply,
+                  onReport: onReport,
+                  canDelete: canDelete,
+                  onDelete: onDelete,
                 ),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _PopupOptionRow extends StatelessWidget {
-  const _PopupOptionRow({
-    required this.icon,
-    required this.title,
-    required this.onTap,
-    this.isDestructive = false,
-  });
-
-  final IconData icon;
-  final String title;
-  final VoidCallback onTap;
-  final bool isDestructive;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = isDestructive ? AppColors.error : AppColors.textPrimary;
-
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-        child: Row(
-          children: [
-            Icon(icon, size: 18, color: color),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -9,7 +9,7 @@ abstract final class AppTheme {
   static const Color seedColor = AppColors.primary;
 
   static ThemeData light() => _base(Brightness.light);
-  static ThemeData dark() => _base(Brightness.dark);
+  static ThemeData dark() => light();
 
   static ThemeData _base(Brightness brightness) {
     final colorScheme = ColorScheme.fromSeed(

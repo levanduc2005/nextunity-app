@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rental_car/features/home/presentation/widgets/home_app_banner.dart';
+import 'package:rental_car/features/home/presentation/widgets/overview/home_app_banner.dart';
 
 void main() {
   testWidgets('HomeAppBanner renders title, CTA and triggers onTap', (

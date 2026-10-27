@@ -18,6 +18,7 @@ abstract class LessonModel with _$LessonModel {
     String? videoUrl,
     @Default(15) int estimatedMinutes,
     String? slideUrl,
+    String? quizId,
     DateTime? createdAt,
   }) = _LessonModel;
 
@@ -39,6 +40,7 @@ abstract class LessonModel with _$LessonModel {
       videoUrl: videoUrl,
       estimatedMinutes: estimatedMinutes,
       slideUrl: slideUrl,
+      quizId: quizId,
       createdAt: createdAt,
     );
   }

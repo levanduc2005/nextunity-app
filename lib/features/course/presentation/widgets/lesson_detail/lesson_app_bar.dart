@@ -13,14 +13,14 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.course,
     required this.modules,
     required this.onSelectLesson,
-    this.onFavorite,
+    this.isCompleted = false,
   });
 
   final LessonEntity lesson;
   final CourseEntity? course;
   final List<ModuleEntity> modules;
   final ValueChanged<LessonEntity> onSelectLesson;
-  final VoidCallback? onFavorite;
+  final bool isCompleted;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -62,12 +62,37 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.favorite_border_rounded, size: 20),
-          color: const Color(0xFF0F172A),
-          tooltip: 'Yêu thích bài học',
-          onPressed: onFavorite,
-        ),
+        if (isCompleted)
+          Center(
+            child: Container(
+              margin: const EdgeInsets.only(right: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFDCFCE7),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: const Color(0xFFBBF7D0)),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.check_circle_rounded,
+                    size: 14,
+                    color: Color(0xFF166534),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'Đã học',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF166534),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         IconButton(
           icon: const Icon(Icons.format_list_bulleted_rounded, size: 22),
           color: const Color(0xFF0F172A),
