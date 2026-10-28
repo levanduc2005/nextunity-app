@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_hero_enrolled_progress.dart';
@@ -6,6 +6,7 @@ import 'package:rental_car/features/course/presentation/widgets/course_detail/co
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_hero_tip_banner.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_hero_video_preview.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Header chi tiết khóa học chuẩn ApSkil (Detail Kelas)
 /// Thiết kế thanh lịch, thoáng đãng:
 /// - Nút Back tròn tinh gọn
@@ -58,7 +59,7 @@ class CourseDetailHeroHeader extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.border),
                       boxShadow: [
                         BoxShadow(
                           color: const Color(
@@ -72,7 +73,7 @@ class CourseDetailHeroHeader extends StatelessWidget {
                     child: const Center(
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                         size: 16,
                       ),
                     ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Card displaying bank transfer details with one-click copy buttons.
@@ -25,7 +25,7 @@ class BankTransferInfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         children: [
@@ -74,8 +74,8 @@ class BankTransferInfoCard extends StatelessWidget {
                   fontSize: 10.5,
                   fontWeight: isWarning ? FontWeight.w700 : FontWeight.w500,
                   color: isWarning
-                      ? const Color(0xFFB45309)
-                      : const Color(0xFF64748B),
+                      ? AppColors.warningDark
+                      : AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 2),
@@ -88,7 +88,7 @@ class BankTransferInfoCard extends StatelessWidget {
                       : FontWeight.w600,
                   color: isWarning
                       ? const Color(0xFF92400E)
-                      : (isBold ? AppColors.primary : const Color(0xFF0F172A)),
+                      : (isBold ? AppColors.primary : AppColors.textPrimary),
                 ),
               ),
             ],
@@ -98,15 +98,15 @@ class BankTransferInfoCard extends StatelessWidget {
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: isWarning
-                  ? const Color(0xFFF59E0B)
+                  ? AppColors.warning
                   : Colors.white,
               foregroundColor: isWarning
                   ? Colors.white
-                  : const Color(0xFF1E293B),
+                  : AppColors.textDark,
               elevation: isWarning ? 1 : 0,
               side: isWarning
                   ? null
-                  : const BorderSide(color: Color(0xFFCBD5E1)),
+                  : const BorderSide(color: AppColors.borderMedium),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,

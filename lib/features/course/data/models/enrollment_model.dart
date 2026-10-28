@@ -16,7 +16,7 @@ abstract class EnrollmentModel with _$EnrollmentModel {
     String? courseDifficultyName,
     @Default(0) int totalLessons,
     @Default(0) int progressPercent,
-    @Default('ACTIVE') String status,
+    @Default('ENROLLED') String status,
     DateTime? createdAt,
     DateTime? completedAt,
     String? instructorName,

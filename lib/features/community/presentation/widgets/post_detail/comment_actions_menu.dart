@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
@@ -52,7 +52,7 @@ class CommentActionsMenu extends StatelessWidget {
                 context.showSnackBar('Đã sao chép nội dung bình luận');
               },
             ),
-            const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+            const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
             _PopupOptionRow(
               icon: Icons.reply_rounded,
               title: 'Trả lời',
@@ -61,7 +61,7 @@ class CommentActionsMenu extends StatelessWidget {
                 onReply();
               },
             ),
-            const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+            const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
             _PopupOptionRow(
               icon: Icons.flag_outlined,
               title: 'Báo cáo',
@@ -71,7 +71,7 @@ class CommentActionsMenu extends StatelessWidget {
               },
             ),
             if (canDelete && onDelete != null) ...[
-              const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+              const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
               _PopupOptionRow(
                 icon: Icons.delete_outline_rounded,
                 title: 'Xóa bình luận',

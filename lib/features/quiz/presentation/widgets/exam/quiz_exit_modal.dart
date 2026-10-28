@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Modal xác nhận thoát bài kiểm tra chuẩn thiết kế NextUnity
@@ -53,7 +53,7 @@ class QuizExitModal extends StatelessWidget {
                 width: 44,
                 height: 4.5,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: AppColors.borderMedium,
                   borderRadius: BorderRadius.circular(2.5),
                 ),
               ),
@@ -65,7 +65,7 @@ class QuizExitModal extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: const BoxDecoration(
-                color: Color(0xFFFEF2F2),
+                color: AppColors.errorSurfaceLight,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -73,13 +73,13 @@ class QuizExitModal extends StatelessWidget {
                   width: 46,
                   height: 46,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFFEE2E2),
+                    color: AppColors.errorContainer,
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.exit_to_app_rounded,
                     size: 24,
-                    color: Color(0xFFEF4444),
+                    color: AppColors.error,
                   ),
                 ),
               ),
@@ -92,7 +92,7 @@ class QuizExitModal extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18.5,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
                 letterSpacing: -0.3,
               ),
             ),
@@ -104,7 +104,7 @@ class QuizExitModal extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13.5,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
                 height: 1.45,
               ),
             ),
@@ -131,7 +131,7 @@ class QuizExitModal extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF334155),
+                      color: AppColors.textLabel,
                     ),
                   ),
                   const Spacer(),
@@ -158,12 +158,12 @@ class QuizExitModal extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () => Navigator.of(context).pop(true),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color(0xFFEF4444),
-                        side: const BorderSide(color: Color(0xFFFECACA)),
+                        foregroundColor: AppColors.error,
+                        side: const BorderSide(color: AppColors.errorBorder),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
-                        backgroundColor: const Color(0xFFFEF2F2),
+                        backgroundColor: AppColors.errorSurfaceLight,
                       ),
                       child: const Text(
                         'Thoát bài',

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -45,7 +45,7 @@ class ProfileMenuList extends StatelessWidget {
           children: [
             _MenuTile(
               icon: Icons.help_outline_rounded,
-              iconColor: const Color(0xFF0284C7),
+              iconColor: AppColors.accentDark,
               iconBgColor: const Color(0xFFF0F9FF),
               title: 'Trợ giúp & FAQ',
               subtitle: 'Hướng dẫn sử dụng và câu hỏi thường gặp',

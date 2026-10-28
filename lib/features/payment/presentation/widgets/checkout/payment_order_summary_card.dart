@@ -22,10 +22,10 @@ class PaymentOrderSummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF183A78).withValues(alpha: 0.08),
+            color: AppColors.navySurface.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -60,7 +60,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                   'Mã đơn: #$orderCode',
                   style: const TextStyle(
                     fontSize: 11,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -69,7 +69,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ],
@@ -80,7 +80,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
             children: [
               const Text(
                 'Hết hạn sau',
-                style: TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
               ),
               const SizedBox(height: 4),
               Container(
@@ -89,16 +89,16 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFF1F2),
+                  color: AppColors.expiredContainer,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xFFFECDD3)),
+                  border: Border.all(color: AppColors.expiredBorder),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.timer_outlined,
                       size: 13,
-                      color: Color(0xFFE11D48),
+                      color: AppColors.expired,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -106,7 +106,7 @@ class PaymentOrderSummaryCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFFE11D48),
+                        color: AppColors.expired,
                       ),
                     ),
                   ],

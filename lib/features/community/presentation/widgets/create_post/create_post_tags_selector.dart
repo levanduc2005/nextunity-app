@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 
@@ -39,7 +39,7 @@ class CreatePostTagsSelector extends StatelessWidget {
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF94A3B8),
+            color: AppColors.textMuted,
             letterSpacing: 0.5,
           ),
         ),
@@ -77,7 +77,7 @@ class CreatePostTagsSelector extends StatelessWidget {
                       child: const Icon(
                         Icons.close_rounded,
                         size: 14,
-                        color: Color(0xFFEF4444),
+                        color: AppColors.error,
                       ),
                     ),
                   ],
@@ -98,7 +98,7 @@ class CreatePostTagsSelector extends StatelessWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF1F5F9),
+                        color: AppColors.surfaceSubtle,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
@@ -106,7 +106,7 @@ class CreatePostTagsSelector extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF475569),
+                          color: AppColors.textSecondaryDark,
                         ),
                       ),
                     ),
@@ -123,21 +123,21 @@ class CreatePostTagsSelector extends StatelessWidget {
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.surfaceSubtle,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: AppColors.border),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add_rounded, size: 14, color: Color(0xFF475569)),
+                    Icon(Icons.add_rounded, size: 14, color: AppColors.textSecondaryDark),
                     Gap.h(2),
                     Text(
                       'Thêm thẻ',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF475569),
+                        color: AppColors.textSecondaryDark,
                       ),
                     ),
                   ],

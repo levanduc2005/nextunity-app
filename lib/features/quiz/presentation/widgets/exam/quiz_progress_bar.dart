@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Thanh trạng thái & tiến độ làm bài thi dạng tối giản
@@ -37,7 +37,7 @@ class QuizProgressBar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.5,
                 fontWeight: FontWeight.w800,
-                color: isDark ? Colors.white : const Color(0xFF0F172A),
+                color: isDark ? Colors.white : AppColors.textPrimary,
                 letterSpacing: 0.5,
               ),
             ),
@@ -46,7 +46,7 @@ class QuizProgressBar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDark
                     ? Colors.white.withValues(alpha: 0.18)
-                    : const Color(0xFFEFF6FF),
+                    : AppColors.primaryContainer,
                 borderRadius: BorderRadius.circular(20),
                 border: isDark
                     ? Border.all(color: Colors.white.withValues(alpha: 0.25))
@@ -71,7 +71,7 @@ class QuizProgressBar extends StatelessWidget {
             minHeight: 4.5,
             backgroundColor: isDark
                 ? Colors.white.withValues(alpha: 0.15)
-                : const Color(0xFFE2E8F0),
+                : AppColors.border,
             valueColor: AlwaysStoppedAnimation<Color>(
               isDark ? AppColors.accent : AppColors.primary,
             ),

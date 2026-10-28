@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
@@ -37,7 +37,7 @@ class UnderDevelopmentView extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     AppColors.primary.withValues(alpha: 0.15),
-                    const Color(0xFF16A34A).withValues(alpha: 0.08),
+                    AppColors.successVibrant.withValues(alpha: 0.08),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -56,9 +56,9 @@ class UnderDevelopmentView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
+                color: AppColors.surfaceSubtle,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFCBD5E1)),
+                border: Border.all(color: AppColors.borderMedium),
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
@@ -66,7 +66,7 @@ class UnderDevelopmentView extends StatelessWidget {
                   Icon(
                     Icons.schedule_rounded,
                     size: 14,
-                    color: Color(0xFF475569),
+                    color: AppColors.textSecondaryDark,
                   ),
                   SizedBox(width: 6),
                   Text(
@@ -74,7 +74,7 @@ class UnderDevelopmentView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF475569),
+                      color: AppColors.textSecondaryDark,
                       letterSpacing: 0.6,
                     ),
                   ),
@@ -90,7 +90,7 @@ class UnderDevelopmentView extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
                 letterSpacing: -0.3,
               ),
             ),
@@ -103,7 +103,7 @@ class UnderDevelopmentView extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 13.5,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
                 height: 1.5,
                 fontWeight: FontWeight.w500,
               ),

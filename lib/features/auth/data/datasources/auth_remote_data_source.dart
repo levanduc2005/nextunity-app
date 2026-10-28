@@ -31,11 +31,6 @@ abstract interface class AuthRemoteDataSource {
 
   Future<void> sendOtp({required String email});
 
-  Future<AuthTokensModel> verifyOtp({
-    required String email,
-    required String otp,
-  });
-
   Future<UserModel> getCurrentUser();
 
   Future<void> logout({String? refreshToken});
@@ -193,30 +188,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         '/auth/resend-register-otp',
         data: {'email': email},
         options: Options(extra: {'isPublic': true}),
-      );
-    });
-  }
-
-  @override
-  Future<AuthTokensModel> verifyOtp({
-    required String email,
-    required String otp,
-  }) {
-    return guardApiCall(() async {
-      final response = await _dio.post<Map<String, dynamic>>(
-        '/auth/verify-otp',
-        data: {'email': email, 'verificationCode': otp},
-        options: Options(extra: {'isPublic': true}),
-      );
-
-      final data = response.data!['data'] as Map<String, dynamic>;
-      final accessToken =
-          (data['accessToken'] ?? data['token'] ?? '') as String;
-      final refreshToken = data['refreshToken'] as String?;
-
-      return AuthTokensModel(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
       );
     });
   }

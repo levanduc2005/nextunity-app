@@ -15,7 +15,6 @@ abstract class CommentEntity with _$CommentEntity {
     required String content,
     String? authorId,
     String? authorAvatar,
-    String? authorBadge,
     String? parentId,
     @Default(0) int reactionCount,
     @Default({}) Map<ReactionType, int> reactionDetails,

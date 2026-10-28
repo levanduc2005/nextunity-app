@@ -166,4 +166,18 @@ abstract final class AppColors {
 
   /// Nền lỗi siêu nhẹ (Red-50) - Dùng cho nền câu hỏi sai, thẻ chưa đạt
   static const Color errorSurfaceLight = Color(0xFFFEF2F2);
+
+  // --- Màu trạng thái Hết hạn / Khẩn cấp (Expired / Rose Accent) ---
+  /// Màu chữ / icon trạng thái hết hạn hoặc thanh toán quá hạn (Rose-600)
+  static const Color expired = Color(0xFFE11D48);
+
+  /// Nền trạng thái hết hạn siêu nhẹ (Rose-50)
+  static const Color expiredContainer = Color(0xFFFFF1F2);
+
+  /// Viền trạng thái hết hạn (Rose-200)
+  static const Color expiredBorder = Color(0xFFFECDD3);
+
+  // --- Màu nền phụ đậm (Navy Surface) ---
+  /// Màu xanh Navy Indigo đậm dùng cho nền card thẻ Plus, bảo mật
+  static const Color navySurface = Color(0xFF183A78);
 }

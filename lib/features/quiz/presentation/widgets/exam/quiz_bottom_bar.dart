@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Thanh điều hướng bài thi (Bottom Bar) chuẩn phong cách hiện đại
@@ -44,11 +44,11 @@ class QuizBottomBar extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: canGoBack
                     ? AppColors.primaryContainer
-                    : const Color(0xFFF8FAFC),
+                    : AppColors.surfaceLight,
                 border: Border.all(
                   color: canGoBack
                       ? AppColors.primaryBorder
-                      : const Color(0xFFE2E8F0),
+                      : AppColors.border,
                 ),
               ),
               child: Center(
@@ -57,7 +57,7 @@ class QuizBottomBar extends StatelessWidget {
                   size: 18,
                   color: canGoBack
                       ? AppColors.primaryForeground
-                      : const Color(0xFFCBD5E1),
+                      : AppColors.borderMedium,
                 ),
               ),
             ),
@@ -71,7 +71,7 @@ class QuizBottomBar extends StatelessWidget {
               height: 52,
               padding: const EdgeInsets.symmetric(horizontal: 40),
               decoration: BoxDecoration(
-                color: canGoNext ? AppColors.primary : const Color(0xFFCBD5E1),
+                color: canGoNext ? AppColors.primary : AppColors.borderMedium,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: canGoNext
                     ? [

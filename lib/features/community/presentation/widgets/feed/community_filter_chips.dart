@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 
@@ -58,7 +58,7 @@ class CommunityFilterModal {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   if (selectedTag != 'Tất cả')
@@ -86,7 +86,7 @@ class CommunityFilterModal {
               const Gap(4),
               const Text(
                 'Chọn hashtag môn học từ hệ thống để xem các bài thảo luận liên quan',
-                style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+                style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
               ),
               const Gap(16),
               Wrap(
@@ -109,12 +109,12 @@ class CommunityFilterModal {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
-                            : const Color(0xFFF1F5F9),
+                            : AppColors.surfaceSubtle,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : const Color(0xFFE2E8F0),
+                              : AppColors.border,
                         ),
                         boxShadow: isSelected
                             ? [
@@ -135,7 +135,7 @@ class CommunityFilterModal {
                               : FontWeight.w600,
                           color: isSelected
                               ? Colors.white
-                              : const Color(0xFF334155),
+                              : AppColors.textLabel,
                         ),
                       ),
                     ),

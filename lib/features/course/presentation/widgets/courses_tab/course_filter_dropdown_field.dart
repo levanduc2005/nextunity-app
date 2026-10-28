@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Ô chọn Dropdown tùy biến có nhãn tiêu đề và icon cho bộ lọc khóa học
@@ -32,7 +32,7 @@ class CourseFilterDropdownField extends StatelessWidget {
           style: const TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF94A3B8),
+            color: AppColors.textMuted,
             letterSpacing: 0.5,
           ),
         ),
@@ -44,24 +44,24 @@ class CourseFilterDropdownField extends StatelessWidget {
               vertical: 4,
             ),
             filled: true,
-            fillColor: const Color(0xFFF8FAFC),
+            fillColor: AppColors.surfaceLight,
             prefixIcon: Icon(
               prefixIcon,
               size: 20,
               color: validValue != null
                   ? AppColors.primary
-                  : const Color(0xFF94A3B8),
+                  : AppColors.textMuted,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: const BorderSide(color: AppColors.border),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(14),
               borderSide: BorderSide(
                 color: validValue != null
                     ? AppColors.primary.withValues(alpha: 0.5)
-                    : const Color(0xFFE2E8F0),
+                    : AppColors.border,
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -81,12 +81,12 @@ class CourseFilterDropdownField extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               icon: const Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
               style: const TextStyle(
                 fontSize: 13.5,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
               ),
               items: [
                 DropdownMenuItem<String?>(
@@ -95,7 +95,7 @@ class CourseFilterDropdownField extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 13.5,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),
@@ -115,7 +115,7 @@ class CourseFilterDropdownField extends StatelessWidget {
                                   : FontWeight.w600,
                               color: isSelected
                                   ? AppColors.primary
-                                  : const Color(0xFF0F172A),
+                                  : AppColors.textPrimary,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),

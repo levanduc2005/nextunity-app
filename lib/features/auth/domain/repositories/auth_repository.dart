@@ -13,12 +13,6 @@ abstract interface class AuthRepository {
   /// Gửi mã OTP đến email user
   Future<Result<void>> sendOtp({required String email});
 
-  /// Xác thực mã OTP và nhận thông tin User
-  Future<Result<UserEntity>> verifyOtp({
-    required String email,
-    required String otp,
-  });
-
   /// Lấy thông tin current user
   Future<Result<UserEntity?>> getCurrentUser();
 

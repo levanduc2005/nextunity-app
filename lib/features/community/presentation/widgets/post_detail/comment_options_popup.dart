@@ -17,7 +17,6 @@ class CommentOptionsPopup extends StatelessWidget {
     required this.formattedTime,
     this.authorAvatar,
     this.authorInitials = '',
-    this.authorBadge,
     this.currentReaction,
     required this.onReactionSelected,
     required this.onReactionCleared,
@@ -33,7 +32,6 @@ class CommentOptionsPopup extends StatelessWidget {
   final String formattedTime;
   final String? authorAvatar;
   final String authorInitials;
-  final String? authorBadge;
   final ReactionType? currentReaction;
   final ValueChanged<ReactionType> onReactionSelected;
   final VoidCallback onReactionCleared;
@@ -51,7 +49,6 @@ class CommentOptionsPopup extends StatelessWidget {
     required String formattedTime,
     String? authorAvatar,
     String authorInitials = '',
-    String? authorBadge,
     ReactionType? currentReaction,
     required ValueChanged<ReactionType> onReactionSelected,
     required VoidCallback onReactionCleared,
@@ -75,7 +72,6 @@ class CommentOptionsPopup extends StatelessWidget {
           formattedTime: formattedTime,
           authorAvatar: authorAvatar,
           authorInitials: authorInitials,
-          authorBadge: authorBadge,
           currentReaction: currentReaction,
           onReactionSelected: onReactionSelected,
           onReactionCleared: onReactionCleared,
@@ -175,7 +171,6 @@ class CommentOptionsPopup extends StatelessWidget {
                   authorName: authorName,
                   formattedTime: formattedTime,
                   authorAvatar: authorAvatar,
-                  authorBadge: authorBadge,
                   commentContent: commentContent,
                 ),
 

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_picker_item.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Lớp hỗ trợ tính toán vị trí và khởi tạo Overlay thanh chọn 6 cảm xúc reaction
 class PostReactionPopup {
   const PostReactionPopup._();
@@ -87,7 +88,7 @@ class PostReactionPopup {
                           offset: const Offset(0, 8),
                         ),
                       ],
-                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                      border: Border.all(color: AppColors.border),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

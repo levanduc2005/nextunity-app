@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
@@ -25,7 +25,7 @@ class CommunityActiveFilterBanner extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(AppRadius.sm),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Row(
           children: [
@@ -37,7 +37,7 @@ class CommunityActiveFilterBanner extends StatelessWidget {
             const Gap.h(6),
             const Text(
               'Đang lọc theo: ',
-              style: TextStyle(fontSize: 13, color: Color(0xFF64748B)),
+              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -67,14 +67,14 @@ class CommunityActiveFilterBanner extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFFEF4444),
+                        color: AppColors.error,
                       ),
                     ),
                     Gap.h(2),
                     Icon(
                       Icons.close_rounded,
                       size: 14,
-                      color: Color(0xFFEF4444),
+                      color: AppColors.error,
                     ),
                   ],
                 ),

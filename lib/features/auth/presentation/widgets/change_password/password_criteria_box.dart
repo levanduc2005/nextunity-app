@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Hộp hiển thị các tiêu chí mật khẩu mạnh (Password Criteria Box).
 class PasswordCriteriaBox extends StatelessWidget {
   final bool hasMin8Chars;
@@ -15,13 +16,17 @@ class PasswordCriteriaBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isAllValid = hasMin8Chars && hasUpperAndLower && hasNumber;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0FDF4),
+        color: isAllValid ? AppColors.successSurfaceLight : AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFDCFCE7)),
+        border: Border.all(
+          color: isAllValid ? AppColors.successContainer : AppColors.border,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +47,7 @@ class PasswordCriteriaBox extends StatelessWidget {
         Icon(
           isValid ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
           size: 16,
-          color: isValid ? const Color(0xFF2E7D32) : const Color(0xFF94A3B8),
+          color: isValid ? const Color(0xFF2E7D32) : AppColors.textMuted,
         ),
         const SizedBox(width: 8),
         Text(
@@ -50,7 +55,7 @@ class PasswordCriteriaBox extends StatelessWidget {
           style: TextStyle(
             fontSize: 12.5,
             fontWeight: isValid ? FontWeight.w600 : FontWeight.w400,
-            color: isValid ? const Color(0xFF1B5E20) : const Color(0xFF64748B),
+            color: isValid ? const Color(0xFF1B5E20) : AppColors.textSecondary,
           ),
         ),
       ],

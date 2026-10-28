@@ -28,7 +28,7 @@ class PaymentExpiredView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE6F0FC),
+      backgroundColor: AppColors.background,
       appBar: const PaymentPageAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,10 +45,10 @@ class PaymentExpiredView extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: AppColors.border),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF183A78).withValues(alpha: 0.08),
+                      color: AppColors.navySurface.withValues(alpha: 0.08),
                       blurRadius: 20,
                       offset: const Offset(0, 6),
                     ),
@@ -62,10 +62,10 @@ class PaymentExpiredView extends StatelessWidget {
                       width: 72,
                       height: 72,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF1F2),
+                        color: AppColors.expiredContainer,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: const Color(0xFFFECDD3),
+                          color: AppColors.expiredBorder,
                           width: 2,
                         ),
                       ),
@@ -73,7 +73,7 @@ class PaymentExpiredView extends StatelessWidget {
                         child: Icon(
                           Icons.history_toggle_off_rounded,
                           size: 38,
-                          color: Color(0xFFE11D48),
+                          color: AppColors.expired,
                         ),
                       ),
                     ),
@@ -85,7 +85,7 @@ class PaymentExpiredView extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -96,7 +96,7 @@ class PaymentExpiredView extends StatelessWidget {
                       'Mã QR và thông tin chuyển khoản cho đơn hàng #$orderCode đã hết thời gian hiệu lực để đảm bảo an toàn giao dịch.\nVui lòng không chuyển khoản vào thông tin cũ.',
                       style: const TextStyle(
                         fontSize: 12.5,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                         height: 1.5,
                       ),
                       textAlign: TextAlign.center,
@@ -107,9 +107,9 @@ class PaymentExpiredView extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF8FAFC),
+                        color: AppColors.surfaceLight,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Row(
                         children: [
@@ -122,7 +122,7 @@ class PaymentExpiredView extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w800,
-                                    color: Color(0xFF334155),
+                                    color: AppColors.textLabel,
                                   ),
                                 ),
                                 const SizedBox(height: 2),
@@ -130,7 +130,7 @@ class PaymentExpiredView extends StatelessWidget {
                                   'Mã đơn: #$orderCode',
                                   style: const TextStyle(
                                     fontSize: 11,
-                                    color: Color(0xFF94A3B8),
+                                    color: AppColors.textMuted,
                                   ),
                                 ),
                               ],
@@ -144,7 +144,7 @@ class PaymentExpiredView extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF64748B),
+                                  color: AppColors.textSecondary,
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
@@ -155,7 +155,7 @@ class PaymentExpiredView extends StatelessWidget {
                                   vertical: 2,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFFEE2E2),
+                                  color: AppColors.errorContainer,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: const Text(
@@ -163,7 +163,7 @@ class PaymentExpiredView extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 9.5,
                                     fontWeight: FontWeight.w800,
-                                    color: Color(0xFFDC2626),
+                                    color: AppColors.errorForeground,
                                   ),
                                 ),
                               ),

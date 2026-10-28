@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Widget background lượn sóng mềm mại (Soft Fluid Waves) dùng cho các màn hình Auth và Landing.
 class AuthBackgroundWaves extends StatelessWidget {
   const AuthBackgroundWaves({super.key});
@@ -51,7 +52,7 @@ class AuthBackgroundWavesPainter extends CustomPainter {
 
     // 2. Sóng dưới cùng bên phải/giữa (Bottom Right Fluid Wave)
     final bottomPaint = Paint()
-      ..color = const Color(0xFFBFDBFE).withValues(alpha: 0.85)
+      ..color = AppColors.primaryBorder.withValues(alpha: 0.85)
       ..style = PaintingStyle.fill;
 
     final bottomPath = Path();

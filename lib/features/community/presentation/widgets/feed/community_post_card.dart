@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
@@ -14,6 +14,7 @@ import 'package:rental_car/features/community/presentation/widgets/feed/post_car
 import 'package:rental_car/features/community/presentation/widgets/feed/post_card_engagement_stats.dart';
 import 'package:rental_car/features/community/presentation/widgets/feed/post_card_header.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Card bài viết chuẩn mạng xã hội (Facebook / Threads style) cho NextUnity Community
 class CommunityPostCard extends ConsumerStatefulWidget {
   const CommunityPostCard({
@@ -58,7 +59,7 @@ class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0A000000),
@@ -106,7 +107,7 @@ class _CommunityPostCardState extends ConsumerState<CommunityPostCard> {
           ),
 
           const Gap(6),
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
 
           // 4. Action Buttons Bar (Thích - Bình luận - Chia sẻ)
           PostCardActionsBar(

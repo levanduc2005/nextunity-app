@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/course_filter_dropdown_field.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/course_filter_modal_header.dart';
@@ -80,7 +80,7 @@ class _CourseFilterModalState extends State<CourseFilterModal> {
             onReset: _reset,
             onClose: () => Navigator.pop(context),
           ),
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
 
           // Content Dropdowns
           Padding(
@@ -116,7 +116,7 @@ class _CourseFilterModalState extends State<CourseFilterModal> {
             ),
           ),
 
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
 
           // Apply Button Footer
           Padding(

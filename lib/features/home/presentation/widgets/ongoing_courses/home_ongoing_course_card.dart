@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -233,7 +233,7 @@ class HomeOngoingCourseCard extends StatelessWidget {
 
   Widget _buildFallbackThumbnail(String code) {
     return Container(
-      color: const Color(0xFF1E3A8A),
+      color: AppColors.primaryDark,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

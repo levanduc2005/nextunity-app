@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Shows the Frequently Asked Questions (FAQ) dialog for NextUnity Plus.
@@ -32,7 +32,7 @@ Future<void> showPlusFaqDialog(BuildContext context) {
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 16,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
         ],
@@ -98,9 +98,9 @@ class _FaqItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +110,7 @@ class _FaqItem extends StatelessWidget {
             style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 12.5,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
@@ -118,7 +118,7 @@ class _FaqItem extends StatelessWidget {
             answer,
             style: const TextStyle(
               fontSize: 12,
-              color: Color(0xFF475569),
+              color: AppColors.textSecondaryDark,
               height: 1.4,
             ),
           ),

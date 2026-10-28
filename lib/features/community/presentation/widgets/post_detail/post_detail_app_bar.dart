@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_options_bottom_sheet.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// AppBar chuẩn mạng xã hội cho màn hình Chi tiết bài viết
 class PostDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PostDetailAppBar({
@@ -29,7 +30,7 @@ class PostDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back_rounded,
-          color: Color(0xFF334155),
+          color: AppColors.textLabel,
           size: 24,
         ),
         onPressed: () => context.pop(),
@@ -42,13 +43,13 @@ class PostDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           if (post != null)
             Text(
               'Tác giả: ${post!.displayAuthor}',
-              style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+              style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
             ),
         ],
       ),
@@ -56,7 +57,7 @@ class PostDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: const Icon(
             Icons.more_horiz_rounded,
-            color: Color(0xFF334155),
+            color: AppColors.textLabel,
             size: 24,
           ),
           onPressed: () {

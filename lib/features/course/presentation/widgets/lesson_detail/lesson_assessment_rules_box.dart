@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Hộp hiển thị quy chế & hướng dẫn thi trắc nghiệm
 class LessonAssessmentRulesBox extends StatelessWidget {
   const LessonAssessmentRulesBox({super.key});
@@ -9,16 +10,16 @@ class LessonAssessmentRulesBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Row(
             children: [
-              Icon(Icons.rule_rounded, size: 16, color: Color(0xFF475569)),
+              Icon(Icons.rule_rounded, size: 16, color: AppColors.textSecondaryDark),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -26,7 +27,7 @@ class LessonAssessmentRulesBox extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12.5,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -61,7 +62,7 @@ class LessonAssessmentRulesBox extends StatelessWidget {
           height: 4,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xFF94A3B8),
+            color: AppColors.textMuted,
           ),
         ),
         const SizedBox(width: 8),
@@ -70,7 +71,7 @@ class LessonAssessmentRulesBox extends StatelessWidget {
             text,
             style: const TextStyle(
               fontSize: 11,
-              color: Color(0xFF475569),
+              color: AppColors.textSecondaryDark,
               height: 1.35,
             ),
           ),

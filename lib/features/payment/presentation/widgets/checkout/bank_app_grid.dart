@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class BankAppGrid extends StatelessWidget {
@@ -28,7 +28,7 @@ class BankAppGrid extends StatelessWidget {
           style: TextStyle(
             fontSize: 10.5,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF94A3B8),
+            color: AppColors.textMuted,
             letterSpacing: 0.5,
           ),
         ),
@@ -56,13 +56,13 @@ class BankAppGrid extends StatelessWidget {
                 duration: const Duration(milliseconds: 150),
                 decoration: BoxDecoration(
                   color: isBankSelected
-                      ? const Color(0xFFDCFCE7)
+                      ? AppColors.successContainer
                       : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isBankSelected
                         ? AppColors.primary
-                        : const Color(0xFFE2E8F0),
+                        : AppColors.border,
                     width: isBankSelected ? 2 : 1,
                   ),
                 ),
@@ -93,8 +93,8 @@ class BankAppGrid extends StatelessWidget {
                                   ? FontWeight.w700
                                   : FontWeight.w500,
                               color: isBankSelected
-                                  ? const Color(0xFF1E3A8A)
-                                  : const Color(0xFF334155),
+                                  ? AppColors.primaryDark
+                                  : AppColors.textLabel,
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 1,
@@ -152,16 +152,16 @@ class BankAppGrid extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
+            color: AppColors.surfaceLight,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: const Row(
             children: [
               Icon(
                 Icons.info_outline_rounded,
                 size: 14,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
               SizedBox(width: 6),
               Expanded(
@@ -169,7 +169,7 @@ class BankAppGrid extends StatelessWidget {
                   'Hệ thống sẽ tự động sao chép mã đơn hàng để bạn dán vào app ngân hàng.',
                   style: TextStyle(
                     fontSize: 10.5,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

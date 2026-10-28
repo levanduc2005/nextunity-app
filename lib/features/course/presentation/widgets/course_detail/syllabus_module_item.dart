@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
@@ -42,11 +42,11 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
     final isCompleted = isEnrolled && module.isAllCompleted;
 
     // Header styling based on state
-    Color headerBorderColor = const Color(0xFFE2E8F0);
+    Color headerBorderColor = AppColors.border;
     if (isCompleted) {
-      headerBorderColor = const Color(0xFFA7F3D0);
+      headerBorderColor = AppColors.successBorder;
     } else if (isEnrolled) {
-      headerBorderColor = const Color(0xFFBBF7D0);
+      headerBorderColor = AppColors.primaryBorder;
     }
 
     return Container(
@@ -60,7 +60,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+            color: AppColors.textPrimary.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -86,25 +86,25 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
                           ? const Color(0xFFD1FAE5)
                           : (isEnrolled
                                 ? AppColors.primary
-                                : const Color(0xFFF1F5F9)),
+                                : AppColors.surfaceSubtle),
                       borderRadius: BorderRadius.circular(10),
                       border: isEnrolled
                           ? null
-                          : Border.all(color: const Color(0xFFCBD5E1)),
+                          : Border.all(color: AppColors.borderMedium),
                     ),
                     child: Center(
                       child: isCompleted
                           ? const Icon(
                               Icons.check_rounded,
                               size: 18,
-                              color: Color(0xFF059669),
+                              color: AppColors.successDark,
                             )
                           : Text(
                               '0${widget.index + 1}',
                               style: TextStyle(
                                 color: isEnrolled
                                     ? Colors.white
-                                    : const Color(0xFF475569),
+                                    : AppColors.textSecondaryDark,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -126,7 +126,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
                                 fontSize: 10,
                                 fontWeight: FontWeight.w800,
                                 color: isCompleted
-                                    ? const Color(0xFF059669)
+                                    ? AppColors.successDark
                                     : AppColors.primary,
                                 letterSpacing: 0.5,
                               ),
@@ -138,7 +138,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
                                   : '• ${module.lessons.length} BÀI HỌC',
                               style: const TextStyle(
                                 fontSize: 10,
-                                color: Color(0xFF94A3B8),
+                                color: AppColors.textMuted,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -150,7 +150,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
                           style: const TextStyle(
                             fontSize: 12.5,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: AppColors.textPrimary,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -164,7 +164,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
                     _isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: const Color(0xFF94A3B8),
+                    color: AppColors.textMuted,
                     size: 22,
                   ),
                 ],
@@ -174,7 +174,7 @@ class _SyllabusModuleItemState extends State<SyllabusModuleItem> {
 
           // Sub-lessons list if expanded
           if (_isExpanded && module.lessons.isNotEmpty) ...[
-            const Divider(height: 1, color: Color(0xFFF1F5F9)),
+            const Divider(height: 1, color: AppColors.surfaceSubtle),
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(

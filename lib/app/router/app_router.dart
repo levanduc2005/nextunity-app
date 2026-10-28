@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -58,7 +58,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoute.splash.path,
         name: AppRoute.splash.name,
         builder: (_, _) => const Scaffold(
-          backgroundColor: Color(0xFFF8FAFC),
+          backgroundColor: AppColors.surfaceLight,
           body: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Hộp thoại nhập và thêm thẻ tag môn học mới cho bài viết
@@ -44,8 +44,9 @@ class _AddTagDialogState extends State<AddTagDialog> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFFDCFCE7),
+              color: AppColors.primaryContainer,
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.primaryBorder),
             ),
             child: const Icon(
               Icons.tag_rounded,
@@ -59,7 +60,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 16,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
         ],
@@ -70,7 +71,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
         style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600),
         decoration: InputDecoration(
           hintText: 'Nhập mã môn (ví dụ: MAS291, PRO192)...',
-          hintStyle: const TextStyle(fontSize: 12.5, color: Color(0xFF94A3B8)),
+          hintStyle: const TextStyle(fontSize: 12.5, color: AppColors.textMuted),
           prefixText: '# ',
           prefixStyle: const TextStyle(
             fontSize: 14,
@@ -78,18 +79,18 @@ class _AddTagDialogState extends State<AddTagDialog> {
             color: AppColors.primary,
           ),
           filled: true,
-          fillColor: const Color(0xFFF8FAFC),
+          fillColor: AppColors.surfaceLight,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 14,
             vertical: 12,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            borderSide: const BorderSide(color: AppColors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+            borderSide: const BorderSide(color: AppColors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
@@ -105,7 +106,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
                 height: 42,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFFE2E8F0)),
+                    side: const BorderSide(color: AppColors.border),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -115,7 +116,7 @@ class _AddTagDialogState extends State<AddTagDialog> {
                     'Hủy',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),

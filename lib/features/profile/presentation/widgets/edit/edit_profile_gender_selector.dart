@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class GenderOptionItem {
@@ -46,7 +46,7 @@ class EditProfileGenderSelector extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1E293B),
+            color: AppColors.textDark,
           ),
         ),
         const SizedBox(height: 6),

@@ -78,7 +78,14 @@ class CourseHeroEnrolledProgress extends StatelessWidget {
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: progressFraction >= 1.0
+                        ? AppColors.success
+                        : AppColors.primary,
+                    gradient: progressFraction < 1.0
+                        ? const LinearGradient(
+                            colors: [AppColors.primary, AppColors.accent],
+                          )
+                        : null,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -90,10 +97,12 @@ class CourseHeroEnrolledProgress extends StatelessWidget {
             children: [
               Text(
                 'Tiến độ: $progressPercent%',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10.5,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.successForeground,
+                  color: progressFraction >= 1.0
+                      ? AppColors.successForeground
+                      : AppColors.primaryForeground,
                 ),
               ),
               const SizedBox(width: 8),

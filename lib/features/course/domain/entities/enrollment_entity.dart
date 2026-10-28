@@ -14,7 +14,7 @@ abstract class EnrollmentEntity with _$EnrollmentEntity {
     String? courseDifficultyName,
     @Default(0) int totalLessons,
     @Default(0) int progressPercent,
-    @Default('ACTIVE') String status,
+    @Default('ENROLLED') String status,
     DateTime? createdAt,
     DateTime? completedAt,
     String? instructorName,

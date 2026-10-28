@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
@@ -62,7 +62,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                 width: 44,
                 height: 4.5,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: AppColors.borderMedium,
                   borderRadius: BorderRadius.circular(2.5),
                 ),
               ),
@@ -76,7 +76,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFEFF6FF),
+                    color: AppColors.primaryContainer,
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -97,7 +97,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                           letterSpacing: -0.3,
                         ),
                       ),
@@ -106,7 +106,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                         'Chạm vào bài học để chuyển bài nhanh',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -117,7 +117,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                   icon: const Icon(
                     Icons.close_rounded,
                     size: 22,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
@@ -133,7 +133,7 @@ class LessonTocBottomSheet extends StatelessWidget {
                     'Không có bài học nào trong danh mục',
                     style: TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF94A3B8),
+                      color: AppColors.textMuted,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

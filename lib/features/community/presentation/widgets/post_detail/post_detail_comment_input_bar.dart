@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
@@ -31,7 +31,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+        border: Border(top: BorderSide(color: AppColors.border)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -67,7 +67,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
                     child: const Icon(
                       Icons.close_rounded,
                       size: 16,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
@@ -103,7 +103,7 @@ class PostDetailCommentInputBar extends StatelessWidget {
                             : 'Viết bình luận công khai...',
                         hintStyle: const TextStyle(
                           fontSize: 12.5,
-                          color: Color(0xFF94A3B8),
+                          color: AppColors.textMuted,
                         ),
                         border: InputBorder.none,
                         isDense: true,

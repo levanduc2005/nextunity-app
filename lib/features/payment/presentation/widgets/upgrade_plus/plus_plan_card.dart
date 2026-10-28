@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_floating_badge.dart';
 import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_price_row.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Interactive subscription plan selection card for NextUnity Plus.
 /// Features smooth elevation pop (-3px lift), glowing blue drop shadows,
 /// and bright white background when active.
@@ -45,12 +46,12 @@ class PlusPlanCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.white : const Color(0xFFF8FAFC),
+                color: isSelected ? Colors.white : AppColors.surfaceLight,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isSelected
-                      ? const Color(0xFFF59E0B)
-                      : const Color(0xFFE2E8F0),
+                      ? AppColors.warning
+                      : AppColors.border,
                   width: isSelected ? 2 : 1,
                 ),
                 boxShadow: isSelected
@@ -91,12 +92,12 @@ class PlusPlanCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isSelected
-                          ? const Color(0xFFF59E0B)
+                          ? AppColors.warning
                           : Colors.white,
                       border: Border.all(
                         color: isSelected
-                            ? const Color(0xFFF59E0B)
-                            : const Color(0xFFCBD5E1),
+                            ? AppColors.warning
+                            : AppColors.borderMedium,
                         width: 2,
                       ),
                     ),
@@ -121,7 +122,7 @@ class PlusPlanCard extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -129,7 +130,7 @@ class PlusPlanCard extends StatelessWidget {
                           subtitle,
                           style: const TextStyle(
                             fontSize: 11,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -156,11 +157,11 @@ class PlusPlanCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? const Color(0xFFFFFBEB)
-                            : const Color(0xFFF1F5F9),
+                            ? AppColors.warningLight
+                            : AppColors.surfaceSubtle,
                         borderRadius: BorderRadius.circular(8),
                         border: isSelected
-                            ? Border.all(color: const Color(0xFFFDE68A))
+                            ? Border.all(color: AppColors.warningBorder)
                             : null,
                       ),
                       child: Text(
@@ -171,8 +172,8 @@ class PlusPlanCard extends StatelessWidget {
                               ? FontWeight.w700
                               : FontWeight.w600,
                           color: isSelected
-                              ? const Color(0xFFB45309)
-                              : const Color(0xFF475569),
+                              ? AppColors.warningDark
+                              : AppColors.textSecondaryDark,
                           letterSpacing: -0.2,
                         ),
                       ),

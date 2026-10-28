@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
@@ -69,7 +69,7 @@ class PostDetailCommentsSection extends StatelessWidget {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const Gap(14),
@@ -91,7 +91,7 @@ class PostDetailCommentsSection extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Chưa có bình luận nào. Hãy là người đầu tiên bình luận!',
-                  style: TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
+                  style: TextStyle(color: AppColors.textMuted, fontSize: 13),
                 ),
               ),
             )

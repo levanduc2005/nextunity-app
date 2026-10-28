@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 abstract final class SupportedBanks {
   static const List<Map<String, dynamic>> list = [
     {
       'id': 'mbbank',
       'name': 'MBBank',
       'short': 'MB',
-      'color': Color(0xFF1E3A8A),
+      'color': AppColors.primaryDark,
       'appId': 'mb',
       'scheme': 'mbbank',
       'package': 'com.mbmobile',
@@ -24,7 +25,7 @@ abstract final class SupportedBanks {
       'id': 'techcombank',
       'name': 'Techcombank',
       'short': 'TCB',
-      'color': Color(0xFFDC2626),
+      'color': AppColors.errorForeground,
       'appId': 'tcb',
       'scheme': 'tcb',
       'package': 'vn.com.techcombank.bb.app',
@@ -33,7 +34,7 @@ abstract final class SupportedBanks {
       'id': 'acb',
       'name': 'ACB',
       'short': 'ACB',
-      'color': Color(0xFF2563EB),
+      'color': AppColors.primaryAction,
       'appId': 'acb',
       'scheme': 'acbone',
       'package': 'mobile.acb.com.vn',
@@ -42,7 +43,7 @@ abstract final class SupportedBanks {
       'id': 'vpbank',
       'name': 'VPBank',
       'short': 'VPB',
-      'color': Color(0xFF059669),
+      'color': AppColors.successDark,
       'appId': 'vpb',
       'scheme': 'vpbankneo',
       'package': 'com.vnpay.vpbankonline',
@@ -60,7 +61,7 @@ abstract final class SupportedBanks {
       'id': 'bidv',
       'name': 'BIDV',
       'short': 'BIDV',
-      'color': Color(0xFF0284C7),
+      'color': AppColors.accentDark,
       'appId': 'bidv',
       'scheme': 'bidv.smartbanking.partner',
       'package': 'com.vnpay.bidv',
@@ -69,7 +70,7 @@ abstract final class SupportedBanks {
       'id': 'agribank',
       'name': 'Agribank',
       'short': 'AGR',
-      'color': Color(0xFFB45309),
+      'color': AppColors.warningDark,
       'appId': 'vba',
       'scheme': 'agribankmobile',
       'package': 'com.vnpay.Agribank3g',

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_card.dart';
 import 'package:rental_car/features/auth/presentation/widgets/decorations/paper_airplane.dart';
 import 'package:rental_car/features/auth/presentation/widgets/decorations/pushpin_and_sticky.dart';
 import 'package:rental_car/features/auth/presentation/widgets/decorations/stationery_pen.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Khung sân khấu đồ dùng học tập / văn phòng phẩm (Stationery Stage)
 /// bao gồm máy bay giấy Origami, bút bi 3D, đinh ghim và giấy note.
 class AuthStationeryStage extends StatelessWidget {
@@ -56,7 +57,7 @@ class AuthStationeryStage extends StatelessWidget {
                     const Positioned.fill(
                       child: CustomPaint(
                         painter: DashedFlightTrailPainter(
-                          color: Color(0xFF94A3B8),
+                          color: AppColors.textMuted,
                           strokeWidth: 1.8,
                         ),
                       ),
@@ -101,7 +102,7 @@ class AuthStationeryStage extends StatelessWidget {
                 AuthCard(
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                      color: AppColors.textPrimary.withValues(alpha: 0.04),
                       blurRadius: 24,
                       offset: const Offset(0, 8),
                     ),

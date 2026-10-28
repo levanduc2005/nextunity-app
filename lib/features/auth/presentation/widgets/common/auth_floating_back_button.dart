@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Nút quay lại dạng đĩa tròn mờ nổi ở góc trên bên trái các trang Xác thực
 class AuthFloatingBackButton extends StatelessWidget {
   const AuthFloatingBackButton({super.key, required this.onBack});
@@ -33,7 +34,7 @@ class AuthFloatingBackButton extends StatelessWidget {
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 18,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
               ),
             ),
           ),

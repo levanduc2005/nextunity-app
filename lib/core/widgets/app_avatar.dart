@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Circular avatar hiển thị ảnh đại diện hoặc chữ cái đầu.
@@ -62,7 +62,7 @@ class AppAvatar extends StatelessWidget {
       height: radius * 2,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isPlus ? const Color(0xFFFEF3C7) : AppColors.primaryContainer,
+        color: isPlus ? AppColors.warningContainer : AppColors.primaryContainer,
         border: Border.all(
           color: isPlus ? Colors.white : AppColors.primaryBorder,
           width: isPlus ? whiteBorderWidth : 1.5,
@@ -116,16 +116,16 @@ class AppAvatar extends StatelessWidget {
                   shape: BoxShape.circle,
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFFF59E0B),
-                      Color(0xFFFDE68A),
-                      Color(0xFFD97706),
+                      AppColors.warning,
+                      AppColors.warningBorder,
+                      AppColors.warningForeground,
                     ],
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFD97706).withValues(alpha: 0.35),
+                      color: AppColors.warningForeground.withValues(alpha: 0.35),
                       blurRadius: (6.0 * scale).clamp(5.0, 14.0),
                       offset: Offset(0, (2.0 * scale).clamp(1.5, 4.0)),
                     ),
@@ -144,7 +144,7 @@ class AppAvatar extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+                      colors: [AppColors.warning, AppColors.warningForeground],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -155,7 +155,7 @@ class AppAvatar extends StatelessWidget {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFD97706).withValues(alpha: 0.45),
+                        color: AppColors.warningForeground.withValues(alpha: 0.45),
                         blurRadius: (4.0 * scale).clamp(3.0, 7.0),
                         offset: Offset(0, (1.5 * scale).clamp(1.0, 2.5)),
                       ),
@@ -251,14 +251,14 @@ class AppAvatar extends StatelessWidget {
 
   Widget _buildFallbackInitial(String initial) {
     return Container(
-      color: isPlus ? const Color(0xFFFEF3C7) : AppColors.primaryContainer,
+      color: isPlus ? AppColors.warningContainer : AppColors.primaryContainer,
       alignment: Alignment.center,
       child: Text(
         initial,
         style: TextStyle(
           fontSize: radius * 0.7,
           fontWeight: FontWeight.w800,
-          color: isPlus ? const Color(0xFFB45309) : AppColors.primaryForeground,
+          color: isPlus ? AppColors.warningDark : AppColors.primaryForeground,
         ),
       ),
     );

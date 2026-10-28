@@ -11,7 +11,6 @@ abstract class UserEntity with _$UserEntity {
     String? university,
     String? studentId,
     String? avatarUrl,
-    @Default(0) int points,
     @Default(0) int streak,
     String? gender,
     String? genderName,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class LessonBottomBar extends StatelessWidget {
@@ -33,10 +33,10 @@ class LessonBottomBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.95),
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0F172A).withValues(alpha: 0.1),
+              color: AppColors.textPrimary.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 6),
             ),
@@ -55,9 +55,9 @@ class LessonBottomBar extends StatelessWidget {
                     child: Container(
                       height: 42,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF8FAFC),
+                        color: AppColors.surfaceLight,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +67,7 @@ class LessonBottomBar extends StatelessWidget {
                                 ? Icons.arrow_back_rounded
                                 : Icons.arrow_back_ios_new_rounded,
                             size: 16,
-                            color: const Color(0xFF475569),
+                            color: AppColors.textSecondaryDark,
                           ),
                           const SizedBox(width: 6),
                           Text(
@@ -75,7 +75,7 @@ class LessonBottomBar extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF475569),
+                              color: AppColors.textSecondaryDark,
                             ),
                           ),
                         ],
@@ -130,21 +130,22 @@ class LessonBottomBar extends StatelessWidget {
                 ),
               ),
             ] else ...[
-              // 1. Nút quay lại bài trước (Chuẩn ApSkil Icon Button)
+              // Khi là bài học thông thường: 3 nút (Bài trước - Hoàn thành - Bài tiếp theo)
+              // 1. Nút quay lại bài trước
               Tooltip(
-                message: hasPrevious ? 'Bài trước' : 'Quay lại',
+                message: hasPrevious ? 'Bài trước' : 'Đầu khóa học',
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: onTapPrevious,
+                    onTap: hasPrevious ? onTapPrevious : null,
                     borderRadius: BorderRadius.circular(14),
                     child: Container(
                       width: 42,
                       height: 42,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF8FAFC),
+                        color: AppColors.surfaceLight,
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Center(
                         child: Icon(
@@ -152,7 +153,7 @@ class LessonBottomBar extends StatelessWidget {
                               ? Icons.arrow_back_rounded
                               : Icons.arrow_back_ios_new_rounded,
                           size: 18,
-                          color: const Color(0xFF475569),
+                          color: AppColors.textSecondaryDark,
                         ),
                       ),
                     ),
@@ -176,12 +177,12 @@ class LessonBottomBar extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: isCompleted
-                            ? const Color(0xFF16A34A)
+                            ? AppColors.successVibrant
                             : AppColors.primaryContainer,
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
                           color: isCompleted
-                              ? const Color(0xFF15803D)
+                              ? AppColors.successDarkText
                               : AppColors.primaryBorder,
                         ),
                         boxShadow: isCompleted
@@ -222,7 +223,7 @@ class LessonBottomBar extends StatelessWidget {
                                 border: Border.all(
                                   color: isCompleted
                                       ? Colors.white
-                                      : const Color(0xFF166534),
+                                      : AppColors.primary,
                                   width: 1.5,
                                 ),
                               ),
@@ -231,7 +232,7 @@ class LessonBottomBar extends StatelessWidget {
                                       child: Icon(
                                         Icons.check_rounded,
                                         size: 12,
-                                        color: Color(0xFF15803D),
+                                        color: AppColors.successDarkText,
                                       ),
                                     )
                                   : null,
@@ -247,7 +248,7 @@ class LessonBottomBar extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                                 color: isCompleted
                                     ? Colors.white
-                                    : const Color(0xFF166534),
+                                    : AppColors.primaryForeground,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

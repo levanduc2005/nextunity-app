@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class VietQrDisplayCard extends StatelessWidget {
@@ -18,7 +18,7 @@ class VietQrDisplayCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -44,7 +44,7 @@ class VietQrDisplayCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ],
@@ -53,7 +53,7 @@ class VietQrDisplayCard extends StatelessWidget {
                 'Khớp lệnh 24/7',
                 style: TextStyle(
                   fontSize: 10,
-                  color: Color(0xFF059669),
+                  color: AppColors.successDark,
                   fontWeight: FontWeight.w700,
                 ),
               ),

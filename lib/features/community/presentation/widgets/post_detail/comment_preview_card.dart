@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 
@@ -10,7 +10,6 @@ class CommentPreviewCard extends StatelessWidget {
     required this.authorName,
     required this.formattedTime,
     this.authorAvatar,
-    this.authorBadge,
     required this.commentContent,
   });
 
@@ -18,7 +17,6 @@ class CommentPreviewCard extends StatelessWidget {
   final String authorName;
   final String formattedTime;
   final String? authorAvatar;
-  final String? authorBadge;
   final String commentContent;
 
   @override
@@ -57,7 +55,7 @@ class CommentPreviewCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     const SizedBox(width: 6),
@@ -65,31 +63,10 @@ class CommentPreviewCard extends StatelessWidget {
                       formattedTime,
                       style: const TextStyle(
                         fontSize: 11,
-                        color: Color(0xFF94A3B8),
+                        color: AppColors.textMuted,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    if (authorBadge != null) ...[
-                      const SizedBox(width: 6),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 1,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE2E8F0),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          authorBadge!,
-                          style: const TextStyle(
-                            fontSize: 9.5,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF475569),
-                          ),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -100,7 +77,7 @@ class CommentPreviewCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF1E293B),
+                    color: AppColors.textDark,
                     height: 1.4,
                   ),
                 ),

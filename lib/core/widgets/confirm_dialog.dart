@@ -67,13 +67,13 @@ class _NextUnityConfirmDialog extends StatelessWidget {
         (isDestructive ? Icons.logout_rounded : Icons.help_outline_rounded);
 
     final primaryActionColor = isDestructive
-        ? const Color(0xFFDC2626)
+        ? AppColors.errorForeground
         : AppColors.primary;
     final outerRingColor = isDestructive
-        ? const Color(0xFFFEF2F2)
+        ? AppColors.errorSurfaceLight
         : AppColors.primaryContainer;
     final innerRingColor = isDestructive
-        ? const Color(0xFFFEE2E2)
+        ? AppColors.errorContainer
         : AppColors.primaryBorder;
 
     return Center(
@@ -86,7 +86,7 @@ class _NextUnityConfirmDialog extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: const Color(0xFFF1F5F9), width: 1.5),
+            border: Border.all(color: AppColors.surfaceSubtle, width: 1.5),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.12),
@@ -137,7 +137,7 @@ class _NextUnityConfirmDialog extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.3,
                 ),
               ),
@@ -151,7 +151,7 @@ class _NextUnityConfirmDialog extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   height: 1.45,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
               ),
 
@@ -166,8 +166,8 @@ class _NextUnityConfirmDialog extends StatelessWidget {
                       height: 46,
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF8FAFC),
-                          side: const BorderSide(color: Color(0xFFE2E8F0)),
+                          backgroundColor: AppColors.surfaceLight,
+                          side: const BorderSide(color: AppColors.border),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
@@ -179,7 +179,7 @@ class _NextUnityConfirmDialog extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 14.5,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF475569),
+                            color: AppColors.textSecondaryDark,
                           ),
                         ),
                       ),

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/syllabus_module_item.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class CourseSyllabusTabView extends StatelessWidget {
   const CourseSyllabusTabView({
     super.key,
@@ -34,7 +35,7 @@ class CourseSyllabusTabView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.3,
                 ),
                 maxLines: 1,
@@ -47,7 +48,7 @@ class CourseSyllabusTabView extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
             ),
           ],
@@ -60,14 +61,14 @@ class CourseSyllabusTabView extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: const Center(
               child: Text(
                 'Đang cập nhật lộ trình bài học...',
                 style: TextStyle(
                   fontSize: 13,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
               ),

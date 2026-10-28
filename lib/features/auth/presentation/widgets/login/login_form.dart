@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -48,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
             prefixIcon: const Icon(
               Icons.mail_outline_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -80,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -95,14 +95,14 @@ class _LoginFormState extends State<LoginForm> {
             prefixIcon: const Icon(
               Icons.lock_outline_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscurePassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF94A3B8),
+                color: AppColors.textMuted,
                 size: 19,
               ),
               onPressed: () {

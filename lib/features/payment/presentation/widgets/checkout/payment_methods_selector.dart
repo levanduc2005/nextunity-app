@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/payment/presentation/constants/supported_banks.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/bank_app_grid.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/payment_method_option_card.dart';
 import 'package:rental_car/features/payment/presentation/widgets/checkout/vietqr_display_card.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Bộ chọn phương thức thanh toán: Mở app ngân hàng (Option 1) hoặc Quét mã VietQR (Option 2)
 class PaymentMethodsSelector extends StatelessWidget {
   const PaymentMethodsSelector({
@@ -37,7 +38,7 @@ class PaymentMethodsSelector extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 10),

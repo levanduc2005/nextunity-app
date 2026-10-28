@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Phân loại thông báo Toast / SnackBar
@@ -96,25 +96,25 @@ class _AppToastContent extends StatelessWidget {
         AppColors.successDark,
         const Color(0xFFD1FAE5),
         AppColors.successBorder,
-        const Color(0xFFF0FDF4),
+        AppColors.successSurfaceLight,
       ),
       SnackType.error => (
         Icons.error_rounded,
         AppColors.errorForeground,
         AppColors.errorContainer,
         AppColors.errorBorder,
-        const Color(0xFFFEF2F2),
+        AppColors.errorSurfaceLight,
       ),
       SnackType.warning => (
         Icons.warning_amber_rounded,
         AppColors.warningForeground,
         AppColors.warningContainer,
         AppColors.warningBorder,
-        const Color(0xFFFFFBEB),
+        AppColors.warningLight,
       ),
       SnackType.info => (
         Icons.info_rounded,
-        const Color(0xFF2563EB),
+        AppColors.primaryAction,
         const Color(0xFFDBEAFE),
         AppColors.primaryBorder,
         AppColors.primaryContainer,

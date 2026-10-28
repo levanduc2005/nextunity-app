@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Thẻ hiển thị kết quả kiểm tra (ĐẠT / CHƯA ĐẠT) thay thế cho quy chế khi học viên đã từng nộp bài
 class LessonAssessmentResultBox extends StatelessWidget {
   const LessonAssessmentResultBox({
@@ -20,14 +21,14 @@ class LessonAssessmentResultBox extends StatelessWidget {
     final int diffNeeded = (roundedTarget - roundedScore).clamp(0, 100);
 
     final statusColor = isPassed
-        ? const Color(0xFF059669)
-        : const Color(0xFFDC2626);
+        ? AppColors.successDark
+        : AppColors.errorForeground;
     final bgColor = isPassed
         ? const Color(0xFFECFDF5)
-        : const Color(0xFFFEF2F2);
+        : AppColors.errorSurfaceLight;
     final borderColor = isPassed
-        ? const Color(0xFFA7F3D0)
-        : const Color(0xFFFECACA);
+        ? AppColors.successBorder
+        : AppColors.errorBorder;
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -48,7 +49,7 @@ class LessonAssessmentResultBox extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isPassed
                       ? const Color(0xFFD1FAE5)
-                      : const Color(0xFFFEE2E2),
+                      : AppColors.errorContainer,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
@@ -73,7 +74,7 @@ class LessonAssessmentResultBox extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         color: isPassed
                             ? const Color(0xFF047857)
-                            : const Color(0xFFB91C1C),
+                            : AppColors.errorDark,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -125,7 +126,7 @@ class LessonAssessmentResultBox extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 9.5,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -144,7 +145,7 @@ class LessonAssessmentResultBox extends StatelessWidget {
               border: Border.all(
                 color: isPassed
                     ? const Color(0xFF6EE7B7)
-                    : const Color(0xFFFCA5A5),
+                    : AppColors.errorBorderLight,
               ),
             ),
             child: Row(
@@ -171,14 +172,14 @@ class LessonAssessmentResultBox extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF475569),
+                              color: AppColors.textSecondaryDark,
                             ),
                             children: [
                               TextSpan(
                                 text: '≥ $roundedTarget%',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFFDC2626),
+                                  color: AppColors.errorForeground,
                                 ),
                               ),
                               if (diffNeeded > 0)

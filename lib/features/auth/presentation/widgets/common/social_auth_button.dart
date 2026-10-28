@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Nút đăng nhập qua mạng xã hội (Facebook, Google, Apple) thiết kế chuẩn theo HTML.
 class SocialAuthButton extends StatelessWidget {
   final Widget icon;
@@ -29,10 +30,10 @@ class SocialAuthButton extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFE2E8F0), width: 1.2),
+            border: Border.all(color: AppColors.border, width: 1.2),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                color: AppColors.textPrimary.withValues(alpha: 0.03),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),

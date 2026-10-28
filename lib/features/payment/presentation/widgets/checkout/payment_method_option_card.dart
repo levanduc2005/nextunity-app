@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class PaymentMethodOptionCard extends StatelessWidget {
@@ -27,7 +27,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
+          color: isSelected ? AppColors.primary : AppColors.border,
           width: isSelected ? 2 : 1,
         ),
         boxShadow: [
@@ -63,7 +63,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
-                              : const Color(0xFFCBD5E1),
+                              : AppColors.borderMedium,
                           width: 2,
                         ),
                       ),
@@ -90,7 +90,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
                                 style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF0F172A),
+                                  color: AppColors.textPrimary,
                                 ),
                               ),
                               const SizedBox(width: 6),
@@ -100,10 +100,10 @@ class PaymentMethodOptionCard extends StatelessWidget {
                                   vertical: 1.5,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFEFF6FF),
+                                  color: AppColors.primaryContainer,
                                   borderRadius: BorderRadius.circular(4),
                                   border: Border.all(
-                                    color: const Color(0xFFBFDBFE),
+                                    color: AppColors.primaryBorder,
                                   ),
                                 ),
                                 child: Text(
@@ -111,7 +111,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 9,
                                     fontWeight: FontWeight.w800,
-                                    color: Color(0xFF1D4ED8),
+                                    color: AppColors.primaryForeground,
                                   ),
                                 ),
                               ),
@@ -122,7 +122,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
                             subtitle,
                             style: const TextStyle(
                               fontSize: 11,
-                              color: Color(0xFF64748B),
+                              color: AppColors.textSecondary,
                             ),
                           ),
                         ],
@@ -131,7 +131,7 @@ class PaymentMethodOptionCard extends StatelessWidget {
                   ],
                 ),
                 if (isSelected) ...[
-                  const Divider(height: 20, color: Color(0xFFF1F5F9)),
+                  const Divider(height: 20, color: AppColors.surfaceSubtle),
                   child,
                 ],
               ],

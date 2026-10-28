@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
@@ -115,7 +115,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
                 const Icon(
                   Icons.error_outline_rounded,
                   size: 48,
-                  color: Color(0xFFEF4444),
+                  color: AppColors.error,
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -123,7 +123,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -157,7 +157,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
         body: const Center(
           child: Text(
             'Bài kiểm tra chưa có câu hỏi nào.',
-            style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
           ),
         ),
       );
@@ -203,7 +203,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
       surfaceTintColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-        color: const Color(0xFF0F172A),
+        color: AppColors.textPrimary,
         onPressed: () => context.pop(),
       ),
       title: Text(
@@ -211,7 +211,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w800,
-          color: Color(0xFF0F172A),
+          color: AppColors.textPrimary,
         ),
       ),
       centerTitle: true,
@@ -228,7 +228,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
     final selectedIds = state.selectedOptionIds[question.id] ?? [];
 
     return Container(
-      color: const Color(0xFF1E3A8A),
+      color: AppColors.primaryDark,
       child: SafeArea(
         bottom: false,
         child: Column(

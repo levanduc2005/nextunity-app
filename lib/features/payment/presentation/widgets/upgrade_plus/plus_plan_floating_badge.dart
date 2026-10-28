@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Huy hiệu nổi góc trên bên phải thẻ gói cước (ví dụ: Phổ biến nhất)
 class PlusPlanFloatingBadge extends StatelessWidget {
   const PlusPlanFloatingBadge({
@@ -21,15 +22,15 @@ class PlusPlanFloatingBadge extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: isSelected
               ? const LinearGradient(
-                  colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+                  colors: [AppColors.warning, AppColors.warningForeground],
                 )
               : null,
-          color: isSelected ? null : const Color(0xFF475569),
+          color: isSelected ? null : AppColors.textSecondaryDark,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? const Color(0xFFF59E0B).withValues(alpha: 0.38)
+                  ? AppColors.warning.withValues(alpha: 0.38)
                   : Colors.black26,
               blurRadius: 4,
               offset: const Offset(0, 1),

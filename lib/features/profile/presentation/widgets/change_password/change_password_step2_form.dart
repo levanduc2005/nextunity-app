@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/presentation/widgets/change_password/password_criteria_box.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_text_field.dart';
@@ -72,7 +72,7 @@ class ChangePasswordStep2Form extends StatelessWidget {
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
               letterSpacing: -0.3,
             ),
           ),
@@ -82,7 +82,7 @@ class ChangePasswordStep2Form extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.5,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
               height: 1.4,
             ),
           ),
@@ -142,7 +142,7 @@ class ChangePasswordStep2Form extends StatelessWidget {
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    side: const BorderSide(color: Color(0xFFCBD5E1)),
+                    side: const BorderSide(color: AppColors.borderMedium),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -153,7 +153,7 @@ class ChangePasswordStep2Form extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ),

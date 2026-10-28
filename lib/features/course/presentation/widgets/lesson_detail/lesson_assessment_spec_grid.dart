@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 
@@ -17,7 +17,7 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
             Expanded(
               child: _buildBentoSpecCard(
                 icon: Icons.assignment_outlined,
-                iconBg: const Color(0xFFEFF6FF),
+                iconBg: AppColors.primaryContainer,
                 iconColor: AppColors.primary,
                 label: 'Hình thức thi',
                 value: 'Trắc nghiệm',
@@ -28,8 +28,8 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
             Expanded(
               child: _buildBentoSpecCard(
                 icon: Icons.timer_outlined,
-                iconBg: const Color(0xFFFEF3C7),
-                iconColor: const Color(0xFFD97706),
+                iconBg: AppColors.warningContainer,
+                iconColor: AppColors.warningForeground,
                 label: 'Thời lượng',
                 value: '${lesson.estimatedMinutes} phút',
                 subText: 'Ước tính hoàn thành',
@@ -44,7 +44,7 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
               child: _buildBentoSpecCard(
                 icon: Icons.verified_outlined,
                 iconBg: const Color(0xFFECFDF5),
-                iconColor: const Color(0xFF059669),
+                iconColor: AppColors.successDark,
                 label: 'Chuẩn đầu ra',
                 value: '80% Đạt',
                 subText: '8.0/10 điểm trở lên',
@@ -78,9 +78,9 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +103,7 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -117,7 +117,7 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -127,7 +127,7 @@ class LessonAssessmentSpecGrid extends StatelessWidget {
             subText,
             style: const TextStyle(
               fontSize: 10,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
               fontWeight: FontWeight.w500,
             ),
             maxLines: 1,

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_text_field.dart';
 import 'package:rental_car/features/auth/presentation/widgets/decorations/envelope_illustration.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Bước 1 của Quên mật khẩu: Nhập email để nhận mã xác thực.
 class ForgotPasswordEmailStep extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -32,7 +33,7 @@ class ForgotPasswordEmailStep extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -42,7 +43,7 @@ class ForgotPasswordEmailStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 13.5,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -57,7 +58,7 @@ class ForgotPasswordEmailStep extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF334155),
+                  color: AppColors.textLabel,
                 ),
               ),
               const SizedBox(height: 7),
@@ -67,7 +68,7 @@ class ForgotPasswordEmailStep extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 prefixIcon: const Icon(
                   Icons.mail_outline_rounded,
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textMuted,
                   size: 20,
                 ),
                 validator: (val) {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
@@ -63,7 +63,7 @@ class ProfileDetailView extends StatelessWidget {
                 border: Border.all(color: Colors.white, width: 1.5),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF183A78).withValues(alpha: 0.08),
+                    color: AppColors.navySurface.withValues(alpha: 0.08),
                     blurRadius: 24,
                     offset: const Offset(0, 8),
                   ),

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Widget vẽ cây bút bi xanh bóng thực tế (Realistic Stationery Pen).
 class RealisticPenWidget extends StatelessWidget {
   final double width;
@@ -46,7 +47,7 @@ class _PenPainter extends CustomPainter {
     // 1. Nút bấm trên cùng & Khuyên bạc (Top Clicker)
     final clickerPaint = Paint()
       ..shader = const LinearGradient(
-        colors: [Color(0xFFCBD5E1), Color(0xFFFFFFFF), Color(0xFF94A3B8)],
+        colors: [AppColors.borderMedium, Color(0xFFFFFFFF), AppColors.textMuted],
       ).createShader(Rect.fromLTWH(centerX - 5, 0, 10, h * 0.06));
     canvas.drawRRect(
       RRect.fromRectAndRadius(
@@ -59,7 +60,7 @@ class _PenPainter extends CustomPainter {
     // 2. Vòng kim loại trên (Upper metallic ring)
     final ringPaint = Paint()
       ..shader = const LinearGradient(
-        colors: [Color(0xFFCBD5E1), Color(0xFFFFFFFF), Color(0xFF64748B)],
+        colors: [AppColors.borderMedium, Color(0xFFFFFFFF), AppColors.textSecondary],
       ).createShader(Rect.fromLTWH(centerX - 8, h * 0.06, 16, h * 0.03));
     canvas.drawRect(
       Rect.fromLTWH(centerX - 8, h * 0.06, 16, h * 0.03),
@@ -71,11 +72,11 @@ class _PenPainter extends CustomPainter {
     final barrelPaint = Paint()
       ..shader = const LinearGradient(
         colors: [
-          Color(0xFF1E3A8A),
-          Color(0xFF2563EB),
-          Color(0xFF60A5FA),
-          Color(0xFF1D4ED8),
-          Color(0xFF0F172A),
+          AppColors.primaryDark,
+          AppColors.primaryAction,
+          AppColors.primaryLight,
+          AppColors.primaryForeground,
+          AppColors.textPrimary,
         ],
         stops: [0.0, 0.25, 0.45, 0.75, 1.0],
       ).createShader(barrelRect);
@@ -111,9 +112,9 @@ class _PenPainter extends CustomPainter {
       ..shader = const LinearGradient(
         colors: [
           Color(0xFF172554),
-          Color(0xFF1D4ED8),
-          Color(0xFF3B82F6),
-          Color(0xFF1E3A8A),
+          AppColors.primaryForeground,
+          AppColors.info,
+          AppColors.primaryDark,
         ],
         stops: [0.0, 0.3, 0.6, 1.0],
       ).createShader(gripRect);
@@ -128,12 +129,12 @@ class _PenPainter extends CustomPainter {
       ..close();
     final conePaint = Paint()
       ..shader = const LinearGradient(
-        colors: [Color(0xFFCBD5E1), Color(0xFFFFFFFF), Color(0xFF64748B)],
+        colors: [AppColors.borderMedium, Color(0xFFFFFFFF), AppColors.textSecondary],
       ).createShader(Rect.fromLTWH(centerX - 7.5, h * 0.845, 15, h * 0.105));
     canvas.drawPath(conePath, conePaint);
 
     // 8. Đầu bi viết (Ballpoint tip)
-    final ballpointPaint = Paint()..color = const Color(0xFF1E293B);
+    final ballpointPaint = Paint()..color = AppColors.textDark;
     canvas.drawCircle(Offset(centerX, h * 0.965), 2.0, ballpointPaint);
 
     // 9. Cài bút (Pen Clip - Metallic Silver)
@@ -145,7 +146,7 @@ class _PenPainter extends CustomPainter {
       ..close();
     final clipPaint = Paint()
       ..shader = const LinearGradient(
-        colors: [Color(0xFFE2E8F0), Color(0xFFFFFFFF), Color(0xFF94A3B8)],
+        colors: [AppColors.border, Color(0xFFFFFFFF), AppColors.textMuted],
       ).createShader(Rect.fromLTWH(centerX - 13, h * 0.05, 5, h * 0.35));
     canvas.drawPath(clipPath, clipPaint);
   }

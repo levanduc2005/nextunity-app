@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Modal bottom sheet quản lý gói NextUnity PLUS của người dùng
 void showProfileSubscriptionManageModal(
   BuildContext context,
@@ -34,7 +35,7 @@ void showProfileSubscriptionManageModal(
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: AppColors.borderMedium,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -48,12 +49,12 @@ void showProfileSubscriptionManageModal(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+                      colors: [AppColors.warning, AppColors.warningForeground],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFD97706).withValues(alpha: 0.3),
+                        color: AppColors.warningForeground.withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -75,7 +76,7 @@ void showProfileSubscriptionManageModal(
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       SizedBox(height: 2),
@@ -84,7 +85,7 @@ void showProfileSubscriptionManageModal(
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -99,12 +100,12 @@ void showProfileSubscriptionManageModal(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFFFFBEB), Color(0xFFFEF3C7)],
+                  colors: [AppColors.warningLight, AppColors.warningContainer],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFFDE68A)),
+                border: Border.all(color: AppColors.warningBorder),
               ),
               child: Column(
                 children: [
@@ -125,7 +126,7 @@ void showProfileSubscriptionManageModal(
                           vertical: 3,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDCFCE7),
+                          color: AppColors.successContainer,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFF86EFAC)),
                         ),
@@ -135,7 +136,7 @@ void showProfileSubscriptionManageModal(
                             Icon(
                               Icons.check_circle_rounded,
                               size: 12,
-                              color: Color(0xFF16A34A),
+                              color: AppColors.successVibrant,
                             ),
                             SizedBox(width: 4),
                             Text(
@@ -143,7 +144,7 @@ void showProfileSubscriptionManageModal(
                               style: TextStyle(
                                 fontSize: 10.5,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF15803D),
+                                color: AppColors.successDarkText,
                               ),
                             ),
                           ],
@@ -151,7 +152,7 @@ void showProfileSubscriptionManageModal(
                       ),
                     ],
                   ),
-                  const Divider(height: 20, color: Color(0xFFFDE68A)),
+                  const Divider(height: 20, color: AppColors.warningBorder),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -182,9 +183,9 @@ void showProfileSubscriptionManageModal(
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: AppColors.surfaceLight,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +195,7 @@ void showProfileSubscriptionManageModal(
                     style: TextStyle(
                       fontSize: 11.5,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF334155),
+                      color: AppColors.textLabel,
                     ),
                   ),
                   SizedBox(height: 8),
@@ -215,7 +216,7 @@ void showProfileSubscriptionManageModal(
             // Nút gia hạn thêm
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF59E0B),
+                backgroundColor: AppColors.warning,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 13),
                 shape: RoundedRectangleBorder(
@@ -243,7 +244,7 @@ void showProfileSubscriptionManageModal(
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ),
@@ -266,7 +267,7 @@ class _BenefitItemRow extends StatelessWidget {
         const Icon(
           Icons.check_circle_rounded,
           size: 14,
-          color: Color(0xFF10B981),
+          color: AppColors.success,
         ),
         const SizedBox(width: 6),
         Expanded(
@@ -275,7 +276,7 @@ class _BenefitItemRow extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF475569),
+              color: AppColors.textSecondaryDark,
             ),
           ),
         ),

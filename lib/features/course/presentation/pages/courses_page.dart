@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
@@ -123,7 +123,7 @@ class CoursesPage extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 13.5,
                                 fontWeight: FontWeight.w900,
-                                color: Color(0xFF0F172A),
+                                color: AppColors.textPrimary,
                                 letterSpacing: -0.2,
                               ),
                             ),
@@ -134,7 +134,7 @@ class CoursesPage extends ConsumerWidget {
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -97,7 +97,7 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
                   const Icon(
                     Icons.error_outline_rounded,
                     size: 48,
-                    color: Color(0xFFEF4444),
+                    color: AppColors.error,
                   ),
                   const SizedBox(height: 12),
                   Text(
@@ -105,7 +105,7 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

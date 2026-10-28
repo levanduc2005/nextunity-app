@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rental_car/features/quiz/domain/entities/quiz_result_entity.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class SubmissionScoreBanner extends StatelessWidget {
   const SubmissionScoreBanner({super.key, required this.submission});
 
@@ -26,12 +27,12 @@ class SubmissionScoreBanner extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isPassed ? const Color(0xFFA7F3D0) : const Color(0xFFFECDD3),
+          color: isPassed ? AppColors.successBorder : AppColors.expiredBorder,
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 18,
             offset: const Offset(0, 4),
           ),
@@ -44,13 +45,13 @@ class SubmissionScoreBanner extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             decoration: BoxDecoration(
               color: isPassed
-                  ? const Color(0xFFDCFCE7)
-                  : const Color(0xFFFEE2E2),
+                  ? AppColors.successContainer
+                  : AppColors.errorContainer,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: isPassed
                     ? const Color(0xFF86EFAC)
-                    : const Color(0xFFFCA5A5),
+                    : AppColors.errorBorderLight,
               ),
             ),
             child: Row(
@@ -60,8 +61,8 @@ class SubmissionScoreBanner extends StatelessWidget {
                   isPassed ? Icons.check_circle_rounded : Icons.cancel_rounded,
                   size: 15,
                   color: isPassed
-                      ? const Color(0xFF16A34A)
-                      : const Color(0xFFEF4444),
+                      ? AppColors.successVibrant
+                      : AppColors.error,
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -70,8 +71,8 @@ class SubmissionScoreBanner extends StatelessWidget {
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
                     color: isPassed
-                        ? const Color(0xFF15803D)
-                        : const Color(0xFFB91C1C),
+                        ? AppColors.successDarkText
+                        : AppColors.errorDark,
                     letterSpacing: 0.4,
                   ),
                 ),
@@ -87,8 +88,8 @@ class SubmissionScoreBanner extends StatelessWidget {
               fontSize: 54,
               fontWeight: FontWeight.w900,
               color: isPassed
-                  ? const Color(0xFF059669)
-                  : const Color(0xFFDC2626),
+                  ? AppColors.successDark
+                  : AppColors.errorForeground,
               letterSpacing: -1.5,
             ),
           ),
@@ -102,7 +103,7 @@ class SubmissionScoreBanner extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: isPassed
                   ? const Color(0xFF047857)
-                  : const Color(0xFFB91C1C),
+                  : AppColors.errorDark,
             ),
             textAlign: TextAlign.center,
           ),
@@ -112,9 +113,9 @@ class SubmissionScoreBanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: AppColors.surfaceLight,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -123,7 +124,7 @@ class SubmissionScoreBanner extends StatelessWidget {
                   label: 'Số câu đúng',
                   value: '$correctCount/$totalQuestions câu',
                 ),
-                Container(width: 1, height: 26, color: const Color(0xFFE2E8F0)),
+                Container(width: 1, height: 26, color: AppColors.border),
                 _buildHeroStatItem(
                   label: 'Điểm số',
                   value:
@@ -137,7 +138,7 @@ class SubmissionScoreBanner extends StatelessWidget {
             'Thời gian nộp: $dateFormatted',
             style: const TextStyle(
               fontSize: 11,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -154,7 +155,7 @@ class SubmissionScoreBanner extends StatelessWidget {
           label,
           style: const TextStyle(
             fontSize: 11,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -164,7 +165,7 @@ class SubmissionScoreBanner extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
           ),
         ),
       ],

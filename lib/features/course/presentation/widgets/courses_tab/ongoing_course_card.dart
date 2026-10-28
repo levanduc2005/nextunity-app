@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/enrollment_entity.dart';
 
@@ -33,10 +33,10 @@ class OngoingCourseCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+              color: AppColors.textPrimary.withValues(alpha: 0.04),
               blurRadius: 10,
               offset: const Offset(0, 3),
             ),
@@ -101,7 +101,7 @@ class OngoingCourseCard extends StatelessWidget {
                                 vertical: 1.5,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFDCFCE7),
+                                color: AppColors.successContainer,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: const Row(
@@ -110,15 +110,15 @@ class OngoingCourseCard extends StatelessWidget {
                                   Icon(
                                     Icons.check_circle_rounded,
                                     size: 10,
-                                    color: Color(0xFF16A34A),
+                                    color: AppColors.successVibrant,
                                   ),
                                   SizedBox(width: 2),
                                   Text(
                                     'Hoàn thành',
                                     style: TextStyle(
                                       fontSize: 9,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFF166534),
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.successForeground,
                                     ),
                                   ),
                                 ],
@@ -129,12 +129,14 @@ class OngoingCourseCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        enrollment.courseTitle,
+                        enrollment.courseTitle.isNotEmpty
+                            ? enrollment.courseTitle
+                            : 'Khóa học FPT',
                         style: const TextStyle(
-                          fontSize: 12.5,
+                          fontSize: 13,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
-                          height: 1.2,
+                          color: AppColors.textPrimary,
+                          height: 1.25,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -166,7 +168,7 @@ class OngoingCourseCard extends StatelessWidget {
                           height: 6,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFE2E8F0),
+                            color: AppColors.border,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -175,7 +177,17 @@ class OngoingCourseCard extends StatelessWidget {
                           height: 6,
                           width: activeWidth,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF10B981),
+                            color: isCompleted
+                                ? AppColors.success
+                                : AppColors.primary,
+                            gradient: !isCompleted
+                                ? const LinearGradient(
+                                    colors: [
+                                      AppColors.primary,
+                                      AppColors.accent,
+                                    ],
+                                  )
+                                : null,
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
@@ -187,7 +199,9 @@ class OngoingCourseCard extends StatelessWidget {
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                color: const Color(0xFF059669),
+                                color: isCompleted
+                                    ? AppColors.successDark
+                                    : AppColors.accent,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.white,
@@ -195,7 +209,10 @@ class OngoingCourseCard extends StatelessWidget {
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.15),
+                                    color: (isCompleted
+                                            ? AppColors.success
+                                            : AppColors.primary)
+                                        .withValues(alpha: 0.35),
                                     blurRadius: 3,
                                   ),
                                 ],
@@ -217,10 +234,12 @@ class OngoingCourseCard extends StatelessWidget {
                         isCompleted
                             ? 'Đã hoàn thành'
                             : '$completedCount bài đã học',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10.5,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF059669),
+                          color: isCompleted
+                              ? AppColors.successDarkText
+                              : AppColors.primaryForeground,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -232,7 +251,7 @@ class OngoingCourseCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -245,7 +264,7 @@ class OngoingCourseCard extends StatelessWidget {
               '${enrollment.courseDifficultyName ?? enrollment.courseDifficulty} • ${enrollment.instructorName ?? "Ban Đào Tạo FPT"}',
               style: const TextStyle(
                 fontSize: 10,
-                color: Color(0xFF94A3B8),
+                color: AppColors.textMuted,
                 fontWeight: FontWeight.w500,
               ),
               maxLines: 1,
@@ -259,7 +278,7 @@ class OngoingCourseCard extends StatelessWidget {
 
   Widget _buildFallbackThumbnail(String code) {
     return Container(
-      color: const Color(0xFF1E3A8A),
+      color: AppColors.primaryDark,
       child: Center(
         child: Text(
           code,

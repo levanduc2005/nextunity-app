@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
@@ -42,7 +42,7 @@ class PostCardHeader extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -76,27 +76,27 @@ class PostCardHeader extends StatelessWidget {
                         post.authorUniversity ?? 'FPT University',
                         style: const TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const Text(
                       ' • ',
-                      style: TextStyle(fontSize: 11, color: Color(0xFF94A3B8)),
+                      style: TextStyle(fontSize: 11, color: AppColors.textMuted),
                     ),
                     Text(
                       post.formattedTime,
                       style: const TextStyle(
                         fontSize: 11,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     const Gap.h(3),
                     const Icon(
                       Icons.public_rounded,
                       size: 12,
-                      color: Color(0xFF94A3B8),
+                      color: AppColors.textMuted,
                     ),
                   ],
                 ),
@@ -106,7 +106,7 @@ class PostCardHeader extends StatelessWidget {
           IconButton(
             icon: const Icon(
               Icons.more_horiz_rounded,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
               size: 20,
             ),
             onPressed: onOptionsPressed,

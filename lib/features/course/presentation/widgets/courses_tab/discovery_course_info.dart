@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 
@@ -48,17 +48,28 @@ class DiscoveryCourseInfo extends StatelessWidget {
                   vertical: 1.5,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFECFDF5),
+                  color: AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: const Color(0xFFA7F3D0)),
+                  border: Border.all(color: AppColors.primaryBorder),
                 ),
-                child: const Text(
-                  'Đã đăng ký',
-                  style: TextStyle(
-                    fontSize: 9.5,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF059669),
-                  ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.check_rounded,
+                      size: 11,
+                      color: AppColors.primaryForeground,
+                    ),
+                    SizedBox(width: 2.5),
+                    Text(
+                      'Đã đăng ký',
+                      style: TextStyle(
+                        fontSize: 9.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryForeground,
+                      ),
+                    ),
+                  ],
                 ),
               )
             else if (course.categoryName != null)
@@ -67,7 +78,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                   course.categoryName!,
                   style: const TextStyle(
                     fontSize: 10.5,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                   maxLines: 1,
@@ -85,7 +96,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             height: 1.25,
           ),
           maxLines: 2,
@@ -100,7 +111,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
             const Icon(
               Icons.person_outline_rounded,
               size: 12,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
             ),
             const SizedBox(width: 3),
             Expanded(
@@ -108,7 +119,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                 course.creatorName ?? 'Ban Đào Tạo FPT',
                 style: const TextStyle(
                   fontSize: 10.5,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,
@@ -130,7 +141,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                 const Icon(
                   Icons.auto_stories_outlined,
                   size: 13,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -140,7 +151,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -148,12 +159,21 @@ class DiscoveryCourseInfo extends StatelessWidget {
 
             // Action button
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5.5),
               decoration: BoxDecoration(
                 color: isEnrolled
-                    ? AppColors.primaryContainer
-                    : const Color(0xFFF1F5F9),
+                    ? AppColors.primary
+                    : AppColors.surfaceSubtle,
                 borderRadius: BorderRadius.circular(8),
+                boxShadow: isEnrolled
+                    ? [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.25),
+                          blurRadius: 4,
+                          offset: const Offset(0, 1.5),
+                        ),
+                      ]
+                    : null,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -164,7 +184,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
                       color: isEnrolled
-                          ? const Color(0xFF059669)
+                          ? Colors.white
                           : AppColors.primary,
                     ),
                   ),
@@ -173,7 +193,7 @@ class DiscoveryCourseInfo extends StatelessWidget {
                     Icons.arrow_forward_rounded,
                     size: 12,
                     color: isEnrolled
-                        ? const Color(0xFF059669)
+                        ? Colors.white
                         : AppColors.primary,
                   ),
                 ],

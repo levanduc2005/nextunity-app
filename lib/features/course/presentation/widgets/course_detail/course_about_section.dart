@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 
@@ -31,7 +31,7 @@ class CourseAboutSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.3,
           ),
         ),
@@ -42,7 +42,7 @@ class CourseAboutSection extends StatelessWidget {
           style: const TextStyle(
             fontSize: 13,
             height: 1.6,
-            color: Color(0xFF475569),
+            color: AppColors.textSecondaryDark,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -52,9 +52,9 @@ class CourseAboutSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
+            color: AppColors.surfaceLight,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Column(
             children: [
@@ -66,7 +66,7 @@ class CourseAboutSection extends StatelessWidget {
               const Divider(
                 height: 16,
                 thickness: 0.8,
-                color: Color(0xFFE2E8F0),
+                color: AppColors.border,
               ),
               _buildInfoRow(
                 icon: Icons.category_outlined,
@@ -76,7 +76,7 @@ class CourseAboutSection extends StatelessWidget {
               const Divider(
                 height: 16,
                 thickness: 0.8,
-                color: Color(0xFFE2E8F0),
+                color: AppColors.border,
               ),
               _buildInfoRow(
                 icon: Icons.signal_cellular_alt_rounded,
@@ -92,7 +92,7 @@ class CourseAboutSection extends StatelessWidget {
               const Divider(
                 height: 16,
                 thickness: 0.8,
-                color: Color(0xFFE2E8F0),
+                color: AppColors.border,
               ),
               _buildInfoRow(
                 icon: Icons.auto_stories_outlined,
@@ -112,7 +112,7 @@ class CourseAboutSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 10),
@@ -122,10 +122,10 @@ class CourseAboutSection extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                  color: AppColors.textPrimary.withValues(alpha: 0.03),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -168,7 +168,7 @@ class CourseAboutSection extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF0F172A),
+                                color: AppColors.textPrimary,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -188,7 +188,7 @@ class CourseAboutSection extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -211,14 +211,14 @@ class CourseAboutSection extends StatelessWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: const Color(0xFF64748B)),
+        Icon(icon, size: 16, color: AppColors.textSecondary),
         const SizedBox(width: 8),
         Text(
           label,
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
           ),
         ),
         const Spacer(),
@@ -228,7 +228,7 @@ class CourseAboutSection extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
             textAlign: TextAlign.end,
             maxLines: 1,

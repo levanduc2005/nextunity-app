@@ -1,6 +1,7 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Widget ghim bấm 3D màu đỏ (Red 3D Pushpin).
 class PushPinWidget extends StatelessWidget {
   final double size;
@@ -80,7 +81,7 @@ class RedPaperclipPainter extends CustomPainter {
   final double strokeWidth;
 
   const RedPaperclipPainter({
-    this.color = const Color(0xFFDC2626),
+    this.color = AppColors.errorForeground,
     this.strokeWidth = 2.4,
   });
 
@@ -173,7 +174,7 @@ class TornStickyNoteWidget extends StatelessWidget {
                     fontFamily: 'Caveat',
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1E293B),
+                    color: AppColors.textDark,
                     height: 1.1,
                   ),
                 ),

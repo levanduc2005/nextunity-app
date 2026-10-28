@@ -118,7 +118,7 @@ class MainTabHeader extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF64748B),
+                                color: AppColors.textSecondary,
                                 letterSpacing: -0.2,
                               ),
                             ),
@@ -130,7 +130,7 @@ class MainTabHeader extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFF0F172A),
+                                color: AppColors.textPrimary,
                                 letterSpacing: -0.3,
                               ),
                             ),
@@ -215,10 +215,10 @@ class _HeaderIconButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                color: AppColors.textPrimary.withValues(alpha: 0.03),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -236,7 +236,7 @@ class _HeaderIconButton extends StatelessWidget {
                     width: 7.5,
                     height: 7.5,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEF4444),
+                      color: AppColors.error,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 1.5),
                     ),

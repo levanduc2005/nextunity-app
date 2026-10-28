@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -73,14 +73,14 @@ class ProfileCardHeaderBar extends StatelessWidget {
                 vertical: 4.5,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFFBEB),
+                color: AppColors.warningLight,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: const Color(0xFFF59E0B).withValues(alpha: 0.6),
+                  color: AppColors.warning.withValues(alpha: 0.6),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFD97706).withValues(alpha: 0.12),
+                    color: AppColors.warningForeground.withValues(alpha: 0.12),
                     blurRadius: 4,
                     offset: const Offset(0, 1),
                   ),
@@ -92,7 +92,7 @@ class ProfileCardHeaderBar extends StatelessWidget {
                   Icon(
                     Icons.tune_rounded,
                     size: 12.5,
-                    color: Color(0xFFB45309),
+                    color: AppColors.warningDark,
                   ),
                   SizedBox(width: 4),
                   Text(
@@ -100,7 +100,7 @@ class ProfileCardHeaderBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10.5,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFFB45309),
+                      color: AppColors.warningDark,
                       letterSpacing: 0.2,
                     ),
                   ),
@@ -153,12 +153,12 @@ class ProfileCardHeaderBar extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+                      colors: [AppColors.warning, AppColors.warningForeground],
                     ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFD97706).withValues(alpha: 0.25),
+                        color: AppColors.warningForeground.withValues(alpha: 0.25),
                         blurRadius: 4,
                         offset: const Offset(0, 1),
                       ),

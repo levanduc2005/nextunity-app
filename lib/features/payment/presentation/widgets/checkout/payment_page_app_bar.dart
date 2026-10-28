@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/payment/presentation/widgets/dialogs/plus_faq_dialog.dart';
 
@@ -18,7 +18,7 @@ class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: const TextStyle(
           fontWeight: FontWeight.w800,
           fontSize: 16,
-          color: Color(0xFF0F172A),
+          color: AppColors.textPrimary,
         ),
       ),
       centerTitle: true,
@@ -31,7 +31,7 @@ class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
@@ -42,7 +42,7 @@ class PaymentPageAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: const Icon(
             Icons.arrow_back,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             size: 18,
           ),
         ),

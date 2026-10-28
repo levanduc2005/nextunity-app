@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Khung Card phong cách sổ tay có ghim đỏ và sticky note bảo mật
 class ChangePasswordNotebookCard extends StatelessWidget {
   const ChangePasswordNotebookCard({super.key, required this.child});
@@ -21,7 +22,7 @@ class ChangePasswordNotebookCard extends StatelessWidget {
             border: Border.all(color: Colors.white, width: 1.5),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF183A78).withValues(alpha: 0.08),
+                color: AppColors.navySurface.withValues(alpha: 0.08),
                 blurRadius: 24,
                 offset: const Offset(0, 8),
               ),

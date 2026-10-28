@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Phần tiêu đề và thông tin email nhận mã trong màn hình Xác thực Email
@@ -19,7 +19,7 @@ class VerifyEmailCardHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -30,7 +30,7 @@ class VerifyEmailCardHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
           ),
         ),
         const SizedBox(height: 4),

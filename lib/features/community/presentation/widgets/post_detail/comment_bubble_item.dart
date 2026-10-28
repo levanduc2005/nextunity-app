@@ -44,7 +44,6 @@ class CommentBubbleItem extends StatelessWidget {
       formattedTime: comment.formattedTime,
       authorAvatar: comment.authorAvatar,
       authorInitials: comment.initials,
-      authorBadge: comment.authorBadge,
       currentReaction: comment.currentUserReaction,
       onReactionSelected: (reaction) => onToggleReaction(comment.id, reaction),
       onReactionCleared: () => onToggleReaction(
@@ -74,7 +73,6 @@ class CommentBubbleItem extends StatelessWidget {
       formattedTime: reply.formattedTime,
       authorAvatar: reply.authorAvatar,
       authorInitials: reply.initials,
-      authorBadge: reply.authorBadge,
       currentReaction: reply.currentUserReaction,
       onReactionSelected: (reaction) => onToggleReaction(reply.id, reaction),
       onReactionCleared: () => onToggleReaction(

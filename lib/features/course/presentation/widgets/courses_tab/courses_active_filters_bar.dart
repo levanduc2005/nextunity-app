@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class CoursesActiveFiltersBar extends StatelessWidget {
@@ -32,7 +32,7 @@ class CoursesActiveFiltersBar extends StatelessWidget {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
             ),
           ),
           if (selectedCategory != null) ...[
@@ -59,7 +59,7 @@ class CoursesActiveFiltersBar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFFEF4444),
+                  color: AppColors.error,
                 ),
               ),
             ),

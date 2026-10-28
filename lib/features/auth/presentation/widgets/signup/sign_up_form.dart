@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/utils/validators.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_gradient_button.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_text_field.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Form đăng ký tài khoản mới (Họ tên, Email, Mật khẩu, Xác nhận mật khẩu) chuẩn ApSkil.
 class SignUpForm extends StatefulWidget {
   final void Function(String fullName, String email, String password) onSignUp;
@@ -56,7 +57,7 @@ class _SignUpFormState extends State<SignUpForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -70,7 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
             prefixIcon: const Icon(
               Icons.person_outline_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
@@ -90,7 +91,7 @@ class _SignUpFormState extends State<SignUpForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -105,7 +106,7 @@ class _SignUpFormState extends State<SignUpForm> {
             prefixIcon: const Icon(
               Icons.mail_outline_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             validator: (val) => AppValidators.email(
               val,
@@ -121,7 +122,7 @@ class _SignUpFormState extends State<SignUpForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -136,14 +137,14 @@ class _SignUpFormState extends State<SignUpForm> {
             prefixIcon: const Icon(
               Icons.lock_outline_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscurePassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF94A3B8),
+                color: AppColors.textMuted,
                 size: 19,
               ),
               onPressed: () {
@@ -170,7 +171,7 @@ class _SignUpFormState extends State<SignUpForm> {
             style: TextStyle(
               fontSize: 12.5,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
             ),
           ),
           const SizedBox(height: 4),
@@ -185,14 +186,14 @@ class _SignUpFormState extends State<SignUpForm> {
             prefixIcon: const Icon(
               Icons.lock_reset_rounded,
               size: 19,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscureConfirmPassword
                     ? Icons.visibility_off_outlined
                     : Icons.visibility_outlined,
-                color: const Color(0xFF94A3B8),
+                color: AppColors.textMuted,
                 size: 19,
               ),
               onPressed: () {

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Đoạn văn bản Điều khoản & Chính sách bảo mật (Terms of Service & Privacy Policy).
@@ -15,7 +15,7 @@ class AuthTermsText extends StatelessWidget {
       text: TextSpan(
         style: const TextStyle(
           fontSize: 12,
-          color: Color(0xFF94A3B8),
+          color: AppColors.textMuted,
           height: 1.45,
         ),
         children: [

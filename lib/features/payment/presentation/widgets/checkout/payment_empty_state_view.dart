@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -24,7 +24,7 @@ class PaymentEmptyStateView extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
@@ -47,14 +47,14 @@ class PaymentEmptyStateView extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 6),
                 const Text(
                   'Vui lòng chọn gói đăng ký NextUnity Plus để khởi tạo đơn thanh toán.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12.5, color: Color(0xFF64748B)),
+                  style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

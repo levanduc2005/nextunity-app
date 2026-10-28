@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -87,7 +87,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         leading: IconButton(
           icon: const Icon(
             Icons.close_rounded,
-            color: Color(0xFF334155),
+            color: AppColors.textLabel,
             size: 24,
           ),
           onPressed: () => context.pop(),
@@ -98,7 +98,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
           ),
         ),
         actions: [

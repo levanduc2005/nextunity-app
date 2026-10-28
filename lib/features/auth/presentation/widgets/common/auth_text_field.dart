@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Ô nhập liệu dùng chung cho các màn hình Auth.
@@ -33,10 +33,10 @@ class AuthTextField extends StatelessWidget {
     this.onChanged,
     this.onFieldSubmitted,
     this.textInputAction,
-    this.borderColor = const Color(0xFFE2E8F0),
+    this.borderColor = AppColors.border,
     this.focusedBorderColor = AppColors.primary,
-    this.hintColor = const Color(0xFF94A3B8),
-    this.fillColor = const Color(0xFFF8FAFC),
+    this.hintColor = AppColors.textMuted,
+    this.fillColor = AppColors.surfaceLight,
     this.borderRadius = 14.0,
     this.autofocus = false,
     this.contentPadding,
@@ -55,7 +55,7 @@ class AuthTextField extends StatelessWidget {
       autofocus: autofocus,
       style: const TextStyle(
         fontSize: 14.5,
-        color: Color(0xFF0F172A),
+        color: AppColors.textPrimary,
         fontWeight: FontWeight.w500,
       ),
       decoration: InputDecoration(

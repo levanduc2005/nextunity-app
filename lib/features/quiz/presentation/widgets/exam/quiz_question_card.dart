@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Hiển thị nội dung câu hỏi trắc nghiệm thoáng đãng, tinh gọn
@@ -63,7 +63,7 @@ class QuizQuestionCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF0284C7),
+                      color: AppColors.accentDark,
                     ),
                   ),
                 ),
@@ -77,7 +77,7 @@ class QuizQuestionCard extends StatelessWidget {
           style: const TextStyle(
             fontSize: 16.5,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             height: 1.45,
             letterSpacing: -0.2,
           ),

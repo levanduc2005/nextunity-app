@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/community/domain/entities/post_entity.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Hàng tóm tắt số lượt cảm xúc và số bình luận của bài viết
 class PostCardEngagementStats extends StatelessWidget {
   const PostCardEngagementStats({super.key, required this.post});
@@ -27,7 +28,7 @@ class PostCardEngagementStats extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
             ),
           ),
         ],

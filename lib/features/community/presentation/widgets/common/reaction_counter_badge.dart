@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_type_ui.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Huy hiệu hiển thị các loại cảm xúc nổi bật xếp chồng kèm tổng số lượt tương tác
 class ReactionCounterBadge extends StatelessWidget {
   const ReactionCounterBadge({
@@ -33,7 +34,7 @@ class ReactionCounterBadge extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
           boxShadow: const [
             BoxShadow(
               color: Color(0x0C000000),
@@ -73,7 +74,7 @@ class ReactionCounterBadge extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
             ),
           ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/presentation/widgets/feed/community_filter_chips.dart';
@@ -33,10 +33,10 @@ class CommunitySearchBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF1E3A8A).withValues(alpha: 0.04),
+                  color: AppColors.primaryDark.withValues(alpha: 0.04),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -46,7 +46,7 @@ class CommunitySearchBar extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.search_rounded,
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textMuted,
                   size: 19,
                 ),
                 const SizedBox(width: 8),
@@ -57,7 +57,7 @@ class CommunitySearchBar extends StatelessWidget {
                       hintText: 'Tìm bài viết, hashtag (#SWP391)...',
                       hintStyle: TextStyle(
                         fontSize: 12.5,
-                        color: Color(0xFF94A3B8),
+                        color: AppColors.textMuted,
                       ),
                       border: InputBorder.none,
                       isDense: true,
@@ -73,7 +73,7 @@ class CommunitySearchBar extends StatelessWidget {
                     child: const Icon(
                       Icons.close_rounded,
                       size: 16,
-                      color: Color(0xFF94A3B8),
+                      color: AppColors.textMuted,
                     ),
                   ),
               ],
@@ -143,10 +143,10 @@ class CommunitySearchBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF1E3A8A).withValues(alpha: 0.04),
+              color: AppColors.primaryDark.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -154,7 +154,7 @@ class CommunitySearchBar extends StatelessWidget {
         ),
         child: const Icon(
           Icons.tune_rounded,
-          color: Color(0xFF475569),
+          color: AppColors.textSecondaryDark,
           size: 20,
         ),
       ),

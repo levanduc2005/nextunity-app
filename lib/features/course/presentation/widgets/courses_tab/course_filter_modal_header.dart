@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Phần Header của modal bộ lọc khóa học (Drag handle, tiêu đề, nút Đặt lại, nút Đóng)
@@ -24,7 +24,7 @@ class CourseFilterModalHeader extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: const Color(0xFFCBD5E1),
+              color: AppColors.borderMedium,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -45,7 +45,7 @@ class CourseFilterModalHeader extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF0F172A),
+                      color: AppColors.textPrimary,
                     ),
                   ),
                 ],
@@ -55,7 +55,7 @@ class CourseFilterModalHeader extends StatelessWidget {
                   TextButton(
                     onPressed: onReset,
                     style: TextButton.styleFrom(
-                      foregroundColor: const Color(0xFF64748B),
+                      foregroundColor: AppColors.textSecondary,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       minimumSize: Size.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -74,7 +74,7 @@ class CourseFilterModalHeader extends StatelessWidget {
                     icon: const Icon(
                       Icons.close_rounded,
                       size: 20,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondary,
                     ),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -17,10 +17,10 @@ class LessonSlideAttachmentCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+            color: AppColors.textPrimary.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -34,7 +34,7 @@ class LessonSlideAttachmentCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
@@ -42,7 +42,7 @@ class LessonSlideAttachmentCard extends StatelessWidget {
             'Tài liệu slide đính kèm bài học phục vụ quá trình ôn tập và tự học.',
             style: TextStyle(
               fontSize: 12,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
               height: 1.4,
             ),
           ),
@@ -50,9 +50,9 @@ class LessonSlideAttachmentCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: AppColors.surfaceLight,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: Row(
               children: [
@@ -60,13 +60,13 @@ class LessonSlideAttachmentCard extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFEE2E2),
+                    color: AppColors.errorContainer,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Center(
                     child: Icon(
                       Icons.picture_as_pdf_rounded,
-                      color: Color(0xFFEF4444),
+                      color: AppColors.error,
                       size: 22,
                     ),
                   ),
@@ -81,7 +81,7 @@ class LessonSlideAttachmentCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -91,7 +91,7 @@ class LessonSlideAttachmentCard extends StatelessWidget {
                         'Tài liệu slide bài giảng',
                         style: TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

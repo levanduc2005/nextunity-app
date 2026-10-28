@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Banner thông báo khi sinh viên chưa đăng ký môn học nào
@@ -39,7 +39,7 @@ class OngoingInitialBanner extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 SizedBox(height: 2),
@@ -47,7 +47,7 @@ class OngoingInitialBanner extends StatelessWidget {
                   'Khám phá danh sách môn học bên dưới để đăng ký môn học đầu tiên của bạn.',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

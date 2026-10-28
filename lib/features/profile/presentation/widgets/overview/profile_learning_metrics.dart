@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/presentation/providers/course_providers.dart';
@@ -46,7 +46,7 @@ class ProfileLearningMetrics extends ConsumerWidget {
           Expanded(
             child: _buildMetricItem(
               icon: Icons.task_alt_rounded,
-              iconColor: const Color(0xFF0284C7),
+              iconColor: AppColors.accentDark,
               iconBgColor: const Color(0xFFE0F2FE),
               count: completedCount.toString(),
               label: 'Hoàn thành',

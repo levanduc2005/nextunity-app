@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:rental_car/core/theme/app_colors.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/comment_entity.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_counter_badge.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Bong bóng hiển thị nội dung của một bình luận (dùng chung cho bình luận chính và câu trả lời con)
 class SingleCommentBubble extends StatelessWidget {
   const SingleCommentBubble({
@@ -54,7 +54,7 @@ class SingleCommentBubble extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header: Tên người dùng + Giờ bên cạnh + Huy hiệu nếu có
+                      // Header: Tên người dùng + Giờ bên cạnh
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
@@ -63,7 +63,7 @@ class SingleCommentBubble extends StatelessWidget {
                             style: TextStyle(
                               fontSize: isReply ? 12 : 12.5,
                               fontWeight: FontWeight.w700,
-                              color: const Color(0xFF0F172A),
+                              color: AppColors.textPrimary,
                             ),
                           ),
                           const Gap.h(6),
@@ -71,37 +71,10 @@ class SingleCommentBubble extends StatelessWidget {
                             comment.formattedTime,
                             style: TextStyle(
                               fontSize: isReply ? 10.5 : 11,
-                              color: const Color(0xFF94A3B8),
+                              color: AppColors.textMuted,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          if (comment.authorBadge != null) ...[
-                            const Gap.h(6),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                                vertical: 1,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isReply
-                                    ? const Color(0xFFDCFCE7)
-                                    : const Color(0xFFE2E8F0),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                comment.authorBadge!,
-                                style: TextStyle(
-                                  fontSize: 9.5,
-                                  fontWeight: isReply
-                                      ? FontWeight.w800
-                                      : FontWeight.w700,
-                                  color: isReply
-                                      ? AppColors.primary
-                                      : const Color(0xFF475569),
-                                ),
-                              ),
-                            ),
-                          ],
                         ],
                       ),
                       const Gap(2),
@@ -110,7 +83,7 @@ class SingleCommentBubble extends StatelessWidget {
                         comment.content,
                         style: TextStyle(
                           fontSize: isReply ? 12.5 : 13,
-                          color: const Color(0xFF1E293B),
+                          color: AppColors.textDark,
                           height: 1.4,
                         ),
                       ),
@@ -145,7 +118,7 @@ class SingleCommentBubble extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ),

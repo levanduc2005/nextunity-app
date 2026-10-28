@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_button.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Thanh nút hành động tương tác: Thích / Thả cảm xúc, Bình luận, Chia sẻ
 class PostCardActionsBar extends StatelessWidget {
   const PostCardActionsBar({
@@ -96,14 +97,14 @@ class _FeedActionButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 18, color: const Color(0xFF64748B)),
+            Icon(icon, size: 18, color: AppColors.textSecondary),
             const Gap.h(6),
             Text(
               label,
               style: const TextStyle(
                 fontSize: 12.5,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF475569),
+                color: AppColors.textSecondaryDark,
               ),
             ),
           ],

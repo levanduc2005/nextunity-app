@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -71,8 +71,8 @@ class HomeStudyToolsBento extends StatelessWidget {
                   context: context,
                   icon: Icons.style_rounded,
                   label: 'Flashcards',
-                  iconColor: const Color(0xFF2563EB),
-                  bgColor: const Color(0xFFEFF6FF),
+                  iconColor: AppColors.primaryAction,
+                  bgColor: AppColors.primaryContainer,
                   borderColor: const Color(0xFFDBEAFE),
                   route: AppRoute.flashcards.path,
                 ),
@@ -93,9 +93,9 @@ class HomeStudyToolsBento extends StatelessWidget {
                   context: context,
                   icon: Icons.hub_rounded,
                   label: 'Mindmap',
-                  iconColor: const Color(0xFF059669),
+                  iconColor: AppColors.successDark,
                   bgColor: const Color(0xFFECFDF5),
-                  borderColor: const Color(0xFFA7F3D0),
+                  borderColor: AppColors.successBorder,
                   route: AppRoute.mindmap.path,
                 ),
               ),
@@ -104,9 +104,9 @@ class HomeStudyToolsBento extends StatelessWidget {
                   context: context,
                   icon: Icons.picture_as_pdf_rounded,
                   label: 'Slide & PDF',
-                  iconColor: const Color(0xFFD97706),
-                  bgColor: const Color(0xFFFFFBEB),
-                  borderColor: const Color(0xFFFDE68A),
+                  iconColor: AppColors.warningForeground,
+                  bgColor: AppColors.warningLight,
+                  borderColor: AppColors.warningBorder,
                   route: AppRoute.slidePdfViewer.path,
                 ),
               ),

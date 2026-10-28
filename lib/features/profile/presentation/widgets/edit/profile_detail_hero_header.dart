@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/profile_detail_info_tile.dart';
@@ -74,10 +74,10 @@ class ProfileDetailHeroHeader extends StatelessWidget {
                 icon: isPlus ? Icons.stars_rounded : Icons.school_rounded,
                 label: isPlus ? 'PLUS MEMBER' : 'SINH VIÊN',
                 bgColor: isPlus
-                    ? const Color(0xFFFEF3C7)
+                    ? AppColors.warningContainer
                     : AppColors.surfaceSubtle,
                 textColor: isPlus
-                    ? const Color(0xFFD97706)
+                    ? AppColors.warningForeground
                     : AppColors.textSecondaryDark,
               ),
             ],

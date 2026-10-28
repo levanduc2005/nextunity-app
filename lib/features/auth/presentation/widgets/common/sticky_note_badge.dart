@@ -1,6 +1,7 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Ngòi bút máy vẽ bằng vector canvas.
 class FountainPenWidget extends StatelessWidget {
   final double size;
@@ -24,7 +25,7 @@ class _FountainPenPainter extends CustomPainter {
 
     // Thân bút
     final bodyPaint = Paint()
-      ..color = const Color(0xFF1E3A8A)
+      ..color = AppColors.primaryDark
       ..style = PaintingStyle.fill;
     final bodyRRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(18 * scale, 4 * scale, 4 * scale, 20 * scale),
@@ -34,7 +35,7 @@ class _FountainPenPainter extends CustomPainter {
 
     // Vòng kim loại
     final bandPaint = Paint()
-      ..color = const Color(0xFFCBD5E1)
+      ..color = AppColors.borderMedium
       ..style = PaintingStyle.fill;
     canvas.drawRect(
       Rect.fromLTWH(17.5 * scale, 24 * scale, 5 * scale, 3 * scale),
@@ -43,7 +44,7 @@ class _FountainPenPainter extends CustomPainter {
 
     // Ngòi bút
     final nibPaint1 = Paint()
-      ..color = const Color(0xFF64748B)
+      ..color = AppColors.textSecondary
       ..style = PaintingStyle.fill;
     final nibPath1 = Path()
       ..moveTo(20 * scale, 38 * scale)
@@ -54,7 +55,7 @@ class _FountainPenPainter extends CustomPainter {
 
     // Rãnh mực ngòi bút
     final nibPaint2 = Paint()
-      ..color = const Color(0xFF334155)
+      ..color = AppColors.textLabel
       ..style = PaintingStyle.fill;
     final nibPath2 = Path()
       ..moveTo(20 * scale, 38 * scale)
@@ -87,9 +88,9 @@ class StickyNoteBadge extends StatelessWidget {
               margin: const EdgeInsets.only(top: 5),
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: AppColors.surfaceLight,
                 borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: const Color(0xFFCBD5E1)),
+                border: Border.all(color: AppColors.borderMedium),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.10),
@@ -105,7 +106,7 @@ class StickyNoteBadge extends StatelessWidget {
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                   fontStyle: FontStyle.italic,
-                  color: Color(0xFF334155),
+                  color: AppColors.textLabel,
                   height: 1.2,
                   letterSpacing: -0.2,
                 ),

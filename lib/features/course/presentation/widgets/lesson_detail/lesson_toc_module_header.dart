@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Tiêu đề phân mục Module trong mục lục bài giảng
@@ -20,9 +20,9 @@ class LessonTocModuleHeader extends StatelessWidget {
       margin: EdgeInsets.only(top: isFirst ? 0 : 14, bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
@@ -51,7 +51,7 @@ class LessonTocModuleHeader extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF334155),
+                color: AppColors.textLabel,
               ),
             ),
           ),

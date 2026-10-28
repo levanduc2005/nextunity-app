@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/study_tools/presentation/widgets/flashcards/flashcard_flip_view.dart';
@@ -88,7 +88,7 @@ class _FlashcardsPageState extends State<FlashcardsPage>
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-          color: const Color(0xFF0F172A),
+          color: AppColors.textPrimary,
           onPressed: () => context.pop(),
         ),
         title: const Text(
@@ -96,7 +96,7 @@ class _FlashcardsPageState extends State<FlashcardsPage>
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
           ),
         ),
         centerTitle: true,

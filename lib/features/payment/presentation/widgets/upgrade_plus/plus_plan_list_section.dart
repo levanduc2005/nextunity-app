@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:rental_car/features/payment/domain/entities/subscription_plan_entity.dart';
@@ -6,6 +6,7 @@ import 'package:rental_car/features/payment/presentation/providers/payment_provi
 import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_card.dart';
 import 'package:rental_car/features/payment/presentation/widgets/upgrade_plus/plus_plan_state_views.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class PlusPlanListSection extends ConsumerWidget {
   const PlusPlanListSection({
     super.key,
@@ -91,7 +92,7 @@ class PlusPlanListSection extends ConsumerWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimary,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -102,7 +103,7 @@ class PlusPlanListSection extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Thẻ lựa chọn đáp án trắc nghiệm chuẩn thiết kế hiện đại
@@ -32,10 +32,10 @@ class QuizOptionTile extends StatelessWidget {
           curve: Curves.easeInOut,
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : const Color(0xFFF8FAFC),
+            color: isSelected ? AppColors.primary : AppColors.surfaceLight,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected ? AppColors.primary : const Color(0xFFE2E8F0),
+              color: isSelected ? AppColors.primary : AppColors.border,
               width: isSelected ? 1.6 : 1.0,
             ),
             boxShadow: isSelected
@@ -59,7 +59,7 @@ class QuizOptionTile extends StatelessWidget {
                   borderRadius: isMultiChoice ? BorderRadius.circular(6) : null,
                   color: isSelected ? Colors.white : Colors.transparent,
                   border: Border.all(
-                    color: isSelected ? Colors.white : const Color(0xFF94A3B8),
+                    color: isSelected ? Colors.white : AppColors.textMuted,
                     width: 2.0,
                   ),
                 ),
@@ -89,7 +89,7 @@ class QuizOptionTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.5,
                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                    color: isSelected ? Colors.white : const Color(0xFF334155),
+                    color: isSelected ? Colors.white : AppColors.textLabel,
                     height: 1.35,
                   ),
                 ),

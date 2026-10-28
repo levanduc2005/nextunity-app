@@ -36,7 +36,6 @@ void main() {
     studentId: 'SE123456',
     university: 'FPT University',
     avatarUrl: 'https://cloudinary.com/avatar.jpg',
-    points: 150,
     streak: 7,
     isPlus: true,
   );

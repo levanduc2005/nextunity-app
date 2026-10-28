@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class PlusCheckoutButton extends StatelessWidget {
   const PlusCheckoutButton({
     super.key,
@@ -23,13 +24,13 @@ class PlusCheckoutButton extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Color(0xFFF59E0B), Color(0xFFD97706)],
+              colors: [AppColors.warning, AppColors.warningForeground],
             ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: canProceed
                 ? [
                     BoxShadow(
-                      color: const Color(0xFFF59E0B).withValues(alpha: 0.38),
+                      color: AppColors.warning.withValues(alpha: 0.38),
                       blurRadius: 14,
                       offset: const Offset(0, 4),
                     ),

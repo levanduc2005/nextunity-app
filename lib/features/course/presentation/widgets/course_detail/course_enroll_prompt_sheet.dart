@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
@@ -64,7 +64,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: const Color(0xFFCBD5E1),
+                color: AppColors.borderMedium,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -77,7 +77,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
                 height: 44,
                 decoration: BoxDecoration(
                   color: course.isPremium
-                      ? const Color(0xFFFEF3C7)
+                      ? AppColors.warningContainer
                       : AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(14),
                 ),
@@ -87,7 +87,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
                         ? Icons.workspace_premium_rounded
                         : Icons.school_rounded,
                     color: course.isPremium
-                        ? const Color(0xFFD97706)
+                        ? AppColors.warningForeground
                         : AppColors.primary,
                     size: 24,
                   ),
@@ -103,7 +103,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -113,7 +113,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
                       'Khóa học: ${course.title}',
                       style: const TextStyle(
                         fontSize: 11.5,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -130,7 +130,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12.5,
               height: 1.5,
-              color: Color(0xFF475569),
+              color: AppColors.textSecondaryDark,
             ),
           ),
           const SizedBox(height: 20),
@@ -138,7 +138,7 @@ class CourseEnrollPromptSheet extends StatelessWidget {
             onPressed: isLockedPlus ? onUpgradePlus : onEnroll,
             style: ElevatedButton.styleFrom(
               backgroundColor: isLockedPlus
-                  ? const Color(0xFFD97706)
+                  ? AppColors.warningForeground
                   : AppColors.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),

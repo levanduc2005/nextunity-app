@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class PaymentManualVerifyButton extends StatelessWidget {
   const PaymentManualVerifyButton({
     super.key,
@@ -20,7 +21,7 @@ class PaymentManualVerifyButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          side: const BorderSide(color: Color(0xFFCBD5E1)),
+          side: const BorderSide(color: AppColors.borderMedium),
         ),
         onPressed: isChecking ? null : onPressed,
         child: isChecking
@@ -34,7 +35,7 @@ class PaymentManualVerifyButton extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 13,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                 ),
               ),
       ),

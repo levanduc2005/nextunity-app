@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rental_car/features/quiz/domain/entities/quiz_submission_summary_entity.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Dòng hiển thị thông tin một lượt làm bài kiểm tra trong lịch sử
 class QuizSubmissionHistoryItem extends StatelessWidget {
   const QuizSubmissionHistoryItem({
@@ -24,9 +25,9 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Material(
         color: Colors.transparent,
@@ -42,8 +43,8 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                   height: 34,
                   decoration: BoxDecoration(
                     color: s.isPassed
-                        ? const Color(0xFFDCFCE7)
-                        : const Color(0xFFFEE2E2),
+                        ? AppColors.successContainer
+                        : AppColors.errorContainer,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -53,8 +54,8 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                           : Icons.cancel_rounded,
                       size: 18,
                       color: s.isPassed
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFFEF4444),
+                          ? AppColors.successVibrant
+                          : AppColors.error,
                     ),
                   ),
                 ),
@@ -68,7 +69,7 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -76,7 +77,7 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                         dateStr,
                         style: const TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -92,8 +93,8 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                         fontSize: 15.5,
                         fontWeight: FontWeight.w800,
                         color: s.isPassed
-                            ? const Color(0xFF16A34A)
-                            : const Color(0xFFDC2626),
+                            ? AppColors.successVibrant
+                            : AppColors.errorForeground,
                         letterSpacing: -0.3,
                       ),
                     ),
@@ -105,8 +106,8 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: s.isPassed
-                            ? const Color(0xFFDCFCE7)
-                            : const Color(0xFFFEE2E2),
+                            ? AppColors.successContainer
+                            : AppColors.errorContainer,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -115,7 +116,7 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           color: s.isPassed
-                              ? const Color(0xFF166534)
+                              ? AppColors.successForeground
                               : const Color(0xFF991B1B),
                         ),
                       ),
@@ -126,7 +127,7 @@ class QuizSubmissionHistoryItem extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   size: 18,
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textMuted,
                 ),
               ],
             ),

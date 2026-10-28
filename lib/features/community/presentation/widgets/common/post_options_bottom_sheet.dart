@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/theme/app_text_styles.dart';
@@ -81,8 +81,8 @@ class PostOptionsBottomSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.md),
             _OptionTile(
               icon: Icons.link_rounded,
-              iconColor: const Color(0xFF0F172A),
-              iconBgColor: const Color(0xFFF1F5F9),
+              iconColor: AppColors.textPrimary,
+              iconBgColor: AppColors.surfaceSubtle,
               title: 'Sao chép liên kết',
               subtitle: 'Sao chép đường dẫn bài viết để chia sẻ',
               onTap: onCopyLink,
@@ -90,8 +90,8 @@ class PostOptionsBottomSheet extends StatelessWidget {
             if (canDelete && onDelete != null)
               _OptionTile(
                 icon: Icons.delete_outline_rounded,
-                iconColor: const Color(0xFF0F172A),
-                iconBgColor: const Color(0xFFF1F5F9),
+                iconColor: AppColors.textPrimary,
+                iconBgColor: AppColors.surfaceSubtle,
                 title: 'Xóa bài viết',
                 subtitle: 'Gỡ bài viết này khỏi cộng đồng',
                 isDestructive: true,

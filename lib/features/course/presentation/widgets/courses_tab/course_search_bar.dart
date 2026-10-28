@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class CourseSearchBar extends StatefulWidget {
@@ -58,10 +58,10 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF1E3A8A).withValues(alpha: 0.04),
+                  color: AppColors.primaryDark.withValues(alpha: 0.04),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -75,13 +75,13 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
               style: const TextStyle(
                 fontSize: 12.5,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
               ),
               decoration: InputDecoration(
                 hintText: 'Tìm mã môn (EXE201, SWP391), từ khóa...',
                 hintStyle: const TextStyle(
                   fontSize: 12,
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textMuted,
                   fontWeight: FontWeight.w500,
                 ),
                 prefixIcon: IconButton(
@@ -104,7 +104,7 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
                         },
                         icon: const Icon(
                           Icons.cancel_rounded,
-                          color: Color(0xFF94A3B8),
+                          color: AppColors.textMuted,
                           size: 18,
                         ),
                         tooltip: 'Xóa tìm kiếm',
@@ -139,7 +139,7 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
               border: Border.all(
                 color: widget.hasActiveFilter
                     ? AppColors.primary
-                    : const Color(0xFFE2E8F0),
+                    : AppColors.border,
                 width: widget.hasActiveFilter ? 1.5 : 1,
               ),
               boxShadow: [
@@ -158,7 +158,7 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
                   size: 20,
                   color: widget.hasActiveFilter
                       ? AppColors.primary
-                      : const Color(0xFF475569),
+                      : AppColors.textSecondaryDark,
                 ),
                 if (widget.hasActiveFilter)
                   Positioned(
@@ -168,7 +168,7 @@ class _CourseSearchBarState extends State<CourseSearchBar> {
                       width: 7,
                       height: 7,
                       decoration: const BoxDecoration(
-                        color: Color(0xFFEF4444),
+                        color: AppColors.error,
                         shape: BoxShape.circle,
                       ),
                     ),

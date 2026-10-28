@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class PlanCardSkeleton extends StatelessWidget {
@@ -12,7 +12,7 @@ class PlanCardSkeleton extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
@@ -20,7 +20,7 @@ class PlanCardSkeleton extends StatelessWidget {
             width: 20,
             height: 20,
             decoration: const BoxDecoration(
-              color: Color(0xFFE2E8F0),
+              color: AppColors.border,
               shape: BoxShape.circle,
             ),
           ),
@@ -34,7 +34,7 @@ class PlanCardSkeleton extends StatelessWidget {
                   width: 140,
                   height: 14,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE2E8F0),
+                    color: AppColors.border,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -43,7 +43,7 @@ class PlanCardSkeleton extends StatelessWidget {
                   width: 200,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: AppColors.surfaceSubtle,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -74,13 +74,13 @@ class PlanErrorView extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFFCA5A5)),
+        border: Border.all(color: AppColors.errorBorderLight),
       ),
       child: Column(
         children: [
           const Icon(
             Icons.error_outline_rounded,
-            color: Color(0xFFEF4444),
+            color: AppColors.error,
             size: 32,
           ),
           const SizedBox(height: 8),
@@ -89,14 +89,14 @@ class PlanErrorView extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             errorMessage,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 11, color: Color(0xFF64748B)),
+            style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
           ),
           const SizedBox(height: 12),
           TextButton.icon(
@@ -125,18 +125,18 @@ class PlanEmptyView extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: const Column(
         children: [
-          Icon(Icons.inventory_2_outlined, color: Color(0xFF94A3B8), size: 32),
+          Icon(Icons.inventory_2_outlined, color: AppColors.textMuted, size: 32),
           SizedBox(height: 8),
           Text(
             'Hiện tại chưa có gói đăng ký nào khả dụng',
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
             ),
           ),
         ],

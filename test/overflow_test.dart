@@ -36,7 +36,6 @@ void main() {
     major: 'Software Engineering Specialization Mobile Development Enterprise',
     cohort: 18,
     streak: 15,
-    points: 2500,
     isPlus: true,
   );
 

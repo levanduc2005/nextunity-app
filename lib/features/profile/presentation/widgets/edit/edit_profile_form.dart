@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/auth/domain/entities/user_entity.dart';
 import 'package:rental_car/features/profile/presentation/widgets/decorations/profile_stationery_decorations.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_action_buttons.dart';
@@ -7,6 +7,7 @@ import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profi
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_section_title.dart';
 import 'package:rental_car/features/profile/presentation/widgets/edit/edit_profile_text_field.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Form chỉnh sửa thông tin sinh viên NextUnity bọc trong thẻ phong cách Stationery
 class EditProfileForm extends StatelessWidget {
   const EditProfileForm({
@@ -60,7 +61,7 @@ class EditProfileForm extends StatelessWidget {
                   border: Border.all(color: Colors.white, width: 1.5),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF183A78).withValues(alpha: 0.08),
+                      color: AppColors.navySurface.withValues(alpha: 0.08),
                       blurRadius: 24,
                       offset: const Offset(0, 8),
                     ),

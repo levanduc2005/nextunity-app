@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -20,7 +20,7 @@ class QuickCreatePostCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: const [
           BoxShadow(
             color: Color(0x06000000),
@@ -50,14 +50,14 @@ class QuickCreatePostCard extends ConsumerWidget {
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF1F5F9),
+                      color: AppColors.surfaceSubtle,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Text(
                       '$displayName ơi, bạn đang cần hỏi đáp môn gì?',
                       style: const TextStyle(
                         fontSize: 12.5,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                       maxLines: 1,
@@ -69,7 +69,7 @@ class QuickCreatePostCard extends ConsumerWidget {
             ],
           ),
           const Gap(10),
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
           const Gap(6),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -80,7 +80,7 @@ class QuickCreatePostCard extends ConsumerWidget {
                 label: 'Đặt câu hỏi',
                 onTap: () => context.push('/community/create-post'),
               ),
-              Container(width: 1, height: 16, color: const Color(0xFFE2E8F0)),
+              Container(width: 1, height: 16, color: AppColors.border),
               _QuickActionItem(
                 icon: Icons.tag_rounded,
                 iconColor: AppColors.iconPrimary,
@@ -124,7 +124,7 @@ class _QuickActionItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF334155),
+                color: AppColors.textLabel,
               ),
             ),
           ],

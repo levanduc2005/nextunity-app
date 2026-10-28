@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_otp_row.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/auth_resend_code.dart';
@@ -41,7 +41,7 @@ class ForgotPasswordOtpStep extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w900,
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -51,7 +51,7 @@ class ForgotPasswordOtpStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 13,
-            color: Color(0xFF64748B),
+            color: AppColors.textSecondary,
             fontWeight: FontWeight.w500,
           ),
         ),

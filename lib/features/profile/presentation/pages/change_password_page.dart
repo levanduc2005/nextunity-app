@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -171,7 +171,7 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
               height: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFFBFDBFE).withValues(alpha: 0.35),
+                color: AppColors.primaryBorder.withValues(alpha: 0.35),
               ),
             ),
           ),

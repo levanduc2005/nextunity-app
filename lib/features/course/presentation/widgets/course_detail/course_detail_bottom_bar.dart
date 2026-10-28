@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Thanh hành động dính dưới màn hình chuẩn phong cách ApSkil (Dual-Action Bottom Bar)
@@ -54,10 +54,10 @@ class CourseDetailBottomBar extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          border: const Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+          border: const Border(top: BorderSide(color: AppColors.border)),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0F172A).withValues(alpha: 0.06),
+              color: AppColors.textPrimary.withValues(alpha: 0.06),
               blurRadius: 16,
               offset: const Offset(0, -4),
             ),
@@ -73,8 +73,8 @@ class CourseDetailBottomBar extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: onTapCurriculum,
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF0F172A),
-                    side: const BorderSide(color: Color(0xFFCBD5E1)),
+                    foregroundColor: AppColors.textPrimary,
+                    side: const BorderSide(color: AppColors.borderMedium),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -86,7 +86,7 @@ class CourseDetailBottomBar extends StatelessWidget {
                       Icon(
                         Icons.visibility_outlined,
                         size: 16,
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimary,
                       ),
                       SizedBox(width: 6),
                       Flexible(
@@ -95,7 +95,7 @@ class CourseDetailBottomBar extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.5,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF0F172A),
+                            color: AppColors.textPrimary,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

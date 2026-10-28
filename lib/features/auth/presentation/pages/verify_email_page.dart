@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -196,7 +196,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                                 Icon(
                                   Icons.schedule_rounded,
                                   size: 14,
-                                  color: Color(0xFF94A3B8),
+                                  color: AppColors.textMuted,
                                 ),
                                 SizedBox(width: 4),
                                 Text(
@@ -204,7 +204,7 @@ class _VerifyEmailPageState extends ConsumerState<VerifyEmailPage> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    color: Color(0xFF94A3B8),
+                                    color: AppColors.textMuted,
                                   ),
                                 ),
                               ],

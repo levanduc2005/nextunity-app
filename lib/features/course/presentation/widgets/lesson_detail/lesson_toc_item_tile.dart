@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 
@@ -22,10 +22,10 @@ class LessonTocItemTile extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
-        color: isCurrent ? const Color(0xFFEFF6FF) : const Color(0xFFF8FAFC),
+        color: isCurrent ? AppColors.primaryContainer : AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isCurrent ? const Color(0xFFBFDBFE) : const Color(0xFFF1F5F9),
+          color: isCurrent ? AppColors.primaryBorder : AppColors.surfaceSubtle,
           width: isCurrent ? 1.2 : 1.0,
         ),
       ),
@@ -44,13 +44,13 @@ class LessonTocItemTile extends StatelessWidget {
                     width: 26,
                     height: 26,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFDCFCE7),
+                      color: AppColors.successContainer,
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
                       child: Icon(
                         Icons.check_rounded,
-                        color: Color(0xFF16A34A),
+                        color: AppColors.successVibrant,
                         size: 15,
                       ),
                     ),
@@ -60,7 +60,7 @@ class LessonTocItemTile extends StatelessWidget {
                     width: 26,
                     height: 26,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFEFF6FF),
+                      color: AppColors.primaryContainer,
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
@@ -76,13 +76,13 @@ class LessonTocItemTile extends StatelessWidget {
                     width: 26,
                     height: 26,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFF1F5F9),
+                      color: AppColors.surfaceSubtle,
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
                       child: Icon(
                         Icons.radio_button_unchecked_rounded,
-                        color: Color(0xFF94A3B8),
+                        color: AppColors.textMuted,
                         size: 14,
                       ),
                     ),
@@ -100,7 +100,7 @@ class LessonTocItemTile extends StatelessWidget {
                       fontWeight: isCurrent ? FontWeight.w800 : FontWeight.w600,
                       color: isCurrent
                           ? AppColors.primary
-                          : const Color(0xFF0F172A),
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -133,16 +133,16 @@ class LessonTocItemTile extends StatelessWidget {
         icon = Icons.quiz_outlined;
       case 'VIDEO':
         label = 'Video';
-        bg = const Color(0xFFEFF6FF);
-        text = const Color(0xFF1D4ED8);
-        border = const Color(0xFFBFDBFE);
+        bg = AppColors.primaryContainer;
+        text = AppColors.primaryForeground;
+        border = AppColors.primaryBorder;
         icon = Icons.play_circle_outline_rounded;
       case 'TEXT':
       default:
         label = 'Lý thuyết';
-        bg = const Color(0xFFF8FAFC);
-        text = const Color(0xFF475569);
-        border = const Color(0xFFE2E8F0);
+        bg = AppColors.surfaceLight;
+        text = AppColors.textSecondaryDark;
+        border = AppColors.border;
         icon = Icons.menu_book_rounded;
     }
 

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/quiz/domain/entities/quiz_detail_entity.dart';
 import 'package:rental_car/features/quiz/domain/entities/quiz_result_entity.dart';
 import 'package:rental_car/features/quiz/presentation/widgets/submission_detail/submission_explanation_box.dart';
 import 'package:rental_car/features/quiz/presentation/widgets/submission_detail/submission_option_tile.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 class SubmissionQuestionCard extends StatelessWidget {
   const SubmissionQuestionCard({
     super.key,
@@ -48,12 +49,12 @@ class SubmissionQuestionCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: isCorrect ? const Color(0xFFBBF7D0) : const Color(0xFFFECACA),
+          color: isCorrect ? AppColors.successBorderLight : AppColors.errorBorder,
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+            color: AppColors.textPrimary.withValues(alpha: 0.03),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -72,8 +73,8 @@ class SubmissionQuestionCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isCorrect
-                      ? const Color(0xFFDCFCE7)
-                      : const Color(0xFFFEE2E2),
+                      ? AppColors.successContainer
+                      : AppColors.errorContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -82,8 +83,8 @@ class SubmissionQuestionCard extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
                     color: isCorrect
-                        ? const Color(0xFF15803D)
-                        : const Color(0xFFB91C1C),
+                        ? AppColors.successDarkText
+                        : AppColors.errorDark,
                   ),
                 ),
               ),
@@ -92,13 +93,13 @@ class SubmissionQuestionCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
                   color: isCorrect
-                      ? const Color(0xFFDCFCE7)
-                      : const Color(0xFFFEE2E2),
+                      ? AppColors.successContainer
+                      : AppColors.errorContainer,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: isCorrect
                         ? const Color(0xFF86EFAC)
-                        : const Color(0xFFFCA5A5),
+                        : AppColors.errorBorderLight,
                   ),
                 ),
                 child: Row(
@@ -110,8 +111,8 @@ class SubmissionQuestionCard extends StatelessWidget {
                           : Icons.cancel_rounded,
                       size: 14,
                       color: isCorrect
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFFEF4444),
+                          ? AppColors.successVibrant
+                          : AppColors.error,
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -120,8 +121,8 @@ class SubmissionQuestionCard extends StatelessWidget {
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         color: isCorrect
-                            ? const Color(0xFF15803D)
-                            : const Color(0xFFB91C1C),
+                            ? AppColors.successDarkText
+                            : AppColors.errorDark,
                       ),
                     ),
                   ],
@@ -139,7 +140,7 @@ class SubmissionQuestionCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
               height: 1.4,
             ),
           ),
@@ -151,9 +152,9 @@ class SubmissionQuestionCard extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF1F2),
+                color: AppColors.expiredContainer,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFECDD3)),
+                border: Border.all(color: AppColors.expiredBorder),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +165,7 @@ class SubmissionQuestionCard extends StatelessWidget {
                       const Icon(
                         Icons.cancel_outlined,
                         size: 15,
-                        color: Color(0xFFE11D48),
+                        color: AppColors.expired,
                       ),
                       const SizedBox(width: 6),
                       Expanded(
@@ -199,7 +200,7 @@ class SubmissionQuestionCard extends StatelessWidget {
                       const Icon(
                         Icons.check_circle_outline_rounded,
                         size: 15,
-                        color: Color(0xFF059669),
+                        color: AppColors.successDark,
                       ),
                       const SizedBox(width: 6),
                       Expanded(

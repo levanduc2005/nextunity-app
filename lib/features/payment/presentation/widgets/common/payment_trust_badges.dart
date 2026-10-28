@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Trust and security badges displayed on payment and upgrade screens.
 class PaymentTrustBadges extends StatelessWidget {
   const PaymentTrustBadges({super.key});
@@ -17,7 +18,7 @@ class PaymentTrustBadges extends StatelessWidget {
           children: [
             Icon(
               Icons.verified_user_rounded,
-              color: Color(0xFF059669),
+              color: AppColors.successDark,
               size: 14,
             ),
             SizedBox(width: 4),
@@ -26,39 +27,39 @@ class PaymentTrustBadges extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10.5,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
             ),
           ],
         ),
-        Text('•', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 10.5)),
+        Text('•', style: TextStyle(color: AppColors.borderMedium, fontSize: 10.5)),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bolt_rounded, color: Color(0xFF059669), size: 15),
+            Icon(Icons.bolt_rounded, color: AppColors.successDark, size: 15),
             SizedBox(width: 3),
             Text(
               'Kích hoạt tức thì',
               style: TextStyle(
                 fontSize: 10.5,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
             ),
           ],
         ),
-        Text('•', style: TextStyle(color: Color(0xFFCBD5E1), fontSize: 10.5)),
+        Text('•', style: TextStyle(color: AppColors.borderMedium, fontSize: 10.5)),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.sync_rounded, color: Color(0xFFF59E0B), size: 14),
+            Icon(Icons.sync_rounded, color: AppColors.warning, size: 14),
             SizedBox(width: 4),
             Text(
               'Hoàn tiền 48h',
               style: TextStyle(
                 fontSize: 10.5,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondary,
               ),
             ),
           ],

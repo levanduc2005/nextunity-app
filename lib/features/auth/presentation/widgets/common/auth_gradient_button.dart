@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Nút bấm Gradient phong cách NextUnity dùng chung cho các màn hình Auth.
 class AuthGradientButton extends StatelessWidget {
   final String text;
@@ -20,10 +21,10 @@ class AuthGradientButton extends StatelessWidget {
     this.borderRadius = 14.0,
     this.gradientColors = const [
       Color(0xFF1D63D8),
-      Color(0xFF2563EB),
+      AppColors.primaryAction,
       Color(0xFF4F86F7),
     ],
-    this.shadowColor = const Color(0xFF2563EB),
+    this.shadowColor = AppColors.primaryAction,
     this.textStyle,
   });
 

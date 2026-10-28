@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
@@ -106,12 +106,12 @@ class LessonAssessmentHub extends ConsumerWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: effectiveIsCompleted
-              ? const Color(0xFFA7F3D0)
-              : const Color(0xFFE2E8F0),
+              ? AppColors.successBorder
+              : AppColors.border,
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 18,
             offset: const Offset(0, 4),
           ),
@@ -126,7 +126,7 @@ class LessonAssessmentHub extends ConsumerWidget {
             Container(
               height: 4,
               color: effectiveIsCompleted
-                  ? const Color(0xFF10B981)
+                  ? AppColors.success
                   : AppColors.primary,
             ),
 
@@ -141,12 +141,12 @@ class LessonAssessmentHub extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: effectiveIsCompleted
                           ? const Color(0xFFECFDF5)
-                          : const Color(0xFFF8FAFC),
+                          : AppColors.surfaceLight,
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
                         color: effectiveIsCompleted
-                            ? const Color(0xFFA7F3D0)
-                            : const Color(0xFFE2E8F0),
+                            ? AppColors.successBorder
+                            : AppColors.border,
                       ),
                     ),
                     child: Row(
@@ -158,7 +158,7 @@ class LessonAssessmentHub extends ConsumerWidget {
                               : Icons.info_outline_rounded,
                           size: 18,
                           color: effectiveIsCompleted
-                              ? const Color(0xFF059669)
+                              ? AppColors.successDark
                               : AppColors.primary,
                         ),
                         const SizedBox(width: 10),
@@ -169,7 +169,7 @@ class LessonAssessmentHub extends ConsumerWidget {
                               fontSize: 12.5,
                               color: effectiveIsCompleted
                                   ? const Color(0xFF065F46)
-                                  : const Color(0xFF475569),
+                                  : AppColors.textSecondaryDark,
                               height: 1.45,
                               fontWeight: FontWeight.w500,
                             ),
@@ -199,14 +199,14 @@ class LessonAssessmentHub extends ConsumerWidget {
                     height: 50,
                     decoration: BoxDecoration(
                       color: effectiveIsCompleted
-                          ? const Color(0xFF059669)
+                          ? AppColors.successDark
                           : AppColors.primary,
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
                           color:
                               (effectiveIsCompleted
-                                      ? const Color(0xFF059669)
+                                      ? AppColors.successDark
                                       : AppColors.primary)
                                   .withValues(alpha: 0.32),
                           blurRadius: 14,
@@ -292,7 +292,7 @@ class LessonAssessmentHub extends ConsumerWidget {
                       icon: const Icon(
                         Icons.history_rounded,
                         size: 19,
-                        color: Color(0xFF334155),
+                        color: AppColors.textLabel,
                       ),
                       label: Text(
                         submissions.isNotEmpty
@@ -301,15 +301,15 @@ class LessonAssessmentHub extends ConsumerWidget {
                         style: const TextStyle(
                           fontSize: 13.5,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF334155),
+                          color: AppColors.textLabel,
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xFFCBD5E1)),
+                        side: const BorderSide(color: AppColors.borderMedium),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
-                        backgroundColor: const Color(0xFFF8FAFC),
+                        backgroundColor: AppColors.surfaceLight,
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Widget minh họa bì thư mở (Open Envelope Illustration) kèm phù hiệu tick xanh.
 class EnvelopeIllustration extends StatelessWidget {
   final double width;
@@ -34,9 +35,9 @@ class EnvelopeIllustration extends StatelessWidget {
               height: height * 0.55,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
+                color: AppColors.surfaceSubtle,
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.06),
@@ -52,7 +53,7 @@ class EnvelopeIllustration extends StatelessWidget {
                     width: 44,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF94A3B8),
+                      color: AppColors.textMuted,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -61,7 +62,7 @@ class EnvelopeIllustration extends StatelessWidget {
                     width: 60,
                     height: 3.5,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF334155),
+                      color: AppColors.textLabel,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -70,7 +71,7 @@ class EnvelopeIllustration extends StatelessWidget {
                     width: 60,
                     height: 3.5,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF334155),
+                      color: AppColors.textLabel,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -97,11 +98,11 @@ class EnvelopeIllustration extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF10B981),
+                color: AppColors.success,
                 border: Border.all(color: Colors.white, width: 2),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF10B981).withValues(alpha: 0.35),
+                    color: AppColors.success.withValues(alpha: 0.35),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -129,7 +130,7 @@ class _EnvelopeFlapPainter extends CustomPainter {
     path.lineTo(size.width * 0.92, size.height * 0.85);
     path.close();
 
-    final paint = Paint()..color = const Color(0xFF2563EB);
+    final paint = Paint()..color = AppColors.primaryAction;
     canvas.drawPath(path, paint);
   }
 
@@ -160,7 +161,7 @@ class _EnvelopeFrontPocketPainter extends CustomPainter {
       4,
       false,
     );
-    canvas.drawPath(mainPocket, Paint()..color = const Color(0xFF60A5FA));
+    canvas.drawPath(mainPocket, Paint()..color = AppColors.primaryLight);
 
     // Nếp gấp đổ bóng trái (#3B82F6)
     final leftFold = Path()
@@ -170,7 +171,7 @@ class _EnvelopeFrontPocketPainter extends CustomPainter {
       ..close();
     canvas.drawPath(
       leftFold,
-      Paint()..color = const Color(0xFF3B82F6).withValues(alpha: 0.65),
+      Paint()..color = AppColors.info.withValues(alpha: 0.65),
     );
 
     // Nếp gấp đổ bóng phải (#2563EB)
@@ -181,7 +182,7 @@ class _EnvelopeFrontPocketPainter extends CustomPainter {
       ..close();
     canvas.drawPath(
       rightFold,
-      Paint()..color = const Color(0xFF2563EB).withValues(alpha: 0.55),
+      Paint()..color = AppColors.primaryAction.withValues(alpha: 0.55),
     );
   }
 

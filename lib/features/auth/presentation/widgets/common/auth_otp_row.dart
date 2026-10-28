@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
@@ -54,7 +54,7 @@ class AuthOtpRow extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF1E293B),
+                color: AppColors.textDark,
               ),
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,
@@ -63,7 +63,7 @@ class AuthOtpRow extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(
-                    color: Color(0xFFA7F3D0),
+                    color: AppColors.borderMedium,
                     width: 1.5,
                   ),
                 ),

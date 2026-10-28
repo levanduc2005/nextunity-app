@@ -9,7 +9,6 @@ import 'package:rental_car/features/auth/domain/usecases/reset_password_usecase.
 import 'package:rental_car/features/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/verify_forgot_password_otp_usecase.dart';
-import 'package:rental_car/features/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/verify_register_otp_usecase.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_providers.dart';
 
@@ -69,7 +68,6 @@ class AuthController extends Notifier<AuthState> {
   GetCurrentUserUseCase get _getCurrentUserUseCase =>
       ref.read(getCurrentUserUseCaseProvider);
   SendOtpUseCase get _sendOtpUseCase => ref.read(sendOtpUseCaseProvider);
-  VerifyOtpUseCase get _verifyOtpUseCase => ref.read(verifyOtpUseCaseProvider);
   LogoutUseCase get _logoutUseCase => ref.read(logoutUseCaseProvider);
   SignInWithGoogleUseCase get _signInWithGoogleUseCase =>
       ref.read(signInWithGoogleUseCaseProvider);
@@ -251,30 +249,6 @@ class AuthController extends Notifier<AuthState> {
         state = state.copyWith(
           status: AuthStatus.otpSent,
           emailForOtp: email.trim().toLowerCase(),
-          isLoading: false,
-        );
-        return true;
-      },
-      err: (failure) {
-        state = state.copyWith(errorMessage: failure.message, isLoading: false);
-        return false;
-      },
-    );
-  }
-
-  Future<bool> verifyOtp({required String email, required String otp}) async {
-    state = state.copyWith(isLoading: true, clearError: true);
-
-    final result = await _verifyOtpUseCase(
-      email: email.trim().toLowerCase(),
-      otp: otp.trim(),
-    );
-
-    return result.when(
-      ok: (user) {
-        state = state.copyWith(
-          status: AuthStatus.authenticated,
-          user: user,
           isLoading: false,
         );
         return true;

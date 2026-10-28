@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -63,7 +63,7 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                 width: 44,
                 height: 4.5,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFCBD5E1),
+                  color: AppColors.borderMedium,
                   borderRadius: BorderRadius.circular(2.5),
                 ),
               ),
@@ -77,7 +77,7 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFEFF6FF),
+                    color: AppColors.primaryContainer,
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -98,7 +98,7 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF0F172A),
+                          color: AppColors.textPrimary,
                           letterSpacing: -0.3,
                         ),
                       ),
@@ -109,7 +109,7 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -120,7 +120,7 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(
                     Icons.close_rounded,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     size: 22,
                   ),
                 ),
@@ -138,12 +138,12 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: bestAttempt.isPassed
                       ? const Color(0xFFECFDF5)
-                      : const Color(0xFFFFFBEB),
+                      : AppColors.warningLight,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: bestAttempt.isPassed
-                        ? const Color(0xFFA7F3D0)
-                        : const Color(0xFFFDE68A),
+                        ? AppColors.successBorder
+                        : AppColors.warningBorder,
                   ),
                 ),
                 child: Row(
@@ -154,8 +154,8 @@ class QuizSubmissionsHistoryModal extends StatelessWidget {
                           : Icons.military_tech_rounded,
                       size: 18,
                       color: bestAttempt.isPassed
-                          ? const Color(0xFF059669)
-                          : const Color(0xFFD97706),
+                          ? AppColors.successDark
+                          : AppColors.warningForeground,
                     ),
                     const SizedBox(width: 8),
                     Expanded(

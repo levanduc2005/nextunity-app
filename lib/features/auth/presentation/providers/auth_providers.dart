@@ -14,7 +14,6 @@ import 'package:rental_car/features/auth/domain/usecases/reset_password_usecase.
 import 'package:rental_car/features/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/verify_forgot_password_otp_usecase.dart';
-import 'package:rental_car/features/auth/domain/usecases/verify_otp_usecase.dart';
 import 'package:rental_car/features/auth/domain/usecases/verify_register_otp_usecase.dart';
 
 // --- Data Layer Providers ---
@@ -79,10 +78,6 @@ final registerUseCaseProvider = Provider<RegisterUseCase>((ref) {
 
 final sendOtpUseCaseProvider = Provider<SendOtpUseCase>((ref) {
   return SendOtpUseCase(ref.watch(authRepositoryProvider));
-});
-
-final verifyOtpUseCaseProvider = Provider<VerifyOtpUseCase>((ref) {
-  return VerifyOtpUseCase(ref.watch(authRepositoryProvider));
 });
 
 final logoutUseCaseProvider = Provider<LogoutUseCase>((ref) {

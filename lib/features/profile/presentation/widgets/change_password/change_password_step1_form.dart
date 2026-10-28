@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -63,7 +63,7 @@ class ChangePasswordStep1Form extends StatelessWidget {
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
               letterSpacing: -0.3,
             ),
           ),
@@ -73,7 +73,7 @@ class ChangePasswordStep1Form extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 12.5,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
               height: 1.4,
             ),
           ),

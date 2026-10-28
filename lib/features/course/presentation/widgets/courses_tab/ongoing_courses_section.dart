@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/enrollment_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/ongoing_course_card.dart';
@@ -57,7 +57,7 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
                 style: const TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w900,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                   letterSpacing: -0.2,
                 ),
                 maxLines: 1,
@@ -69,9 +69,9 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
             Container(
               padding: const EdgeInsets.all(2.5),
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
+                color: AppColors.surfaceSubtle,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -145,7 +145,7 @@ class _OngoingCoursesSectionState extends State<OngoingCoursesSection> {
           style: TextStyle(
             fontSize: 10.5,
             fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-            color: isSelected ? AppColors.primary : const Color(0xFF64748B),
+            color: isSelected ? AppColors.primary : AppColors.textSecondary,
           ),
         ),
       ),

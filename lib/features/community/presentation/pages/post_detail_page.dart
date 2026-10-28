@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -199,7 +199,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                             'Đã sao chép liên kết bài viết!',
                           ),
                         ),
-                        Container(height: 8, color: const Color(0xFFF1F5F9)),
+                        Container(height: 8, color: AppColors.surfaceSubtle),
                         PostDetailCommentsSection(
                           comments: detailState.comments,
                           isLoading: detailState.isLoadingComments,

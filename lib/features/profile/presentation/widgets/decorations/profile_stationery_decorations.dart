@@ -1,6 +1,7 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// 3D Push Pin trang trí góc trên bên trái của thẻ hồ sơ
 class PushPinWidget extends StatelessWidget {
   const PushPinWidget({super.key});
@@ -14,7 +15,7 @@ class PushPinWidget extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: const RadialGradient(
           center: Alignment(-0.3, -0.3),
-          colors: [Color(0xFFFF7A7A), Color(0xFFDC2626), Color(0xFF7F1D1D)],
+          colors: [Color(0xFFFF7A7A), AppColors.errorForeground, Color(0xFF7F1D1D)],
         ),
         boxShadow: [
           BoxShadow(
@@ -106,7 +107,7 @@ class ProfileStickyBadge extends StatelessWidget {
                   height: 1.5,
                   margin: const EdgeInsets.only(top: 2),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFB45309).withValues(alpha: 0.3),
+                    color: AppColors.warningDark.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -132,7 +133,7 @@ class _PaperclipPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFE11D48)
+      ..color = AppColors.expired
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round

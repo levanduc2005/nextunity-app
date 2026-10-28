@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class LessonVideoPlayerBox extends StatelessWidget {
@@ -11,12 +11,12 @@ class LessonVideoPlayerBox extends StatelessWidget {
     return Container(
       height: 195,
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A),
+        color: AppColors.textPrimary,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0F172A).withValues(alpha: 0.1),
+            color: AppColors.textPrimary.withValues(alpha: 0.1),
             blurRadius: 18,
             offset: const Offset(0, 6),
           ),
@@ -27,7 +27,7 @@ class LessonVideoPlayerBox extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Container(color: const Color(0xFF0F172A)),
+            Container(color: AppColors.textPrimary),
             Center(
               child: Container(
                 width: 52,

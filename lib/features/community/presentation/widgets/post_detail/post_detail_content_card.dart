@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/theme/app_spacing.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
@@ -63,7 +63,7 @@ class PostDetailContentCard extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF0F172A),
+                              color: AppColors.textPrimary,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -86,20 +86,20 @@ class PostDetailContentCard extends StatelessWidget {
                           post.formattedTime,
                           style: const TextStyle(
                             fontSize: 11,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         const Text(
                           ' • ',
                           style: TextStyle(
                             fontSize: 11,
-                            color: Color(0xFF94A3B8),
+                            color: AppColors.textMuted,
                           ),
                         ),
                         const Icon(
                           Icons.public_rounded,
                           size: 12,
-                          color: Color(0xFF94A3B8),
+                          color: AppColors.textMuted,
                         ),
                       ],
                     ),
@@ -118,7 +118,7 @@ class PostDetailContentCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
                 height: 1.35,
               ),
             ),
@@ -130,7 +130,7 @@ class PostDetailContentCard extends StatelessWidget {
             post.content,
             style: const TextStyle(
               fontSize: 14.5,
-              color: Color(0xFF334155),
+              color: AppColors.textLabel,
               height: 1.5,
             ),
           ),
@@ -153,14 +153,14 @@ class PostDetailContentCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],
           ),
 
           const Gap(8),
-          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, thickness: 1, color: AppColors.surfaceSubtle),
 
           // 3 Nút tương tác chuẩn FB
           Padding(
@@ -199,7 +199,7 @@ class PostDetailContentCard extends StatelessWidget {
                           Icon(
                             Icons.chat_bubble_outline_rounded,
                             size: 18,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                           Gap.h(6),
                           Text(
@@ -207,7 +207,7 @@ class PostDetailContentCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF475569),
+                              color: AppColors.textSecondaryDark,
                             ),
                           ),
                         ],
@@ -227,7 +227,7 @@ class PostDetailContentCard extends StatelessWidget {
                           Icon(
                             Icons.share_outlined,
                             size: 18,
-                            color: Color(0xFF64748B),
+                            color: AppColors.textSecondary,
                           ),
                           Gap.h(6),
                           Text(
@@ -235,7 +235,7 @@ class PostDetailContentCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF475569),
+                              color: AppColors.textSecondaryDark,
                             ),
                           ),
                         ],

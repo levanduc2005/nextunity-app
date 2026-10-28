@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 
@@ -25,11 +25,11 @@ class SyllabusLessonTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCompleted = isEnrolled && lesson.isCompleted;
 
-    Color itemBg = const Color(0xFFF8FAFC);
-    Color itemBorder = const Color(0xFFF1F5F9);
+    Color itemBg = AppColors.surfaceLight;
+    Color itemBorder = AppColors.surfaceSubtle;
     if (isActive) {
-      itemBg = const Color(0xFFF0FDF4);
-      itemBorder = const Color(0xFF86EFAC);
+      itemBg = AppColors.primaryContainer;
+      itemBorder = AppColors.primaryBorder;
     }
 
     return Container(
@@ -55,7 +55,7 @@ class SyllabusLessonTile extends StatelessWidget {
                       ? const Color(0xFFD1FAE5)
                       : (isActive
                             ? AppColors.primary
-                            : const Color(0xFFE2E8F0)),
+                            : AppColors.border),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(
@@ -63,7 +63,7 @@ class SyllabusLessonTile extends StatelessWidget {
                       ? const Icon(
                           Icons.check_rounded,
                           size: 14,
-                          color: Color(0xFF059669),
+                          color: AppColors.successDark,
                         )
                       : (isActive
                             ? Icon(
@@ -81,7 +81,7 @@ class SyllabusLessonTile extends StatelessWidget {
                                                 .radio_button_unchecked_rounded)
                                     : Icons.lock_outline_rounded,
                                 size: 14,
-                                color: const Color(0xFF64748B),
+                                color: AppColors.textSecondary,
                               )),
                 ),
               ),
@@ -101,7 +101,7 @@ class SyllabusLessonTile extends StatelessWidget {
                             : FontWeight.w600,
                         color: isActive
                             ? AppColors.primary
-                            : const Color(0xFF1E293B),
+                            : AppColors.textDark,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -111,7 +111,7 @@ class SyllabusLessonTile extends StatelessWidget {
                       '${lesson.typeName ?? (lesson.type == 'QUIZ' ? 'Bài kiểm tra' : lesson.type)} • ${lesson.estimatedMinutes} phút',
                       style: const TextStyle(
                         fontSize: 10,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -126,7 +126,7 @@ class SyllabusLessonTile extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF059669),
+                    color: AppColors.successDark,
                   ),
                 )
               else if (isActive)
@@ -168,7 +168,7 @@ class SyllabusLessonTile extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F5F9),
+                    color: AppColors.surfaceSubtle,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Row(
@@ -177,14 +177,14 @@ class SyllabusLessonTile extends StatelessWidget {
                       Icon(
                         Icons.visibility_outlined,
                         size: 11,
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondary,
                       ),
                       SizedBox(width: 3),
                       Text(
                         'Xem trước',
                         style: TextStyle(
                           fontSize: 9.5,
-                          color: Color(0xFF64748B),
+                          color: AppColors.textSecondary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -196,7 +196,7 @@ class SyllabusLessonTile extends StatelessWidget {
                   'Chưa học',
                   style: TextStyle(
                     fontSize: 10,
-                    color: Color(0xFF94A3B8),
+                    color: AppColors.textMuted,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

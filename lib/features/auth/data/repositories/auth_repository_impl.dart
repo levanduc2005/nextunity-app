@@ -104,14 +104,12 @@ class AuthRepositoryImpl implements AuthRepository {
         return null;
       }
 
-      final cachedUser = await _localDataSource.getUser();
-      if (cachedUser != null) {
-        return cachedUser.toEntity();
-      }
+      final localUser = await _localDataSource.getUser();
+      if (localUser != null) return localUser.toEntity();
 
-      final user = await _remoteDataSource.getCurrentUser();
-      await _localDataSource.saveUser(user);
-      return user.toEntity();
+      final remoteUser = await _remoteDataSource.getCurrentUser();
+      await _localDataSource.saveUser(remoteUser);
+      return remoteUser.toEntity();
     });
   }
 
@@ -152,26 +150,6 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Result<void>> sendOtp({required String email}) {
     return safeCall(() => _remoteDataSource.sendOtp(email: email));
-  }
-
-  @override
-  Future<Result<UserEntity>> verifyOtp({
-    required String email,
-    required String otp,
-  }) {
-    return safeCall(() async {
-      final tokens = await _remoteDataSource.verifyOtp(email: email, otp: otp);
-
-      await _localDataSource.saveTokens(
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
-      );
-
-      final userModel = await _remoteDataSource.getCurrentUser();
-      await _localDataSource.saveUser(userModel);
-
-      return userModel.toEntity();
-    });
   }
 
   @override

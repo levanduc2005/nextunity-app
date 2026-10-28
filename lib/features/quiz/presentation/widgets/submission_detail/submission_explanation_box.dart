@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class SubmissionExplanationBox extends StatelessWidget {
@@ -14,7 +14,7 @@ class SubmissionExplanationBox extends StatelessWidget {
       margin: const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFEFF6FF),
+        color: AppColors.primaryContainer,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFDBEAFE)),
       ),
@@ -44,7 +44,7 @@ class SubmissionExplanationBox extends StatelessWidget {
                   explanation.trim(),
                   style: const TextStyle(
                     fontSize: 12,
-                    color: Color(0xFF334155),
+                    color: AppColors.textLabel,
                     height: 1.4,
                   ),
                 ),

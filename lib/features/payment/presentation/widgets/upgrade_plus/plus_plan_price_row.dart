@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Hàng giá gói cước kèm giá gốc gạch ngang và tag giảm giá
 class PlusPlanPriceRow extends StatelessWidget {
   const PlusPlanPriceRow({
@@ -30,21 +31,21 @@ class PlusPlanPriceRow extends StatelessWidget {
             fontSize: 17,
             fontWeight: FontWeight.w900,
             color: isSelected
-                ? const Color(0xFFB45309)
-                : const Color(0xFF1E293B),
+                ? AppColors.warningDark
+                : AppColors.textDark,
           ),
         ),
         if (priceUnit != null)
           Text(
             priceUnit!,
-            style: const TextStyle(fontSize: 11.5, color: Color(0xFF64748B)),
+            style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondary),
           ),
         if (originalPrice != null)
           Text(
             originalPrice!,
             style: const TextStyle(
               fontSize: 11.5,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
               decoration: TextDecoration.lineThrough,
             ),
           ),
@@ -52,16 +53,16 @@ class PlusPlanPriceRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFFBEB),
+              color: AppColors.warningLight,
               borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: const Color(0xFFFDE68A)),
+              border: Border.all(color: AppColors.warningBorder),
             ),
             child: Text(
               discountTag!,
               style: const TextStyle(
                 fontSize: 9.5,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFFB45309),
+                color: AppColors.warningDark,
               ),
             ),
           ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Thân nội dung bài viết: Tiêu đề và đoạn trích văn bản 3 dòng có nút 'Xem thêm'
@@ -27,7 +27,7 @@ class PostCardContentBody extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimary,
                 height: 1.35,
               ),
             ),
@@ -40,7 +40,7 @@ class PostCardContentBody extends StatelessWidget {
             builder: (context, constraints) {
               const textStyle = TextStyle(
                 fontSize: 13.5,
-                color: Color(0xFF334155),
+                color: AppColors.textLabel,
                 height: 1.45,
               );
 

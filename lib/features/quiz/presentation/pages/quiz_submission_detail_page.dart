@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
@@ -63,7 +63,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
       final quizToUse = quiz ?? quizAsync?.asData?.value;
 
       return Scaffold(
-        backgroundColor: const Color(0xFFF8FAFC),
+        backgroundColor: AppColors.surfaceLight,
         appBar: _buildAppBar(context, ref, initialSubmission, quizToUse),
         body: _buildContent(context, ref, initialSubmission!, quizToUse),
       );
@@ -74,7 +74,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.surfaceLight,
       appBar: _buildAppBar(context, ref, submissionAsync.asData?.value, null),
       body: submissionAsync.when(
         loading: () => const Center(
@@ -91,7 +91,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
                 const Icon(
                   Icons.error_outline_rounded,
                   size: 48,
-                  color: Color(0xFFEF4444),
+                  color: AppColors.error,
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -99,7 +99,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -145,7 +145,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
       surfaceTintColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-        color: const Color(0xFF0F172A),
+        color: AppColors.textPrimary,
         onPressed: () => _handleBack(context, ref, submission, quiz),
       ),
       title: Text(
@@ -153,7 +153,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
         style: const TextStyle(
           fontSize: 16.5,
           fontWeight: FontWeight.w800,
-          color: Color(0xFF0F172A),
+          color: AppColors.textPrimary,
         ),
       ),
       centerTitle: true,
@@ -190,7 +190,7 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimary,
                 ),
               ),
               Container(
@@ -199,9 +199,9 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEFF6FF),
+                  color: AppColors.primaryContainer,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFBFDBFE)),
+                  border: Border.all(color: AppColors.primaryBorder),
                 ),
                 child: Text(
                   '$correctCount đúng • ${totalQuestions - correctCount} sai',
@@ -279,8 +279,8 @@ class QuizSubmissionDetailPage extends ConsumerWidget {
                 style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700),
               ),
               style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFF334155),
-                side: const BorderSide(color: Color(0xFFCBD5E1), width: 1.2),
+                foregroundColor: AppColors.textLabel,
+                side: const BorderSide(color: AppColors.borderMedium, width: 1.2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),

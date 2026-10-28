@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 import 'package:rental_car/features/course/domain/entities/module_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_toc_bottom_sheet.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// App Bar chi tiết bài học chuẩn phong cách ApSkil (Materi Kelas)
 class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
   const LessonAppBar({
@@ -34,7 +35,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
-        color: const Color(0xFF0F172A),
+        color: AppColors.textPrimary,
         onPressed: () => context.pop(),
       ),
       title: Column(
@@ -45,7 +46,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondary,
               letterSpacing: 0.5,
             ),
           ),
@@ -56,7 +57,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
         ],
@@ -68,9 +69,9 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
               margin: const EdgeInsets.only(right: 6),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFDCFCE7),
+                color: AppColors.successContainer,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFBBF7D0)),
+                border: Border.all(color: AppColors.successBorderLight),
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
@@ -78,7 +79,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Icon(
                     Icons.check_circle_rounded,
                     size: 14,
-                    color: Color(0xFF166534),
+                    color: AppColors.successForeground,
                   ),
                   SizedBox(width: 4),
                   Text(
@@ -86,7 +87,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF166534),
+                      color: AppColors.successForeground,
                     ),
                   ),
                 ],
@@ -95,7 +96,7 @@ class LessonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         IconButton(
           icon: const Icon(Icons.format_list_bulleted_rounded, size: 22),
-          color: const Color(0xFF0F172A),
+          color: AppColors.textPrimary,
           tooltip: 'Mục lục bài học',
           onPressed: () {
             LessonTocBottomSheet.show(

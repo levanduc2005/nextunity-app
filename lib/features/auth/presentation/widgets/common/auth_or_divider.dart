@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/core/theme/app_colors.dart';
 
 /// Đường phân cách "Hoặc" giữa Form và Social Logins.
 class AuthOrDivider extends StatelessWidget {
@@ -18,7 +19,7 @@ class AuthOrDivider extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(
-            child: Divider(color: Color(0xFFE2E8F0), thickness: 1),
+            child: Divider(color: AppColors.border, thickness: 1),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -27,12 +28,12 @@ class AuthOrDivider extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 12.5,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF94A3B8),
+                color: AppColors.textMuted,
               ),
             ),
           ),
           const Expanded(
-            child: Divider(color: Color(0xFFE2E8F0), thickness: 1),
+            child: Divider(color: AppColors.border, thickness: 1),
           ),
         ],
       ),

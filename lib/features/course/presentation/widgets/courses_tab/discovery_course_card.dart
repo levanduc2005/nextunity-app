@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/features/course/domain/entities/course_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/discovery_course_info.dart';
 import 'package:rental_car/features/course/presentation/widgets/courses_tab/discovery_course_thumbnail.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Thẻ hiển thị khóa học trong danh mục khám phá (Discovery)
 class DiscoveryCourseCard extends StatelessWidget {
   const DiscoveryCourseCard({
@@ -26,10 +27,10 @@ class DiscoveryCourseCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0xFFF1F5F9)),
+          border: Border.all(color: AppColors.surfaceSubtle),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+              color: AppColors.textPrimary.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 3),
             ),

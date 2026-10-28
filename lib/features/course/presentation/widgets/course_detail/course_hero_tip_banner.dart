@@ -28,7 +28,7 @@ class CourseHeroTipBanner extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.w600,
-                color: AppColors.successForeground,
+                color: AppColors.primaryForeground,
               ),
             ),
           ),

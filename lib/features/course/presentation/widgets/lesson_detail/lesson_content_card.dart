@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
@@ -61,10 +61,10 @@ class _LessonContentCardState extends ConsumerState<LessonContentCard> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.03),
+                  color: AppColors.textPrimary.withValues(alpha: 0.03),
                   blurRadius: 10,
                   offset: const Offset(0, 3),
                 ),
@@ -84,9 +84,9 @@ class _LessonContentCardState extends ConsumerState<LessonContentCard> {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: AppColors.surfaceSubtle,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Row(
         children: [
@@ -123,7 +123,7 @@ class _LessonContentCardState extends ConsumerState<LessonContentCard> {
                         : FontWeight.w600,
                     color: _activeContentTab == 0
                         ? AppColors.primary
-                        : const Color(0xFF64748B),
+                        : AppColors.textSecondary,
                   ),
                 ),
               ),
@@ -162,7 +162,7 @@ class _LessonContentCardState extends ConsumerState<LessonContentCard> {
                         : FontWeight.w600,
                     color: _activeContentTab == 1
                         ? AppColors.primary
-                        : const Color(0xFF64748B),
+                        : AppColors.textSecondary,
                   ),
                 ),
               ),

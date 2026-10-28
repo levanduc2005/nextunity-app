@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rental_car/core/widgets/widgets.dart';
 import 'package:rental_car/features/community/domain/entities/reaction_type.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/post_reaction_popup.dart';
 import 'package:rental_car/features/community/presentation/widgets/common/reaction_type_ui.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Nút bày tỏ cảm xúc bài viết:
 /// - Chạm nhanh: Like / Bỏ cảm xúc hiện tại
 /// - Nhấn giữ: Hiện thanh chọn 6 loại cảm xúc với animation nảy mượt mà
@@ -85,7 +86,7 @@ class _PostReactionButtonState extends State<PostReactionButton>
     final reaction = widget.currentReaction;
     final isReacted = reaction != null;
 
-    final Color color = isReacted ? reaction.color : const Color(0xFF64748B);
+    final Color color = isReacted ? reaction.color : AppColors.textSecondary;
     final String label = isReacted ? reaction.label : 'Thích';
 
     if (widget.isCompact) {
@@ -105,7 +106,7 @@ class _PostReactionButtonState extends State<PostReactionButton>
                   const Icon(
                     Icons.thumb_up_alt_outlined,
                     size: 13,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondary,
                   )
                 else if (reaction == ReactionType.like)
                   const Icon(
@@ -122,7 +123,7 @@ class _PostReactionButtonState extends State<PostReactionButton>
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: isReacted ? color : const Color(0xFF64748B),
+                      color: isReacted ? color : AppColors.textSecondary,
                     ),
                   ),
                 ],

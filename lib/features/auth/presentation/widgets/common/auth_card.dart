@@ -1,6 +1,7 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import 'package:rental_car/core/theme/app_colors.dart';
 /// Painter vẽ đường viền nét đứt bên trong AuthCard.
 class DashedBorderPainter extends CustomPainter {
   final Color color;
@@ -88,8 +89,8 @@ class AuthCard extends StatelessWidget {
     this.innerPadding = const EdgeInsets.all(22),
     this.borderRadius = 24.0,
     this.backgroundColor = Colors.white,
-    this.borderColor = const Color(0xFFE2E8F0),
-    this.dashColor = const Color(0xFFE2E8F0),
+    this.borderColor = AppColors.border,
+    this.dashColor = AppColors.border,
     this.dashStrokeWidth = 1.0,
     this.dashRadius = 24.0,
     this.boxShadow,
@@ -108,7 +109,7 @@ class AuthCard extends StatelessWidget {
             boxShadow ??
             [
               BoxShadow(
-                color: const Color(0xFF0F172A).withValues(alpha: 0.04),
+                color: AppColors.textPrimary.withValues(alpha: 0.04),
                 blurRadius: 24,
                 offset: const Offset(0, 8),
               ),

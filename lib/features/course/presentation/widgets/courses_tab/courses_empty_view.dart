@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
 class CoursesEmptyEnrolledView extends StatelessWidget {
@@ -13,7 +13,7 @@ class CoursesEmptyEnrolledView extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         children: [
@@ -35,14 +35,14 @@ class CoursesEmptyEnrolledView extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           const Text(
             'Hãy khám phá danh mục môn học FPT và đăng ký tham gia ngay!',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 11.5, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -75,20 +75,20 @@ class CoursesEmptySearchView extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              color: Color(0xFFF1F5F9),
+              color: AppColors.surfaceSubtle,
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.search_off_rounded,
               size: 36,
-              color: Color(0xFF94A3B8),
+              color: AppColors.textMuted,
             ),
           ),
           const SizedBox(height: 12),
@@ -97,14 +97,14 @@ class CoursesEmptySearchView extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w800,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 4),
           const Text(
             'Vui lòng thử tìm kiếm bằng từ khóa hoặc chọn danh mục khác.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 11.5, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary),
           ),
         ],
       ),

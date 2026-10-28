@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -24,17 +24,17 @@ Future<void> showPaymentSuccessDialog(
             height: 64,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
+                colors: [AppColors.warningContainer, AppColors.warningBorder],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFF59E0B)),
+              border: Border.all(color: AppColors.warning),
             ),
             child: const Center(
               child: Icon(
                 Icons.workspace_premium_rounded,
-                color: Color(0xFFB45309),
+                color: AppColors.warningDark,
                 size: 34,
               ),
             ),
@@ -45,7 +45,7 @@ Future<void> showPaymentSuccessDialog(
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 18,
-              color: Color(0xFF0F172A),
+              color: AppColors.textPrimary,
               letterSpacing: -0.3,
             ),
             textAlign: TextAlign.center,
@@ -57,7 +57,7 @@ Future<void> showPaymentSuccessDialog(
         textAlign: TextAlign.center,
         style: const TextStyle(
           fontSize: 13,
-          color: Color(0xFF64748B),
+          color: AppColors.textSecondary,
           height: 1.45,
         ),
       ),
