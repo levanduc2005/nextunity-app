@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
@@ -15,11 +15,13 @@ class LessonContentCard extends ConsumerStatefulWidget {
     required this.lesson,
     required this.isCompleted,
     this.instructorName,
+    this.showMediaHeader = true,
   });
 
   final LessonEntity lesson;
   final bool isCompleted;
   final String? instructorName;
+  final bool showMediaHeader;
 
   @override
   ConsumerState<LessonContentCard> createState() => _LessonContentCardState();
@@ -44,11 +46,17 @@ class _LessonContentCardState extends ConsumerState<LessonContentCard> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // 1. Hero Media: Quiz Hub hoặc Video Player
-        if (isQuiz) ...[
-          LessonAssessmentHub(lesson: lesson, isCompleted: isCompleted),
-        ] else if (isVideoLesson) ...[
-          LessonVideoPlayerBox(estimatedMinutes: lesson.estimatedMinutes),
-          const SizedBox(height: 16),
+        if (widget.showMediaHeader) ...[
+          if (isQuiz) ...[
+            LessonAssessmentHub(lesson: lesson, isCompleted: isCompleted),
+          ] else if (isVideoLesson) ...[
+            LessonVideoPlayerBox(
+              estimatedMinutes: lesson.estimatedMinutes,
+              videoUrl: lesson.videoUrl,
+              title: lesson.title,
+            ),
+            const SizedBox(height: 16),
+          ],
         ],
 
         // 2. Tabs chuyển đổi chỉ hiển thị khi có Slide thực tế

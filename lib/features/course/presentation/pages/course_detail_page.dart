@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
@@ -10,9 +10,10 @@ import 'package:rental_car/features/course/domain/entities/module_entity.dart';
 import 'package:rental_car/features/course/presentation/providers/course_providers.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_about_section.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_bottom_bar.dart';
-import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_hero_header.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_enroll_prompt_sheet.dart';
+import 'package:rental_car/features/course/presentation/widgets/course_detail/course_sliver_hero_header.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_syllabus_tab_view.dart';
+import 'package:rental_car/features/course/presentation/widgets/course_detail/course_tab_header_delegate.dart';
 
 class CourseDetailPage extends ConsumerStatefulWidget {
   const CourseDetailPage({required this.courseId, super.key});
@@ -24,7 +25,8 @@ class CourseDetailPage extends ConsumerStatefulWidget {
 }
 
 class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
-  final GlobalKey _syllabusKey = GlobalKey();
+  final ScrollController _scrollController = ScrollController();
+  int _activeTabIndex = 0; // 0: Giáo trình (Mặc định), 1: Tổng quan & CLO
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
 
   @override
   void dispose() {
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -109,12 +112,14 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
     return null;
   }
 
-  void _scrollToSyllabus() {
-    final keyContext = _syllabusKey.currentContext;
-    if (keyContext != null) {
-      Scrollable.ensureVisible(
-        keyContext,
-        duration: const Duration(milliseconds: 350),
+  void _switchToSyllabus() {
+    if (_activeTabIndex != 0) {
+      setState(() => _activeTabIndex = 0);
+    }
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        180,
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -232,65 +237,74 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Scrollable Body
-          SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 96),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // 1. Sleek Hero Header chuẩn ApSkil
-                CourseDetailHeroHeader(
-                  course: course,
-                  completedCount: completedCount,
+          // 1. CustomScrollView với Collapsible Sliver Hero & Sticky Tabs
+          CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              // 1.1 Collapsible Sliver Hero Header tràn viền
+              CourseSliverHeroHeader(
+                course: course,
+                completedCount: completedCount,
+                totalLessons: totalLessons,
+                onPlayTrailer: () => _handleEnrollOrLearn(
+                  context,
+                  course,
+                  isUserPlus,
+                  targetLesson,
+                ),
+              ),
+
+              // 1.2 Sticky Segmented Tab Bar (1-chạm chuyển tab)
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CourseTabHeaderDelegate(
+                  selectedIndex: _activeTabIndex,
                   totalLessons: totalLessons,
-                  onPlayTrailer: () => _handleEnrollOrLearn(
-                    context,
-                    course,
-                    isUserPlus,
-                    targetLesson,
+                  onTabChanged: (index) {
+                    setState(() => _activeTabIndex = index);
+                  },
+                ),
+              ),
+
+              // 1.3 Nội dung theo Tab
+              if (_activeTabIndex == 0) ...[
+                // Tab 0: Giáo trình môn học (Mặc định mở ngay lập tức)
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 110),
+                  sliver: SliverToBoxAdapter(
+                    child: CourseSyllabusTabView(
+                      modules: modules,
+                      isEnrolled: course.isEnrolled,
+                      isCourseCompleted: isCourseCompleted,
+                      incompleteLesson: incompleteLesson,
+                      onTapLesson: (lesson) {
+                        if (course.isEnrolled) {
+                          _navigateToLesson(lesson.id);
+                        } else {
+                          _showEnrollPrompt(
+                            context,
+                            course,
+                            lesson,
+                            isUserPlus,
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
-
-                // 2. Main Content: Giới thiệu ở TRÊN, Giáo trình ở DƯỚI chung 1 trang
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // 2.1 Giới thiệu môn học (TRÊN)
-                      CourseAboutSection(course: course),
-                      const SizedBox(height: 24),
-
-                      // 2.2 Giáo trình môn học (DƯỚI)
-                      KeyedSubtree(
-                        key: _syllabusKey,
-                        child: CourseSyllabusTabView(
-                          modules: modules,
-                          isEnrolled: course.isEnrolled,
-                          isCourseCompleted: isCourseCompleted,
-                          incompleteLesson: incompleteLesson,
-                          onTapLesson: (lesson) {
-                            if (course.isEnrolled) {
-                              _navigateToLesson(lesson.id);
-                            } else {
-                              _showEnrollPrompt(
-                                context,
-                                course,
-                                lesson,
-                                isUserPlus,
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ],
+              ] else ...[
+                // Tab 1: Tổng quan & Chuẩn đầu ra (CLO)
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 110),
+                  sliver: SliverToBoxAdapter(
+                    child: CourseAboutSection(course: course),
                   ),
                 ),
               ],
-            ),
+            ],
           ),
 
-          // 3. Sticky Bottom Action Bar chuẩn ApSkil
+          // 2. Sticky Bottom Action Bar
           Positioned(
             bottom: 0,
             left: 0,
@@ -301,7 +315,7 @@ class _CourseDetailPageState extends ConsumerState<CourseDetailPage> {
               isCompleted: isCourseCompleted,
               isPremium: course.isPremium,
               isUserPlus: isUserPlus,
-              onTapCurriculum: _scrollToSyllabus,
+              onTapCurriculum: _switchToSyllabus,
               lessonLabel: isCourseCompleted
                   ? 'Bạn đã hoàn thành tất cả bài học'
                   : (incompleteLesson != null

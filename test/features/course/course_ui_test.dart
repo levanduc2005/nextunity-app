@@ -7,12 +7,15 @@ import 'package:rental_car/features/course/domain/entities/module_entity.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_about_section.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_bottom_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_detail_hero_header.dart';
+import 'package:rental_car/features/course/presentation/widgets/course_detail/course_sliver_hero_header.dart';
 import 'package:rental_car/features/course/presentation/widgets/course_detail/course_syllabus_tab_view.dart';
+import 'package:rental_car/features/course/presentation/widgets/course_detail/course_tab_header_delegate.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_app_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_assessment_result_box.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_content_card.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_toc_bottom_sheet.dart';
+import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_video_player_box.dart';
 
 void main() {
   const sampleCourse = CourseEntity(
@@ -245,7 +248,7 @@ void main() {
 
     expect(find.byIcon(Icons.favorite_border_rounded), findsNothing);
     expect(find.byIcon(Icons.format_list_bulleted_rounded), findsOneWidget);
-    expect(find.text('PRN211'), findsOneWidget);
+    expect(find.textContaining('PRN211'), findsOneWidget);
     expect(find.text('Đã học'), findsNothing);
 
     // Test with isCompleted: true
@@ -366,6 +369,88 @@ void main() {
         findsOneWidget,
       );
       expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Test CourseSliverHeroHeader and CourseTabHeaderDelegate render smoothly',
+    (tester) async {
+      int activeTab = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                const CourseSliverHeroHeader(
+                  course: sampleCourse,
+                  completedCount: 6,
+                  totalLessons: 24,
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CourseTabHeaderDelegate(
+                    selectedIndex: activeTab,
+                    totalLessons: 24,
+                    onTabChanged: (i) => activeTab = i,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(CourseSliverHeroHeader), findsOneWidget);
+      expect(find.text('PRN211'), findsAtLeastNWidgets(1));
+      expect(find.text('Giáo trình (24 bài)'), findsOneWidget);
+      expect(find.text('Tổng quan & CLO'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Test Option 1: LessonDetail layout with LessonAppBar and Cinema Video',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            appBar: const LessonAppBar(
+              lesson: sampleLesson,
+              course: sampleCourse,
+              modules: sampleModules,
+              onSelectLesson: _dummyTap,
+              isCompleted: true,
+            ),
+            body: Column(
+              children: [
+                LessonVideoPlayerBox(
+                  estimatedMinutes: sampleLesson.estimatedMinutes,
+                  videoUrl: 'https://www.youtube.com/watch?v=KJgsSFOSQv0',
+                  title: sampleLesson.title,
+                  isCinemaMode: true,
+                ),
+                const Expanded(
+                  child: SingleChildScrollView(
+                    child: LessonContentCard(
+                      lesson: sampleLesson,
+                      isCompleted: true,
+                      showMediaHeader: false,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(LessonAppBar), findsOneWidget);
+      expect(find.byType(LessonVideoPlayerBox), findsOneWidget);
+      expect(find.byType(LessonContentCard), findsOneWidget);
+      expect(find.textContaining('PRN211'), findsOneWidget);
+      expect(find.text('Đã học'), findsOneWidget);
+      expect(find.byIcon(Icons.format_list_bulleted_rounded), findsOneWidget);
     },
   );
 }

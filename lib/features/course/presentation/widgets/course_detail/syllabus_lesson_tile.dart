@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/features/course/domain/entities/lesson_entity.dart';
 
@@ -69,7 +69,9 @@ class SyllabusLessonTile extends StatelessWidget {
                             ? Icon(
                                 lesson.type == 'QUIZ'
                                     ? Icons.quiz_rounded
-                                    : Icons.play_arrow_rounded,
+                                    : (lesson.type == 'VIDEO'
+                                        ? Icons.play_arrow_rounded
+                                        : Icons.article_rounded),
                                 size: 16,
                                 color: Colors.white,
                               )
@@ -77,8 +79,10 @@ class SyllabusLessonTile extends StatelessWidget {
                                 isEnrolled
                                     ? (lesson.type == 'QUIZ'
                                           ? Icons.quiz_outlined
-                                          : Icons
-                                                .radio_button_unchecked_rounded)
+                                          : (lesson.type == 'VIDEO'
+                                              ? Icons
+                                                    .play_circle_outline_rounded
+                                              : Icons.article_outlined))
                                     : Icons.lock_outline_rounded,
                                 size: 14,
                                 color: AppColors.textSecondary,
@@ -108,7 +112,7 @@ class SyllabusLessonTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${lesson.typeName ?? (lesson.type == 'QUIZ' ? 'Bài kiểm tra' : lesson.type)} • ${lesson.estimatedMinutes} phút',
+                      '${lesson.typeName ?? (lesson.type == 'QUIZ' ? 'Bài kiểm tra' : (lesson.type == 'VIDEO' ? 'Video bài giảng' : 'Bài đọc'))} • ${lesson.estimatedMinutes} phút',
                       style: const TextStyle(
                         fontSize: 10,
                         color: AppColors.textSecondary,
@@ -143,7 +147,11 @@ class SyllabusLessonTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        lesson.type == 'QUIZ' ? 'Làm bài' : 'Học',
+                        lesson.type == 'QUIZ'
+                            ? 'Làm bài'
+                            : (lesson.type == 'VIDEO'
+                                ? 'Xem video'
+                                : 'Đọc bài'),
                         style: const TextStyle(
                           fontSize: 10.5,
                           fontWeight: FontWeight.w800,
@@ -154,7 +162,9 @@ class SyllabusLessonTile extends StatelessWidget {
                       Icon(
                         lesson.type == 'QUIZ'
                             ? Icons.quiz_rounded
-                            : Icons.play_arrow_rounded,
+                            : (lesson.type == 'VIDEO'
+                                ? Icons.play_arrow_rounded
+                                : Icons.article_rounded),
                         size: 13,
                         color: Colors.white,
                       ),

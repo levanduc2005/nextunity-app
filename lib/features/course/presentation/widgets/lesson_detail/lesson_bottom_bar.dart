@@ -1,6 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 
+/// Bottom Navigation Bar tinh gọn theo chuẩn Phương Án 1:
+/// - Nút Lùi tròn (circular button) nhẹ nhàng bên trái
+/// - Nút Hoàn thành pill ở giữa (chuyển đổi Đã hoàn thành / Hoàn thành bài học)
+/// - Nút Bài tiếp pill primary hiện đại bên phải
 class LessonBottomBar extends StatelessWidget {
   const LessonBottomBar({
     super.key,
@@ -28,35 +32,35 @@ class LessonBottomBar extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.95),
-          borderRadius: BorderRadius.circular(22),
+          color: Colors.white.withValues(alpha: 0.96),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(
-              color: AppColors.textPrimary.withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 6),
+              color: AppColors.textPrimary.withValues(alpha: 0.07),
+              blurRadius: 18,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Row(
           children: [
             if (isQuiz) ...[
-              // Khi là Quiz: chỉ hiển thị 2 nút điều hướng Bài trước và Bài tiếp theo
+              // Khi là Quiz: hiển thị 2 nút điều hướng Bài trước và Bài tiếp theo
               Expanded(
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: onTapPrevious,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(16),
                     child: Container(
-                      height: 42,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: AppColors.surfaceLight,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.border),
                       ),
                       child: Row(
@@ -64,16 +68,16 @@ class LessonBottomBar extends StatelessWidget {
                         children: [
                           Icon(
                             hasPrevious
-                                ? Icons.arrow_back_rounded
+                                ? Icons.chevron_left_rounded
                                 : Icons.arrow_back_ios_new_rounded,
-                            size: 16,
+                            size: 18,
                             color: AppColors.textSecondaryDark,
                           ),
-                          const SizedBox(width: 6),
+                          const SizedBox(width: 4),
                           Text(
                             hasPrevious ? 'Bài trước' : 'Quay lại',
                             style: const TextStyle(
-                              fontSize: 12.5,
+                              fontSize: 12,
                               fontWeight: FontWeight.w700,
                               color: AppColors.textSecondaryDark,
                             ),
@@ -84,21 +88,21 @@ class LessonBottomBar extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: onTapNext,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(16),
                     child: Container(
-                      height: 42,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.3),
+                            color: AppColors.primary.withValues(alpha: 0.28),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -110,17 +114,17 @@ class LessonBottomBar extends StatelessWidget {
                           Text(
                             hasNext ? 'Bài tiếp' : 'Hoàn tất',
                             style: const TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(width: 6),
+                          const SizedBox(width: 4),
                           Icon(
                             hasNext
-                                ? Icons.arrow_forward_rounded
-                                : Icons.check_circle_outline_rounded,
-                            size: 16,
+                                ? Icons.chevron_right_rounded
+                                : Icons.check_rounded,
+                            size: 18,
                             color: Colors.white,
                           ),
                         ],
@@ -130,30 +134,36 @@ class LessonBottomBar extends StatelessWidget {
                 ),
               ),
             ] else ...[
-              // Khi là bài học thông thường: 3 nút (Bài trước - Hoàn thành - Bài tiếp theo)
-              // 1. Nút quay lại bài trước
+              // Khi là bài học thông thường: Tinh gọn theo chuẩn PA 1
+              // 1. Nút Lùi tròn gọn gàng
               Tooltip(
                 message: hasPrevious ? 'Bài trước' : 'Đầu khóa học',
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: hasPrevious ? onTapPrevious : null,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(19),
                     child: Container(
-                      width: 42,
-                      height: 42,
+                      width: 38,
+                      height: 38,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceLight,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.border),
+                        color: hasPrevious
+                            ? AppColors.surfaceLight
+                            : AppColors.surfaceLight.withValues(alpha: 0.5),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: hasPrevious
+                              ? AppColors.border
+                              : AppColors.border.withValues(alpha: 0.5),
+                        ),
                       ),
                       child: Center(
                         child: Icon(
-                          hasPrevious
-                              ? Icons.arrow_back_rounded
-                              : Icons.arrow_back_ios_new_rounded,
-                          size: 18,
-                          color: AppColors.textSecondaryDark,
+                          Icons.chevron_left_rounded,
+                          size: 22,
+                          color: hasPrevious
+                              ? AppColors.textPrimary
+                              : AppColors.textMuted,
                         ),
                       ),
                     ),
@@ -162,7 +172,7 @@ class LessonBottomBar extends StatelessWidget {
               ),
               const SizedBox(width: 8),
 
-              // 2. Nút trạng thái hoàn thành bài học (Primary Action Center)
+              // 2. Nút trạng thái hoàn thành bài học (Pill ở giữa)
               Expanded(
                 child: Material(
                   color: Colors.transparent,
@@ -170,74 +180,47 @@ class LessonBottomBar extends StatelessWidget {
                     onTap: (isUpdating || isCompleted)
                         ? null
                         : onToggleComplete,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(19),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 250),
-                      height: 42,
+                      height: 38,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: isCompleted
-                            ? AppColors.successVibrant
+                            ? AppColors.successContainer
                             : AppColors.primaryContainer,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(19),
                         border: Border.all(
                           color: isCompleted
-                              ? AppColors.successDarkText
+                              ? AppColors.successBorderLight
                               : AppColors.primaryBorder,
                         ),
-                        boxShadow: isCompleted
-                            ? [
-                                BoxShadow(
-                                  color: const Color(
-                                    0xFF16A34A,
-                                  ).withValues(alpha: 0.25),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ]
-                            : null,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           if (isUpdating)
                             const SizedBox(
-                              width: 16,
-                              height: 16,
+                              width: 15,
+                              height: 15,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
+                                  AppColors.primary,
                                 ),
                               ),
                             )
                           else
-                            Container(
-                              width: 18,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: isCompleted
-                                    ? Colors.white
-                                    : Colors.transparent,
-                                border: Border.all(
-                                  color: isCompleted
-                                      ? Colors.white
-                                      : AppColors.primary,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: isCompleted
-                                  ? const Center(
-                                      child: Icon(
-                                        Icons.check_rounded,
-                                        size: 12,
-                                        color: AppColors.successDarkText,
-                                      ),
-                                    )
-                                  : null,
+                            Icon(
+                              isCompleted
+                                  ? Icons.check_circle_rounded
+                                  : Icons.check_circle_outline_rounded,
+                              size: 16,
+                              color: isCompleted
+                                  ? AppColors.successForeground
+                                  : AppColors.primaryForeground,
                             ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 6),
                           Flexible(
                             child: Text(
                               isCompleted
@@ -247,7 +230,7 @@ class LessonBottomBar extends StatelessWidget {
                                 fontSize: 12,
                                 fontWeight: FontWeight.w800,
                                 color: isCompleted
-                                    ? Colors.white
+                                    ? AppColors.successForeground
                                     : AppColors.primaryForeground,
                               ),
                               maxLines: 1,
@@ -262,36 +245,48 @@ class LessonBottomBar extends StatelessWidget {
               ),
               const SizedBox(width: 8),
 
-              // 3. Nút chuyển sang bài tiếp theo / Hoàn tất
+              // 3. Nút chuyển sang Bài tiếp theo (Pill primary gọn gàng chuẩn PA 1)
               Tooltip(
-                message: hasNext ? 'Bài tiếp' : 'Hoàn tất',
+                message: hasNext ? 'Bài tiếp' : 'Hoàn tất khóa học',
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: onTapNext,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(19),
                     child: Container(
-                      width: 42,
-                      height: 42,
+                      height: 38,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(19),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.3),
+                            color: AppColors.primary.withValues(alpha: 0.28),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: Center(
-                        child: Icon(
-                          hasNext
-                              ? Icons.arrow_forward_rounded
-                              : Icons.check_circle_outline_rounded,
-                          size: 18,
-                          color: Colors.white,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            hasNext ? 'Bài tiếp' : 'Hoàn tất',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 3),
+                          Icon(
+                            hasNext
+                                ? Icons.chevron_right_rounded
+                                : Icons.check_rounded,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
                     ),
                   ),

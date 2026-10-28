@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
@@ -7,6 +7,7 @@ import 'package:rental_car/features/course/presentation/providers/course_provide
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_app_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_content_card.dart';
+import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_video_player_box.dart';
 import 'package:rental_car/features/quiz/domain/entities/quiz_submission_summary_entity.dart';
 import 'package:rental_car/features/quiz/presentation/providers/quiz_providers.dart';
 
@@ -187,6 +188,12 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
     final prevLesson = hasPrev ? allLessons[currentIndex - 1] : null;
     final nextLesson = hasNext ? allLessons[currentIndex + 1] : null;
 
+    final isQuiz = lesson.type == 'QUIZ';
+    final isVideoLesson =
+        !isQuiz &&
+        (lesson.type == 'VIDEO' ||
+            (lesson.videoUrl != null && lesson.videoUrl!.trim().isNotEmpty));
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: LessonAppBar(
@@ -196,22 +203,39 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
         onSelectLesson: (selected) => _switchLesson(selected.id),
         isCompleted: effectiveIsCompleted,
       ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-        physics: const BouncingScrollPhysics(),
-        child: LessonContentCard(
-          lesson: lesson,
-          isCompleted: effectiveIsCompleted,
-          instructorName: courseDetailState.course?.creatorName,
-        ),
+      body: Column(
+        children: [
+          // 1. Sticky Zero-Margin Cinema Video Player nếu là bài có Video
+          if (isVideoLesson)
+            LessonVideoPlayerBox(
+              estimatedMinutes: lesson.estimatedMinutes,
+              videoUrl: lesson.videoUrl,
+              title: lesson.title,
+              isCinemaMode: true,
+            ),
+
+          // 2. Khung đọc bài cuộn độc lập (Không còn Subheader trùng lặp với AppBar)
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+              physics: const BouncingScrollPhysics(),
+              child: LessonContentCard(
+                lesson: lesson,
+                isCompleted: effectiveIsCompleted,
+                instructorName: courseDetailState.course?.creatorName,
+                showMediaHeader: isQuiz,
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: LessonBottomBar(
         isCompleted: effectiveIsCompleted,
         isUpdating: state.isUpdatingProgress,
         hasPrevious: hasPrev,
         hasNext: hasNext,
-        isQuiz: lesson.type == 'QUIZ',
+        isQuiz: isQuiz,
         onTapPrevious: () {
           if (hasPrev && prevLesson != null) {
             _switchLesson(prevLesson.id);
