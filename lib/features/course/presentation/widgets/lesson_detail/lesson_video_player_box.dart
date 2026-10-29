@@ -180,64 +180,12 @@ class _LessonVideoPlayerBoxState extends State<LessonVideoPlayerBox> {
         ),
         child: ClipRRect(
           borderRadius: borderRadius,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: YoutubePlayer(
-                  controller: _controller!,
-                  aspectRatio: 16 / 9,
-                ),
-              ),
-              Container(
-                color: const Color(0xFF0F172A),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 7,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(
-                          Icons.play_circle_fill_rounded,
-                          size: 14,
-                          color: Color(0xFFEF4444),
-                        ),
-                        SizedBox(width: 6),
-                        Text(
-                          'Đang phát trực tiếp trên app',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    TextButton.icon(
-                      onPressed: () => _openExternal(context),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        foregroundColor: Colors.white70,
-                      ),
-                      icon: const Icon(Icons.open_in_new_rounded, size: 13),
-                      label: const Text(
-                        'Mở YouTube',
-                        style: TextStyle(fontSize: 11),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: YoutubePlayer(
+              controller: _controller!,
+              aspectRatio: 16 / 9,
+            ),
           ),
         ),
       );
