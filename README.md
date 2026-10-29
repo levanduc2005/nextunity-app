@@ -1,244 +1,174 @@
-# Flutter Template
+# NextUnity Mobile App
 
-A **production-ready Flutter boilerplate** built by (and for) experienced
-teams. It bakes in Clean Architecture, a feature-first structure, sensible
-state management, typed error handling, localization, theming, testing, CI, and
-first-class support for AI coding agents — so you can start shipping features on
-day one instead of wiring plumbing.
+<p align="center">
+  <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="NextUnity App Banner" width="100%" height="280" style="border-radius: 12px; object-fit: cover;" />
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <b>Nền tảng Ứng dụng Di động Học tập Trực tuyến & Cộng đồng Học thuật Sinh viên FPT</b><br/>
+  Xây dựng trên nền tảng <b>Flutter</b> với kiến trúc <b>Clean Architecture</b>, <b>Riverpod</b> và bộ giao diện hiện đại chuẩn Material 3.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.11+-02569B?logo=flutter&logoColor=white" alt="Flutter" />
+  <img src="https://img.shields.io/badge/Dart-3.11+-0175C2?logo=dart&logoColor=white" alt="Dart" />
+  <img src="https://img.shields.io/badge/State-Riverpod_3.3-blueviolet" alt="Riverpod" />
+  <img src="https://img.shields.io/badge/Routing-go__router-informational" alt="GoRouter" />
+  <img src="https://img.shields.io/badge/Architecture-Clean_Architecture-success" alt="Clean Architecture" />
+  <img src="https://img.shields.io/badge/Tests-100%25_Passed-brightgreen" alt="Tests" />
+</p>
 
 ---
 
-## ✨ Highlights
+## ✨ Điểm Nhấn Tính Năng (Key Features)
 
-- **Clean Architecture** with a strict dependency rule (`presentation → domain ← data`).
-- **Feature-first** folders — each feature owns its three layers.
-- **Bottom-tab navigation shell** (go_router `StatefulShellRoute`) + a **login
-  screen** with an auth-guarded `redirect`.
-- **Shared widget kit** — buttons, inputs, cards, dialogs, snackbars, empty
-  states… plus a live **components gallery**.
-- **Riverpod** for state management & DI (no code-gen required → fewer moving parts).
-- **Typed error handling** via a `Result<T>` type and a `Failure` hierarchy — no
-  more untyped `catch`.
-- **Dio** networking with interceptors and a testable client.
-- **freezed + json_serializable** for immutable models and DTOs.
-- **go_router** with a type-safe route enum.
-- **Localization** (i18n) via the official `gen-l10n` (English + Spanish included).
-- **Material 3** theming with light/dark from a single seed color.
-- **Config via `--dart-define`** (dev/staging/prod flavors) — zero secrets in source.
-- **Thorough tests**: unit, repository (mocktail), network (fake adapter), and widget tests.
-- **Strict linting** and a one-command `make verify` gate.
-- **`Makefile`** of common tasks (setup, codegen, test, verify, run).
-- **Agent-ready**: [`AGENTS.md`](AGENTS.md) + [`CLAUDE.md`](CLAUDE.md).
+### 1. Trải Nghiệm Học Tập Chuyên Sâu (Course & Lesson Experience)
+- **Course Detail Screen**: Thiết kế màn hình đơn liền mạch (Single-page Layout) với thanh cuộn Sliver Hero Header, Tab Header ghim mượt mà, phân tách rõ ràng khối **Giới thiệu môn học (About)** và **Đề cương bài giảng (Syllabus)**.
+- **Cinema Video Player**: Trình phát video bài giảng YouTube nhúng tỉ lệ chuẩn điện ảnh 16:9, loại bỏ hoàn toàn các khung viền rườm rà.
+- **Modern IDE Code Block (Mới)**:
+  - Tích hợp khối hiển thị mã nguồn chuẩn giao diện macOS/VS Code.
+  - Tự động tô màu cú pháp (Syntax Highlighting) cho C, Java, SQL, Python... với hiệu năng cao, zero-dependency.
+  - Nút **"Sao chép" 1-chạm** tiện lợi kèm phản hồi thị giác ("Đã chép").
+  - Thanh cuộn ngang (`SingleChildScrollView`) bảo toàn thụt lề chuẩn, không bị ngắt dòng vỡ mã trên màn hình điện thoại.
+  - Cột đánh số dòng (Line Numbers) tách biệt, chống loang màu nền.
+  - Inline Code dạng pill bo góc tinh tế nằm êm mắt trong dòng văn bản.
+- **Lesson Mini TOC Bottom Sheet**: Cho phép xem nhanh toàn bộ cây mục lục các chương và nhảy bài học tức thì.
+- **Floating Bottom Bar**: Thanh điều hướng nổi dạng capsule tinh gọn hỗ trợ chuyển bài trước/sau và đánh dấu hoàn thành bài học.
 
-## 🧱 Tech stack
+### 2. Trắc Nghiệm Ôn Luyện Kỳ Thi PE/FE (Quiz & Assessment Engine)
+- Giao diện làm bài trắc nghiệm thông minh với thời gian đếm ngược.
+- Chấm điểm tức thì kèm hộp thông báo kết quả (Passed/Failed) trực quan.
+- Xem lại đáp án chi tiết và làm lại bài thi không giới hạn.
 
-| Concern            | Choice                                  |
-| ------------------ | --------------------------------------- |
-| State management   | `flutter_riverpod`                      |
-| Navigation         | `go_router`                             |
-| Networking         | `dio`                                   |
-| Models / immutable | `freezed`, `json_serializable`          |
-| Local storage      | `shared_preferences`                    |
-| Secure storage     | `flutter_secure_storage`                |
-| Logging            | `logger`                                |
-| i18n               | `flutter_localizations`, `intl`, gen-l10n |
-| Testing            | `flutter_test`, `mocktail`              |
-| Lint               | `flutter_lints` (tightened)             |
+### 3. Diễn Đàn Thảo Luận FPTU (Community & Social Learning)
+- Bảng tin (Feed) cập nhật các bài chia sẻ kinh nghiệm ôn thi PE điểm cao, đồ án SWP391 và phỏng vấn OJT.
+- Bộ lọc Chip thông minh theo thẻ môn học: `PE`, `PRF192`, `PRO192`, `CSD201`, `DBI202`, `PRJ301`, `SWP391`, `OJT_INTERNSHIP`, `TAI_LIEU`.
+- Thả cảm xúc phong phú (`LIKE`, `LOVE`, `WOW`, `HAHA`, `SAD`, `ANGRY`).
+- Bình luận đa cấp (Nested Comments & Replies) trao đổi trực tiếp với Giảng viên và Mentor.
+- Đăng bài viết nhanh kèm chọn tags trực quan.
 
-## 🚀 Getting started
+### 4. Gói Nâng Cấp PLUS & Thanh Toán Tự Động (Subscription & VietQR)
+- Giới thiệu quyền lợi hội viên NextUnity PLUS (mở khóa toàn bộ ngân hàng đề thi PE và bài giảng VIP).
+- Tích hợp tạo mã QR thanh toán ngân hàng tự động **VietQR**, hỗ trợ quét mã chuyển khoản nhanh chóng và tự động kiểm tra trạng thái thanh toán.
 
-```bash
-# 1. Clone and rename (see "Renaming the project" below)
-git clone <your-fork> my_app && cd my_app
+### 5. Quản Lý Hồ Sơ & Chuỗi Học Tập (Profile & Streak)
+- Thống kê chuỗi ngày học tập liên tục (Learning Streak) tạo động lực học tập mỗi ngày.
+- Quản lý danh sách khóa học đã đăng ký và tiến độ hoàn thành.
+- Đổi mật khẩu, cài đặt tài khoản an toàn với `flutter_secure_storage`.
 
-# 2. Create your local config from the template
-cp config/dev.example.json config/dev.json
+---
 
-# 3. One-time setup: deps + codegen + localizations
-make setup      # == flutter pub get && dart run build_runner build && flutter gen-l10n
+## 🏛️ Kiến Trúc Ứng Dụng (Architecture)
 
-# 4. Run it
-make run        # == flutter run --dart-define-from-file=config/dev.json
-```
+Ứng dụng tuân thủ nghiêm ngặt **Clean Architecture** kết hợp phân rã theo tính năng (**Feature-First Structure**):
 
-**Requirements:** Flutter `>=3.41` / Dart `>=3.11` (see `environment` in
-`pubspec.yaml`).
-
-## 📁 Project structure
-
-```
+```text
 lib/
-├── main.dart                 # entry point → bootstrap(App.new)
-├── bootstrap.dart            # zone guard, global error handling, DI overrides
-├── app/                      # app shell: root widget + routing
-├── core/                     # cross-cutting building blocks
-│   ├── config/  error/  network/  providers/
-│   ├── storage/ theme/   utils/
-│   └── widgets/              # shared widget kit (barrel: widgets.dart)
-├── features/
-│   ├── auth/                 # login screen + AuthController (no real backend)
-│   ├── shell/                # bottom-tab scaffold (ScaffoldWithNavBar)
-│   ├── home/                 # Home tab: dashboard
-│   ├── profile/              # Profile tab: account + logout
-│   ├── counter/              # example: simple synchronous state
-│   ├── showcase/             # live gallery of the widget kit
-│   └── posts/                # example: full network → domain → UI (list + detail)
-│       ├── data/             #   datasources, models (DTOs), repository impl
-│       ├── domain/           #   entities, repository interface, use cases
-│       └── presentation/     #   providers, pages (list + detail), widgets
-└── l10n/                     # arb/ (source), gen/ (generated), l10n.dart
+├── core/                              # Nền tảng dùng chung toàn app
+│   ├── config/                        # Cấu hình môi trường (API base URL, timeout)
+│   ├── network/                       # Dio client, Interceptors, Token Refresh
+│   ├── storage/                       # SharedPreferences, FlutterSecureStorage
+│   ├── theme/                         # AppColors, AppTheme, Typography Material 3
+│   └── widgets/                       # Shared UI components (Buttons, Inputs, Cards)
+│
+├── features/                          # Các phân hệ tính năng độc lập
+│   ├── auth/                          # Đăng nhập, Đăng ký, Quên mật khẩu, Google Sign-In
+│   ├── home/                          # Dashboard trang chủ, Banner, Quick Stats
+│   ├── course/                        # Khóa học, Chương mục, Bài học, Markdown Reader
+│   ├── quiz/                          # Trắc nghiệm, Câu hỏi, Bảng điểm
+│   ├── community/                     # Diễn đàn, Bài viết, Bình luận, Tương tác
+│   ├── payment/                       # Nâng cấp gói PLUS, VietQR helper
+│   ├── profile/                       # Thông tin cá nhân, Streak, Cài đặt
+│   └── shell/                         # Khung Scaffold Bottom Navigation Bar
+│
+└── main.dart                          # Điểm khởi chạy ứng dụng (Bootstrap)
 ```
 
-## 🏛️ Architecture
+### Mỗi Feature được chia làm 3 lớp chuẩn:
+1. **`data/`**: Models (Freezed/JSON), DataSources (Remote API), Repositories Implementation.
+2. **`domain/`**: Entities độc lập, Repository Interfaces, UseCases nghiệp vụ.
+3. **`presentation/`**: Controllers/StateNotifier (Riverpod), Pages, Widgets con.
 
-This template follows **Clean Architecture**. The one rule that matters: source
-code dependencies always point **inward**, toward the domain.
+---
 
-```
-        ┌─────────────────────────────────────────────┐
-        │                presentation                  │  Widgets, Controllers
-        │   (ConsumerWidgets, Notifier/AsyncNotifier)  │
-        └───────────────────────┬─────────────────────┘
-                                 │ depends on
-        ┌───────────────────────▼─────────────────────┐
-        │                   domain                     │  Pure Dart. No Flutter.
-        │  Entities · Repository interfaces · UseCases │  No Dio. No JSON.
-        └───────────────────────▲─────────────────────┘
-                                 │ implements
-        ┌───────────────────────┴─────────────────────┐
-        │                    data                      │  Dio, JSON, storage
-        │  DataSources · DTOs · Repository impls       │
-        └─────────────────────────────────────────────┘
-```
+## 🧱 Công Nghệ & Thư Viện Chính (Tech Stack)
 
-**Error handling.** Data sources throw typed exceptions
-(`core/error/exceptions.dart`). Repositories catch them and return a
-`Result<T>` holding either a value or a `Failure` (`core/error/failure.dart`).
-Controllers surface failures to the UI, which renders them with the shared
-`AsyncValueView`/`ErrorView`. Errors are **values**, checked by the compiler —
-not surprises at runtime.
+| Hạng mục | Thư viện | Phiên bản | Mục đích |
+| :--- | :--- | :--- | :--- |
+| **Framework** | Flutter SDK | `^3.11.0` | Nền tảng phát triển ứng dụng di động đa nền tảng |
+| **Quản lý State** | `flutter_riverpod` | `^3.3.2` | State Management bất biến, Dependency Injection an toàn |
+| **Điều hướng** | `go_router` | `^17.3.0` | Định tuyến khai báo (Declarative Routing), bảo vệ Auth Guard |
+| **Kết nối mạng** | `dio` | `^5.11.0` | HTTP Client, tự động gắn Bearer Token & bắt lỗi mạng |
+| **Mã nguồn bất biến**| `freezed_annotation`, `json_annotation` | `^3.1.0` | Sinh code Entity/Model tự động, an toàn kiểu dữ liệu |
+| **Trình phát Video** | `youtube_player_iframe`| `^6.0.2` | Phát video YouTube nhúng chuẩn không quảng cáo |
+| **Đọc Markdown** | `flutter_markdown` | `^0.7.7` | Hiển thị bài giảng lý thuyết + Custom IDE Code Builder |
+| **Lưu trữ an toàn**| `flutter_secure_storage` | `^10.3.1` | Lưu Access Token & Refresh Token được mã hóa |
+| **Lưu trữ cục bộ** | `shared_preferences` | `^2.5.5` | Lưu Theme mode, trạng thái ghi nhớ đăng nhập |
 
-The `posts` feature is a complete, copy-me reference of this flow. The `counter`
-feature shows the simplest possible synchronous state.
+---
 
-## 🧭 Navigation & auth
+## 🚀 Hướng Dẫn Cài Đặt & Chạy App (Getting Started)
 
-Navigation uses go_router's `StatefulShellRoute.indexedStack` for a **bottom
-tab bar** (`features/shell/`), where each tab keeps its own navigation stack.
-The app is gated by a **login screen** (`features/auth/`): the router's
-`redirect` watches `authControllerProvider` and bounces unauthenticated users
-to `/login`, and signed-in users away from it.
+### 1. Yêu Cầu Môi Trường (Prerequisites)
+- **Flutter SDK**: Phiên bản `>= 3.11.0`
+- **Dart SDK**: Phiên bản `>= 3.11.0`
+- **Android Studio** hoặc **VS Code** có cài đặt Flutter Extension.
+- Thiết bị thật hoặc máy ảo Android (API level 24 trở lên) / iOS Simulator.
 
-> The login flow is intentionally a stub — pressing **Sign in** just flips the
-> auth flag so you can see the navigation. Wire `AuthController` to a real
-> backend (and persist a token via `SecureStore`) when you're ready.
+### 2. Cài Đặt Dependencies
+Mở terminal tại thư mục `NextUnity_App` và chạy:
 
-## 🧰 Widget kit
-
-A set of reusable building blocks lives in `core/widgets/` and is exported via a
-single barrel — `import 'package:flutter_template/core/widgets/widgets.dart';`:
-
-| Widget / helper       | Purpose                                     |
-| --------------------- | ------------------------------------------- |
-| `AppButton`           | Buttons with variants, icon & loading state |
-| `AppTextField`        | Labeled input with password toggle          |
-| `AppCard`             | Consistent tappable card container          |
-| `AppAvatar`           | Circle avatar with initials fallback        |
-| `Gap` / `AppSpacing`  | Spacing without magic numbers               |
-| `SectionHeader`       | Titled section with optional action         |
-| `EmptyView` / `ErrorView` | Empty & error states                    |
-| `AsyncValueView`      | Uniform loading/error/data for `AsyncValue` |
-| `LoadingOverlay`      | Modal spinner over content                  |
-| `showConfirmDialog`   | Standard confirmation dialog                |
-| `context.showSnackBar`| Info / success / error snackbars            |
-
-Every one of these is demonstrated live in the **Components** gallery
-(`features/showcase/`), reachable from the Home tab.
-
-## ➕ Adding a feature
-
-See the step-by-step recipe in [`AGENTS.md` §4](AGENTS.md#4-how-to-add-a-new-feature-follow-this-recipe).
-In short: create `lib/features/<name>/{data,domain,presentation}`, follow the
-`posts` example, wire providers, add a route, add ARB strings, and write tests.
-
-## 🌐 Configuration & flavors
-
-Configuration is injected at build time — nothing sensitive lives in source.
-
-```bash
-flutter run --dart-define-from-file=config/dev.json
-flutter build apk --dart-define-from-file=config/prod.json
+```powershell
+flutter pub get
 ```
 
-`config/*.json` is git-ignored; only the `*.example.json` templates are
-committed. Values are read through `AppConfig` (`lib/core/config/app_config.dart`),
-which also exposes the current `Flavor` (dev / staging / prod).
-
-## 🌍 Localization
-
-Source strings live in `lib/l10n/arb/` (`app_en.arb`, `app_es.arb`).
-Regenerate the typed accessors with `make l10n`, then use them via the
-`context.l10n` extension:
-
-```dart
-Text(context.l10n.postsTitle);
+### 3. Sinh Mã Nguồn Tự Động (Code Generation - Nếu cần)
+Nếu có thay đổi về Model Freezed hoặc JSON Serializable:
+```powershell
+dart run build_runner build --delete-conflicting-outputs
 ```
 
-## 🧪 Testing
+### 4. Khởi Chạy Ứng Dụng (Run Debug Mode)
+Đảm bảo Backend `NextUnity_BE` đang chạy tại `http://localhost:8000` (hoặc cấu hình địa chỉ IP máy của bạn trong `core/config`):
 
-```bash
-make test          # run all tests
-make coverage      # run with coverage → coverage/lcov.info
+```powershell
+flutter run
 ```
 
-Tests mirror the `lib/` structure under `test/`:
+---
 
-- **`result_test.dart`** — the functional `Result` type.
-- **`counter_controller_test.dart`** — Riverpod controller via `ProviderContainer`.
-- **`post_repository_impl_test.dart`** — error mapping with `mocktail`.
-- **`post_remote_data_source_test.dart`** — Dio against a fake `HttpClientAdapter`.
-- **`posts_page_test.dart`** — widget test with provider overrides + `pumpApp`.
+## 🧪 Kiểm Thử Tự Động (Automated Testing)
 
-## 🛠️ Common commands
+Dự án sở hữu bộ test toàn diện kiểm tra logic nghiệp vụ, giao diện và đảm bảo không xảy ra hiện tượng tràn viền (overflow) trên các kích thước màn hình hẹp (từ 320px đến 390px):
 
-Run `make help` for the full list.
-
-| Task           | Command        |
-| -------------- | -------------- |
-| Setup          | `make setup`   |
-| Codegen        | `make gen`     |
-| Localizations  | `make l10n`    |
-| Format         | `make format`  |
-| Analyze        | `make analyze` |
-| Test           | `make test`    |
-| **Verify all** | `make verify`  |
-| Run (dev)      | `make run`     |
-
-## 🤖 Working with AI agents
-
-This repo is set up for AI coding agents. [`AGENTS.md`](AGENTS.md) is the
-operational contract (architecture, conventions, do/don'ts, definition of done);
-[`CLAUDE.md`](CLAUDE.md) points Claude Code at it. Keeping these accurate is the
-single biggest lever for good agent output.
-
-## ✏️ Renaming the project
-
-Replace `flutter_template` (Dart package) and `mx.apto` (bundle id) with your
-own:
-
-```bash
-# Option A: use a tool
-dart pub global activate rename
-rename setAppName --value "My App"
-rename setBundleId --value com.mycompany.myapp
-
-# Option B: manual — update `name:` in pubspec.yaml, the imports
-# (package:flutter_template/...), and the applicationId / bundle identifier
-# under android/ and ios/.
+```powershell
+# Chạy toàn bộ bộ test kiểm tra giao diện bài học và chống tràn viền
+flutter test test/features/course/course_ui_test.dart test/features/course/lesson_markdown_reader_test.dart test/overflow_test.dart
 ```
 
-## 📄 License
+*Kết quả:* **20 / 20 tests passed (100% Pass)**.
 
-[MIT](LICENSE) © 2026 Apto. Use it, fork it, ship it.
+---
+
+## 📦 Hướng Dẫn Đóng Gói Bản Phát Hành (Build Release for Google Play)
+
+Ứng dụng đã được tích hợp sẵn Release Keystore trong [`android/key.properties`](file:///e:/Workspace/Mon_Hoc_FPT/EXE/NextUnity_App/android/key.properties).
+
+Để build file **Android App Bundle (.aab)** tải lên Google Play Console (CH Play):
+
+```powershell
+# Dọn dẹp cache cũ
+flutter clean
+flutter pub get
+
+# Build file AAB với Version Code tăng dần
+flutter build appbundle --release --build-name=1.1.1 --build-number=4
+```
+
+File sau khi build xong sẽ nằm tại:
+👉 `build/app/outputs/bundle/release/app-release.aab`
+
+---
+
+## 👥 Nhóm Phát Triển (Authors)
+Dự án được xây dựng bởi nhóm sinh viên Kỹ thuật Phần mềm (Software Engineering) - Đại học FPT.
