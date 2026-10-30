@@ -1,12 +1,9 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
-import 'package:rental_car/features/ai_study_set/presentation/pages/ai_result_page.dart';
-import 'package:rental_car/features/ai_study_set/presentation/pages/ai_study_set_page.dart';
-import 'package:rental_car/features/ai_study_set/presentation/pages/ai_upload_page.dart';
 import 'package:rental_car/features/auth/presentation/pages/account_created_page.dart';
 import 'package:rental_car/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rental_car/features/auth/presentation/pages/login_page.dart';
@@ -32,8 +29,6 @@ import 'package:rental_car/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:rental_car/features/quiz/presentation/pages/quiz_submission_detail_page.dart';
 import 'package:rental_car/features/shell/presentation/scaffold_with_nav_bar.dart';
 import 'package:rental_car/features/study_tools/presentation/pages/flashcards_page.dart';
-import 'package:rental_car/features/study_tools/presentation/pages/mindmap_page.dart';
-import 'package:rental_car/features/study_tools/presentation/pages/pdf_viewer_page.dart';
 import 'package:rental_car/l10n/l10n.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -129,11 +124,6 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       // Profile details
       GoRoute(
-        path: AppRoute.profile.path,
-        name: AppRoute.profile.name,
-        builder: (_, _) => const ProfilePage(),
-      ),
-      GoRoute(
         path: AppRoute.editProfile.path,
         name: AppRoute.editProfile.name,
         builder: (_, _) => const EditProfilePage(),
@@ -173,30 +163,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           initialSubmission: state.extra as QuizResultEntity?,
         ),
       ),
-      GoRoute(
-        path: AppRoute.mindmap.path,
-        name: AppRoute.mindmap.name,
-        builder: (_, _) => const MindmapPage(),
-      ),
-      GoRoute(
-        path: AppRoute.slidePdfViewer.path,
-        name: AppRoute.slidePdfViewer.name,
-        builder: (_, _) => const PdfViewerPage(),
-      ),
-
-      // AI Study Set
-      GoRoute(
-        path: AppRoute.aiUpload.path,
-        name: AppRoute.aiUpload.name,
-        builder: (_, _) => const AiUploadPage(),
-      ),
-      GoRoute(
-        path: AppRoute.aiResult.path,
-        name: AppRoute.aiResult.name,
-        builder: (_, state) =>
-            AiResultPage(setId: state.pathParameters['id'] ?? '1'),
-      ),
-
       // Community
       GoRoute(
         path: AppRoute.postDetail.path,
@@ -235,7 +201,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
 
-      // The tabbed app shell (5 main branches)
+      // The tabbed app shell (4 main branches: Home, Courses, Community, Profile)
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             ScaffoldWithNavBar(navigationShell: navigationShell),
@@ -260,23 +226,23 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-          // Branch 2: AI Study Set
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.aiStudySet.path,
-                name: AppRoute.aiStudySet.name,
-                builder: (_, _) => const AiStudySetPage(),
-              ),
-            ],
-          ),
-          // Branch 3: Community
+          // Branch 2: Community
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: AppRoute.community.path,
                 name: AppRoute.community.name,
                 builder: (_, _) => const CommunityPage(),
+              ),
+            ],
+          ),
+          // Branch 3: Profile
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoute.profile.path,
+                name: AppRoute.profile.name,
+                builder: (_, _) => const ProfilePage(),
               ),
             ],
           ),

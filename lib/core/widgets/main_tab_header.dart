@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:rental_car/app/router/app_routes.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/app_avatar.dart';
-import 'package:rental_car/core/widgets/app_snack_bar.dart';
 
 /// Top App Bar thống nhất cho toàn bộ các Tab chính (Home, Courses, AI, Community, Profile).
 /// - Bên trái: Avatar người dùng (ảnh hoặc chữ cái đầu) + Lời chào / Phụ đề & Tên sinh viên
@@ -17,8 +16,6 @@ class MainTabHeader extends StatelessWidget {
     this.subtitle,
     this.showSearch = false,
     this.onSearchTap,
-    this.onNotificationTap,
-    this.notificationCount = 3,
     this.trailing,
     this.bottom,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -41,19 +38,13 @@ class MainTabHeader extends StatelessWidget {
   /// Phụ đề tùy chọn (nếu có và không có greeting, sẽ hiển thị phụ đề này).
   final String? subtitle;
 
-  /// Hiển thị nút tìm kiếm khóa học bên cạnh chuông thông báo (mặc định false, chỉ true ở Home).
+  /// Hiển thị nút tìm kiếm khóa học bên phải (mặc định false, chỉ true ở Home).
   final bool showSearch;
 
   /// Callback khi ấn vào icon tìm kiếm khóa học.
   final VoidCallback? onSearchTap;
 
-  /// Callback khi ấn vào icon chuông thông báo.
-  final VoidCallback? onNotificationTap;
-
-  /// Số lượng thông báo chưa đọc để hiển thị chấm đỏ (mặc định 3).
-  final int notificationCount;
-
-  /// Widget tùy chọn thêm vào sau chuông thông báo.
+  /// Widget tùy chọn thêm vào bên phải header.
   final Widget? trailing;
 
   /// Widget mở rộng phía dưới header (vd: search bar, chips).
@@ -159,22 +150,10 @@ class MainTabHeader extends StatelessWidget {
                             } catch (_) {}
                           },
                     ),
-                    const SizedBox(width: 8),
                   ],
 
-                  // Nút Chuông thông báo
-                  _HeaderIconButton(
-                    icon: Icons.notifications_none_rounded,
-                    tooltip: 'Thông báo',
-                    hasBadge: notificationCount > 0,
-                    onTap:
-                        onNotificationTap ??
-                        () =>
-                            context.showSnackBar('Chưa có thông báo mới nào.'),
-                  ),
-
                   if (trailing != null) ...[
-                    const SizedBox(width: 8),
+                    if (showSearch) const SizedBox(width: 8),
                     trailing!,
                   ],
                 ],
@@ -194,13 +173,11 @@ class _HeaderIconButton extends StatelessWidget {
     required this.icon,
     required this.onTap,
     this.tooltip,
-    this.hasBadge = false,
   });
 
   final IconData icon;
   final VoidCallback onTap;
   final String? tooltip;
-  final bool hasBadge;
 
   @override
   Widget build(BuildContext context) {
@@ -224,25 +201,8 @@ class _HeaderIconButton extends StatelessWidget {
               ),
             ],
           ),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Center(child: Icon(icon, size: 21, color: AppColors.iconPrimary)),
-              if (hasBadge)
-                Positioned(
-                  top: 9,
-                  right: 9,
-                  child: Container(
-                    width: 7.5,
-                    height: 7.5,
-                    decoration: BoxDecoration(
-                      color: AppColors.error,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 1.5),
-                    ),
-                  ),
-                ),
-            ],
+          child: Center(
+            child: Icon(icon, size: 21, color: AppColors.iconPrimary),
           ),
         ),
       ),

@@ -1,9 +1,3 @@
-/// Barrel file for the shared widget kit.
-///
-/// Import everything with a single line:
-/// ```dart
-/// import 'package:rental_car/core/widgets/widgets.dart';
-/// ```
 library;
 
 export 'app_avatar.dart';
@@ -19,4 +13,3 @@ export 'gap.dart';
 export 'loading_overlay.dart';
 export 'main_tab_header.dart';
 export 'section_header.dart';
-export 'under_development_view.dart';

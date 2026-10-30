@@ -14,12 +14,14 @@ class LessonVideoPlayerBox extends StatefulWidget {
     this.videoUrl,
     this.title,
     this.isCinemaMode = true,
+    this.autoFullScreen = false,
   });
 
   final int estimatedMinutes;
   final String? videoUrl;
   final String? title;
   final bool isCinemaMode;
+  final bool autoFullScreen;
 
   @override
   State<LessonVideoPlayerBox> createState() => _LessonVideoPlayerBoxState();
@@ -103,6 +105,7 @@ class _LessonVideoPlayerBoxState extends State<LessonVideoPlayerBox> {
             showFullscreenButton: true,
             mute: false,
             enableCaption: true,
+            playsInline: true,
           ),
         );
       } catch (_) {
@@ -185,6 +188,8 @@ class _LessonVideoPlayerBoxState extends State<LessonVideoPlayerBox> {
             child: YoutubePlayer(
               controller: _controller!,
               aspectRatio: 16 / 9,
+              autoFullScreen: widget.autoFullScreen,
+              enableFullScreenOnVerticalDrag: false,
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,7 @@ class LessonDetailPage extends ConsumerStatefulWidget {
 
 class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _videoPlayerKey = GlobalKey();
   late String _currentLessonId;
 
   @override
@@ -203,22 +205,20 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
         onSelectLesson: (selected) => _switchLesson(selected.id),
         isCompleted: effectiveIsCompleted,
       ),
-      body: Column(
-        children: [
-          // 1. Sticky Zero-Margin Cinema Video Player nếu là bài có Video
-          if (isVideoLesson)
-            LessonVideoPlayerBox(
-              estimatedMinutes: lesson.estimatedMinutes,
-              videoUrl: lesson.videoUrl,
-              title: lesson.title,
-              isCinemaMode: true,
-            ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isLandscape = constraints.maxWidth > constraints.maxHeight;
 
-          // 2. Khung đọc bài cuộn độc lập (Không còn Subheader trùng lặp với AppBar)
-          Expanded(
-            child: SingleChildScrollView(
+          // Khi là bài Quiz hoặc bài đọc không có Video: cuộn dọc toàn màn hình
+          if (!isVideoLesson) {
+            return SingleChildScrollView(
               controller: _scrollController,
-              padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+              padding: EdgeInsets.fromLTRB(
+                16,
+                isLandscape ? 12 : 14,
+                16,
+                isLandscape ? 20 : 28,
+              ),
               physics: const BouncingScrollPhysics(),
               child: LessonContentCard(
                 lesson: lesson,
@@ -226,9 +226,84 @@ class _LessonDetailPageState extends ConsumerState<LessonDetailPage> {
                 instructorName: courseDetailState.course?.creatorName,
                 showMediaHeader: isQuiz,
               ),
-            ),
-          ),
-        ],
+            );
+          }
+
+          // Khi xoay ngang (Landscape Split-View):
+          // Cột trái (50%): Video 16:9 vừa khít chiều cao khả dụng
+          // Cột phải (50%): Khung cuộn độc lập cho lý thuyết, code, slides
+          if (isLandscape) {
+            final maxVideoWidth = constraints.maxWidth * 0.50;
+            final naturalVideoWidth = constraints.maxHeight * (16 / 9);
+            final videoWidth = math.min(naturalVideoWidth, maxVideoWidth);
+
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: videoWidth,
+                  color: Colors.black,
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: LessonVideoPlayerBox(
+                        key: _videoPlayerKey,
+                        estimatedMinutes: lesson.estimatedMinutes,
+                        videoUrl: lesson.videoUrl,
+                        title: lesson.title,
+                        isCinemaMode: true,
+                      ),
+                    ),
+                  ),
+                ),
+                const VerticalDivider(
+                  width: 1,
+                  thickness: 1,
+                  color: AppColors.border,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    physics: const BouncingScrollPhysics(),
+                    child: LessonContentCard(
+                      lesson: lesson,
+                      isCompleted: effectiveIsCompleted,
+                      instructorName: courseDetailState.course?.creatorName,
+                      showMediaHeader: false,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          // Khi xoay dọc (Portrait): Giữ nguyên giao diện Cinema Mode chuẩn
+          return Column(
+            children: [
+              LessonVideoPlayerBox(
+                key: _videoPlayerKey,
+                estimatedMinutes: lesson.estimatedMinutes,
+                videoUrl: lesson.videoUrl,
+                title: lesson.title,
+                isCinemaMode: true,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
+                  physics: const BouncingScrollPhysics(),
+                  child: LessonContentCard(
+                    lesson: lesson,
+                    isCompleted: effectiveIsCompleted,
+                    instructorName: courseDetailState.course?.creatorName,
+                    showMediaHeader: isQuiz,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: LessonBottomBar(
         isCompleted: effectiveIsCompleted,

@@ -9,6 +9,7 @@ import 'package:rental_car/features/community/domain/usecases/delete_comment_use
 import 'package:rental_car/features/community/domain/usecases/delete_post_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_all_posts_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_comments_use_case.dart';
+import 'package:rental_car/features/community/domain/usecases/get_popular_posts_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_post_detail_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/get_tags_use_case.dart';
 import 'package:rental_car/features/community/domain/usecases/toggle_reaction_use_case.dart';
@@ -34,6 +35,10 @@ final communityRepositoryProvider = Provider<CommunityRepository>((ref) {
 
 final getAllPostsUseCaseProvider = Provider<GetAllPostsUseCase>((ref) {
   return GetAllPostsUseCase(ref.watch(communityRepositoryProvider));
+});
+
+final getPopularPostsUseCaseProvider = Provider<GetPopularPostsUseCase>((ref) {
+  return GetPopularPostsUseCase(ref.watch(communityRepositoryProvider));
 });
 
 final getPostDetailUseCaseProvider = Provider<GetPostDetailUseCase>((ref) {

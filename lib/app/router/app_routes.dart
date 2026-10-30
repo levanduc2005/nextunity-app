@@ -15,7 +15,6 @@ enum AppRoute {
   // Main Tabs (StatefulShellRoute)
   home('/home'),
   courses('/courses'),
-  aiStudySet('/ai-study-set'),
   community('/community'),
   profile('/profile'),
 
@@ -23,16 +22,10 @@ enum AppRoute {
   courseDetail('/courses/:id'),
   lessonDetail('/lessons/:id'),
 
-  // Study Tools
+  // Study & Quiz
   flashcards('/study/flashcards'),
   quiz('/study/quiz'),
   quizSubmissionDetail('/study/quiz/submissions/:id'),
-  mindmap('/study/mindmap'),
-  slidePdfViewer('/study/pdf-viewer'),
-
-  // AI Study Set
-  aiUpload('/ai/upload'),
-  aiResult('/ai/result/:id'),
 
   // Community
   postDetail('/community/posts/:id'),

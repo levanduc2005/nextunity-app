@@ -72,7 +72,7 @@ class HomeAppBanner extends StatelessWidget {
                     onTap ??
                     () {
                       try {
-                        context.go(AppRoute.aiStudySet.path);
+                        context.go(AppRoute.courses.path);
                       } catch (_) {}
                     },
                 borderRadius: BorderRadius.circular(22),
@@ -104,7 +104,7 @@ class HomeAppBanner extends StatelessWidget {
 
                             // Mô tả ngắn
                             const Text(
-                              'Tự động tóm tắt bài giảng, tạo flashcard và đề thi thử theo giáo trình FPTU.',
+                              'Học tập, ôn thi chuyên sâu theo giáo trình CNTT Đại học FPT.',
                               style: TextStyle(
                                 color: Color(0xFFDBEAFE),
                                 fontSize: 11.5,

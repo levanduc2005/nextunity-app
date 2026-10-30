@@ -8,6 +8,8 @@ import 'package:rental_car/features/community/domain/entities/reaction_type.dart
 abstract interface class CommunityRepository {
   Future<Result<List<PostEntity>>> getAllPosts();
 
+  Future<Result<List<PostEntity>>> getPopularPosts({int limit = 3});
+
   Future<Result<PostEntity>> getPostById(String id);
 
   Future<Result<PostEntity>> createPost({

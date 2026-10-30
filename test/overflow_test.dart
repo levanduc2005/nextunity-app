@@ -7,6 +7,8 @@ import 'package:rental_car/features/auth/presentation/pages/login_page.dart';
 import 'package:rental_car/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:rental_car/features/auth/presentation/providers/auth_controller.dart';
 import 'package:rental_car/features/auth/presentation/widgets/common/nextunity_logo.dart';
+import 'package:rental_car/features/community/domain/entities/post_entity.dart';
+import 'package:rental_car/features/home/presentation/widgets/community/home_community_highlights.dart';
 import 'package:rental_car/features/course/presentation/widgets/lesson_detail/lesson_bottom_bar.dart';
 import 'package:rental_car/features/payment/domain/entities/subscription_plan_entity.dart';
 import 'package:rental_car/features/payment/presentation/pages/upgrade_plus_page.dart';
@@ -242,6 +244,42 @@ void main() {
       );
       await tester.pump();
       expect(find.byType(UpgradePlusPage), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Test HomeCommunityHighlights renders without overflow on compact 320px screen',
+    (tester) async {
+      tester.view.physicalSize = const Size(640, 1280);
+      tester.view.devicePixelRatio = 2.0; // 320 logical width
+      addTearDown(() => tester.view.resetPhysicalSize());
+
+      final testPost = PostEntity(
+        id: 'p-1',
+        title: 'Kinh nghiệm ôn thi môn CSD201 cho sinh viên CNTT FPT',
+        content: 'Cấu trúc dữ liệu và giải thuật cần chú ý phần Binary Search Tree và Graph.',
+        authorId: 'u-1',
+        authorName: 'Nguyen Dinh Thach Thao Very Long Name In The University',
+        tags: ['CSD201', 'DataStructures'],
+        reactionCount: 155,
+        commentCount: 88,
+        createdAt: DateTime.now().subtract(const Duration(hours: 3)),
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: HomeCommunityHighlights(
+                posts: [testPost],
+                isLoading: false,
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(find.text('Thảo luận nổi bật'), findsOneWidget);
     },
   );
 }

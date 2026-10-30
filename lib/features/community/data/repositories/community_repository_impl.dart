@@ -27,6 +27,18 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
+  Future<Result<List<PostEntity>>> getPopularPosts({int limit = 3}) async {
+    try {
+      final models = await _remoteDataSource.getPopularPosts(limit: limit);
+      return Result.ok(models.map((m) => m.toEntity()).toList());
+    } on ServerException catch (e) {
+      return Result.err(ServerFailure(message: e.message));
+    } catch (e) {
+      return Result.err(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Result<PostEntity>> getPostById(String id) async {
     try {
       final model = await _remoteDataSource.getPostById(id);

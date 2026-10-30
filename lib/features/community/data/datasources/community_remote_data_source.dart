@@ -8,6 +8,7 @@ import 'package:rental_car/features/community/domain/entities/reaction_type.dart
 
 abstract interface class CommunityRemoteDataSource {
   Future<List<PostModel>> getAllPosts();
+  Future<List<PostModel>> getPopularPosts({int limit = 3});
   Future<PostModel> getPostById(String id);
   Future<PostModel> createPost({
     required String title,
@@ -51,6 +52,27 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           .toList();
     } on DioException catch (e) {
       throw _handleDioError(e, 'Không thể tải danh sách bài viết cộng đồng');
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<List<PostModel>> getPopularPosts({int limit = 3}) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/posts/popular',
+        queryParameters: {'limit': limit},
+      );
+      final data = response.data;
+      if (data == null) return [];
+
+      final list = data['data'] as List<dynamic>? ?? [];
+      return list
+          .map((e) => PostModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      throw _handleDioError(e, 'Không thể tải bài viết nổi bật');
     } catch (e) {
       throw ServerException(message: e.toString());
     }

@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/core/providers/core_providers.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
 import 'package:rental_car/core/widgets/main_tab_header.dart';
+import 'package:rental_car/features/community/presentation/providers/community_providers.dart';
 import 'package:rental_car/features/course/presentation/providers/course_providers.dart';
 import 'package:rental_car/features/home/presentation/providers/home_providers.dart';
+import 'package:rental_car/features/home/presentation/widgets/community/home_community_highlights.dart';
 import 'package:rental_car/features/home/presentation/widgets/ongoing_courses/home_ongoing_courses.dart';
 import 'package:rental_car/features/home/presentation/widgets/overview/home_app_banner.dart';
-import 'package:rental_car/features/home/presentation/widgets/overview/home_study_tools_bento.dart';
 import 'package:rental_car/features/home/presentation/widgets/popular_courses/home_popular_courses.dart';
 
 /// Màn hình Trang Chủ (Home Page) thiết kế chuẩn 100% theo phong cách ApSkil E-Learning
@@ -19,6 +20,7 @@ class HomePage extends ConsumerWidget {
     final homeState = ref.watch(homeControllerProvider);
     final userProfile = ref.watch(currentUserProvider);
     final coursesState = ref.watch(coursesControllerProvider);
+    final communityState = ref.watch(communityControllerProvider);
 
     final displayName = userProfile?.displayName ?? 'Sinh viên FPT';
     final enrollments = coursesState.myEnrollments;
@@ -29,13 +31,23 @@ class HomePage extends ConsumerWidget {
         ? coursesState.popularCourses
         : coursesState.allCourses.take(5).toList();
 
+    // Bài viết thảo luận nổi bật từ Backend (/api/posts/popular) theo thuật toán Trending Score
+    final popularPosts = communityState.popularPosts.isNotEmpty
+        ? communityState.popularPosts
+        : communityState.posts.take(3).toList();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: RefreshIndicator(
           color: AppColors.primary,
           backgroundColor: Colors.white,
-          onRefresh: () => ref.read(homeControllerProvider.notifier).refresh(),
+          onRefresh: () async {
+            await Future.wait([
+              ref.read(homeControllerProvider.notifier).refresh(),
+              ref.read(communityControllerProvider.notifier).loadPopularPosts(),
+            ]);
+          },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 28),
@@ -48,7 +60,7 @@ class HomePage extends ConsumerWidget {
                     color: AppColors.primary,
                   ),
 
-                // 1. HEADING: Avatar + Tên bên trái | Icon Search + Icon Thông báo bên phải
+                // 1. HEADING: Avatar + Tên bên trái | Icon Search bên phải
                 MainTabHeader(
                   displayName: displayName,
                   avatarUrl: userProfile?.avatarUrl,
@@ -69,14 +81,17 @@ class HomePage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // 4. BỘ CÔNG CỤ ÔN LUYỆN THÔNG MINH (4 BENTO TOOLS)
-                const HomeStudyToolsBento(),
-                const SizedBox(height: 20),
-
-                // 5. KHÓA HỌC NỔI BẬT (KELAS POPULER - POPULAR COURSES)
+                // 4. KHÓA HỌC NỔI BẬT (KELAS POPULER - POPULAR COURSES)
                 HomePopularCourses(
                   courses: popularCourses,
                   isLoading: coursesState.isLoading,
+                ),
+                const SizedBox(height: 22),
+
+                // 5. THẢO LUẬN NỔI BẬT TỪ CỘNG ĐỒNG (COMMUNITY HIGHLIGHTS)
+                HomeCommunityHighlights(
+                  posts: popularPosts,
+                  isLoading: communityState.isLoading,
                 ),
               ],
             ),

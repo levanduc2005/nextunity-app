@@ -198,83 +198,91 @@ class _ModernCodeBlockWidgetState extends State<ModernCodeBlockWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // 1. Mac-style Top Bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: const BoxDecoration(
-              color: Color(0xFF1E293B),
-              border: Border(
-                bottom: BorderSide(color: Color(0xFF334155), width: 0.8),
-              ),
-            ),
-            child: Row(
-              children: [
-                // 3 Mac window control dots
-                Row(
+          LayoutBuilder(
+            builder: (context, headerConstraints) {
+              final isCompact = headerConstraints.maxWidth < 220;
+
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF1E293B),
+                  border: Border(
+                    bottom: BorderSide(color: Color(0xFF334155), width: 0.8),
+                  ),
+                ),
+                child: Row(
                   children: [
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFEF4444), shape: BoxShape.circle)),
-                    const SizedBox(width: 5),
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFF59E0B), shape: BoxShape.circle)),
-                    const SizedBox(width: 5),
-                    Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle)),
-                  ],
-                ),
-                const SizedBox(width: 10),
-                // Language Badge
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0F172A),
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: const Color(0xFF334155)),
-                  ),
-                  child: Text(
-                    widget.language,
-                    style: const TextStyle(
-                      fontFamily: 'monospace',
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF38BDF8),
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                // Copy Button with tactile feedback
-                InkWell(
-                  onTap: _copyCode,
-                  borderRadius: BorderRadius.circular(6),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0F172A),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(
-                        color: _copied ? const Color(0xFF10B981) : const Color(0xFF334155),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                    // 3 Mac window control dots
+                    Row(
                       children: [
-                        Icon(
-                          _copied ? Icons.check_rounded : Icons.copy_rounded,
-                          size: 12,
-                          color: _copied ? const Color(0xFF10B981) : const Color(0xFF94A3B8),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          _copied ? 'Đã chép' : 'Sao chép',
-                          style: TextStyle(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w600,
-                            color: _copied ? const Color(0xFF10B981) : const Color(0xFF94A3B8),
-                          ),
-                        ),
+                        Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFEF4444), shape: BoxShape.circle)),
+                        const SizedBox(width: 5),
+                        Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFFF59E0B), shape: BoxShape.circle)),
+                        const SizedBox(width: 5),
+                        Container(width: 8, height: 8, decoration: const BoxDecoration(color: Color(0xFF10B981), shape: BoxShape.circle)),
                       ],
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    // Language Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0F172A),
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: const Color(0xFF334155)),
+                      ),
+                      child: Text(
+                        widget.language,
+                        style: const TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF38BDF8),
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    // Copy Button with tactile feedback
+                    InkWell(
+                      onTap: _copyCode,
+                      borderRadius: BorderRadius.circular(6),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3.5),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF0F172A),
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: _copied ? const Color(0xFF10B981) : const Color(0xFF334155),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              _copied ? Icons.check_rounded : Icons.copy_rounded,
+                              size: 12,
+                              color: _copied ? const Color(0xFF10B981) : const Color(0xFF94A3B8),
+                            ),
+                            if (!isCompact) ...[
+                              const SizedBox(width: 4),
+                              Text(
+                                _copied ? 'Đã chép' : 'Sao chép',
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.w600,
+                                  color: _copied ? const Color(0xFF10B981) : const Color(0xFF94A3B8),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
 
           // 2. Code Body with Line Numbers & Horizontal Scroll

@@ -1,7 +1,6 @@
-﻿import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:rental_car/app/router/app_routes.dart';
+import 'package:flutter/material.dart';
 import 'package:rental_car/core/theme/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LessonSlideAttachmentCard extends StatelessWidget {
   const LessonSlideAttachmentCard({super.key, required this.slideUrl});
@@ -102,10 +101,25 @@ class LessonSlideAttachmentCard extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {
-                      context.push(
-                        '${AppRoute.slidePdfViewer.path}?url=${Uri.encodeComponent(slideUrl)}',
-                      );
+                    onTap: () async {
+                      final uri = Uri.tryParse(slideUrl);
+                      if (uri != null) {
+                        try {
+                          await launchUrl(
+                            uri,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        } catch (_) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Không thể mở liên kết: $slideUrl'),
+                                backgroundColor: AppColors.error,
+                              ),
+                            );
+                          }
+                        }
+                      }
                     },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(

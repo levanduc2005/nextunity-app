@@ -29,11 +29,17 @@ class LessonBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     return SafeArea(
       top: false,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        margin: EdgeInsets.fromLTRB(16, 0, 16, isLandscape ? 4 : 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: isLandscape ? 4 : 6,
+        ),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.96),
           borderRadius: BorderRadius.circular(24),

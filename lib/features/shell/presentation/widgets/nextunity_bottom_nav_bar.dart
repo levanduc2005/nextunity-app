@@ -34,14 +34,14 @@ class NextUnityBottomNavBar extends StatelessWidget {
         label: l10n.tabCourses,
       ),
       _NavItemData(
-        icon: Icons.auto_awesome_outlined,
-        selectedIcon: Icons.auto_awesome_rounded,
-        label: l10n.tabAiStudy,
-      ),
-      _NavItemData(
         icon: Icons.forum_outlined,
         selectedIcon: Icons.forum_rounded,
         label: l10n.tabCommunity,
+      ),
+      const _NavItemData(
+        icon: Icons.person_outline_rounded,
+        selectedIcon: Icons.person_rounded,
+        label: 'Cá nhân',
       ),
     ];
 

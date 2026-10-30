@@ -6,6 +6,7 @@ import 'package:rental_car/features/community/presentation/providers/community_p
 class CommunityState {
   const CommunityState({
     this.posts = const [],
+    this.popularPosts = const [],
     this.tags = const [],
     this.isLoading = false,
     this.errorMessage,
@@ -15,6 +16,7 @@ class CommunityState {
   });
 
   final List<PostEntity> posts;
+  final List<PostEntity> popularPosts;
   final List<String> tags;
   final bool isLoading;
   final String? errorMessage;
@@ -66,6 +68,7 @@ class CommunityState {
 
   CommunityState copyWith({
     List<PostEntity>? posts,
+    List<PostEntity>? popularPosts,
     List<String>? tags,
     bool? isLoading,
     String? errorMessage,
@@ -77,6 +80,7 @@ class CommunityState {
   }) {
     return CommunityState(
       posts: posts ?? this.posts,
+      popularPosts: popularPosts ?? this.popularPosts,
       tags: tags ?? this.tags,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
@@ -95,8 +99,25 @@ class CommunityController extends Notifier<CommunityState> {
     Future.microtask(() {
       loadPosts();
       loadTags();
+      loadPopularPosts();
     });
     return const CommunityState(isLoading: true);
+  }
+
+  Future<void> loadPopularPosts({int limit = 3}) async {
+    final result = await ref
+        .read(getPopularPostsUseCaseProvider)
+        .call(limit: limit);
+    result.when(
+      ok: (popular) {
+        state = state.copyWith(popularPosts: popular);
+      },
+      err: (_) {
+        if (state.popularPosts.isEmpty && state.posts.isNotEmpty) {
+          state = state.copyWith(popularPosts: state.posts.take(limit).toList());
+        }
+      },
+    );
   }
 
   Future<void> loadPosts() async {
